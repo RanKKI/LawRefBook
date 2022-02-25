@@ -18,7 +18,7 @@ class Model: ObservableObject {
     @Published var Body: [TextContent] = []
     
     init(filename:String, folder: String?) {
-        var dir = "laws"
+        var dir = "法律法条"
         if folder != nil {
             dir += "/" + folder!
         }

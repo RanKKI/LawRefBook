@@ -12,7 +12,7 @@
 		902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5B27C7CBC200926036 /* Assets.xcassets */; };
 		902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5E27C7CBC200926036 /* Preview Assets.xcassets */; };
 		9035982C27C9012B00C8D9E7 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035982B27C9012B00C8D9E7 /* Config.swift */; };
-		9035983627C90D4800C8D9E7 /* laws in Resources */ = {isa = PBXBuildFile; fileRef = 9035983527C90D4800C8D9E7 /* laws */; };
+		9035983827C91E0300C8D9E7 /* 法律法条 in Resources */ = {isa = PBXBuildFile; fileRef = 9035983727C91E0300C8D9E7 /* 法律法条 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,7 +22,7 @@
 		902DAE5B27C7CBC200926036 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		902DAE5E27C7CBC200926036 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9035982B27C9012B00C8D9E7 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		9035983527C90D4800C8D9E7 /* laws */ = {isa = PBXFileReference; lastKnownFileType = folder; name = laws; path = law.handbook/laws; sourceTree = "<group>"; };
+		9035983727C91E0300C8D9E7 /* 法律法条 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "法律法条"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +39,7 @@
 		902DAE4B27C7CBC100926036 = {
 			isa = PBXGroup;
 			children = (
-				9035983527C90D4800C8D9E7 /* laws */,
+				9035983727C91E0300C8D9E7 /* 法律法条 */,
 				902DAE5627C7CBC100926036 /* law.handbook */,
 				902DAE5527C7CBC100926036 /* Products */,
 			);
@@ -131,7 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9035983627C90D4800C8D9E7 /* laws in Resources */,
+				9035983827C91E0300C8D9E7 /* 法律法条 in Resources */,
 				902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */,
 				902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */,
 			);
