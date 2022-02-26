@@ -18,10 +18,14 @@ class LawModel: ObservableObject {
     @Published var Desc: [String] = []
     @Published var Body: [TextContent] = []
     
-    init(filename:String, folder: String?) {
+    init(law: Law) {
         var dir = "法律法条"
-        if folder != nil {
-            dir += "/" + folder!
+        if law.folder != nil {
+            dir += "/" + law.folder!
+        }
+        var filename = law.file
+        if filename == nil {
+            filename = law.name
         }
         if let filepath = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: dir) {
             do {
@@ -103,6 +107,7 @@ struct LawContentList: View {
             if searchText.isEmpty {
                 Text(model.Name)
                     .frame(maxWidth: .infinity, alignment: .center)
+                    .multilineTextAlignment(.center)
                     .listRowSeparator(.hidden)
                     .font(.title2)
                 ForEach(model.Desc, id: \.self) { desc in
@@ -143,7 +148,7 @@ struct LawContentView: View {
 struct LawContentView_Previews:PreviewProvider {
     static var previews: some View {
         Group {
-            LawContentView(model: LawModel(filename: "消费者权益保护法", folder: nil))
+            LawContentView(model: LawModel(law: Law(name: "消费者权益保护法")))
         }.previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
     }
 }

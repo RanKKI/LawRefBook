@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		902DAE5427C7CBC100926036 /* law.handbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = law.handbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		902DAE5427C7CBC100926036 /* 中国法律.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "中国法律.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		902DAE5727C7CBC100926036 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		902DAE5927C7CBC100926036 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		902DAE5B27C7CBC200926036 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -52,7 +52,7 @@
 		902DAE5527C7CBC100926036 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				902DAE5427C7CBC100926036 /* law.handbook.app */,
+				902DAE5427C7CBC100926036 /* 中国法律.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,7 +96,7 @@
 			);
 			name = law.handbook;
 			productName = law.handbook;
-			productReference = 902DAE5427C7CBC100926036 /* law.handbook.app */;
+			productReference = 902DAE5427C7CBC100926036 /* 中国法律.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -299,7 +299,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "中国法律";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -328,7 +328,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "中国法律";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
