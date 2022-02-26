@@ -36,7 +36,7 @@ class LawModel: ObservableObject {
                     var isDesc = true
                     
                     for (index, text) in arr.enumerated() {
-                        let out = text.split(separator: " ", maxSplits: 2)
+                        let out = text.split(separator: " ", maxSplits: 1)
                         if out.isEmpty {
                             continue
                         }
