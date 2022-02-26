@@ -28,10 +28,12 @@ struct LawGroup : Hashable{
 
 
 var laws: [LawGroup] = [
-    LawGroup(name: "宪法", laws: [
+    LawGroup(name: "宪法及相关法案", laws: [
         Law(name: "宪法"),
+        Law(name: "国籍法"),
+        Law(name: "身份证法"),
     ]),
-        LawGroup(name: "宪法修正案", laws: [
+    LawGroup(name: "宪法修正案", laws: [
         Law(name: "1988年", folder:"宪法修正案"),
         Law(name: "1993年", folder:"宪法修正案"),
         Law(name: "1999年", folder:"宪法修正案"),
