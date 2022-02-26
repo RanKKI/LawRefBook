@@ -131,7 +131,6 @@ struct LawContentList: View {
 struct LawContentView: View {
     
     @ObservedObject var model: LawModel
-    @State var showSearchModal = false
     @State var searchText = ""
     
     var body: some View{

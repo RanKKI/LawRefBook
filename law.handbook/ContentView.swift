@@ -35,27 +35,32 @@ struct LawList: View {
 struct ContentView: View {
     
     @State var showSettingModal = false
-    @State var showSearchModal = false
-    
     @State var searchText = ""
+    
+    var filteredLaws:  [LawGroup] {
+        if searchText.isEmpty {
+            return laws
+        }
+        return laws.filter {
+            return !$0.laws.filter{$0.name.hasPrefix(searchText)}.isEmpty
+        }
+    }
     
     var body: some View {
         NavigationView{
-            LawList(lawsArr: laws.filter {
-                return !$0.laws.filter{$0.name.hasPrefix(searchText) || searchText == ""}.isEmpty
-            }).navigationBarTitle("中国法律")
+            LawList(lawsArr: filteredLaws)
+                .navigationBarTitle("中国法律")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
                             showSettingModal.toggle()
                         }, label: {
                             Image(systemName: "gear")
-                        }).foregroundColor(.red) // You can apply colors and other modifiers too
-                            .sheet(isPresented: $showSettingModal) {
-                                SettingView()
-                            }
+                        }).foregroundColor(.red).sheet(isPresented: $showSettingModal) {
+                            SettingView()
+                        }
                     }
-
+                    
                 }
         }.searchable(text: $searchText, prompt: "宪法修正案")
     }

@@ -31,6 +31,13 @@ var laws: [LawGroup] = [
     LawGroup(name: "宪法", laws: [
         Law(name: "宪法"),
     ]),
+        LawGroup(name: "宪法修正案", laws: [
+        Law(name: "1988年", folder:"宪法修正案"),
+        Law(name: "1993年", folder:"宪法修正案"),
+        Law(name: "1999年", folder:"宪法修正案"),
+        Law(name: "2004年", folder:"宪法修正案"),
+        Law(name: "2018年", folder:"宪法修正案"),
+    ]),
     LawGroup(name: "民法典", laws: [
         Law(name: "总则", folder: "民法典"),
         Law(name: "物权", folder: "民法典"),
