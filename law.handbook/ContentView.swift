@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct LawList: View {
     
@@ -18,11 +19,7 @@ struct LawList: View {
             ForEach(lawsArr, id: \.name) { g in
                 Section(header: Text(g.name)) {
                     ForEach(g.laws, id: \.name) { law in
-                        NavigationLink(destination: LawContentView(model: LawModel(law: law)).simultaneousGesture(TapGesture().onEnded{
-                            if action != nil {
-                                action!()
-                            }
-                        })){
+                        NavigationLink(destination: LawContentView(model: LawModel(law: law))){
                             Text(law.name)
                         }
                     }
@@ -35,6 +32,7 @@ struct LawList: View {
 struct ContentView: View {
     
     @State var showSettingModal = false
+    @State var showFavModal = false
     @State var searchText = ""
     
     var filteredLaws:  [LawGroup] {
@@ -51,6 +49,17 @@ struct ContentView: View {
             LawList(lawsArr: filteredLaws)
                 .navigationBarTitle("中国法律")
                 .toolbar {
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showFavModal.toggle()
+                        }, label: {
+                            Image(systemName: "heart")
+                        }).foregroundColor(.red).sheet(isPresented: $showFavModal) {
+                            FavouiteView()
+                        }
+                    }
+                    
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
                             showSettingModal.toggle()

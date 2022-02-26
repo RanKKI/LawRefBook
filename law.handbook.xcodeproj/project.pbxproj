@@ -15,6 +15,8 @@
 		9035983827C91E0300C8D9E7 /* 法律法条 in Resources */ = {isa = PBXBuildFile; fileRef = 9035983727C91E0300C8D9E7 /* 法律法条 */; };
 		9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983927C9F57D00C8D9E7 /* LawContentView.swift */; };
 		9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983B27C9F96400C8D9E7 /* SettingView.swift */; };
+		9035984027CA29CA00C8D9E7 /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983F27CA29CA00C8D9E7 /* Favourite.swift */; };
+		9035984327CA2A6500C8D9E7 /* Modal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9035984127CA2A6500C8D9E7 /* Modal.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		9035983727C91E0300C8D9E7 /* 法律法条 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "法律法条"; sourceTree = "<group>"; };
 		9035983927C9F57D00C8D9E7 /* LawContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentView.swift; sourceTree = "<group>"; };
 		9035983B27C9F96400C8D9E7 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		9035983F27CA29CA00C8D9E7 /* Favourite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
+		9035984227CA2A6500C8D9E7 /* Favouite.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Favouite.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				9035983B27C9F96400C8D9E7 /* SettingView.swift */,
+				9035983F27CA29CA00C8D9E7 /* Favourite.swift */,
+				9035984127CA2A6500C8D9E7 /* Modal.xcdatamodeld */,
 				902DAE5727C7CBC100926036 /* App.swift */,
 				902DAE5927C7CBC100926036 /* ContentView.swift */,
 				902DAE5B27C7CBC200926036 /* Assets.xcassets */,
@@ -153,7 +159,9 @@
 				902DAE5A27C7CBC100926036 /* ContentView.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,
+				9035984027CA29CA00C8D9E7 /* Favourite.swift in Sources */,
 				902DAE5827C7CBC100926036 /* App.swift in Sources */,
+				9035984327CA2A6500C8D9E7 /* Modal.xcdatamodeld in Sources */,
 				9035982C27C9012B00C8D9E7 /* Config.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +365,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9035984127CA2A6500C8D9E7 /* Modal.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9035984227CA2A6500C8D9E7 /* Favouite.xcdatamodel */,
+			);
+			currentVersion = 9035984227CA2A6500C8D9E7 /* Favouite.xcdatamodel */;
+			path = Modal.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 902DAE4C27C7CBC100926036 /* Project object */;
 }

@@ -88,9 +88,11 @@ struct LawContentList: View {
     @ObservedObject var model: LawModel
     @Binding var searchText: String
     
+    @Environment(\.managedObjectContext) var moc
+    
     func HightedText(str: String, searched: String) -> Text {
         guard !str.isEmpty && !searched.isEmpty else { return Text(str) }
-
+        
         var result: Text!
         let parts = str.components(separatedBy: searched)
         for i in parts.indices {
@@ -104,12 +106,12 @@ struct LawContentList: View {
     
     var body: some View {
         List {
+            Text(model.Name)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+                .listRowSeparator(.hidden)
+                .font(.title2)
             if searchText.isEmpty {
-                Text(model.Name)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .multilineTextAlignment(.center)
-                    .listRowSeparator(.hidden)
-                    .font(.title2)
                 ForEach(model.Desc, id: \.self) { desc in
                     Text(desc)
                         .font(.body)
@@ -124,6 +126,18 @@ struct LawContentList: View {
                     Section(header: Text(body.text)){
                         ForEach(Array(contentArr.enumerated()), id: \.offset){ j, text in
                             HightedText(str: text, searched: searchText)
+                                .swipeActions {
+                                    Button {
+                                        let fav = Favouite(context: moc)
+                                        fav.id = UUID()
+                                        fav.content = text
+                                        fav.law = model.Name
+                                        try? moc.save()
+                                    } label: {
+                                        Label("收藏", systemImage: "heart")
+                                    }
+                                    .tint(.orange)
+                                }
                         }
                     }
                     
