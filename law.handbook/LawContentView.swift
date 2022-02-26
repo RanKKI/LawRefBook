@@ -137,20 +137,7 @@ struct LawContentView: View {
     var body: some View{
         LawContentList(model: model, searchText: $searchText)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack {
-                        Button(action: {
-                            showSearchModal.toggle()
-                        }, label: {
-                            Image(systemName: "magnifyingglass")
-                        }).foregroundColor(.red) // You can apply colors and other modifiers too
-                            .sheet(isPresented: $showSearchModal) {
-                                SearchView(lawModel: model)
-                            }
-                    }
-                }
-            }
+            .searchable(text: $searchText)
     }
 }
 
