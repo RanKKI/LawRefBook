@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TextContent : Hashable {
+    var id: UUID = UUID()
     var text: String
     var children: [String]
 }
@@ -87,7 +88,7 @@ struct LawContentList: View {
     
     @ObservedObject var model: LawModel
     @Binding var searchText: String
-    
+
     @Environment(\.managedObjectContext) var moc
     
     func HightedText(str: String, searched: String) -> Text {
@@ -114,9 +115,9 @@ struct LawContentList: View {
             if searchText.isEmpty {
                 ForEach(model.Desc, id: \.self) { desc in
                     Text(desc)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .font(.body)
                         .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity, alignment: .center)
                         .listRowSeparator(.hidden)
                 }
             }
@@ -126,6 +127,7 @@ struct LawContentList: View {
                     Section(header: Text(body.text)){
                         ForEach(Array(contentArr.enumerated()), id: \.offset){ j, text in
                             HightedText(str: text, searched: searchText)
+                                .id(body.id)
                                 .swipeActions {
                                     Button {
                                         let fav = Favouite(context: moc)

@@ -23,7 +23,9 @@ class DataController: ObservableObject {
 
 struct FavouiteView: View {
     
-    @FetchRequest(sortDescriptors: []) var favourites: FetchedResults<Favouite>
+    @FetchRequest(sortDescriptors: [],
+                  predicate: nil,
+                  animation: .default) var favourites: FetchedResults<Favouite>
     @Environment(\.managedObjectContext) var moc
     
     func group(_ result : FetchedResults<Favouite>)-> [[Favouite]] {
@@ -44,8 +46,10 @@ struct FavouiteView: View {
                         Text(fav.content ?? "")
                             .swipeActions {
                                 Button {
-                                    moc.delete(fav)
-                                    try? moc.save()
+                                    withAnimation(.spring()){
+                                        moc.delete(fav)
+                                        try? moc.save()
+                                    }
                                 } label: {
                                     Label("移除", systemImage: "heart.slash")
                                 }
