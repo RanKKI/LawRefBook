@@ -30,7 +30,7 @@ struct LawGroup : Hashable{
 let DeveloperMail = "rankki.dev@icloud.com"
 
 var laws: [LawGroup] = [
-    LawGroup(name: "宪法及相关法案", laws: [
+    LawGroup(name: "宪法及相关法", laws: [
         Law(name: "宪法"),
         Law(name: "国籍法"),
         Law(name: "身份证法"),
@@ -44,6 +44,20 @@ var laws: [LawGroup] = [
     ]),
     LawGroup(name: "诉讼与非诉讼程序法", laws: [
         Law(name: "民事诉讼法"),
+    ]),
+    LawGroup(name: "刑法及刑法修正案", laws: [
+        Law(name: "刑法"),
+        Law(name: "刑法修正案（一）", folder: "刑法修正案", file: "1"),
+        Law(name: "刑法修正案（二）", folder: "刑法修正案", file: "2"),
+        Law(name: "刑法修正案（三）", folder: "刑法修正案", file: "3"),
+        Law(name: "刑法修正案（四）", folder: "刑法修正案", file: "4"),
+        Law(name: "刑法修正案（五）", folder: "刑法修正案", file: "5"),
+        Law(name: "刑法修正案（六）", folder: "刑法修正案", file: "6"),
+        Law(name: "刑法修正案（七）", folder: "刑法修正案", file: "7"),
+        Law(name: "刑法修正案（八）", folder: "刑法修正案", file: "8"),
+        Law(name: "刑法修正案（九）", folder: "刑法修正案", file: "9"),
+        Law(name: "刑法修正案（十）", folder: "刑法修正案", file: "10"),
+        Law(name: "刑法修正案（十一）", folder: "刑法修正案", file: "11"),
     ]),
     LawGroup(name: "民法典", laws: [
         Law(name: "总则", folder: "民法典"),
