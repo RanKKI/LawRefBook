@@ -27,6 +27,7 @@ struct LawGroup : Hashable{
     }
 }
 
+let DeveloperMail = "rankki.dev@icloud.com"
 
 var laws: [LawGroup] = [
     LawGroup(name: "宪法及相关法案", laws: [

@@ -84,6 +84,16 @@ class LawModel: ObservableObject {
     }
 }
 
+func Report(law: LawModel, line: String){
+    let subject = String(format: "反馈问题:%@", law.Name)
+    let body = line
+    let mailTo = String(format: "mailto:%@?subject=%@&body=%@", DeveloperMail, subject, body).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    let mailtoUrl = URL(string: mailTo!)!
+    if UIApplication.shared.canOpenURL(mailtoUrl) {
+            UIApplication.shared.open(mailtoUrl, options: [:])
+    }
+}
+
 struct LawContentList: View {
     
     @ObservedObject var model: LawModel
@@ -129,6 +139,13 @@ struct LawContentList: View {
                             HightedText(str: text, searched: searchText)
                                 .id(body.id)
                                 .swipeActions {
+                                    Button {
+                                        Report(law: model, line: text)
+                                    } label: {
+                                        Label("反馈", systemImage: "exclamationmark.circle")
+                                    }
+                                    .tint(.red)
+                                    
                                     Button {
                                         let fav = Favouite(context: moc)
                                         fav.id = UUID()

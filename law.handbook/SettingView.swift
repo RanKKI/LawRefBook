@@ -18,7 +18,7 @@ struct SettingView: View {
             }
             Section(header: Text("开发者")){
                 Text("@RanKKI")
-                Text("some.email@email.com")
+                Text(DeveloperMail)
             }
             Section(footer: Text("自豪地采用 SwiftUI")){
                 Text("给 App 评分！")
