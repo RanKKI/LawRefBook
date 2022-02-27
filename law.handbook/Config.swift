@@ -11,17 +11,17 @@ struct Law: Hashable {
     var name: String
     var folder: String?
     var file: String?
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(name)
     }
-    
+
 }
 
 struct LawGroup : Hashable{
     var name: String
     var laws: [Law]
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(name)
     }

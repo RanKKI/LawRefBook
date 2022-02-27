@@ -16,9 +16,9 @@ struct TextContent : Hashable {
 
 class LawModel: ObservableObject {
     @Published var Name: String = ""
-    @Published var Desc: [String] = []
+    @Published var Desc: String = ""
     @Published var Body: [TextContent] = []
-    
+
     init(law: Law) {
         var dir = "法律法条"
         if law.folder != nil {
@@ -37,29 +37,39 @@ class LawModel: ObservableObject {
                     }.filter{ line in
                         return !line.isEmpty
                     }
-                    
+
                     var isDesc = true
-                    
+
                     for (index, text) in arr.enumerated() {
+
+                        if text.isEmpty {
+                            continue
+                        }
+
                         let out = text.split(separator: " ", maxSplits: 1)
                         if out.isEmpty {
                             continue
                         }
-                        if(index == 0){
+
+                        if index == 0{
                             // 标题
                             self.Name = String(out[1])
                             continue
                         }
-                        
-                        if(out[0].hasPrefix("#")){
+
+                        if out[0].hasPrefix("#") {
                             isDesc = false
                         }
-                        
+
                         if isDesc {
-                            self.Desc.append(text)
+                            if self.Desc.isEmpty {
+                                self.Desc = text
+                            } else {
+                                self.Desc = self.Desc + "\n" + text
+                            }
                             continue
                         }
-                        
+
                         if out[0].hasPrefix("#") {
                             self.Body.append(TextContent(text: String(out[1]), children: []))
                         } else {
@@ -100,16 +110,27 @@ func Report(law: LawModel, line: String){
     OpenMail(subject: subject, body: body)
 }
 
+struct CenterFullTextInList: View {
+    @Binding var content: String
+
+    var body: some View {
+        Text(content)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .multilineTextAlignment(.center)
+            .listRowSeparator(.hidden)
+    }
+}
+
 struct LawContentList: View {
-    
+
     @ObservedObject var model: LawModel
     @Binding var searchText: String
-    
+
     @Environment(\.managedObjectContext) var moc
-    
+
     func HightedText(str: String, searched: String) -> Text {
         guard !str.isEmpty && !searched.isEmpty else { return Text(str) }
-        
+
         var result: Text!
         let parts = str.components(separatedBy: searched)
         for i in parts.indices {
@@ -120,23 +141,14 @@ struct LawContentList: View {
         }
         return result ?? Text(str)
     }
-    
+
     var body: some View {
         List {
-            Text(model.Name)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .multilineTextAlignment(.center)
-                .listRowSeparator(.hidden)
-                .font(.title2)
+            CenterFullTextInList(content: $model.Name).font(.title)
             if searchText.isEmpty {
-                ForEach(model.Desc, id: \.self) { desc in
-                    Text(desc)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .listRowSeparator(.hidden)
-                }
+                CenterFullTextInList(content: $model.Desc).font(.body)
             }
+
             ForEach(Array(model.Body.enumerated()), id: \.offset){ i, body in
                 let contentArr = body.children.filter { searchText.isEmpty || $0.contains(searchText)}
                 if !contentArr.isEmpty {
@@ -151,7 +163,7 @@ struct LawContentList: View {
                                         Label("反馈", systemImage: "exclamationmark.circle")
                                     }
                                     .tint(.red)
-                                    
+
                                     Button {
                                         let fav = Favouite(context: moc)
                                         fav.id = UUID()
@@ -165,7 +177,7 @@ struct LawContentList: View {
                                 }
                         }
                     }
-                    
+
                 }
             }
         }.listStyle(.plain)
@@ -173,10 +185,10 @@ struct LawContentList: View {
 }
 
 struct LawContentView: View {
-    
+
     @ObservedObject var model: LawModel
     @State var searchText = ""
-    
+
     var body: some View{
         LawContentList(model: model, searchText: $searchText)
             .navigationBarTitleDisplayMode(.inline)

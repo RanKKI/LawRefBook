@@ -9,11 +9,11 @@ import SwiftUI
 import CoreData
 
 struct LawList: View {
-    
+
     var lawsArr: [LawGroup] = []
-    
+
     var action: (() -> Void)?
-    
+
     var body: some View {
         List {
             ForEach(lawsArr, id: \.name) { g in
@@ -30,11 +30,11 @@ struct LawList: View {
 }
 
 struct ContentView: View {
-    
+
     @State var showSettingModal = false
     @State var showFavModal = false
     @State var searchText = ""
-    
+
     var filteredLaws:  [LawGroup] {
         if searchText.isEmpty {
             return laws
@@ -43,13 +43,13 @@ struct ContentView: View {
             return !$0.laws.filter{$0.name.hasPrefix(searchText)}.isEmpty
         }
     }
-    
+
     var body: some View {
         NavigationView{
             LawList(lawsArr: filteredLaws)
                 .navigationBarTitle("中国法律")
                 .toolbar {
-                    
+
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
                             showFavModal.toggle()
@@ -59,7 +59,7 @@ struct ContentView: View {
                             FavouiteView()
                         }
                     }
-                    
+
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
                             showSettingModal.toggle()
@@ -69,11 +69,11 @@ struct ContentView: View {
                             SettingView()
                         }
                     }
-                    
+
                 }
         }.searchable(text: $searchText, prompt: "宪法修正案")
     }
-    
+
 }
 
 struct ContentView_Previews: PreviewProvider {

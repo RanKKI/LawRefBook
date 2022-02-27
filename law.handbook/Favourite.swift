@@ -11,7 +11,7 @@ import SwiftUI
 
 class DataController: ObservableObject {
     let container = NSPersistentContainer(name: "Modal")
-    
+
     init() {
         container.loadPersistentStores { description, error in
             if let error = error {
@@ -22,22 +22,22 @@ class DataController: ObservableObject {
 }
 
 struct FavouiteView: View {
-    
+
     @FetchRequest(sortDescriptors: [],
                   predicate: nil,
                   animation: .default) var favourites: FetchedResults<Favouite>
     @Environment(\.managedObjectContext) var moc
-    
+
     func group(_ result : FetchedResults<Favouite>)-> [[Favouite]] {
         return Dictionary(grouping: result) { $0.law! }
         .sorted {$0.value.first!.law! < $1.value.first!.law!}
         .map { $0.value }
     }
-    
+
     private var favArr: Array<Array<Favouite>>  {
         return group(favourites)
     }
-    
+
     var body: some View {
         if favArr.isEmpty {
             Text("还没有任何收藏呢～")

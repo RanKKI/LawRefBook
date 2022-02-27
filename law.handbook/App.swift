@@ -10,9 +10,9 @@ import SwiftUI
 
 @main
 struct MainApp: App {
-    
+
     @StateObject private var dataController = DataController()
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -23,9 +23,9 @@ struct MainApp: App {
 
 
 extension UIApplication {
-    
+
     static var appVersion: String? {
         return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
-    
+
 }
