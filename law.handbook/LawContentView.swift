@@ -27,9 +27,11 @@ extension String {
 }
 
 class LawModel: ObservableObject {
+
     @Published var Titles: [String] = []
     @Published var Desc: [Info] = []
-    @Published var Body: [TextContent] = []
+    @Published var Content: [TextContent] = []
+    var Body: [TextContent] = []
     
     init(law: Law) {
         var dir = "法律法条"
@@ -97,8 +99,10 @@ class LawModel: ObservableObject {
             
             self.parseContent(&Body[Body.count - 1].children, text, isFix: isFix)
         }
+        
+        self.Content = Body
     }
-    
+
     func parseContent(_ children: inout [String], _ text: String, isFix: Bool = false) {
         let matched = text.range(of: "^第.+条", options: .regularExpression) != nil
         
@@ -151,66 +155,104 @@ struct LawInfoPage: View {
 struct LawContentList: View {
     
     @ObservedObject var model: LawModel
-    @Binding var searchText: String
-    @State var showInfoPage = false
-    
+    @State var content: [TextContent] = []
+
     @Environment(\.managedObjectContext) var moc
+
+//    func HightedText(str: String, searched: String) -> Text {
+//        guard !str.isEmpty && !searched.isEmpty else { return Text(str) }
+//
+//        var result: Text!
+//        let parts = str.components(separatedBy: searched)
+//        for i in parts.indices {
+//            result = (result == nil ? Text(parts[i]) : result + Text(parts[i]))
+//            if i != parts.count - 1 {
+//                result = result + Text(searched).bold()
+//            }
+//        }
+//        return result ?? Text(str)
+//    }
     
-    func HightedText(str: String, searched: String) -> Text {
-        guard !str.isEmpty && !searched.isEmpty else { return Text(str) }
-        
-        var result: Text!
-        let parts = str.components(separatedBy: searched)
-        for i in parts.indices {
-            result = (result == nil ? Text(parts[i]) : result + Text(parts[i]))
-            if i != parts.count - 1 {
-                result = result + Text(searched).bold().font(.title)
-            }
+    var title: some View {
+        ForEach($model.Titles.indices, id: \.self) { i in
+            Text(self.model.Titles[i])
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+                .listRowSeparator(.hidden)
+                .font(i == 0 ? .title2 : .title3)
         }
-        return result ?? Text(str)
     }
     
+    func ContentLine(text: String) -> some View {
+        Text(text)
+            .swipeActions {
+                Button {
+                    Report(law: model, line: text)
+                } label: {
+                    Label("反馈", systemImage: "exclamationmark.circle")
+                }
+                .tint(.red)
+                Button {
+                    let fav = Favouite(context: moc)
+                    fav.id = UUID()
+                    fav.content = text
+                    fav.law = model.Titles.first
+                    try? moc.save()
+                } label: {
+                    Label("收藏", systemImage: "heart")
+                }
+                .tint(.orange)
+            }
+    }
+
     var body: some View {
         List {
-            ForEach($model.Titles.indices, id: \.self) { i in
-                Text(self.model.Titles[i])
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .multilineTextAlignment(.center)
-                    .listRowSeparator(.hidden)
-                    .font(i == 0 ? .title2 : .title3g)
-            }
-            ForEach(Array(model.Body.enumerated()), id: \.offset){ i, body in
-                let contentArr = body.children.filter { searchText.isEmpty || $0.contains(searchText)}
-                if !contentArr.isEmpty {
+            title
+            ForEach(Array(model.Content.enumerated()), id: \.offset){ i, body in
+                if !body.children.isEmpty {
                     Section(header: Text(body.text)){
-                        ForEach(Array(contentArr.enumerated()), id: \.offset){ j, text in
-                            HightedText(str: text, searched: searchText)
-                                .id(body.id)
-                                .swipeActions {
-                                    Button {
-                                        Report(law: model, line: text)
-                                    } label: {
-                                        Label("反馈", systemImage: "exclamationmark.circle")
-                                    }
-                                    .tint(.red)
-                                    
-                                    Button {
-                                        let fav = Favouite(context: moc)
-                                        fav.id = UUID()
-                                        fav.content = text
-                                        fav.law = model.Titles.first
-                                        try? moc.save()
-                                    } label: {
-                                        Label("收藏", systemImage: "heart")
-                                    }
-                                    .tint(.orange)
-                                }
+                        ForEach(body.children, id: \.self) { text in
+                            ContentLine(text: text)
                         }
                     }
-                    
                 }
             }
         }.listStyle(.plain)
+
+    }
+}
+
+struct LawContentView: View {
+    
+    @ObservedObject var model: LawModel
+
+    @State var searchText = ""
+    @State var showInfoPage = false
+    
+    func filterContents() {
+        DispatchQueue.main.async {
+            print("on serach", searchText)
+            var newBody: [TextContent] = []
+            model.Body.forEach { val in
+                let children = val.children.filter { $0.contains(searchText) }
+                newBody.append(TextContent(id: val.id, text: val.text, children: children))
+            }
+            model.Content = newBody
+        }
+    }
+    
+    var body: some View{
+        LawContentList(model: model)
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchText)
+            .onSubmit(of: .search) {
+                filterContents()
+            }
+            .onChange(of: searchText){ query in
+                if query.isEmpty {
+                    model.Content = model.Body
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -226,19 +268,7 @@ struct LawContentList: View {
     }
 }
 
-struct LawContentView: View {
-    
-    @ObservedObject var model: LawModel
-    @State var searchText = ""
-    
-    var body: some View{
-        LawContentList(model: model, searchText: $searchText)
-            .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $searchText)
-    }
-}
-
-struct LawContentView_Previews:PreviewProvider {
+struct LawContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             LawContentView(model: LawModel(law: Law(name: "消费者权益保护法")))
