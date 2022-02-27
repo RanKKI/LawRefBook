@@ -8,17 +8,23 @@
 import Foundation
 import SwiftUI
 
-struct TextContent : Hashable {
+struct TextContent : Identifiable {
     var id: UUID = UUID()
     var text: String
     var children: [String]
 }
 
+struct Info: Identifiable {
+    var id: UUID = UUID()
+    var header: Substring
+    var content: Substring = ""
+}
+
 class LawModel: ObservableObject {
     @Published var Name: String = ""
-    @Published var Desc: String = ""
+    @Published var Desc: [Info] = []
     @Published var Body: [TextContent] = []
-
+    
     init(law: Law) {
         var dir = "法律法条"
         if law.folder != nil {
@@ -37,39 +43,40 @@ class LawModel: ObservableObject {
                     }.filter{ line in
                         return !line.isEmpty
                     }
-
+                    
                     var isDesc = true
-
+                    
                     for (index, text) in arr.enumerated() {
-
+                        
                         if text.isEmpty {
                             continue
                         }
-
+                        
                         let out = text.split(separator: " ", maxSplits: 1)
                         if out.isEmpty {
                             continue
                         }
-
+                        
                         if index == 0{
                             // 标题
                             self.Name = String(out[1])
                             continue
                         }
-
-                        if out[0].hasPrefix("#") {
+                        
+                        if text == "<!-- INFO END -->" {
                             isDesc = false
-                        }
-
-                        if isDesc {
-                            if self.Desc.isEmpty {
-                                self.Desc = text
-                            } else {
-                                self.Desc = self.Desc + "\n" + text
-                            }
                             continue
                         }
-
+                        
+                        if isDesc {
+                            var info = Info(header: out[0])
+                            if out.count > 1 {
+                                info.content = out[1]
+                            }
+                            self.Desc.append(info)
+                            continue
+                        }
+                        
                         if out[0].hasPrefix("#") {
                             self.Body.append(TextContent(text: String(out[1]), children: []))
                         } else {
@@ -112,7 +119,7 @@ func Report(law: LawModel, line: String){
 
 struct CenterFullTextInList: View {
     @Binding var content: String
-
+    
     var body: some View {
         Text(content)
             .frame(maxWidth: .infinity, alignment: .center)
@@ -121,16 +128,38 @@ struct CenterFullTextInList: View {
     }
 }
 
-struct LawContentList: View {
+struct LawInfoPage: View {
+    @ObservedObject var model: LawModel
+    
+    var body: some View {
+        List {
+            ForEach(model.Desc, id: \.id) { info in
+                if !info.content.isEmpty {
+                    Section(header: Text(info.header)){
+                        Text(info.content)
+                    }
+                }else{
+                    Text(info.header)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                        .listRowSeparator(.hidden)
+                }
+            }
+        }.listStyle(.plain)
+    }
+}
 
+struct LawContentList: View {
+    
     @ObservedObject var model: LawModel
     @Binding var searchText: String
-
+    @State var showInfoPage = false
+    
     @Environment(\.managedObjectContext) var moc
-
+    
     func HightedText(str: String, searched: String) -> Text {
         guard !str.isEmpty && !searched.isEmpty else { return Text(str) }
-
+        
         var result: Text!
         let parts = str.components(separatedBy: searched)
         for i in parts.indices {
@@ -141,14 +170,10 @@ struct LawContentList: View {
         }
         return result ?? Text(str)
     }
-
+    
     var body: some View {
         List {
             CenterFullTextInList(content: $model.Name).font(.title)
-            if searchText.isEmpty {
-                CenterFullTextInList(content: $model.Desc).font(.body)
-            }
-
             ForEach(Array(model.Body.enumerated()), id: \.offset){ i, body in
                 let contentArr = body.children.filter { searchText.isEmpty || $0.contains(searchText)}
                 if !contentArr.isEmpty {
@@ -163,7 +188,7 @@ struct LawContentList: View {
                                         Label("反馈", systemImage: "exclamationmark.circle")
                                     }
                                     .tint(.red)
-
+                                    
                                     Button {
                                         let fav = Favouite(context: moc)
                                         fav.id = UUID()
@@ -177,18 +202,30 @@ struct LawContentList: View {
                                 }
                         }
                     }
-
+                    
                 }
             }
         }.listStyle(.plain)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showInfoPage.toggle()
+                    }, label: {
+                        Image(systemName: "info.circle")
+                    }).foregroundColor(.red)
+                        .sheet(isPresented: $showInfoPage) {
+                            LawInfoPage(model: model)
+                        }
+                }
+            }
     }
 }
 
 struct LawContentView: View {
-
+    
     @ObservedObject var model: LawModel
     @State var searchText = ""
-
+    
     var body: some View{
         LawContentList(model: model, searchText: $searchText)
             .navigationBarTitleDisplayMode(.inline)
