@@ -84,21 +84,27 @@ class LawModel: ObservableObject {
     }
 }
 
+func OpenMail(subject: String, body: String) {
+    let info = String(format: "Version:%@", body, UIApplication.appVersion ?? "")
+    let mailTo = String(format: "mailto:%@?subject=%@&body=%@\n\n%@", DeveloperMail, subject,body,info)
+        .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    let mailtoUrl = URL(string: mailTo!)!
+    if UIApplication.shared.canOpenURL(mailtoUrl) {
+        UIApplication.shared.open(mailtoUrl, options: [:])
+    }
+}
+
 func Report(law: LawModel, line: String){
     let subject = String(format: "反馈问题:%@", law.Name)
     let body = line
-    let mailTo = String(format: "mailto:%@?subject=%@&body=%@", DeveloperMail, subject, body).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-    let mailtoUrl = URL(string: mailTo!)!
-    if UIApplication.shared.canOpenURL(mailtoUrl) {
-            UIApplication.shared.open(mailtoUrl, options: [:])
-    }
+    OpenMail(subject: subject, body: body)
 }
 
 struct LawContentList: View {
     
     @ObservedObject var model: LawModel
     @Binding var searchText: String
-
+    
     @Environment(\.managedObjectContext) var moc
     
     func HightedText(str: String, searched: String) -> Text {

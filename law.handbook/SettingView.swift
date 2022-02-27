@@ -19,6 +19,11 @@ struct SettingView: View {
             Section(header: Text("开发者")){
                 Text("@RanKKI")
                 Text(DeveloperMail)
+                    .foregroundColor(.accentColor)
+                    .underline()
+                    .onTapGesture {
+                        OpenMail(subject: "问题反馈：", body: "")
+                    }
             }
             Section(footer: Text("自豪地采用 SwiftUI")){
                 Text("给 App 评分！")
