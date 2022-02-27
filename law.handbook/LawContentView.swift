@@ -27,7 +27,7 @@ extension String {
 }
 
 class LawModel: ObservableObject {
-    @Published var Name: String = ""
+    @Published var Titles: [String] = []
     @Published var Desc: [Info] = []
     @Published var Body: [TextContent] = []
     
@@ -64,15 +64,15 @@ class LawModel: ObservableObject {
         var isDesc = true // 是否为信息部分
         var isFix = false // 是否为修正案
         
-        for (index, text) in arr.enumerated() {
+        for text in arr {
             let out = text.split(separator: " ", maxSplits: 1)
             if out.isEmpty {
                 continue
             }
             
-            if index == 0 { // 标题
-                self.Name = String(out[1])
-                isFix = self.Name.contains("修正")
+            if out[0] == "#" { // 标题
+                Titles.append(String(out[1]))
+                isFix = isFix || self.Titles.contains("修正")
                 continue
             }
             
@@ -91,7 +91,7 @@ class LawModel: ObservableObject {
             }
             
             if out[0].hasPrefix("#") { // 标题
-                self.Body.append(TextContent(text: String(out[1]), children: []))
+                self.Body.append(TextContent(text: out.count > 1 ? String(out[1]) : "", children: []))
                 continue
             }
             
@@ -122,20 +122,9 @@ func OpenMail(subject: String, body: String) {
 }
 
 func Report(law: LawModel, line: String){
-    let subject = String(format: "反馈问题:%@", law.Name)
+    let subject = String(format: "反馈问题:%@", law.Titles)
     let body = line
     OpenMail(subject: subject, body: body)
-}
-
-struct CenterFullTextInList: View {
-    @Binding var content: String
-    
-    var body: some View {
-        Text(content)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .multilineTextAlignment(.center)
-            .listRowSeparator(.hidden)
-    }
 }
 
 struct LawInfoPage: View {
@@ -183,7 +172,13 @@ struct LawContentList: View {
     
     var body: some View {
         List {
-            CenterFullTextInList(content: $model.Name).font(.title)
+            ForEach($model.Titles.indices, id: \.self) { i in
+                Text(self.model.Titles[i])
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .multilineTextAlignment(.center)
+                    .listRowSeparator(.hidden)
+                    .font(i == 0 ? .title2 : .title3g)
+            }
             ForEach(Array(model.Body.enumerated()), id: \.offset){ i, body in
                 let contentArr = body.children.filter { searchText.isEmpty || $0.contains(searchText)}
                 if !contentArr.isEmpty {
@@ -203,7 +198,7 @@ struct LawContentList: View {
                                         let fav = Favouite(context: moc)
                                         fav.id = UUID()
                                         fav.content = text
-                                        fav.law = model.Name
+                                        fav.law = model.Titles.first
                                         try? moc.save()
                                     } label: {
                                         Label("收藏", systemImage: "heart")
@@ -225,7 +220,7 @@ struct LawContentList: View {
                     }).foregroundColor(.red)
                         .sheet(isPresented: $showInfoPage) {
                             LawInfoPage(model: model)
-                        }
+                        }.id(UUID())
                 }
             }
     }
