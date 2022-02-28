@@ -146,7 +146,7 @@ struct LawGroup : Hashable{
 let DeveloperMail = "rankki.dev@icloud.com"
 
 var laws: [LawGroup] = [
-    LawGroup(name: "宪法及相关法", laws: [
+    LawGroup(name: "宪法及宪法相关法", laws: [
         Law(name: "宪法"),
         Law(name: "国籍法"),
         Law(name: "身份证法"),
@@ -159,6 +159,10 @@ var laws: [LawGroup] = [
     LawGroup(name: "行政法", laws: [
         Law(name: "食品安全法"),
         Law(name: "广告法"),
+    ]),
+    LawGroup(name: "社会法", laws: [
+        Law(name: "劳动法"),
+        Law(name: "劳动合同法"),
     ]),
     LawGroup(name: "诉讼与非诉讼程序法", laws: [
         Law(name: "民事诉讼法"),
@@ -196,5 +200,11 @@ var laws: [LawGroup] = [
     ]),
     LawGroup(name: "司法解释", laws: [
         Law(name: "最高人民法院关于适用《中华人民共和国民事诉讼法》的解释", folder: "司法解释", file: "民事诉讼法"),
+    ]),
+    LawGroup(name: "规定", laws: [
+        Law(name: "工资支付暂行规定", folder: "暂行规定", file: "工资支付"),
+    ]),
+    LawGroup(name: "办法", laws: [
+        Law(name: "国家机关、事业单位贯彻<国务院关于职工工作时间的规定>  的实施办法", folder: "办法"),
     ]),
 ]
