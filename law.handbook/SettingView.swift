@@ -8,6 +8,14 @@
 import Foundation
 import SwiftUI
 
+let desc = """
+根据《中华人民共和国著作权法》第五条，本作品不适用于该法。如不受其他法律、法规保护，本作品在中国大陆和其他地区属于公有领域。
+不适用于《中华人民共和国著作权法》的作品包括：
+（一）法律、法规，国家机关的决议、决定、命令和其他具有立法、行政、司法性质的文件，及其官方正式译文；
+（二）单纯事实消息；
+（三）历法、通用数表、通用表格和公式。
+"""
+
 struct SettingView: View {
 
     var body: some View {
@@ -29,6 +37,10 @@ struct SettingView: View {
                 Text("给 App 评分！")
                 Text("[在 GitHub 上贡献](https://github.com/RanKKI/chinese.law.handbook)")
             }
+            
+            Text(desc)
+                .listRowBackground(Color.clear)
+                .font(.footnote)
         }
     }
 }
