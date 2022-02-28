@@ -159,6 +159,7 @@ var laws: [LawGroup] = [
     LawGroup(name: "行政法", laws: [
         Law(name: "食品安全法"),
         Law(name: "广告法"),
+        Law(name: "人民警察法"),
     ]),
     LawGroup(name: "社会法", laws: [
         Law(name: "劳动法"),
