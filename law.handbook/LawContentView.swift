@@ -74,7 +74,7 @@ class LawModel: ObservableObject {
             
             if out[0] == "#" { // 标题
                 Titles.append(String(out[1]))
-                isFix = isFix || self.Titles.contains("修正")
+                isFix = isFix || text.contains("修正")
                 continue
             }
             
@@ -106,7 +106,7 @@ class LawModel: ObservableObject {
     func parseContent(_ children: inout [String], _ text: String, isFix: Bool = false) {
         let matched = text.range(of: "^第.+条", options: .regularExpression) != nil
         
-        if children.isEmpty || (isFix && !text.starts(with: "-")) || matched {
+        if children.isEmpty || (isFix && !text.starts(with: "-")) || (!isFix && matched) {
             children.append(contentsOf: [text])
         } else {
             children[children.count - 1] = children.last!.addNewLine(str: text.trimmingCharacters(in: ["-"," "]))
@@ -159,20 +159,6 @@ struct LawContentList: View {
 
     @Environment(\.managedObjectContext) var moc
 
-//    func HightedText(str: String, searched: String) -> Text {
-//        guard !str.isEmpty && !searched.isEmpty else { return Text(str) }
-//
-//        var result: Text!
-//        let parts = str.components(separatedBy: searched)
-//        for i in parts.indices {
-//            result = (result == nil ? Text(parts[i]) : result + Text(parts[i]))
-//            if i != parts.count - 1 {
-//                result = result + Text(searched).bold()
-//            }
-//        }
-//        return result ?? Text(str)
-//    }
-    
     var title: some View {
         ForEach($model.Titles.indices, id: \.self) { i in
             Text(self.model.Titles[i])
@@ -244,7 +230,7 @@ struct LawContentView: View {
     var body: some View{
         LawContentList(model: model)
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $searchText)
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .onSubmit(of: .search) {
                 filterContents()
             }
