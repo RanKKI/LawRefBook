@@ -19,7 +19,9 @@ struct LawList: View {
             ForEach(lawsArr, id: \.name) { g in
                 Section(header: Text(g.name)) {
                     ForEach(g.laws, id: \.name) { law in
-                        NavigationLink(destination: LawContentView(model: LawModel(law: law))){
+                        NavigationLink(destination: LawContentView(model: law.getModal()).onAppear {
+                            law.getModal().load()
+                        }){
                             Text(law.name)
                         }
                     }
