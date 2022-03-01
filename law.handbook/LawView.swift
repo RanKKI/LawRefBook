@@ -11,7 +11,7 @@ import SwiftUI
 struct LawInfoPage: View {
 
     @ObservedObject var model: LawModel
-    
+
     var body: some View {
         List {
             ForEach(model.Desc, id: \.id) { info in
@@ -31,7 +31,7 @@ struct LawInfoPage: View {
 }
 
 struct LawContentList: View {
-    
+
     @ObservedObject var model: LawModel
     @State var content: [TextContent] = []
 
@@ -46,7 +46,7 @@ struct LawContentList: View {
                 .font(i == 0 ? .title2 : .title3)
         }
     }
-    
+
     func ContentLine(text: String) -> some View {
         Text(text)
             .swipeActions {
@@ -87,12 +87,12 @@ struct LawContentList: View {
 }
 
 struct LawContentView: View {
-    
+
     @ObservedObject var model: LawModel
 
     @State var searchText = ""
     @State var showInfoPage = false
-    
+
     func filterContents() {
         DispatchQueue.main.async {
             print("on serach", searchText)
@@ -104,7 +104,7 @@ struct LawContentView: View {
             model.Content = newBody
         }
     }
-    
+
     var body: some View{
         LawContentList(model: model)
             .navigationBarTitleDisplayMode(.inline)

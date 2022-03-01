@@ -39,7 +39,7 @@ struct SettingView: View {
                 Text("给 App 评分！")
                 Text("[在 GitHub 上贡献](https://github.com/RanKKI/chinese.law.handbook)")
             }
-            
+
             Text(desc)
                 .listRowBackground(Color.clear)
                 .font(.footnote)
