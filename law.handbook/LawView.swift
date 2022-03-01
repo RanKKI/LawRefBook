@@ -11,6 +11,7 @@ import SwiftUI
 struct LawInfoPage: View {
 
     @ObservedObject var model: LawModel
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         List {
@@ -27,6 +28,15 @@ struct LawInfoPage: View {
                 }
             }
         }.listStyle(.plain)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Text("关闭")
+                    }).foregroundColor(.red)
+                }
+            }
     }
 }
 
@@ -125,7 +135,11 @@ struct LawContentView: View {
                         Image(systemName: "info.circle")
                     }).foregroundColor(.red)
                         .sheet(isPresented: $showInfoPage) {
-                            LawInfoPage(model: model)
+                            NavigationView {
+                                LawInfoPage(model: model)
+                                    .navigationBarTitle("关于", displayMode: .inline)
+                            }
+
                         }.id(UUID())
                 }
             }

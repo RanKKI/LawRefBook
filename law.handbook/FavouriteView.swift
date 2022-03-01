@@ -10,6 +10,8 @@ import CoreData
 import SwiftUI
 
 struct FavouiteView: View {
+    
+    @Environment(\.dismiss) var dismiss
 
     @FetchRequest(sortDescriptors: [],
                   predicate: nil,
@@ -27,28 +29,38 @@ struct FavouiteView: View {
     }
 
     var body: some View {
-        if favArr.isEmpty {
-            Text("还没有任何收藏呢～")
-        } else{
-            List{
-                ForEach(Array(favArr.enumerated()), id: \.offset) { (index, arr) in
-                    Section(header: Text(arr.first!.law!)){
-                        ForEach(arr, id:\.id){ fav in
-                            Text(fav.content ?? "")
-                                .swipeActions {
-                                    Button {
-                                        withAnimation(.spring()){
-                                            moc.delete(fav)
-                                            try? moc.save()
+        ZStack {
+            if favArr.isEmpty {
+                Text("还没有任何收藏呢～")
+            } else{
+                List{
+                    ForEach(Array(favArr.enumerated()), id: \.offset) { (index, arr) in
+                        Section(header: Text(arr.first!.law!)){
+                            ForEach(arr, id:\.id){ fav in
+                                Text(fav.content ?? "")
+                                    .swipeActions {
+                                        Button {
+                                            withAnimation(.spring()){
+                                                moc.delete(fav)
+                                                try? moc.save()
+                                            }
+                                        } label: {
+                                            Label("移除", systemImage: "heart.slash")
                                         }
-                                    } label: {
-                                        Label("移除", systemImage: "heart.slash")
+                                        .tint(.red)
                                     }
-                                    .tint(.red)
-                                }
+                            }
                         }
                     }
                 }
+            }
+        }.toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    Text("关闭")
+                }).foregroundColor(.red)
             }
         }
     }

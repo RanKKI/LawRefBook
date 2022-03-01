@@ -19,6 +19,8 @@ let desc = """
 let DeveloperMail = "rankki.dev@icloud.com"
 
 struct SettingView: View {
+    
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         List{
@@ -43,6 +45,14 @@ struct SettingView: View {
             Text(desc)
                 .listRowBackground(Color.clear)
                 .font(.footnote)
+        }.toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    Text("关闭")
+                }).foregroundColor(.red)
+            }
         }
     }
 }

@@ -63,7 +63,10 @@ struct ContentView: View {
                         }, label: {
                             Image(systemName: "heart")
                         }).foregroundColor(.red).sheet(isPresented: $showFavModal) {
-                            FavouiteView()
+                            NavigationView {
+                                FavouiteView()
+                                    .navigationBarTitle("收藏", displayMode: .inline)
+                            }
                         }
                     }
 
@@ -73,7 +76,10 @@ struct ContentView: View {
                         }, label: {
                             Image(systemName: "gear")
                         }).foregroundColor(.red).sheet(isPresented: $showSettingModal) {
-                            SettingView()
+                            NavigationView {
+                                SettingView()
+                                    .navigationBarTitle("关于", displayMode: .inline)
+                            }
                         }
                     }
 
