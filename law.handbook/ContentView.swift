@@ -8,24 +8,29 @@
 import SwiftUI
 import CoreData
 
+struct LawSubList: View {
+
+    var sub: LawGroup
+    var body: some View {
+        Section(header: Text(sub.name)) {
+            ForEach(sub.laws, id: \.name) { law in
+                NavigationLink(destination: LawContentView(model: law.getModal()).onAppear {
+                    law.getModal().load()
+                }){
+                    Text(law.name)
+                }
+            }
+        }
+    }
+}
+
 struct LawList: View {
 
     var lawsArr: [LawGroup] = []
-
-    var action: (() -> Void)?
-
     var body: some View {
         List {
-            ForEach(lawsArr, id: \.name) { g in
-                Section(header: Text(g.name)) {
-                    ForEach(g.laws, id: \.name) { law in
-                        NavigationLink(destination: LawContentView(model: law.getModal()).onAppear {
-                            law.getModal().load()
-                        }){
-                            Text(law.name)
-                        }
-                    }
-                }
+            ForEach(lawsArr, id: \.name) { sub in
+                LawSubList(sub: sub)
             }
         }
     }

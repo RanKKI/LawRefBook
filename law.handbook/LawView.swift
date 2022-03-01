@@ -8,42 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct TextContent : Identifiable {
-    var id: UUID = UUID()
-    var text: String
-    var children: [String]
-}
-
-struct Info: Identifiable {
-    var id: UUID = UUID()
-    var header: Substring
-    var content: Substring = ""
-}
-
-extension String {
-    func addNewLine(str: String) -> String {
-        return self + "\n   " + str
-    }
-}
-
-
-func OpenMail(subject: String, body: String) {
-    let info = String(format: "Version:%@", UIApplication.appVersion ?? "")
-    let mailTo = String(format: "mailto:%@?subject=%@&body=%@\n\n%@", DeveloperMail, subject, body, info)
-        .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-    let mailtoUrl = URL(string: mailTo!)!
-    if UIApplication.shared.canOpenURL(mailtoUrl) {
-        UIApplication.shared.open(mailtoUrl, options: [:])
-    }
-}
-
-func Report(law: LawModel, line: String){
-    let subject = String(format: "反馈问题:%@", law.Titles)
-    let body = line
-    OpenMail(subject: subject, body: body)
-}
-
 struct LawInfoPage: View {
+
     @ObservedObject var model: LawModel
     
     var body: some View {

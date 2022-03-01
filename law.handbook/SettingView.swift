@@ -16,6 +16,8 @@ let desc = """
 （三）历法、通用数表、通用表格和公式。
 """
 
+let DeveloperMail = "rankki.dev@icloud.com"
+
 struct SettingView: View {
 
     var body: some View {
