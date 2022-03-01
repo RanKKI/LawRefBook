@@ -57,8 +57,9 @@ var laws: [LawGroup] = [
     ]),
     LawGroup(name: "规定", laws: [
         Law(name: "工资支付暂行规定", folder: "暂行规定", file: "工资支付"),
+        Law(name: "互联网信息服务算法推荐管理规定", folder: "规定")
     ]),
     LawGroup(name: "办法", laws: [
-        Law(name: "国家机关、事业单位贯彻<国务院关于职工工作时间的规定>  的实施办法", folder: "办法"),
+        Law(name: "国家机关、事业单位贯彻<国务院关于职工工作时间的规定>的实施办法", folder: "办法"),
     ]),
 ]
