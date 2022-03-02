@@ -17,8 +17,9 @@
  - [x] 增加刑法及刑法修正案
  - [ ] 完善民法商法
  - [ ] 增加诉讼与非诉讼程序法
+ - [ ] 添加旧法，历史库
 
-# 该项目包含以下法律、行政规定
+## 该项目包含以下法律、行政规定
 ```
 法律法规
 ├── 办法
@@ -68,3 +69,11 @@
 ├── 个人信息保护法.md
 └── 消费者权益保护法.md
 ```
+
+## 贡献
+如果你有任何的想法或者意见，欢迎提 Issue 或者 PR
+
+
+<a href="https://github.com/RanKKI/LawRefBook/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=RanKKI/LawRefBook" />
+</a>
