@@ -9,13 +9,14 @@ import SwiftUI
 import CoreData
 
 struct LawSubList: View {
-    
-    var sub: LawGroup
+
+    var cate: LawCategory
+
     var body: some View {
-        Section(header: Text(sub.name)) {
-            ForEach(sub.laws, id: \.name) { law in
-                NavigationLink(destination: LawContentView(model: law.getModal()).onAppear {
-                    law.getModal().load()
+        Section(header: Text(cate.category)) {
+            ForEach(cate.laws, id: \.id) { law in
+                NavigationLink(destination: LawContentView(law: law.getContent()).onAppear {
+                    law.getContent().load()
                 }){
                     Text(law.name)
                 }
@@ -25,27 +26,28 @@ struct LawSubList: View {
 }
 
 struct LawList: View {
-    
-    var lawsArr: [LawGroup] = []
+
+    var lawsArr: [LawCategory] = []
+
     var body: some View {
         List {
-            ForEach(lawsArr, id: \.name) { sub in
-                LawSubList(sub: sub)
+            ForEach(lawsArr, id: \.id) { category in
+                LawSubList(cate: category)
             }
         }
     }
 }
 
 struct ContentView: View {
-    
+
     class SheetMananger: ObservableObject{
-        
+
         enum SheetState {
             case none
             case favorite
             case setting
         }
-        
+
         @Published var isShowingSheet = false
         @Published var sheetState: SheetState = .none {
             didSet {
@@ -53,24 +55,16 @@ struct ContentView: View {
             }
         }
     }
-    
-    
+
+
     @StateObject var sheetManager = SheetMananger()
-    
+    @ObservedObject var lawManager: LawManager
+
     @State var searchText = ""
-    
-    var filteredLaws:  [LawGroup] {
-        if searchText.isEmpty {
-            return laws
-        }
-        return laws.filter {
-            return !$0.laws.filter{$0.name.contains(searchText)}.isEmpty
-        }
-    }
-    
+
     var body: some View {
         NavigationView{
-            LawList(lawsArr: filteredLaws)
+            LawList(lawsArr: lawManager.laws)
                 .navigationBarTitle("中国法律")
                 .toolbar {
                     BarItem("heart") {
@@ -94,14 +88,17 @@ struct ContentView: View {
                     }
                 }
         }.searchable(text: $searchText, prompt: "宪法修正案")
+            .onChange(of: searchText){ text in
+                lawManager.filterLaws(filterString: text)
+            }
     }
-    
+
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView()
+            ContentView(lawManager: LawManager())
         }.previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
     }
 }

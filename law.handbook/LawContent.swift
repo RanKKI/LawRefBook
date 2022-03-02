@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LawModel: ObservableObject {
+class LawContent: ObservableObject {
 
     @Published var Titles: [String] = []
     @Published var Desc: [Info] = []
@@ -101,46 +101,6 @@ class LawModel: ObservableObject {
         }
     }
 
-}
-
-class Law: Hashable {
-
-    var name: String
-    var folder: String?
-    var file: String?
-
-    private var modal: LawModel? = nil
-
-    init(name: String,folder: String? = nil,file: String? = nil){
-        self.name = name
-        self.folder = folder
-        self.file = file
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
-    }
-
-    func getModal() -> LawModel {
-        if modal == nil {
-            modal = LawModel(file ?? name, folder == nil ? "法律法规" : "法律法规/" + folder!)
-        }
-        return modal!
-    }
-
-    static func == (lhs: Law, rhs: Law) -> Bool {
-        return lhs.name == rhs.name && lhs.folder == rhs.folder && lhs.file == rhs.file
-    }
-
-}
-
-struct LawGroup : Hashable{
-    var name: String
-    var laws: [Law]
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
-    }
 }
 
 struct TextContent : Identifiable {

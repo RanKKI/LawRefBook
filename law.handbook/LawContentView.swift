@@ -10,12 +10,12 @@ import SwiftUI
 
 struct LawInfoPage: View {
 
-    @ObservedObject var model: LawModel
+    @ObservedObject var law: LawContent
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
         List {
-            ForEach(model.Desc, id: \.id) { info in
+            ForEach(law.Desc, id: \.id) { info in
                 if !info.content.isEmpty {
                     Section(header: Text(info.header)){
                         Text(info.content)
@@ -38,14 +38,14 @@ struct LawInfoPage: View {
 
 struct LawContentList: View {
 
-    @ObservedObject var model: LawModel
+    @ObservedObject var law: LawContent
     @State var content: [TextContent] = []
 
     @Environment(\.managedObjectContext) var moc
 
     var title: some View {
-        ForEach($model.Titles.indices, id: \.self) { i in
-            Text(self.model.Titles[i])
+        ForEach($law.Titles.indices, id: \.self) { i in
+            Text(self.law.Titles[i])
                 .frame(maxWidth: .infinity, alignment: .center)
                 .multilineTextAlignment(.center)
                 .listRowSeparator(.hidden)
@@ -57,7 +57,7 @@ struct LawContentList: View {
         Text(text)
             .swipeActions {
                 Button {
-                    Report(law: model, line: text)
+                    Report(law: law, line: text)
                 } label: {
                     Label("反馈", systemImage: "exclamationmark.circle")
                 }
@@ -66,7 +66,7 @@ struct LawContentList: View {
                     let fav = FavContent(context: moc)
                     fav.id = UUID()
                     fav.content = text
-                    fav.law = model.Titles.first
+                    fav.law = law.Titles.first
                     try? moc.save()
                 } label: {
                     Label("收藏", systemImage: "heart")
@@ -78,7 +78,7 @@ struct LawContentList: View {
     var body: some View {
         List {
             title
-            ForEach(Array(model.Content.enumerated()), id: \.offset){ i, body in
+            ForEach(Array(law.Content.enumerated()), id: \.offset){ i, body in
                 if !body.children.isEmpty {
                     Section(header: Text(body.text)){
                         ForEach(body.children, id: \.self) { text in
@@ -94,7 +94,7 @@ struct LawContentList: View {
 
 struct LawContentView: View {
 
-    @ObservedObject var model: LawModel
+    @ObservedObject var law: LawContent
 
     @State var searchText = ""
     @State var showInfoPage = false
@@ -103,16 +103,16 @@ struct LawContentView: View {
         DispatchQueue.main.async {
             print("on serach", searchText)
             var newBody: [TextContent] = []
-            model.Body.forEach { val in
+            law.Body.forEach { val in
                 let children = val.children.filter { $0.contains(searchText) }
                 newBody.append(TextContent(id: val.id, text: val.text, children: children))
             }
-            model.Content = newBody
+            law.Content = newBody
         }
     }
 
     var body: some View{
-        LawContentList(model: model)
+        LawContentList(law: law)
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .onSubmit(of: .search) {
@@ -120,7 +120,7 @@ struct LawContentView: View {
             }
             .onChange(of: searchText){ query in
                 if query.isEmpty {
-                    model.Content = model.Body
+                    law.Content = law.Body
                 }
             }
             .toolbar {
@@ -130,19 +130,10 @@ struct LawContentView: View {
             }
             .sheet(isPresented: $showInfoPage) {
                 NavigationView {
-                    LawInfoPage(model: model)
+                    LawInfoPage(law: law)
                         .navigationBarTitle("关于", displayMode: .inline)
                 }
 
             }.id(UUID())
     }
 }
-
-struct LawContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            LawContentView(model: Law(name: "消费者权益保护法").getModal())
-        }.previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
-    }
-}
-

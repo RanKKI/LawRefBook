@@ -27,7 +27,7 @@ func OpenMail(subject: String, body: String) {
     }
 }
 
-func Report(law: LawModel, line: String){
+func Report(law: LawContent, line: String){
     let subject = String(format: "反馈问题:%@", law.Titles)
     let body = line
     OpenMail(subject: subject, body: body)
@@ -55,4 +55,18 @@ func TextBarItem(_ str: String, action: @escaping () -> Void ) -> ToolbarItem<Vo
             })
         )
     }
+}
+
+func readLocalFile(forName name: String) -> Data? {
+    do {
+        if let bundlePath = Bundle.main.path(forResource: name,
+                                             ofType: "json"),
+            let jsonData = try String(contentsOfFile: bundlePath).data(using: .utf8) {
+            return jsonData
+        }
+    } catch {
+        print(error)
+    }
+
+    return nil
 }

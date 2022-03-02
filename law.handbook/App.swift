@@ -12,10 +12,11 @@ import SwiftUI
 struct MainApp: App {
 
     @StateObject private var dataController = DataController()
+    @ObservedObject var manager: LawManager = LawManager()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(lawManager: manager)
                 .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
@@ -29,7 +30,7 @@ struct MainApp: App {
     }
 
     private func firstRun(){
-        // 读取 json 并存入 core data
+
     }
 
 }
