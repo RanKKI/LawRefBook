@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct LawSubList: View {
-
+    
     var sub: LawGroup
     var body: some View {
         Section(header: Text(sub.name)) {
@@ -25,7 +25,7 @@ struct LawSubList: View {
 }
 
 struct LawList: View {
-
+    
     var lawsArr: [LawGroup] = []
     var body: some View {
         List {
@@ -37,56 +37,65 @@ struct LawList: View {
 }
 
 struct ContentView: View {
-
-    @State var showSettingModal = false
-    @State var showFavModal = false
+    
+    class SheetMananger: ObservableObject{
+        
+        enum SheetState {
+            case none
+            case favorite
+            case setting
+        }
+        
+        @Published var isShowingSheet = false
+        @Published var sheetState: SheetState = .none {
+            didSet {
+                isShowingSheet = sheetState != .none
+            }
+        }
+    }
+    
+    
+    @StateObject var sheetManager = SheetMananger()
+    
     @State var searchText = ""
-
+    
     var filteredLaws:  [LawGroup] {
         if searchText.isEmpty {
             return laws
         }
         return laws.filter {
-            return !$0.laws.filter{$0.name.hasPrefix(searchText)}.isEmpty
+            return !$0.laws.filter{$0.name.contains(searchText)}.isEmpty
         }
     }
-
+    
     var body: some View {
         NavigationView{
             LawList(lawsArr: filteredLaws)
                 .navigationBarTitle("中国法律")
                 .toolbar {
-
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showFavModal.toggle()
-                        }, label: {
-                            Image(systemName: "heart")
-                        }).foregroundColor(.red).sheet(isPresented: $showFavModal) {
-                            NavigationView {
-                                FavoriteView()
-                                    .navigationBarTitle("收藏", displayMode: .inline)
-                            }
+                    BarItem("heart") {
+                        sheetManager.sheetState = .favorite
+                    }
+                    BarItem("gear") {
+                        sheetManager.sheetState = .setting
+                    }
+                }
+                .sheet(isPresented: $sheetManager.isShowingSheet, onDismiss: {
+                    sheetManager.sheetState = .none
+                }) {
+                    NavigationView {
+                        if sheetManager.sheetState == .setting {
+                            SettingView()
+                                .navigationBarTitle("关于", displayMode: .inline)
+                        } else if sheetManager.sheetState == .favorite {
+                            FavoriteView()
+                                .navigationBarTitle("收藏", displayMode: .inline)
                         }
                     }
-
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showSettingModal.toggle()
-                        }, label: {
-                            Image(systemName: "gear")
-                        }).foregroundColor(.red).sheet(isPresented: $showSettingModal) {
-                            NavigationView {
-                                SettingView()
-                                    .navigationBarTitle("关于", displayMode: .inline)
-                            }
-                        }
-                    }
-
                 }
         }.searchable(text: $searchText, prompt: "宪法修正案")
     }
-
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

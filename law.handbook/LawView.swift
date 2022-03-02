@@ -29,12 +29,8 @@ struct LawInfoPage: View {
             }
         }.listStyle(.plain)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        dismiss()
-                    }, label: {
-                        Text("关闭")
-                    }).foregroundColor(.red)
+                TextBarItem("关闭") {
+                    dismiss()
                 }
             }
     }
@@ -128,21 +124,17 @@ struct LawContentView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showInfoPage.toggle()
-                    }, label: {
-                        Image(systemName: "info.circle")
-                    }).foregroundColor(.red)
-                        .sheet(isPresented: $showInfoPage) {
-                            NavigationView {
-                                LawInfoPage(model: model)
-                                    .navigationBarTitle("关于", displayMode: .inline)
-                            }
-
-                        }.id(UUID())
+                BarItem("info.circle"){
+                    showInfoPage.toggle()
                 }
             }
+            .sheet(isPresented: $showInfoPage) {
+                NavigationView {
+                    LawInfoPage(model: model)
+                        .navigationBarTitle("关于", displayMode: .inline)
+                }
+
+            }.id(UUID())
     }
 }
 

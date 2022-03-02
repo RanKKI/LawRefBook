@@ -32,3 +32,27 @@ func Report(law: LawModel, line: String){
     let body = line
     OpenMail(subject: subject, body: body)
 }
+
+
+func BarItem(_ icon: String, action: @escaping () -> Void ) -> ToolbarItem<Void, AnyView> {
+    return ToolbarItem(placement: .navigationBarTrailing) {
+        AnyView(
+            Button(action: action, label: {
+                Image(systemName: icon)
+                    .foregroundColor(.red)
+            })
+        )
+    }
+}
+
+
+func TextBarItem(_ str: String, action: @escaping () -> Void ) -> ToolbarItem<Void, AnyView> {
+    return ToolbarItem(placement: .navigationBarTrailing) {
+        AnyView(
+            Button(action: action, label: {
+                Text(str)
+                    .foregroundColor(.red)
+            })
+        )
+    }
+}

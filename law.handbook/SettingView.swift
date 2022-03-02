@@ -46,12 +46,8 @@ struct SettingView: View {
                 .listRowBackground(Color.clear)
                 .font(.footnote)
         }.toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Text("关闭")
-                }).foregroundColor(.red)
+            TextBarItem("关闭") {
+                dismiss()
             }
         }
     }
