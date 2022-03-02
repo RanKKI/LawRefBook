@@ -19,4 +19,17 @@ struct MainApp: App {
                 .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
+
+    init() {
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if !launchedBefore  {
+            self.firstRun()
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+        }
+    }
+
+    private func firstRun(){
+        // 读取 json 并存入 core data
+    }
+
 }

@@ -67,7 +67,7 @@ struct LawContentList: View {
                 }
                 .tint(.red)
                 Button {
-                    let fav = Favouite(context: moc)
+                    let fav = FavContent(context: moc)
                     fav.id = UUID()
                     fav.content = text
                     fav.law = model.Titles.first

@@ -10,6 +10,8 @@
 		16BA35C327CDDD8C00694880 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C227CDDD8C00694880 /* Data.swift */; };
 		16BA35C527CDDDC200694880 /* LawConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C427CDDDC200694880 /* LawConfig.swift */; };
 		16BA35C727CDDE8700694880 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C627CDDE8700694880 /* Util.swift */; };
+		16D28E9A27CF803D001FB6B8 /* law.json in Resources */ = {isa = PBXBuildFile; fileRef = 16D28E9927CF803D001FB6B8 /* law.json */; };
+		16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */; };
 		902DAE5827C7CBC100926036 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DAE5727C7CBC100926036 /* App.swift */; };
 		902DAE5A27C7CBC100926036 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DAE5927C7CBC100926036 /* ContentView.swift */; };
 		902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5B27C7CBC200926036 /* Assets.xcassets */; };
@@ -18,7 +20,6 @@
 		9035983827C91E0300C8D9E7 /* 法律法规 in Resources */ = {isa = PBXBuildFile; fileRef = 9035983727C91E0300C8D9E7 /* 法律法规 */; };
 		9035983A27C9F57D00C8D9E7 /* LawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983927C9F57D00C8D9E7 /* LawView.swift */; };
 		9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983B27C9F96400C8D9E7 /* SettingView.swift */; };
-		9035984027CA29CA00C8D9E7 /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983F27CA29CA00C8D9E7 /* FavouriteView.swift */; };
 		9035984327CA2A6500C8D9E7 /* Modal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9035984127CA2A6500C8D9E7 /* Modal.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,8 @@
 		16BA35C427CDDDC200694880 /* LawConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawConfig.swift; sourceTree = "<group>"; };
 		16BA35C627CDDE8700694880 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		16BA35C827CE078800694880 /* law.handbook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = law.handbook.entitlements; sourceTree = "<group>"; };
+		16D28E9927CF803D001FB6B8 /* law.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = law.json; sourceTree = "<group>"; };
+		16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		902DAE5427C7CBC100926036 /* 中国法律.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "中国法律.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		902DAE5727C7CBC100926036 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		902DAE5927C7CBC100926036 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,7 +39,6 @@
 		9035983727C91E0300C8D9E7 /* 法律法规 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "法律法规"; sourceTree = "<group>"; };
 		9035983927C9F57D00C8D9E7 /* LawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawView.swift; sourceTree = "<group>"; };
 		9035983B27C9F96400C8D9E7 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		9035983F27CA29CA00C8D9E7 /* FavouriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteView.swift; sourceTree = "<group>"; };
 		9035984227CA2A6500C8D9E7 /* Favouite.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Favouite.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,6 +56,7 @@
 		902DAE4B27C7CBC100926036 = {
 			isa = PBXGroup;
 			children = (
+				16D28E9927CF803D001FB6B8 /* law.json */,
 				9035983727C91E0300C8D9E7 /* 法律法规 */,
 				902DAE5627C7CBC100926036 /* law.handbook */,
 				902DAE5527C7CBC100926036 /* Products */,
@@ -71,9 +74,9 @@
 		902DAE5627C7CBC100926036 /* law.handbook */ = {
 			isa = PBXGroup;
 			children = (
+				16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */,
 				16BA35C827CE078800694880 /* law.handbook.entitlements */,
 				9035983B27C9F96400C8D9E7 /* SettingView.swift */,
-				9035983F27CA29CA00C8D9E7 /* FavouriteView.swift */,
 				9035984127CA2A6500C8D9E7 /* Modal.xcdatamodeld */,
 				902DAE5727C7CBC100926036 /* App.swift */,
 				902DAE5927C7CBC100926036 /* ContentView.swift */,
@@ -154,6 +157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16D28E9A27CF803D001FB6B8 /* law.json in Resources */,
 				9035983827C91E0300C8D9E7 /* 法律法规 in Resources */,
 				902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */,
 				902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */,
@@ -172,10 +176,10 @@
 				9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawView.swift in Sources */,
 				16BA35C527CDDDC200694880 /* LawConfig.swift in Sources */,
-				9035984027CA29CA00C8D9E7 /* FavouriteView.swift in Sources */,
 				902DAE5827C7CBC100926036 /* App.swift in Sources */,
 				16BA35C727CDDE8700694880 /* Util.swift in Sources */,
 				9035984327CA2A6500C8D9E7 /* Modal.xcdatamodeld in Sources */,
+				16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */,
 				9035982C27C9012B00C8D9E7 /* LawModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

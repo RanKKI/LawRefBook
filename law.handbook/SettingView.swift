@@ -19,7 +19,7 @@ let desc = """
 let DeveloperMail = "rankki.dev@icloud.com"
 
 struct SettingView: View {
-    
+
     @Environment(\.dismiss) var dismiss
 
     var body: some View {

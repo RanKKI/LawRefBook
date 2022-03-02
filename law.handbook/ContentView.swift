@@ -64,7 +64,7 @@ struct ContentView: View {
                             Image(systemName: "heart")
                         }).foregroundColor(.red).sheet(isPresented: $showFavModal) {
                             NavigationView {
-                                FavouiteView()
+                                FavoriteView()
                                     .navigationBarTitle("收藏", displayMode: .inline)
                             }
                         }
