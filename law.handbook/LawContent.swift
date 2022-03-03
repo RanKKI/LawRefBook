@@ -101,6 +101,21 @@ class LawContent: ObservableObject {
         }
     }
 
+    func filterText(text: String){
+        if text.isEmpty {
+            self.Content = self.Body
+            return
+        }
+        DispatchQueue.main.async {
+            var newBody: [TextContent] = []
+            self.Body.forEach { val in
+                let children = val.children.filter { $0.contains(text) }
+                newBody.append(TextContent(id: val.id, text: val.text, children: children))
+            }
+            self.Content = newBody
+        }
+    }
+
 }
 
 struct TextContent : Identifiable {

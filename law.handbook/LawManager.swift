@@ -1,12 +1,14 @@
 
 import Foundation
+import CoreData
+import SwiftUI
 
-class Law: Codable, Hashable, Equatable {
+class Law: Codable, Hashable, Equatable, ObservableObject {
 
     var name: String
+    var id: UUID
     var folder: String?
     var filename: String?
-    var id: UUID = UUID()
     var category: LawCategory?
     var content: LawContent?
 
@@ -17,7 +19,7 @@ class Law: Codable, Hashable, Equatable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case name, folder, filename
+        case name, folder, filename, id
     }
 
     static func == (lhs: Law, rhs: Law) -> Bool {
@@ -39,8 +41,8 @@ struct LawCategory: Codable, Hashable {
 
     var category: String
     var laws: [Law]
+    var id: UUID
     var folder: String?
-    var id: UUID = UUID()
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(category)
@@ -48,15 +50,19 @@ struct LawCategory: Codable, Hashable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case category, laws, folder
+        case category, laws, folder, id
     }
 
 }
 
 class LawManager: ObservableObject {
 
-    var rawLaws: [LawCategory] = []
+    private var rawLaws: [LawCategory] = []
+    private var lawMap = [UUID: Law]()
+
     @Published var laws: [LawCategory] = []
+
+    @Environment(\.managedObjectContext) var moc
 
     init() {
         DispatchQueue.main.async {
@@ -72,12 +78,23 @@ class LawManager: ObservableObject {
                 self.rawLaws.forEach { category in
                     category.laws.forEach {
                         $0.category = category
+                        lawMap[$0.id] = $0
                     }
                 }
             }
         } catch {
             print("decode error", error)
         }
+    }
+
+    func loadFavState() {
+        try? moc.fetch(FavLaw.fetchRequest()).forEach {
+            print("law fav", $0)
+        }
+    }
+
+    func getLawByUUID(uuid: UUID) -> Law? {
+        return self.lawMap[uuid]
     }
 
     func filterLaws(filterString str: String){
@@ -94,7 +111,7 @@ class LawManager: ObservableObject {
             } else {
                 let laws = $0.laws.filter { $0.name.contains(str) }
                 if !laws.isEmpty {
-                    filteredLaws.append(LawCategory(category: $0.category, laws: laws))
+                    filteredLaws.append(LawCategory(category: $0.category, laws: laws, id: $0.id))
                 }
             }
         }

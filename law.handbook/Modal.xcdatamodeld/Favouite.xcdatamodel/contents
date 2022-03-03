@@ -5,7 +5,12 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="law" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="FavLaw" representedClassName="FavLaw" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lawID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
     <elements>
         <element name="FavContent" positionX="-1937.303833007812" positionY="-1054.122436523438" width="121.79736328125" height="88"/>
+        <element name="FavLaw" positionX="-1935" positionY="-1017" width="128" height="59"/>
     </elements>
 </model>

@@ -15,7 +15,7 @@ struct LawSubList: View {
     var body: some View {
         Section(header: Text(cate.category)) {
             ForEach(cate.laws, id: \.id) { law in
-                NavigationLink(destination: LawContentView(law: law.getContent()).onAppear {
+                NavigationLink(destination: LawContentView(law: law).onAppear {
                     law.getContent().load()
                 }){
                     Text(law.name)
@@ -56,11 +56,9 @@ struct ContentView: View {
         }
     }
 
-
-    @StateObject var sheetManager = SheetMananger()
-    @ObservedObject var lawManager: LawManager
-
     @State var searchText = ""
+    @StateObject var sheetManager = SheetMananger()
+    @EnvironmentObject var lawManager: LawManager
 
     var body: some View {
         NavigationView{
@@ -93,12 +91,4 @@ struct ContentView: View {
             }
     }
 
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ContentView(lawManager: LawManager())
-        }.previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
-    }
 }

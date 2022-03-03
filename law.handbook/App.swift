@@ -12,12 +12,13 @@ import SwiftUI
 struct MainApp: App {
 
     @StateObject private var dataController = DataController()
-    @ObservedObject var manager: LawManager = LawManager()
+    @StateObject private var manager: LawManager = LawManager()
 
     var body: some Scene {
         WindowGroup {
-            ContentView(lawManager: manager)
+            ContentView()
                 .environment(\.managedObjectContext, dataController.container.viewContext)
+                .environmentObject(manager)
         }
     }
 

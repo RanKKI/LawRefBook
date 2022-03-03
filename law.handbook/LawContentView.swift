@@ -94,34 +94,19 @@ struct LawContentList: View {
 
 struct LawContentView: View {
 
-    @ObservedObject var law: LawContent
+    var law: Law
 
     @State var searchText = ""
     @State var showInfoPage = false
 
-    func filterContents() {
-        DispatchQueue.main.async {
-            print("on serach", searchText)
-            var newBody: [TextContent] = []
-            law.Body.forEach { val in
-                let children = val.children.filter { $0.contains(searchText) }
-                newBody.append(TextContent(id: val.id, text: val.text, children: children))
-            }
-            law.Content = newBody
-        }
-    }
+    @EnvironmentObject var manager: LawManager
 
     var body: some View{
-        LawContentList(law: law)
+        LawContentList(law: law.getContent())
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .onSubmit(of: .search) {
-                filterContents()
-            }
-            .onChange(of: searchText){ query in
-                if query.isEmpty {
-                    law.Content = law.Body
-                }
+                law.getContent().filterText(text: searchText)
             }
             .toolbar {
                 BarItem("info.circle"){
@@ -130,7 +115,7 @@ struct LawContentView: View {
             }
             .sheet(isPresented: $showInfoPage) {
                 NavigationView {
-                    LawInfoPage(law: law)
+                    LawInfoPage(law: law.getContent())
                         .navigationBarTitle("关于", displayMode: .inline)
                 }
 
