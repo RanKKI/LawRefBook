@@ -19,7 +19,7 @@ let desc = """
 let Contributors: [String] = [
     // "@XXX"
 ]
-let ContributorsText = String(format: "贡献者: %@", Contributors.isEmpty ? "@欢迎你来贡献！" : Contributors.joined(separator: ","))
+let ContributorsText = String(format: "贡献者: %@", Contributors.isEmpty ? "欢迎你来贡献！" : Contributors.joined(separator: ","))
 
 let DeveloperMail = "rankki.dev@icloud.com"
 
