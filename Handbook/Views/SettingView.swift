@@ -46,8 +46,10 @@ struct SettingView: View {
                 .listRowBackground(Color.clear)
                 .font(.footnote)
         }.toolbar {
-            TextBarItem("关闭") {
-                dismiss()
+            ToolbarItem(placement: .navigationBarTrailing){
+                CloseSheetItem() {
+                    dismiss()
+                }
             }
         }
     }

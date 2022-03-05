@@ -21,8 +21,12 @@ struct FavoriteView: View {
     var favorites: FetchedResults<FavContent>
 
     private func convert(_ result: FetchedResults<FavContent>) -> [[FavContent]] {
-        return Dictionary(grouping: result) { $0.law! }
-        .sorted {$0.value.first!.law! < $1.value.first!.law!}
+        return Dictionary(grouping: result) { $0.lawId! }
+        .sorted {
+            let name1 = LawProvider.shared.getLawNameByUUID($0.value.first!.lawId!)
+            let name2 = LawProvider.shared.getLawNameByUUID($1.value.first!.lawId!)
+            return name1 < name2
+        }
         .map { $0.value }
     }
 
@@ -32,7 +36,7 @@ struct FavoriteView: View {
                 Text("还没有任何收藏呢～")
             } else {
                 List(convert(favorites), id: \.self) { (section: [FavContent]) in
-                    Section(header: Text(section[0].law ?? "No Title")){
+                    Section(header: Text(LawProvider.shared.getLawNameByUUID(section[0].lawId!))){
                         ForEach(section, id: \.id) { (fav: FavContent) in
                             Text(fav.content ?? "")
                                 .onTapGesture {
@@ -44,8 +48,10 @@ struct FavoriteView: View {
                 }
             }
         }.toolbar {
-            TextBarItem("关闭") {
-                dismiss()
+            ToolbarItem(placement: .navigationBarTrailing){
+                CloseSheetItem() {
+                    dismiss()
+                }
             }
         }.confirmationDialog("LawActions", isPresented: $showActions) {
             Button("取消收藏") {
