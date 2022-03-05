@@ -16,6 +16,11 @@ let desc = """
 （三）历法、通用数表、通用表格和公式。
 """
 
+let Contributors: [String] = [
+    // "@XXX"
+]
+let ContributorsText = String(format: "贡献者: %@", Contributors.isEmpty ? "欢迎你来贡献！" : Contributors.joined(separator: ","))
+
 let DeveloperMail = "rankki.dev@icloud.com"
 
 struct SettingView: View {
@@ -28,7 +33,7 @@ struct SettingView: View {
                 Text("国家法律法规数据库")
                 Text("https://flk.npc.gov.cn")
             }
-            Section(header: Text("开发者")){
+            Section(header: Text("开发者"), footer: Text(ContributorsText)){
                 Text("@RanKKI")
                 Text(DeveloperMail)
                     .foregroundColor(.accentColor)
@@ -38,10 +43,11 @@ struct SettingView: View {
                     }
             }
             Section(footer: Text("自豪地采用 SwiftUI")){
-                Text("给 App 评分！")
-                Text("[在 GitHub 上贡献](https://github.com/RanKKI/chinese.law.handbook)")
+                Button("给 App 评分！") {
+                    AppStoreReviewManager.requestReviewIfAppropriate()
+                }
+                Text("[在 GitHub 上贡献](https://github.com/RanKKI/LawRefBook)")
             }
-
             Text(desc)
                 .listRowBackground(Color.clear)
                 .font(.footnote)
