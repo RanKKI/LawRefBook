@@ -34,7 +34,7 @@ class LawContent: ObservableObject {
         if loaded {
             return
         }
-        print("load", filename)
+        print("load", folder, filename)
         if let filepath = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: folder) {
             do {
                 let contents = try String(contentsOfFile: filepath)

@@ -69,13 +69,19 @@ struct LawContentList: View {
 struct LawContentView: View {
     
     var lawID: UUID
-    
+
+    @State var isFav = false
     @State var showInfoPage = false
     
     var body: some View{
         LawContentList(lawID: lawID, obj: LawProvider.shared.getLawContent(lawID))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    IconButton(icon: isFav ? "heart.slash" : "heart") {
+//                        isFav = LawProvider.shared.favoriteLaw(lawID)
+//                    }
+//                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     IconButton(icon: "info.circle") {
                         showInfoPage.toggle()

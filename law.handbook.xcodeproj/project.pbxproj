@@ -63,7 +63,6 @@
 		900EBCDB27D35C9D00E20FE4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				902DAE5727C7CBC100926036 /* App.swift */,
 				902DAE5B27C7CBC200926036 /* Assets.xcassets */,
 				900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */,
 			);
@@ -112,6 +111,7 @@
 		900EBCF127D38AFF00E20FE4 /* Handbook */ = {
 			isa = PBXGroup;
 			children = (
+				902DAE5727C7CBC100926036 /* App.swift */,
 				16BA35C627CDDE8700694880 /* Util.swift */,
 				900EBCDE27D35CEF00E20FE4 /* Toolbar Items */,
 				900EBCDD27D35CCB00E20FE4 /* Models */,

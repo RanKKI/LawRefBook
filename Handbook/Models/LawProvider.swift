@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import SwiftUI
 
 class LawProvider {
     
@@ -42,7 +43,7 @@ class LawProvider {
     func getLawContent(_ uuid: UUID) -> LawContent {
         if contents[uuid] == nil {
             if let law = LocalProvider.shared.getLaw(uuid) {
-                let folder: [String?] = ["法律法规", law.cateogry?.folder ?? ""].filter { $0 != nil }
+                let folder: [String?] = ["法律法规", law.cateogry?.folder].filter { $0 != nil }
                 contents[uuid] = LawContent(law.filename ?? law.name, folder.map{ $0! }.joined(separator: "/"))
             } else {
                 fatalError("unexpected law uuid: \(uuid)")
@@ -66,4 +67,12 @@ class LawProvider {
         }
     }
     
+    func getFavoriteState(_ uuid: UUID) -> Bool {
+        return false // TODO
+    }
+
+    func favoriteLaw(_ uuid: UUID) -> Bool {
+        return false // TODO
+    }
+
 }

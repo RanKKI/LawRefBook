@@ -10,7 +10,7 @@ struct LawList: View {
         List(laws, id: \.self) { ids  in
             Section(header: Text(LawProvider.shared.getCategoryName(ids[0]))) {
                 ForEach(ids, id: \.self) { uuid in
-                    NavigationLink(destination: LawContentView(lawID: uuid).onAppear {
+                    NavigationLink(destination: LawContentView(lawID: uuid, isFav: LawProvider.shared.getFavoriteState(uuid)).onAppear {
                         LawProvider.shared.getLawContent(uuid).load()
                     }){
                         Text( LawProvider.shared.getLawNameByUUID(uuid))
@@ -64,7 +64,7 @@ struct ContentView: View {
                 .navigationTitle("中国法律")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        IconButton(icon: "heart") {
+                        IconButton(icon: "heart.text.square") {
                             sheetManager.sheetState = .favorite
                         }
                     }

@@ -26,3 +26,9 @@ struct LawInfo {
     var header: String
     var content: String
 }
+
+extension FavLaw {
+    var key: UUID {
+        return self.id!
+    }
+}
