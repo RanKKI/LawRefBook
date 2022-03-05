@@ -70,3 +70,10 @@ func readLocalFile(forName name: String) -> Data? {
 
     return nil
 }
+
+
+extension FavContent {
+    var title: String {
+        return self.law ?? "未分组"
+    }
+}

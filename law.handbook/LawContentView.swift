@@ -36,12 +36,43 @@ struct LawInfoPage: View {
     }
 }
 
+struct LawContentLine: View {
+
+    @ObservedObject var law: LawContent
+    @Environment(\.managedObjectContext) var moc
+
+    @State var text: String
+    @State var showActions = false
+
+    var body: some View {
+        Text(text)
+            .onTapGesture {
+                showActions.toggle()
+            }
+            .confirmationDialog("LawActions", isPresented: $showActions) {
+                Button("收藏") {
+                    let fav = FavContent(context: moc)
+                    fav.id = UUID()
+                    fav.content = text
+                    fav.law = law.Titles.first
+                    try? moc.save()
+                }
+                Button("反馈") {
+                    Report(law: law, line: text)
+                }
+                Button("取消", role: .cancel) {
+
+                }
+            } message: {
+                Text("你要做些什么呢?")
+            }
+    }
+}
+
 struct LawContentList: View {
 
     @ObservedObject var law: LawContent
     @State var content: [TextContent] = []
-
-    @Environment(\.managedObjectContext) var moc
 
     var title: some View {
         ForEach($law.Titles.indices, id: \.self) { i in
@@ -53,28 +84,6 @@ struct LawContentList: View {
         }
     }
 
-    func ContentLine(text: String) -> some View {
-        Text(text)
-            .swipeActions {
-                Button {
-                    Report(law: law, line: text)
-                } label: {
-                    Label("反馈", systemImage: "exclamationmark.circle")
-                }
-                .tint(.red)
-                Button {
-                    let fav = FavContent(context: moc)
-                    fav.id = UUID()
-                    fav.content = text
-                    fav.law = law.Titles.first
-                    try? moc.save()
-                } label: {
-                    Label("收藏", systemImage: "heart")
-                }
-                .tint(.orange)
-            }
-    }
-
     var body: some View {
         List {
             title
@@ -82,7 +91,7 @@ struct LawContentList: View {
                 if !body.children.isEmpty {
                     Section(header: Text(body.text)){
                         ForEach(body.children, id: \.self) { text in
-                            ContentLine(text: text)
+                            LawContentLine(law: law, text: text)
                         }
                     }
                 }

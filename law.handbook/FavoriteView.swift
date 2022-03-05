@@ -9,58 +9,37 @@ import Foundation
 import CoreData
 import SwiftUI
 
-struct FavoriteLawGroup: View {
-
-    @Environment(\.managedObjectContext) var moc
-
-    var arr: [FavContent]
-
-    var body: some View {
-        Section(header: Text(arr.first!.law!)){
-            ForEach(arr, id:\.id){ fav in
-                Text(fav.content ?? "")
-                    .swipeActions {
-                        Button {
-                            withAnimation(.spring()){
-                                moc.delete(fav)
-                                try? moc.save()
-                            }
-                        } label: {
-                            Label("移除", systemImage: "heart.slash")
-                        }
-                        .tint(.red)
-                    }
-            }
-        }
-    }
-}
-
 struct FavoriteView: View {
 
     @Environment(\.dismiss) var dismiss
+    @Environment(\.managedObjectContext) var moc
 
-    @FetchRequest(sortDescriptors: [],
-                  predicate: nil,
-                  animation: .default) var favorites: FetchedResults<FavContent>
+    @State var showActions = false
+    @State var targetItem: FavContent? = nil
 
-    func group(_ result : FetchedResults<FavContent>)-> [[FavContent]] {
+    @FetchRequest(sortDescriptors: [], predicate: nil)
+    var favorites: FetchedResults<FavContent>
+
+    private func convert(_ result: FetchedResults<FavContent>) -> [[FavContent]] {
         return Dictionary(grouping: result) { $0.law! }
         .sorted {$0.value.first!.law! < $1.value.first!.law!}
         .map { $0.value }
     }
 
-    private var favArr: Array<Array<FavContent>>  {
-        return group(favorites)
-    }
-
     var body: some View {
         ZStack {
-            if favArr.isEmpty {
+            if favorites.isEmpty {
                 Text("还没有任何收藏呢～")
-            } else{
-                List{
-                    ForEach(Array(favArr.enumerated()), id: \.offset) { (index, arr) in
-                        FavoriteLawGroup(arr: arr)
+            } else {
+                List(convert(favorites), id: \.self) { (section: [FavContent]) in
+                    Section(header: Text(section[0].law ?? "No Title")){
+                        ForEach(section, id: \.id) { (fav: FavContent) in
+                            Text(fav.content ?? "")
+                                .onTapGesture {
+                                    self.targetItem = fav
+                                    showActions.toggle()
+                                }
+                        }
                     }
                 }
             }
@@ -68,6 +47,14 @@ struct FavoriteView: View {
             TextBarItem("关闭") {
                 dismiss()
             }
+        }.confirmationDialog("LawActions", isPresented: $showActions) {
+            Button("取消收藏") {
+                moc.delete(targetItem!)
+                try? moc.save()
+            }
+            Button("取消", role: .cancel) { }
+        } message: {
+            Text("你要做些什么呢?")
         }
     }
 }
