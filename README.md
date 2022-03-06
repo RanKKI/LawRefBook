@@ -1,3 +1,7 @@
+![Swift](https://img.shields.io/badge/swift-F54A2A?style=for-the-badge&logo=swift&logoColor=white)
+[![App Store](https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white)
+](https://apps.apple.com/au/app/%E4%B8%AD%E5%9B%BD%E6%B3%95%E5%BE%8B%E5%BF%AB%E6%9F%A5%E6%89%8B%E5%86%8C/id1612953870)
+
 # 中国法律
 
 根据《中华人民共和国著作权法》第五条，本作品不适用于该法。如不受其他法律、法规保护，本作品在中国大陆和其他地区属于公有领域。不适用于《中华人民共和国著作权法》的作品包括：
