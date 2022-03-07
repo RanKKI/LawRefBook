@@ -9,9 +9,17 @@ struct LawContentLine: View {
 
     @State var text: String
     @State var showActions = false
+    
+    func boldSection() -> Text {
+        let arr = text.split(separator: " ")
+        if arr.count == 1 {
+            return Text(text)
+        }
+        return Text(arr[0]).bold() + Text(" " + arr[1])
+    }
 
     var body: some View {
-        Text(text)
+        boldSection()
             .onTapGesture {
                 showActions.toggle()
             }

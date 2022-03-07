@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
     func addNewLine(str: String) -> String {
-        return self + "\n   " + str
+        return self + "\n" + str
     }
 }
 
@@ -51,16 +51,16 @@ class LawContent: ObservableObject {
     }
 
     func parse(contents: String){
-        let arr = contents.components(separatedBy: "\n").map{text in
-            return text.trimmingCharacters(in: .whitespacesAndNewlines)
-        }.filter{ line in
-            return !line.isEmpty
-        }
-
         var isDesc = true // 是否为信息部分
         var isFix = false // 是否为修正案
 
-        for text in arr {
+        for line in contents.components(separatedBy: "\n") {
+            
+            let text = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            if text.isEmpty {
+                continue
+            }
+
             let out = text.split(separator: " ", maxSplits: 1).map { String($0) }
             if out.isEmpty {
                 continue
@@ -98,10 +98,8 @@ class LawContent: ObservableObject {
     }
 
     func parseContent(_ children: inout [String], _ text: String, isFix: Bool = false) {
-        let matched = text.range(of: "^第.+条", options: .regularExpression) != nil
-
-        if children.isEmpty || (isFix && !text.starts(with: "-")) || (!isFix && matched) {
-            children.append(contentsOf: [text])
+        if children.isEmpty || (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.{1,4}条", options: .regularExpression) != nil ){
+            children.append(text)
         } else {
             children[children.count - 1] = children.last!.addNewLine(str: text.trimmingCharacters(in: ["-"," "]))
         }
