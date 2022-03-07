@@ -39,10 +39,16 @@ struct FavoriteView: View {
                     Section(header: Text(LawProvider.shared.getLawTitleByUUID(section[0].lawId!))){
                         ForEach(section, id: \.id) { (fav: FavContent) in
                             Text(fav.content ?? "")
-                                .onTapGesture {
-                                    self.targetItem = fav
-                                    showActions.toggle()
+                                .contextMenu {
+                                    Button {
+                                        moc.delete(fav)
+                                        try? moc.save()
+                                    } label: {
+                                        Label("Red", systemImage: "heart.slash")
+                                            .foregroundColor(.red)
+                                    }
                                 }
+                                
                         }
                     }
                 }
@@ -53,14 +59,6 @@ struct FavoriteView: View {
                     dismiss()
                 }
             }
-        }.confirmationDialog("LawActions", isPresented: $showActions) {
-            Button("取消收藏") {
-                moc.delete(targetItem!)
-                try? moc.save()
-            }
-            Button("取消", role: .cancel) { }
-        } message: {
-            Text("你要做些什么呢?")
         }
     }
 }

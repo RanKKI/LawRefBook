@@ -19,28 +19,22 @@ struct LawContentLine: View {
 
     var body: some View {
         boldSection()
-            .onTapGesture {
-                showActions.toggle()
-            }
-            .confirmationDialog("LawActions", isPresented: $showActions) {
-                Button("收藏") {
+            .contextMenu {
+                Button {
                     LawProvider.shared.favoriteContent(lawID, line: text)
+                } label: {
+                    Label("收藏", systemImage: "suit.heart")
                 }
-                Button("反馈") {
+                Button {
                     Report(law: law, line: text)
+                } label: {
+                    Label("反馈", systemImage: "flag")
                 }
-                Button("复制") {
+                Button {
                     let message = String(format: "%@\n\n%@", LawProvider.shared.getLawTitleByUUID(lawID), text)
                     UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
-                }
-                Button("取消", role: .cancel) {
-
-                }
-            } message: {
-                if text.count > 25 {
-                    Text(text.prefix(upTo: text.index(text.startIndex, offsetBy: 25)) + "...")
-                } else {
-                    Text(text)
+                } label: {
+                    Label("复制", systemImage: "doc")
                 }
             }
     }
