@@ -5,11 +5,11 @@ struct LawContentLine: View {
 
     var lawID: UUID
     @ObservedObject var law: LawContent
-//    @Environment(\.managedObjectContext) var moc
+    //    @Environment(\.managedObjectContext) var moc
 
     @State var text: String
     @State var showActions = false
-    
+
     func boldSection() -> Text {
         let arr = text.split(separator: " ")
         if arr.count == 1 {
@@ -31,9 +31,6 @@ struct LawContentLine: View {
                     Report(law: law, line: text)
                 }
                 Button("复制") {
-                    UIPasteboard.general.setValue(text, forPasteboardType: "public.plain-text")
-                }
-                Button("复制（包括标题）") {
                     let message = String(format: "%@\n\n%@", LawProvider.shared.getLawTitleByUUID(lawID), text)
                     UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
                 }
@@ -41,7 +38,11 @@ struct LawContentLine: View {
 
                 }
             } message: {
-                Text("你要做些什么呢?")
+                if text.count > 25 {
+                    Text(text.prefix(upTo: text.index(text.startIndex, offsetBy: 25)) + "...")
+                } else {
+                    Text(text)
+                }
             }
     }
 }
@@ -92,11 +93,11 @@ struct LawContentView: View {
         LawContentList(lawID: lawID, obj: LawProvider.shared.getLawContent(lawID))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    IconButton(icon: isFav ? "heart.slash" : "heart") {
-//                        isFav = LawProvider.shared.favoriteLaw(lawID)
-//                    }
-//                }
+                //                ToolbarItem(placement: .navigationBarTrailing) {
+                //                    IconButton(icon: isFav ? "heart.slash" : "heart") {
+                //                        isFav = LawProvider.shared.favoriteLaw(lawID)
+                //                    }
+                //                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     IconButton(icon: "info.circle") {
                         showInfoPage.toggle()

@@ -55,7 +55,7 @@ class LawContent: ObservableObject {
         var isFix = false // 是否为修正案
 
         for line in contents.components(separatedBy: "\n") {
-            
+
             let text = line.trimmingCharacters(in: .whitespacesAndNewlines)
             if text.isEmpty {
                 continue
