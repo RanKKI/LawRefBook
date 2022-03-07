@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3427D5CAD200B42167 /* TOCView.swift */; };
+		1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3627D6277F00B42167 /* WhatNewView.swift */; };
 		16BA35C727CDDE8700694880 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C627CDDE8700694880 /* Util.swift */; };
 		16D28E9A27CF803D001FB6B8 /* law.json in Resources */ = {isa = PBXBuildFile; fileRef = 16D28E9927CF803D001FB6B8 /* law.json */; };
 		16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		1632AD3427D5CAD200B42167 /* TOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCView.swift; sourceTree = "<group>"; };
+		1632AD3627D6277F00B42167 /* WhatNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatNewView.swift; sourceTree = "<group>"; };
 		16BA35C627CDDE8700694880 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		16D28E9927CF803D001FB6B8 /* law.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = law.json; sourceTree = "<group>"; };
 		16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				9035983927C9F57D00C8D9E7 /* LawContentView.swift */,
 				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
+				1632AD3627D6277F00B42167 /* WhatNewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				902DAE5A27C7CBC100926036 /* ContentView.swift in Sources */,
 				900EBCE627D35FDE00E20FE4 /* LawProvider.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */,
+				1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
 				900EBCEA27D3621700E20FE4 /* Law.swift in Sources */,
@@ -382,7 +386,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				SUPPORTS_MACCATALYST = NO;
@@ -413,7 +417,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				SUPPORTS_MACCATALYST = NO;

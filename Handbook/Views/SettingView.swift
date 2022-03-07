@@ -23,15 +23,29 @@ let ContributorsText = String(format: "贡献者: %@", Contributors.isEmpty ? "�
 
 let DeveloperMail = "rankki.dev@icloud.com"
 
+let LawGroupingMethods = [
+    "法律部门",
+    "法律阶位"
+]
+
 struct SettingView: View {
 
     @Environment(\.dismiss) var dismiss
+
+    @State private var groupingMethod = "法律部门"
 
     var body: some View {
         List{
             Section(header: Text("内容来源"), footer: Text("如果您发现了任何错误，包括但不限于排版、错字、缺失内容，请使用以下联系方式告知开发者，以便修复")){
                 Text("国家法律法规数据库")
                 Text("https://flk.npc.gov.cn")
+            }
+            Section(header: Text("偏好设置")) {
+                Picker("Options", selection: $groupingMethod) {
+                   ForEach(LawGroupingMethods, id: \.self) {
+                       Text($0)
+                   }
+               }
             }
             Section(header: Text("开发者"), footer: Text(ContributorsText)){
                 Text("@RanKKI")

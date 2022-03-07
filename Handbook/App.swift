@@ -11,24 +11,28 @@ import SwiftUI
 @main
 struct MainApp: App {
 
+    @State var showNewPage = false
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
+                .sheet(isPresented: $showNewPage) {
+                    WhatNewView()
+                }
+                .onAppear {
+                    self.checkVersionUpdate()
+                }
         }
     }
 
-    init() {
-        let launchedCnt = UserDefaults.standard.integer(forKey: "launchedCnt")
-        if launchedCnt == 0 {
-            self.firstRun()
+    private func checkVersionUpdate(){
+        let lastVersion = UserDefaults.standard.string(forKey: "lastVersion")
+        let curVersion = UIApplication.appVersion
+        if lastVersion == nil || lastVersion != curVersion {
+            showNewPage.toggle()
+            UserDefaults.standard.set(curVersion, forKey: "lastVersion")
         }
-        UserDefaults.standard.set(launchedCnt + 1, forKey: "launchedCnt")
-
-    }
-
-    private func firstRun(){
-
     }
 
 }
