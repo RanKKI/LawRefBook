@@ -18,6 +18,7 @@ class LawContent: ObservableObject {
     @Published var Titles: [String] = []
     @Published var Infomations: [LawInfo] = []
     @Published var Content: [TextContent] = []
+    @Published var TOC: [TocListData] = []
 
     var Body: [TextContent] = []
     var filename: String
@@ -87,7 +88,21 @@ class LawContent: ObservableObject {
             }
 
             if out[0].hasPrefix("#") { // 标题
-                self.Body.append(TextContent(text: out.count > 1 ? out[1] : "", children: []))
+                let indent = out[0].count - 1
+                let title = out.count > 1 ? out[1] : ""
+                if indent == 1 || self.TOC.isEmpty {
+                    self.TOC.append(TocListData(title: title, indent: indent))
+                } else {
+                    var i = indent
+                    var targetToc: TocListData = self.TOC.last!
+                    while i - 1 > targetToc.indent && !targetToc.children.isEmpty {
+                        targetToc = targetToc.children.last!
+                        i -= 1
+                    }
+                    print(targetToc.title, title, out[0].count - 1, indent)
+                    targetToc.children.append(TocListData(title: title, indent: indent))
+                }
+                self.Body.append(TextContent(text: title))
                 continue
             }
 
@@ -118,6 +133,13 @@ class LawContent: ObservableObject {
             }
             self.Content = newBody
         }
+    }
+
+    func hasToc() -> Bool {
+        if self.TOC.isEmpty || self.TOC.count == 1{
+            return false
+        }
+        return true
     }
 
 }

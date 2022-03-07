@@ -5,7 +5,6 @@ struct LawContentLine: View {
 
     var lawID: UUID
     @ObservedObject var law: LawContent
-    //    @Environment(\.managedObjectContext) var moc
 
     @State var text: String
     @State var showActions = false
@@ -84,32 +83,60 @@ struct LawContentList: View {
 
 struct LawContentView: View {
 
+    class SheetMananger: ObservableObject{
+
+        enum SheetState {
+            case none
+            case info
+            case toc
+        }
+
+        @Published var isShowingSheet = false
+        @Published var sheetState: SheetState = .none {
+            didSet {
+                withAnimation {
+                    isShowingSheet = sheetState != .none
+                }
+            }
+        }
+    }
+
+    @StateObject var sheetManager = SheetMananger()
+
     var lawID: UUID
+    @ObservedObject var content: LawContent
 
     @State var isFav = false
-    @State var showInfoPage = false
 
     var body: some View{
-        LawContentList(lawID: lawID, obj: LawProvider.shared.getLawContent(lawID))
+        LawContentList(lawID: lawID, obj: content)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                //                ToolbarItem(placement: .navigationBarTrailing) {
-                //                    IconButton(icon: isFav ? "heart.slash" : "heart") {
-                //                        isFav = LawProvider.shared.favoriteLaw(lawID)
-                //                    }
-                //                }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    if content.hasToc() {
+                        IconButton(icon: "list.bullet.rectangle") {
+                            // show table of content
+                            sheetManager.sheetState = .toc
+                        }
+                    }
                     IconButton(icon: "info.circle") {
-                        showInfoPage.toggle()
+                        sheetManager.sheetState = .info
+
                     }
                 }
             }
-            .sheet(isPresented: $showInfoPage) {
+            .sheet(isPresented: $sheetManager.isShowingSheet, onDismiss: {
+                sheetManager.sheetState = .none
+            }) {
                 NavigationView {
-                    LawInfoPage(lawID: lawID)
-                        .navigationBarTitle("关于", displayMode: .inline)
+                    if sheetManager.sheetState == .info {
+                        LawInfoPage(lawID: lawID)
+                            .navigationBarTitle("关于", displayMode: .inline)
+                    } else if sheetManager.sheetState == .toc {
+                        TableOfContentView(obj: LawProvider.shared.getLawContent(lawID))
+                            .navigationBarTitle("目录", displayMode: .inline)
+                    }
                 }
-
-            }.id(UUID())
+            }
     }
 }

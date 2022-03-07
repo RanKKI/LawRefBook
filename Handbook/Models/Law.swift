@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 class Law: Codable {
     var name: String
@@ -18,7 +19,20 @@ class LawCategory: Codable {
 struct TextContent : Identifiable {
     var id: UUID = UUID()
     var text: String
-    var children: [String]
+    var children: [String] = []
+}
+
+class TocListData: Identifiable {
+
+    var id: UUID = UUID()
+    var children: [TocListData] = []
+    var title: String
+    var indent: Int
+
+    init(title: String, indent: Int){
+        self.title = title
+        self.indent = indent
+    }
 }
 
 struct LawInfo {

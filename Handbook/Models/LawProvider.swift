@@ -80,5 +80,4 @@ class LawProvider {
     func favoriteLaw(_ uuid: UUID) -> Bool {
         return false // TODO
     }
-
 }

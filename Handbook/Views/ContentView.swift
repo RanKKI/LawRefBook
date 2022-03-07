@@ -6,13 +6,18 @@ struct LawList: View {
     @State var searchText = ""
     @State var laws = LawProvider.shared.lawList
 
+    func content(uuid: UUID) -> some View {
+        let content = LawProvider.shared.getLawContent(uuid)
+        return LawContentView(lawID: uuid, content: content, isFav: LawProvider.shared.getFavoriteState(uuid)).onAppear {
+            content.load()
+        }
+    }
+
     var body: some View {
         List(laws, id: \.self) { ids  in
             Section(header: Text(LawProvider.shared.getCategoryName(ids[0]))) {
                 ForEach(ids, id: \.self) { uuid in
-                    NavigationLink(destination: LawContentView(lawID: uuid, isFav: LawProvider.shared.getFavoriteState(uuid)).onAppear {
-                        LawProvider.shared.getLawContent(uuid).load()
-                    }){
+                    NavigationLink(destination: content(uuid: uuid)){
                         Text( LawProvider.shared.getLawNameByUUID(uuid))
                     }
                 }
@@ -63,12 +68,10 @@ struct ContentView: View {
             LawList()
                 .navigationTitle("中国法律")
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
                         IconButton(icon: "heart.text.square") {
                             sheetManager.sheetState = .favorite
                         }
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
                         IconButton(icon: "gear") {
                             sheetManager.sheetState = .setting
                         }
@@ -87,7 +90,8 @@ struct ContentView: View {
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 
 }
