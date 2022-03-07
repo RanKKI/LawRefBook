@@ -84,6 +84,7 @@
 
 ## 贡献
 如果你有任何的想法或者意见，欢迎提 Issue 或者 PR
+
 <a href="https://github.com/RanKKI/LawRefBook/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=RanKKI/LawRefBook" />
 </a>
