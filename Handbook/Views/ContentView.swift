@@ -2,10 +2,10 @@ import SwiftUI
 import CoreData
 
 struct LawList: View {
-    
+
     @State var searchText = ""
     @State var laws = LawProvider.shared.lawList
-    
+
     var body: some View {
         List(laws, id: \.self) { ids  in
             Section(header: Text(LawProvider.shared.getCategoryName(ids[0]))) {
@@ -39,15 +39,15 @@ struct LawList: View {
 }
 
 struct ContentView: View {
-    
+
     class SheetMananger: ObservableObject{
-        
+
         enum SheetState {
             case none
             case favorite
             case setting
         }
-        
+
         @Published var isShowingSheet = false
         @Published var sheetState: SheetState = .none {
             didSet {
@@ -55,9 +55,9 @@ struct ContentView: View {
             }
         }
     }
-    
+
     @StateObject var sheetManager = SheetMananger()
-    
+
     var body: some View {
         NavigationView{
             LawList()
@@ -89,5 +89,5 @@ struct ContentView: View {
                 }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
-    
+
 }

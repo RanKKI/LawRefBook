@@ -2,14 +2,14 @@ import Foundation
 import SwiftUI
 
 struct LawContentLine: View {
-    
+
     var lawID: UUID
     @ObservedObject var law: LawContent
 //    @Environment(\.managedObjectContext) var moc
 
     @State var text: String
     @State var showActions = false
-    
+
     var body: some View {
         Text(text)
             .onTapGesture {
@@ -22,8 +22,15 @@ struct LawContentLine: View {
                 Button("反馈") {
                     Report(law: law, line: text)
                 }
+                Button("复制") {
+                    UIPasteboard.general.setValue(text, forPasteboardType: "public.plain-text")
+                }
+                Button("复制（包括标题）") {
+                    let message = String(format: "%@\n\n%@", LawProvider.shared.getLawTitleByUUID(lawID), text)
+                    UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
+                }
                 Button("取消", role: .cancel) {
-                    
+
                 }
             } message: {
                 Text("你要做些什么呢?")
@@ -32,12 +39,12 @@ struct LawContentLine: View {
 }
 
 struct LawContentList: View {
-    
+
     var lawID: UUID
     @ObservedObject var obj: LawContent
     @State var content: [TextContent] = []
     @State var searchText = ""
-    
+
     var body: some View {
         List {
             ForEach($obj.Titles.indices, id: \.self) { i in
@@ -62,17 +69,17 @@ struct LawContentList: View {
             obj.filterText(text: searchText)
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-        
+
     }
 }
 
 struct LawContentView: View {
-    
+
     var lawID: UUID
 
     @State var isFav = false
     @State var showInfoPage = false
-    
+
     var body: some View{
         LawContentList(lawID: lawID, obj: LawProvider.shared.getLawContent(lawID))
             .navigationBarTitleDisplayMode(.inline)
@@ -93,7 +100,7 @@ struct LawContentView: View {
                     LawInfoPage(lawID: lawID)
                         .navigationBarTitle("关于", displayMode: .inline)
                 }
-                
+
             }.id(UUID())
     }
 }

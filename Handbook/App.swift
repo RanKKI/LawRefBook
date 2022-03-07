@@ -24,7 +24,7 @@ struct MainApp: App {
             self.firstRun()
         }
         UserDefaults.standard.set(launchedCnt + 1, forKey: "launchedCnt")
-    
+
     }
 
     private func firstRun(){

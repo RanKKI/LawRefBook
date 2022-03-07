@@ -1,9 +1,9 @@
 import Foundation
 
 class LocalProvider {
-    
+
     static let shared = LocalProvider()
-    
+
     private var lawList: [LawCategory] = []
     lazy var lawMap: [UUID: Law] = {
         var ret = [UUID: Law]()
@@ -12,11 +12,11 @@ class LocalProvider {
         }
         return ret
     }()
-    
+
     func getLaw(_ uuid: UUID) -> Law? {
         return lawMap[uuid]
     }
-    
+
     func getLawList() -> [LawCategory] {
         if !lawList.isEmpty {
             return self.lawList
@@ -35,7 +35,7 @@ class LocalProvider {
         }
         return self.lawList
     }
-    
+
     private func readLocalFile(forName name: String, type: String) -> Data? {
         do {
             if let bundlePath = Bundle.main.path(forResource: name, ofType: type),
@@ -45,8 +45,8 @@ class LocalProvider {
         } catch {
             print(error)
         }
-        
+
         return nil
     }
-    
+
 }

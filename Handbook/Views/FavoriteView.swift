@@ -36,7 +36,7 @@ struct FavoriteView: View {
                 Text("还没有任何收藏呢～")
             } else {
                 List(convert(favorites), id: \.self) { (section: [FavContent]) in
-                    Section(header: Text(LawProvider.shared.getLawNameByUUID(section[0].lawId!))){
+                    Section(header: Text(LawProvider.shared.getLawTitleByUUID(section[0].lawId!))){
                         ForEach(section, id: \.id) { (fav: FavContent) in
                             Text(fav.content ?? "")
                                 .onTapGesture {
