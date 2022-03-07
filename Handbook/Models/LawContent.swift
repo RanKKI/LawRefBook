@@ -98,7 +98,7 @@ class LawContent: ObservableObject {
     }
 
     func parseContent(_ children: inout [String], _ text: String, isFix: Bool = false) {
-        if children.isEmpty || (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.{1,4}条", options: .regularExpression) != nil ){
+        if children.isEmpty || (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.+?条", options: .regularExpression) != nil ){
             children.append(text)
         } else {
             children[children.count - 1] = children.last!.addNewLine(str: text.trimmingCharacters(in: ["-"," "]))
