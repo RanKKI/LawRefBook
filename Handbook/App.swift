@@ -1,10 +1,3 @@
-//
-//  law_handbookApp.swift
-//  law.handbook
-//
-//  Created by Hugh Liu on 24/2/2022.
-//
-
 import SwiftUI
 
 
@@ -22,6 +15,7 @@ struct MainApp: App {
                 }
                 .onAppear {
                     self.checkVersionUpdate()
+                    LawProvider.shared.loadLawList()
                 }
         }
     }

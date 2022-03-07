@@ -32,7 +32,8 @@ struct SettingView: View {
 
     @Environment(\.dismiss) var dismiss
 
-    @State private var groupingMethod = "法律部门"
+    @AppStorage("defaultGroupingMethod", store: .standard)
+    private var groupingMethod = "法律部门"
 
     var body: some View {
         List{
@@ -41,11 +42,11 @@ struct SettingView: View {
                 Text("https://flk.npc.gov.cn")
             }
             Section(header: Text("偏好设置")) {
-                Picker("Options", selection: $groupingMethod) {
+                Picker("分组方式", selection: $groupingMethod) {
                    ForEach(LawGroupingMethods, id: \.self) {
                        Text($0)
                    }
-               }
+                }
             }
             Section(header: Text("开发者"), footer: Text(ContributorsText)){
                 Text("@RanKKI")
@@ -65,12 +66,16 @@ struct SettingView: View {
             Text(desc)
                 .listRowBackground(Color.clear)
                 .font(.footnote)
-        }.toolbar {
+        }
+        .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){
                 CloseSheetItem() {
                     dismiss()
                 }
             }
+        }
+        .onChange(of: groupingMethod) { val in
+            LawProvider.shared.loadLawList()
         }
     }
 }

@@ -2,19 +2,19 @@ import SwiftUI
 import CoreData
 
 struct LawList: View {
-
+    
     @State var searchText = ""
-    @State var laws = LawProvider.shared.lawList
-
+    @ObservedObject var law  = LawProvider.shared
+    
     func content(uuid: UUID) -> some View {
         let content = LawProvider.shared.getLawContent(uuid)
         return LawContentView(lawID: uuid, content: content, isFav: LawProvider.shared.getFavoriteState(uuid)).onAppear {
             content.load()
         }
     }
-
+    
     var body: some View {
-        List(laws, id: \.self) { ids  in
+        List(law.lawList, id: \.self) { ids  in
             Section(header: Text(LawProvider.shared.getCategoryName(ids[0]))) {
                 ForEach(ids, id: \.self) { uuid in
                     NavigationLink(destination: content(uuid: uuid)){
@@ -25,34 +25,21 @@ struct LawList: View {
         }
         .searchable(text: $searchText, prompt: "宪法修正案")
         .onChange(of: searchText){ text in
-            if text.isEmpty {
-                laws = LawProvider.shared.lawList
-            } else {
-                var ret: [[UUID]] = []
-                LawProvider.shared.lawList.forEach {
-                    let arr = $0.filter {
-                        LawProvider.shared.getLawNameByUUID($0).contains(searchText)
-                    }
-                    if !arr.isEmpty {
-                        ret.append(arr)
-                    }
-                }
-                laws = ret
-            }
+            law.filterLawList(text: text)
         }
     }
 }
 
 struct ContentView: View {
-
+    
     class SheetMananger: ObservableObject{
-
+        
         enum SheetState {
             case none
             case favorite
             case setting
         }
-
+        
         @Published var isShowingSheet = false
         @Published var sheetState: SheetState = .none {
             didSet {
@@ -60,9 +47,9 @@ struct ContentView: View {
             }
         }
     }
-
+    
     @StateObject var sheetManager = SheetMananger()
-
+    
     var body: some View {
         NavigationView{
             LawList()
@@ -93,5 +80,5 @@ struct ContentView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
-
+    
 }

@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class LawProvider {
+class LawProvider: ObservableObject{
 
     static let shared = LawProvider()
 
@@ -24,11 +24,44 @@ class LawProvider {
         container.viewContext.shouldDeleteInaccessibleFaults = true
         return container
     }()
+    
+    @Published var lawList: [[UUID]] = []
 
-    lazy var lawList: [[UUID]] = {
-        let laws = LocalProvider.shared.getLawList()
-        return laws.map {$0.laws.map {$0.id} }
-    }()
+    @AppStorage("defaultGroupingMethod", store: .standard)
+    private var groupingMethod = "法律部门"
+
+    private func getLawList() -> [[UUID]] {
+        let arr = LocalProvider.shared.getLawList()
+        if groupingMethod == "法律阶位" {
+            let dict = Dictionary(grouping: arr.flatMap { $0.laws } , by: { $0.level }).sorted {
+                $0.key < $1.key
+            }
+            return dict.map { $0.value.map {$0.id } }
+        }
+        return arr.map {$0.laws.map {$0.id} }
+    }
+    
+    func loadLawList() {
+        self.lawList = self.getLawList()
+    }
+
+    func filterLawList(text: String) {
+        let data = self.getLawList()
+        if text.isEmpty {
+            self.lawList = data
+        } else {
+            var ret: [[UUID]] = []
+            data.forEach {
+                let arr = $0.filter {
+                    getLawNameByUUID($0).contains(text)
+                }
+                if !arr.isEmpty {
+                    ret.append(arr)
+                }
+            }
+            self.lawList = ret
+        }
+    }
 
     private var contents: [UUID: LawContent] = [UUID: LawContent]()
 
@@ -43,6 +76,9 @@ class LawProvider {
     }
 
     func getCategoryName(_ uuid: UUID) -> String {
+        if groupingMethod == "法律阶位" {
+            return LocalProvider.shared.lawMap[uuid]?.level ?? ""
+        }
         return LocalProvider.shared.lawMap[uuid]?.cateogry?.category ?? ""
     }
 

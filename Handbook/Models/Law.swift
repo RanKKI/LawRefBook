@@ -4,6 +4,7 @@ import SwiftUI
 class Law: Codable {
     var name: String
     var id: UUID
+    var level: String
     var filename: String?
 
     var cateogry: LawCategory?
