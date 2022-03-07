@@ -53,31 +53,51 @@ struct LawContentList: View {
     @State var content: [TextContent] = []
     @State var searchText = ""
 
-    var body: some View {
-        List {
+    var title: some View {
+        VStack {
             ForEach($obj.Titles.indices, id: \.self) { i in
                 Text(obj.Titles[i])
                     .frame(maxWidth: .infinity, alignment: .center)
                     .multilineTextAlignment(.center)
-                    .listRowSeparator(.hidden)
-                    .font(i == 0 ? .title2 : .title3)
+                    .font(i == 0 ? .title2 : .title2)
             }
-            ForEach(Array(obj.Content.enumerated()), id: \.offset){ i, body in
-                if !body.children.isEmpty {
-                    Section(header: Text(body.text)){
-                        ForEach(body.children, id: \.self) { text in
-                            LawContentLine(lawID: lawID, law: obj, text: text)
-                        }
-                    }
+        }
+    }
+
+    var bodyList: some View {
+        ForEach(obj.Content, id: \.id) { (content: TextContent) in
+            if self.searchText.isEmpty || (!self.searchText.isEmpty && !content.children.isEmpty){
+                Text(content.text)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
+                    .id(content.line)
+                    .font(content.indent == 1 ? .headline : .subheadline)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+            }
+            if !content.children.isEmpty {
+                Divider()
+                ForEach(Array(zip(content.children.indices, content.children)), id: \.0) { (i: Int, txt: String) in
+                    LawContentLine(lawID: lawID, law: obj, text: txt)
+                        .id(content.line + i + 1)
+                    Divider()
                 }
             }
         }
-        .listStyle(.plain)
+    }
+
+    var body: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading){
+                title
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing:0))
+                bodyList
+            }
+            .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+        }
         .onChange(of: searchText) { text in
             obj.filterText(text: searchText)
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-
     }
 }
 
@@ -107,36 +127,45 @@ struct LawContentView: View {
     @ObservedObject var content: LawContent
 
     @State var isFav = false
+    @State private var scrollTarget: Int?
 
     var body: some View{
-        LawContentList(lawID: lawID, obj: content)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if content.hasToc() {
-                        IconButton(icon: "list.bullet.rectangle") {
-                            // show table of content
-                            sheetManager.sheetState = .toc
-                        }
+        ScrollViewReader { scrollProxy in
+            LawContentList(lawID: lawID, obj: content)
+                .onChange(of: scrollTarget) { target in
+                    if let target = target {
+                        scrollTarget = nil
+                        scrollProxy.scrollTo(target, anchor: .top)
                     }
-                    IconButton(icon: "info.circle") {
-                        sheetManager.sheetState = .info
+                }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                if content.hasToc() {
+                    IconButton(icon: "list.bullet.rectangle") {
+                        // show table of content
+                        sheetManager.sheetState = .toc
+                    }
+                }
+                IconButton(icon: "info.circle") {
+                    sheetManager.sheetState = .info
 
-                    }
                 }
             }
-            .sheet(isPresented: $sheetManager.isShowingSheet, onDismiss: {
-                sheetManager.sheetState = .none
-            }) {
-                NavigationView {
-                    if sheetManager.sheetState == .info {
-                        LawInfoPage(lawID: lawID)
-                            .navigationBarTitle("关于", displayMode: .inline)
-                    } else if sheetManager.sheetState == .toc {
-                        TableOfContentView(obj: LawProvider.shared.getLawContent(lawID))
-                            .navigationBarTitle("目录", displayMode: .inline)
-                    }
+        }
+        .sheet(isPresented: $sheetManager.isShowingSheet, onDismiss: {
+            sheetManager.sheetState = .none
+        }) {
+            NavigationView {
+                if sheetManager.sheetState == .info {
+                    LawInfoPage(lawID: lawID)
+                        .navigationBarTitle("关于", displayMode: .inline)
+                } else if sheetManager.sheetState == .toc {
+                    TableOfContentView(obj: LawProvider.shared.getLawContent(lawID), sheetState: $sheetManager.sheetState, scrollID: $scrollTarget)
+                        .navigationBarTitle("目录", displayMode: .inline)
                 }
             }
+        }
     }
 }

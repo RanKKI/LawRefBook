@@ -55,7 +55,7 @@ class LawContent: ObservableObject {
         var isDesc = true // 是否为信息部分
         var isFix = false // 是否为修正案
 
-        for line in contents.components(separatedBy: "\n") {
+        for (no, line) in contents.components(separatedBy: "\n").enumerated() {
 
             let text = line.trimmingCharacters(in: .whitespacesAndNewlines)
             if text.isEmpty {
@@ -91,7 +91,7 @@ class LawContent: ObservableObject {
                 let indent = out[0].count - 1
                 let title = out.count > 1 ? out[1] : ""
                 if indent == 1 || self.TOC.isEmpty {
-                    self.TOC.append(TocListData(title: title, indent: indent))
+                    self.TOC.append(TocListData(title: title, indent: indent, line: no))
                 } else {
                     var i = indent
                     var targetToc: TocListData = self.TOC.last!
@@ -99,10 +99,9 @@ class LawContent: ObservableObject {
                         targetToc = targetToc.children.last!
                         i -= 1
                     }
-                    print(targetToc.title, title, out[0].count - 1, indent)
-                    targetToc.children.append(TocListData(title: title, indent: indent))
+                    targetToc.children.append(TocListData(title: title, indent: indent, line: no))
                 }
-                self.Body.append(TextContent(text: title))
+                self.Body.append(TextContent(text: title, line: no, indent: indent))
                 continue
             }
 
@@ -129,7 +128,7 @@ class LawContent: ObservableObject {
             var newBody: [TextContent] = []
             self.Body.forEach { val in
                 let children = val.children.filter { $0.contains(text) }
-                newBody.append(TextContent(id: val.id, text: val.text, children: children))
+                newBody.append(TextContent(id: val.id, text: val.text, children: children, line: val.line, indent: val.indent))
             }
             self.Content = newBody
         }
