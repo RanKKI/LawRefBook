@@ -61,12 +61,14 @@ struct LawContentList: View {
     var bodyList: some View {
         ForEach(obj.Content, id: \.id) { (content: TextContent) in
             if self.searchText.isEmpty || (!self.searchText.isEmpty && !content.children.isEmpty){
-                Text(content.text)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
-                    .id(content.line)
-                    .font(content.indent == 1 ? .headline : .subheadline)
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+                if !content.text.isEmpty {
+                    Text(content.text)
+                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.center)
+                        .id(content.line)
+                        .font(content.indent == 1 ? .headline : .subheadline)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+                }
             }
             if !content.children.isEmpty {
                 Divider()

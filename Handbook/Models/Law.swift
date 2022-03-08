@@ -45,8 +45,8 @@ struct LawInfo {
     var content: String
 }
 
-extension FavLaw {
-    var key: UUID {
-        return self.id!
-    }
+
+enum LawGroupingMethod: String, CaseIterable {
+    case department = "法律部门"
+    case level = "法律阶位"
 }

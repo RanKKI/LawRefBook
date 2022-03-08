@@ -23,17 +23,12 @@ let ContributorsText = String(format: "贡献者: %@", Contributors.isEmpty ? "�
 
 let DeveloperMail = "rankki.dev@icloud.com"
 
-let LawGroupingMethods = [
-    "法律部门",
-    "法律阶位"
-]
-
 struct SettingView: View {
 
     @Environment(\.dismiss) var dismiss
 
     @AppStorage("defaultGroupingMethod", store: .standard)
-    private var groupingMethod = "法律部门"
+    private var groupingMethod = LawGroupingMethod.department
 
     var body: some View {
         List{
@@ -43,8 +38,8 @@ struct SettingView: View {
             }
             Section(header: Text("偏好设置")) {
                 Picker("分组方式", selection: $groupingMethod) {
-                   ForEach(LawGroupingMethods, id: \.self) {
-                       Text($0)
+                    ForEach(LawGroupingMethod.allCases, id: \.self) {
+                        Text($0.rawValue)
                    }
                 }
             }

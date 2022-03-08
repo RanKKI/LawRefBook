@@ -28,11 +28,11 @@ class LawProvider: ObservableObject{
     @Published var lawList: [[UUID]] = []
 
     @AppStorage("defaultGroupingMethod", store: .standard)
-    private var groupingMethod = "法律部门"
+    private var groupingMethod = LawGroupingMethod.department
 
     private func getLawList() -> [[UUID]] {
         let arr = LocalProvider.shared.getLawList()
-        if groupingMethod == "法律阶位" {
+        if groupingMethod == .level {
             let dict = Dictionary(grouping: arr.flatMap { $0.laws } , by: { $0.level }).sorted {
                 $0.key < $1.key
             }
@@ -76,7 +76,7 @@ class LawProvider: ObservableObject{
     }
 
     func getCategoryName(_ uuid: UUID) -> String {
-        if groupingMethod == "法律阶位" {
+        if groupingMethod == .level {
             return LocalProvider.shared.lawMap[uuid]?.level ?? ""
         }
         return LocalProvider.shared.lawMap[uuid]?.cateogry?.category ?? ""
