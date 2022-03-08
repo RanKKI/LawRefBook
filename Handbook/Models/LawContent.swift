@@ -104,6 +104,10 @@ class LawContent: ObservableObject {
                 self.Body.append(TextContent(text: title, line: no, indent: indent))
                 continue
             }
+            
+            if self.Body.isEmpty {
+                self.Body.append(TextContent(text: "", line: no, indent: 1))
+            }
 
             self.parseContent(&Body[Body.count - 1].children, text, isFix: isFix)
         }
