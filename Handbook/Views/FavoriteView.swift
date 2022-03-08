@@ -44,7 +44,7 @@ struct FavoriteView: View {
                                         moc.delete(fav)
                                         try? moc.save()
                                     } label: {
-                                        Label("Red", systemImage: "heart.slash")
+                                        Label("取消收藏", systemImage: "heart.slash")
                                             .foregroundColor(.red)
                                     }
                                 }
