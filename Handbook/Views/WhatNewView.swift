@@ -11,9 +11,9 @@ private struct Change {
 }
 
 private var changes = [
-    Change(icon: "doc", title: "增加复制功能", content: "长按法文可以选择复制"),
-    Change(icon: "list.bullet.rectangle", title: "目录", content: "在可以用场景里，可以在右上角找到目录icon，点击即可查看法律目录。点击可以跳转到指定位置"),
-    Change(icon: "list.number", title: "分组方式", content: "你可以在设置中调整分组方式，按法律部门或者阶位排序"),
+    Change(icon: "doc", title: "增加复制功能", content: "长按法条可以选择复制"),
+    Change(icon: "list.bullet.rectangle", title: "目录", content: "在拥有目录的法律法规下，使用右上角的按钮即可打开目录，点击可以跳转到指定位置哦"),
+    Change(icon: "list.number", title: "分组方式", content: "可以在设置中调整分组方式，是按法律部门显示，还是法律阶位"),
 ]
 
 struct WhatNewView : View {
@@ -21,7 +21,7 @@ struct WhatNewView : View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack {
+        VStack(spacing: 36) {
             Text("看看有什么更新!")
                 .font(.largeTitle)
             ForEach(changes, id: \.id) { change in
@@ -36,8 +36,7 @@ struct WhatNewView : View {
                         Text(change.content)
                     }
                 }
-                .padding(EdgeInsets(top: 48, leading: 8, bottom: 8, trailing: 8))
-                .frame(width: 300, alignment: .leading)
+                .frame(width: 280, alignment: .leading)
             }
             Spacer()
             Button(action: {
@@ -47,7 +46,8 @@ struct WhatNewView : View {
                     .bold()
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
-            }.buttonStyle(.borderedProminent)
+            }
+            .buttonStyle(.borderedProminent)
         }
         .padding(EdgeInsets(top: 96, leading: 8, bottom: 32, trailing: 8))
         .interactiveDismissDisabled(true)
