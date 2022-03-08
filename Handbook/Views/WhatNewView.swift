@@ -13,7 +13,7 @@ private struct Change {
 private var changes = [
     Change(icon: "doc", title: "增加复制功能", content: "长按法文可以选择复制"),
     Change(icon: "list.bullet.rectangle", title: "目录", content: "在可以用场景里，可以在右上角找到目录icon，点击即可查看法律目录。点击可以跳转到指定位置"),
-    Change(icon: "list.number", title: "分组方式", content: "你可以在设置设置中设置分组方式，按法律部门或者阶位排序"),
+    Change(icon: "list.number", title: "分组方式", content: "你可以在设置中调整分组方式，按法律部门或者阶位排序"),
 ]
 
 struct WhatNewView : View {
