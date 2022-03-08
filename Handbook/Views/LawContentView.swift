@@ -83,9 +83,9 @@ struct LawContentList: View {
 
     var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading){
+            LazyVStack(alignment: .leading, spacing: 8){
                 title
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing:0))
+                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing:0))
                 bodyList
             }
             .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
