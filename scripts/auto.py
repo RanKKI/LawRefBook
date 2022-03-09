@@ -3,6 +3,7 @@
 import json
 from uuid import uuid4
 import glob
+import shutil
 import functools
 import os
 import re
@@ -56,18 +57,17 @@ def addMissingLaw():
         if "laws" not in target:
             target["laws"] = []
         item = dict()
-        item["name"] = name
+        item["name"] = name.replace("中华人民共和国", "")
         item["level"] = level
         target["laws"].append(item)
 
     with open("./law.json", "w") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
-    
+
 
 def main():
     addMissingLaw()
     addUUID()
-
 
 if __name__ == "__main__":
     main()

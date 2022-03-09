@@ -9,7 +9,7 @@ struct LawContentLine: View {
     @State var text: String
     @State var showActions = false
 
-    func boldSection() -> Text {
+    var boldSection: Text {
         let arr = text.split(separator: " ")
         if arr.count == 1 {
             return Text(text)
@@ -18,7 +18,7 @@ struct LawContentLine: View {
     }
 
     var body: some View {
-        boldSection()
+        boldSection
             .contextMenu {
                 Button {
                     LawProvider.shared.favoriteContent(lawID, line: text)
