@@ -192,11 +192,10 @@
 			};
 			buildConfigurationList = 902DAE4F27C7CBC100926036 /* Build configuration list for PBXProject "law.handbook" */;
 			compatibilityVersion = "Xcode 13.0";
-			developmentRegion = en;
+			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
-				Base,
+				"zh-Hans",
 			);
 			mainGroup = 902DAE4B27C7CBC100926036;
 			productRefGroup = 902DAE5527C7CBC100926036 /* Products */;
