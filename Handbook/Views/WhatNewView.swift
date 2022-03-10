@@ -12,7 +12,7 @@ private struct Change {
 
 private var changes = [
     Change(icon: "heart", title: "收藏法条", content: "在法律法规内容界面，增加了收藏按钮。收藏后的法条法规将出现在主页列表最上面"),
-    Change(icon: "textformat.size", title: "自定义文字大小", content: "在设置界面，可以设置法律法规内容的现实大小"),
+    Change(icon: "textformat.size", title: "自定义文字大小", content: "在设置界面，可以设置法律法规内容的显示大小"),
 ]
 
 struct WhatNewView : View {
