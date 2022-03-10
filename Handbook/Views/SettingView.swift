@@ -17,7 +17,7 @@ let desc = """
 """
 
 let Contributors: [String] = [
-    // "@XXX"
+    "@文涛"
 ]
 let ContributorsText = String(format: "贡献者: %@", Contributors.isEmpty ? "欢迎你来贡献！" : Contributors.joined(separator: ","))
 

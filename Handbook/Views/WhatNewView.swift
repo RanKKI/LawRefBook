@@ -11,9 +11,8 @@ private struct Change {
 }
 
 private var changes = [
-    Change(icon: "doc", title: "增加复制功能", content: "长按法条可以选择复制"),
-    Change(icon: "list.bullet.rectangle", title: "目录", content: "在拥有目录的法律法规下，使用右上角的按钮即可打开目录，点击可以跳转到指定位置哦"),
-    Change(icon: "list.number", title: "分组方式", content: "可以在设置中调整分组方式，是按法律部门显示，还是法律阶位"),
+    Change(icon: "heart", title: "收藏法条", content: "在法律法规内容界面，增加了收藏按钮。收藏后的法条法规将出现在主页列表最上面"),
+    Change(icon: "textformat.size", title: "自定义文字大小", content: "在设置界面，可以设置法律法规内容的现实大小"),
 ]
 
 struct WhatNewView : View {
