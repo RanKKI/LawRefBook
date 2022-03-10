@@ -25,7 +25,7 @@ struct LawList: View {
 
     var body: some View {
         List {
-            if !law.favoriteUUID.isEmpty {
+            if searchText.isEmpty && !law.favoriteUUID.isEmpty {
                 Section(header: Text("收藏")) {
                     ForEach(law.favoriteUUID, id: \.self) { id  in
                         NaviLawLink(uuid: id)
@@ -43,7 +43,9 @@ struct LawList: View {
         }
         .searchable(text: $searchText, prompt: "宪法修正案")
         .onChange(of: searchText){ text in
-            law.filterLawList(text: text)
+            withAnimation {
+                law.filterLawList(text: text)
+            }
         }
     }
 }

@@ -57,20 +57,22 @@ class LawProvider: ObservableObject{
     }
 
     func filterLawList(text: String) {
-        let data = self.getLawList()
-        if text.isEmpty {
-            self.lawList = data
-        } else {
-            var ret: [[UUID]] = []
-            data.forEach {
-                let arr = $0.filter {
-                    getLawNameByUUID($0).contains(text)
+        DispatchQueue.main.async {
+            let data = self.getLawList()
+            if text.isEmpty {
+                self.lawList = data
+            } else {
+                var ret: [[UUID]] = []
+                data.forEach {
+                    let arr = $0.filter {
+                        self.getLawNameByUUID($0).contains(text)
+                    }
+                    if !arr.isEmpty {
+                        ret.append(arr)
+                    }
                 }
-                if !arr.isEmpty {
-                    ret.append(arr)
-                }
+                self.lawList = ret
             }
-            self.lawList = ret
         }
     }
 
