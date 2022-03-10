@@ -7,7 +7,7 @@ private let exampleLines = [
 ]
 
 private struct AdjustSteppter: View {
-    
+
     var title: String
     @Binding var value: Int
 

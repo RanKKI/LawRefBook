@@ -1,24 +1,42 @@
 import SwiftUI
 import CoreData
 
+private struct NaviLawLink : View {
+    var uuid: UUID
+    @ObservedObject var law  = LawProvider.shared
+    var body: some View {
+        NavigationLink {
+            LawContentView(lawID: uuid,
+                           content: law.getLawContent(uuid),
+                           isFav: law.getFavoriteState(uuid))
+            .onAppear {
+                law.getLawContent(uuid).load()
+            }
+        } label: {
+            Text(law.getLawNameByUUID(uuid))
+        }
+    }
+}
+
 struct LawList: View {
 
     @State var searchText = ""
     @ObservedObject var law  = LawProvider.shared
 
     var body: some View {
-        List(law.lawList, id: \.self) { ids  in
-            Section(header: Text(law.getCategoryName(ids[0]))) {
-                ForEach(ids, id: \.self) { uuid in
-                    NavigationLink {
-                        LawContentView(lawID: uuid,
-                                       content: law.getLawContent(uuid),
-                                       isFav: law.getFavoriteState(uuid))
-                        .onAppear {
-                            law.getLawContent(uuid).load()
-                        }
-                    } label: {
-                        Text(law.getLawNameByUUID(uuid))
+        List {
+            if !law.favoriteUUID.isEmpty {
+                Section(header: Text("收藏")) {
+                    ForEach(law.favoriteUUID, id: \.self) { id  in
+                        NaviLawLink(uuid: id)
+                    }
+
+                }
+            }
+            ForEach(law.lawList, id: \.self) { ids  in
+                Section(header: Text(law.getCategoryName(ids[0]))) {
+                    ForEach(ids, id: \.self) { uuid in
+                        NaviLawLink(uuid: uuid)
                     }
                 }
             }

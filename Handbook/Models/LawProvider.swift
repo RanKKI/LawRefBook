@@ -120,11 +120,22 @@ class LawProvider: ObservableObject{
         }
     }
 
+    @AppStorage("favoriteLaws")
+    var favoriteUUID: [UUID] = []
+
     func getFavoriteState(_ uuid: UUID) -> Bool {
-        return false // TODO
+        return favoriteUUID.contains(uuid)
     }
 
     func favoriteLaw(_ uuid: UUID) -> Bool {
-        return false // TODO
+        if favoriteUUID.contains(uuid) {
+            if let idx = favoriteUUID.firstIndex(of: uuid) {
+                favoriteUUID.remove(at: idx)
+            }
+            return false
+        } else {
+            favoriteUUID.append(uuid)
+            return true
+        }
     }
 }

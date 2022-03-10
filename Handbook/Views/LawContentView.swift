@@ -43,7 +43,7 @@ private struct LawLineView: View {
 
     @AppStorage("font_content")
     var contentFontSize: Int = 17
-    
+
     var lawID: UUID
     @ObservedObject var law: LawContent
 
@@ -172,9 +172,11 @@ struct LawContentView: View {
                         sheetManager.sheetState = .toc
                     }
                 }
+                IconButton(icon: isFav ? "heart.slash" : "heart") {
+                    isFav = LawProvider.shared.favoriteLaw(lawID)
+                }
                 IconButton(icon: "info.circle") {
                     sheetManager.sheetState = .info
-
                 }
             }
         }
