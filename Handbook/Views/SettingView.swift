@@ -41,6 +41,11 @@ struct SettingView: View {
                     ForEach(LawGroupingMethod.allCases, id: \.self) {
                         Text($0.rawValue)
                    }
+                }   
+                NavigationLink {
+                    FontSettingView()
+                } label: {
+                    Text("字体设置")
                 }
             }
             Section(header: Text("开发者"), footer: Text(ContributorsText)){

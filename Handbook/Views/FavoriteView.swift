@@ -48,7 +48,7 @@ struct FavoriteView: View {
                                             .foregroundColor(.red)
                                     }
                                 }
-                                
+
                         }
                     }
                 }

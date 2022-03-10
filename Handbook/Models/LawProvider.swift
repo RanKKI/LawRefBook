@@ -35,7 +35,7 @@ class LawProvider: ObservableObject{
         container.viewContext.shouldDeleteInaccessibleFaults = true
         return container
     }()
-    
+
     @Published var lawList: [[UUID]] = []
 
     @AppStorage("defaultGroupingMethod", store: .standard)
@@ -51,7 +51,7 @@ class LawProvider: ObservableObject{
         }
         return arr.map {$0.laws.map {$0.id} }
     }
-    
+
     func loadLawList() {
         self.lawList = self.getLawList()
     }

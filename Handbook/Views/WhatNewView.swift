@@ -17,9 +17,9 @@ private var changes = [
 ]
 
 struct WhatNewView : View {
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         VStack(spacing: 36) {
             Text("看看有什么更新!")

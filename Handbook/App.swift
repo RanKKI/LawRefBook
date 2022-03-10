@@ -5,7 +5,7 @@ import SwiftUI
 struct MainApp: App {
 
     @State var showNewPage = false
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -28,7 +28,7 @@ struct MainApp: App {
             UserDefaults.standard.set(curVersion, forKey: "lastVersion")
         }
     }
-    
+
     private func checkRunTimes(){
         let launchTime = UserDefaults.standard.integer(forKey: "launchTimes")
         if launchTime == 2 {

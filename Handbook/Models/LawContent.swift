@@ -104,7 +104,7 @@ class LawContent: ObservableObject {
                 self.Body.append(TextContent(text: title, line: no, indent: indent))
                 continue
             }
-            
+
             if self.Body.isEmpty {
                 self.Body.append(TextContent(text: "", line: no, indent: 1))
             }

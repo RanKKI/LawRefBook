@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3427D5CAD200B42167 /* TOCView.swift */; };
 		1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3627D6277F00B42167 /* WhatNewView.swift */; };
+		1632AD3F27D8719600B42167 /* SettingFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* SettingFont.swift */; };
 		16BA35C727CDDE8700694880 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C627CDDE8700694880 /* Util.swift */; };
 		16D28E9A27CF803D001FB6B8 /* law.json in Resources */ = {isa = PBXBuildFile; fileRef = 16D28E9927CF803D001FB6B8 /* law.json */; };
 		16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		1632AD3427D5CAD200B42167 /* TOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCView.swift; sourceTree = "<group>"; };
 		1632AD3627D6277F00B42167 /* WhatNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatNewView.swift; sourceTree = "<group>"; };
+		1632AD3E27D8719600B42167 /* SettingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFont.swift; sourceTree = "<group>"; };
 		16BA35C627CDDE8700694880 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		16D28E9927CF803D001FB6B8 /* law.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = law.json; sourceTree = "<group>"; };
 		16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
 				1632AD3627D6277F00B42167 /* WhatNewView.swift */,
+				1632AD3E27D8719600B42167 /* SettingFont.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
 				900EBCEA27D3621700E20FE4 /* Law.swift in Sources */,
 				902DAE5827C7CBC100926036 /* App.swift in Sources */,
+				1632AD3F27D8719600B42167 /* SettingFont.swift in Sources */,
 				16BA35C727CDDE8700694880 /* Util.swift in Sources */,
 				16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */,
 				900EBCE827D361AE00E20FE4 /* LocalProvider.swift in Sources */,

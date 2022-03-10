@@ -2,17 +2,17 @@ import SwiftUI
 import CoreData
 
 struct LawList: View {
-    
+
     @State var searchText = ""
     @ObservedObject var law  = LawProvider.shared
-    
+
     func content(uuid: UUID) -> some View {
         let content = LawProvider.shared.getLawContent(uuid)
         return LawContentView(lawID: uuid, content: content, isFav: LawProvider.shared.getFavoriteState(uuid)).onAppear {
             content.load()
         }
     }
-    
+
     var body: some View {
         List(law.lawList, id: \.self) { ids  in
             Section(header: Text(LawProvider.shared.getCategoryName(ids[0]))) {
@@ -31,15 +31,15 @@ struct LawList: View {
 }
 
 struct ContentView: View {
-    
+
     class SheetMananger: ObservableObject{
-        
+
         enum SheetState {
             case none
             case favorite
             case setting
         }
-        
+
         @Published var isShowingSheet = false
         @Published var sheetState: SheetState = .none {
             didSet {
@@ -47,9 +47,9 @@ struct ContentView: View {
             }
         }
     }
-    
+
     @StateObject var sheetManager = SheetMananger()
-    
+
     var body: some View {
         NavigationView{
             LawList()
@@ -80,5 +80,5 @@ struct ContentView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
-    
+
 }

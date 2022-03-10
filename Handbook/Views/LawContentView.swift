@@ -1,24 +1,58 @@
 import Foundation
 import SwiftUI
 
-struct LawContentLine: View {
+struct LawContentTitleView: View {
 
-    var lawID: UUID
-    @ObservedObject var law: LawContent
+    var text: String
+    var body: some View {
+        Text(text)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .multilineTextAlignment(.center)
+            .font(.title2)
+    }
+}
 
-    @State var text: String
-    @State var showActions = false
 
-    var boldSection: Text {
+struct LawContentHeaderView: View {
+
+    var text: String
+    var indent: Int
+    var body: some View {
+        Text(text)
+            .frame(maxWidth: .infinity)
+            .multilineTextAlignment(.center)
+            .font(indent == 1 ? .headline : .subheadline)
+            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+    }
+}
+
+struct LawContentLineView: View {
+
+    var text: String
+    var body: some View {
         let arr = text.split(separator: " ")
         if arr.count == 1 {
             return Text(text)
         }
         return Text(arr[0]).bold() + Text(" " + arr[1])
     }
+}
+
+
+private struct LawLineView: View {
+
+    @AppStorage("font_content")
+    var contentFontSize: Int = 17
+    
+    var lawID: UUID
+    @ObservedObject var law: LawContent
+
+    @State var text: String
+    @State var showActions = false
 
     var body: some View {
-        boldSection
+        LawContentLineView(text: text)
+            .font(.system(size: CGFloat(contentFontSize)))
             .contextMenu {
                 Button {
                     LawProvider.shared.favoriteContent(lawID, line: text)
@@ -50,10 +84,7 @@ struct LawContentList: View {
     var title: some View {
         VStack {
             ForEach($obj.Titles.indices, id: \.self) { i in
-                Text(obj.Titles[i])
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .multilineTextAlignment(.center)
-                    .font(i == 0 ? .title2 : .title2)
+                LawContentTitleView(text: obj.Titles[i])
             }
         }
     }
@@ -62,18 +93,15 @@ struct LawContentList: View {
         ForEach(obj.Content, id: \.id) { (content: TextContent) in
             if self.searchText.isEmpty || (!self.searchText.isEmpty && !content.children.isEmpty){
                 if !content.text.isEmpty {
-                    Text(content.text)
-                        .frame(maxWidth: .infinity)
-                        .multilineTextAlignment(.center)
+                    LawContentHeaderView(text: content.text, indent: content.indent)
                         .id(content.line)
-                        .font(content.indent == 1 ? .headline : .subheadline)
                         .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                 }
             }
             if !content.children.isEmpty {
                 Divider()
                 ForEach(Array(zip(content.children.indices, content.children)), id: \.0) { (i: Int, txt: String) in
-                    LawContentLine(lawID: lawID, law: obj, text: txt)
+                    LawLineView(lawID: lawID, law: obj, text: txt)
                         .id(content.line + i + 1)
                     Divider()
                 }
