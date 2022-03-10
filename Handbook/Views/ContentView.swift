@@ -6,19 +6,19 @@ struct LawList: View {
     @State var searchText = ""
     @ObservedObject var law  = LawProvider.shared
 
-    func content(uuid: UUID) -> some View {
-        let content = LawProvider.shared.getLawContent(uuid)
-        return LawContentView(lawID: uuid, content: content, isFav: LawProvider.shared.getFavoriteState(uuid)).onAppear {
-            content.load()
-        }
-    }
-
     var body: some View {
         List(law.lawList, id: \.self) { ids  in
-            Section(header: Text(LawProvider.shared.getCategoryName(ids[0]))) {
+            Section(header: Text(law.getCategoryName(ids[0]))) {
                 ForEach(ids, id: \.self) { uuid in
-                    NavigationLink(destination: content(uuid: uuid)){
-                        Text( LawProvider.shared.getLawNameByUUID(uuid))
+                    NavigationLink {
+                        LawContentView(lawID: uuid,
+                                       content: law.getLawContent(uuid),
+                                       isFav: law.getFavoriteState(uuid))
+                        .onAppear {
+                            law.getLawContent(uuid).load()
+                        }
+                    } label: {
+                        Text(law.getLawNameByUUID(uuid))
                     }
                 }
             }
