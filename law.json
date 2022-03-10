@@ -254,6 +254,53 @@
         "id": "8c83b678-ffa0-4a60-b389-f464f3b70f55"
     },
     {
+        "category": "经济法",
+        "folder": "经济法",
+        "laws": [
+            {
+                "name": "出口管制法",
+                "level": "法律",
+                "id": "1cef0cb4-af9b-49d9-a1b4-2946856bd09d"
+            },
+            {
+                "name": "动物防疫法",
+                "level": "法律",
+                "id": "bb963e49-e8ec-445b-bd03-b87fcc70803a"
+            },
+            {
+                "name": "契税法",
+                "level": "法律",
+                "id": "e3f60f6a-60c9-45d8-8d06-109175dfa8ea"
+            },
+            {
+                "name": "反不正当竞争法",
+                "level": "法律",
+                "id": "f4001abf-77d2-4cf7-ac79-bf2bb5c5c248"
+            },
+            {
+                "name": "印花税法",
+                "level": "法律",
+                "id": "080d10e4-d7a3-47ac-97cf-b3e67d2ef205"
+            },
+            {
+                "name": "审计法",
+                "level": "法律",
+                "id": "d012bf5a-2786-4e1c-a37a-7c5ee0734ee2"
+            },
+            {
+                "name": "反食品浪费法",
+                "level": "法律",
+                "id": "cd0b390e-4ed1-4502-adbe-6a59782e1fa0"
+            },
+            {
+                "name": "民用航空法",
+                "level": "法律",
+                "id": "207ed1f7-154b-4642-8331-7510dcf000ab"
+            }
+        ],
+        "id": "8f7b6ac2-165e-49e5-bd05-a8515f76b558"
+    },
+    {
         "category": "刑法及刑法修正案",
         "folder": "刑法",
         "laws": [
@@ -488,52 +535,5 @@
             }
         ],
         "id": "6604aafc-4a93-4795-bc98-aebc3ef1e367"
-    },
-    {
-        "category": "经济法",
-        "folder": "经济法",
-        "laws": [
-            {
-                "name": "出口管制法",
-                "level": "法律",
-                "id": "1cef0cb4-af9b-49d9-a1b4-2946856bd09d"
-            },
-            {
-                "name": "动物防疫法",
-                "level": "法律",
-                "id": "bb963e49-e8ec-445b-bd03-b87fcc70803a"
-            },
-            {
-                "name": "契税法",
-                "level": "法律",
-                "id": "e3f60f6a-60c9-45d8-8d06-109175dfa8ea"
-            },
-            {
-                "name": "反不正当竞争法",
-                "level": "法律",
-                "id": "f4001abf-77d2-4cf7-ac79-bf2bb5c5c248"
-            },
-            {
-                "name": "印花税法",
-                "level": "法律",
-                "id": "080d10e4-d7a3-47ac-97cf-b3e67d2ef205"
-            },
-            {
-                "name": "审计法",
-                "level": "法律",
-                "id": "d012bf5a-2786-4e1c-a37a-7c5ee0734ee2"
-            },
-            {
-                "name": "反食品浪费法",
-                "level": "法律",
-                "id": "cd0b390e-4ed1-4502-adbe-6a59782e1fa0"
-            },
-            {
-                "name": "民用航空法",
-                "level": "法律",
-                "id": "207ed1f7-154b-4642-8331-7510dcf000ab"
-            }
-        ],
-        "id": "8f7b6ac2-165e-49e5-bd05-a8515f76b558"
     }
 ]
