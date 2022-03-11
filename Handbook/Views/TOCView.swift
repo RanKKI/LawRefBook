@@ -6,7 +6,7 @@ struct TOCList: View {
     var content: TocListData
 
     @Binding var sheetState: LawContentView.SheetMananger.SheetState
-    @State private var isExpand = true
+    @State private var isExpand = false
     @Binding var scrollID: Int?
 
     var body: some View {

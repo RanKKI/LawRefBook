@@ -109,21 +109,23 @@ class LawContent: ObservableObject {
                 self.Body.append(TextContent(text: "", line: no, indent: 1))
             }
 
-            self.parseContent(&Body[Body.count - 1].children, text, isFix: isFix)
+            self.parseContent(&Body[Body.count - 1].children, text, isFix: isFix, no: no)
         }
 
         self.Content = Body
     }
 
-    func parseContent(_ children: inout [String], _ text: String, isFix: Bool = false) {
+    func parseContent(_ children: inout [TextContent.Content], _ text: String, isFix: Bool, no: Int) {
         if children.isEmpty || (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.+?条", options: .regularExpression) != nil ){
-            children.append(text)
+//            children.append(text)
+            children.append(TextContent.Content(no, text))
         } else {
             let newLine = text.trimmingCharacters(in: ["-"," "])
             if newLine.count > 100 {
-                children[children.count - 1] = children.last!.addNewLine(str: "")
+                children[children.count - 1].text = children[children.count - 1].text.addNewLine(str: "")
             }
-            children[children.count - 1] = children.last!.addNewLine(str: newLine)
+            children[children.count - 1].text = children[children.count - 1].text.addNewLine(str: newLine)
+    
         }
     }
 
@@ -135,9 +137,10 @@ class LawContent: ObservableObject {
         DispatchQueue.main.async {
             var newBody: [TextContent] = []
             self.Body.forEach { val in
-                let children = val.children.filter { $0.contains(text) }
+                let children = val.children.filter { $0.text.contains(text) }
                 newBody.append(TextContent(id: val.id, text: val.text, children: children, line: val.line, indent: val.indent))
             }
+            print(newBody)
             self.Content = newBody
         }
     }

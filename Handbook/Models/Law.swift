@@ -18,9 +18,21 @@ class LawCategory: Codable {
 }
 
 struct TextContent : Identifiable {
+    
+    class Content: Identifiable{
+        var id: UUID = UUID()
+        var line: Int
+        var text: String
+        
+        init(_ line: Int, _ text: String) {
+            self.line = line
+            self.text = text
+        }
+    }
+    
     var id: UUID = UUID()
     var text: String
-    var children: [String] = []
+    var children: [Content] = []
     var line: Int
     var indent: Int
 }

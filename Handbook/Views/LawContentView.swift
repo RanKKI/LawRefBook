@@ -103,9 +103,9 @@ struct LawContentList: View {
             }
             if !content.children.isEmpty {
                 Divider()
-                ForEach(Array(zip(content.children.indices, content.children)), id: \.0) { (i: Int, txt: String) in
-                    LawLineView(lawID: lawID, law: obj, text: txt)
-                        .id(content.line + i + 1)
+                ForEach(content.children, id:\.id) {  line in
+                    LawLineView(lawID: lawID, law: obj, text: line.text)
+                        .id(line.line + 1)
                     Divider()
                 }
             }
