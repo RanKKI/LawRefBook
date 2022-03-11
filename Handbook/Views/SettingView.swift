@@ -63,6 +63,13 @@ struct SettingView: View {
                 }
                 Text("[在 GitHub 上贡献](https://github.com/RanKKI/LawRefBook)")
             }
+            Section(header: Text("其他")) {
+                NavigationLink {
+                    LicenseView()
+                } label: {
+                    Text("LICENSE")
+                }
+            }
             Text(desc)
                 .listRowBackground(Color.clear)
                 .font(.footnote)

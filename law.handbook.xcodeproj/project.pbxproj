@@ -11,6 +11,8 @@
 		1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3627D6277F00B42167 /* WhatNewView.swift */; };
 		1632AD3F27D8719600B42167 /* SettingFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* SettingFont.swift */; };
 		16BA35C727CDDE8700694880 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C627CDDE8700694880 /* Util.swift */; };
+		16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C3362B27DB182500D3F1F0 /* LicenseView.swift */; };
+		16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 16C3362D27DB18D700D3F1F0 /* LICENSE */; };
 		16D28E9A27CF803D001FB6B8 /* law.json in Resources */ = {isa = PBXBuildFile; fileRef = 16D28E9927CF803D001FB6B8 /* law.json */; };
 		16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */; };
 		900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */; };
@@ -35,6 +37,8 @@
 		1632AD3627D6277F00B42167 /* WhatNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatNewView.swift; sourceTree = "<group>"; };
 		1632AD3E27D8719600B42167 /* SettingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFont.swift; sourceTree = "<group>"; };
 		16BA35C627CDDE8700694880 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		16C3362B27DB182500D3F1F0 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
+		16C3362D27DB18D700D3F1F0 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		16D28E9927CF803D001FB6B8 /* law.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = law.json; sourceTree = "<group>"; };
 		16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseSheetItem.swift; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
 				1632AD3627D6277F00B42167 /* WhatNewView.swift */,
 				1632AD3E27D8719600B42167 /* SettingFont.swift */,
+				16C3362B27DB182500D3F1F0 /* LicenseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -133,6 +138,7 @@
 		902DAE4B27C7CBC100926036 = {
 			isa = PBXGroup;
 			children = (
+				16C3362D27DB18D700D3F1F0 /* LICENSE */,
 				902DAE5527C7CBC100926036 /* Products */,
 				900EBCF127D38AFF00E20FE4 /* Handbook */,
 				902DAE5D27C7CBC200926036 /* Preview Content */,
@@ -219,6 +225,7 @@
 				9035983827C91E0300C8D9E7 /* 法律法规 in Resources */,
 				902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */,
 				902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */,
+				16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +240,7 @@
 				900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */,
 				902DAE5A27C7CBC100926036 /* ContentView.swift in Sources */,
 				900EBCE627D35FDE00E20FE4 /* LawProvider.swift in Sources */,
+				16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */,
 				1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,

@@ -12,6 +12,13 @@ class LocalProvider {
         }
         return ret
     }()
+    
+    lazy var ANIT996_LICENSE: String = {
+        if let data = self.readLocalFile(forName: "LICENSE", type: "") {
+            return String(decoding: data, as: UTF8.self)
+        }
+        return ""
+    }()
 
     func getLaw(_ uuid: UUID) -> Law? {
         return lawMap[uuid]
