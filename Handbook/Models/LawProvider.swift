@@ -11,6 +11,7 @@ private let ArrayLevelSort = [
     "经济特区法规",
     "自治条例",
     "单行条例",
+    "其他",
 ]
 
 class LawProvider: ObservableObject{
