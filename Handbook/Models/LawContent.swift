@@ -119,7 +119,11 @@ class LawContent: ObservableObject {
         if children.isEmpty || (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.+?条", options: .regularExpression) != nil ){
             children.append(text)
         } else {
-            children[children.count - 1] = children.last!.addNewLine(str: text.trimmingCharacters(in: ["-"," "]))
+            let newLine = text.trimmingCharacters(in: ["-"," "])
+            if newLine.count > 100 {
+                children[children.count - 1] = children.last!.addNewLine(str: "")
+            }
+            children[children.count - 1] = children.last!.addNewLine(str: newLine)
         }
     }
 
