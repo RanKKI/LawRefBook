@@ -14,7 +14,7 @@ struct MainApp: App {
                     WhatNewView()
                 }
                 .onAppear {
-                    self.checkVersionUpdate()
+//                    self.checkVersionUpdate()
                     LawProvider.shared.loadLawList()
                 }
         }
