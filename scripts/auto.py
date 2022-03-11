@@ -64,8 +64,13 @@ def addMissingLaw():
     with open("./law.json", "w") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
+def renameFiles():
+    for line in glob.glob("法律法规/**/*.md", recursive=True):
+        newPath = line.replace("/中华人民共和国", "")
+        shutil.move(line, newPath)
 
 def main():
+    renameFiles()
     addMissingLaw()
     addUUID()
 
