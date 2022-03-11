@@ -10,13 +10,17 @@ struct LawInfoPage: View {
     var body: some View {
         List(LawProvider.shared.getLawInfo(lawID), id: \.id){ info in
             if info.header.isEmpty {
-                Text(info.content)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .multilineTextAlignment(.center)
-                    .listRowSeparator(.hidden)
+                if let text = try? AttributedString(markdown: info.content) {
+                    Text(text)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                        .listRowSeparator(.hidden)
+                        .textSelection(.enabled)
+                }
             }else{
                 Section(header: Text(info.header)){
                     Text(info.content)
+                        .textSelection(.enabled)
                 }
             }
         }

@@ -31,7 +31,10 @@ struct LawContentLineView: View {
     var text: String
     var body: some View {
         let arr = text.split(separator: " ")
-        if arr.count == 1 {
+        if arr.count == 1{
+            return Text(text)
+        }
+        if arr[0] .range(of: "^第.+?条", options: .regularExpression) == nil {
             return Text(text)
         }
         return Text(arr[0]).bold() + Text(" " + arr[1])
