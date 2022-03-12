@@ -72,6 +72,17 @@ def renameFiles():
         newPath = line.replace("/中华人民共和国", "")
         shutil.move(line, newPath)
 
+# 用于找到 “第x条" 或者 "第x条之一"
+num = "[一二三四五六七八九十]"
+title_re = "^(第"+num+"{1,6}?条(?:之"+num+"{1,2})*\s*)"
+
+def cleanTitle(line: str):
+
+    def f(matched):
+        return matched.group(0).strip() + " "
+
+    return re.sub(title_re, f, line)
+
 def clean():
     for filename in glob.glob("法律法规/**/*.md", recursive=True):
         print(filename)
@@ -89,13 +100,25 @@ def clean():
             if not flag:
                 continue
 
+            line = cleanTitle(line)
+            data[i] = line
+
             spliced = line.split(" ", 1)
             if len(spliced) == 2 and " " in spliced[1]:
                 spliced[1] = spliced[1].replace(" ", "")
                 data[i] = " ".join(spliced)
         with open(filename, "w") as f:
             f.writelines(data)
+
+def test():
+    assert "第一条 测试" == cleanTitle("第一条测试")
+    assert "第一条 测试" == cleanTitle("第一条 测试")
+    assert "第一二三四五条 测试" == cleanTitle("第一二三四五条测试")
+    assert "第一条之一 测试" == cleanTitle("第一条之一测试")
+    assert "第一条之一 测试" == cleanTitle("第一条之一 测试")
+
 def main():
+    test()
     renameFiles()
     addMissingLaw()
     addUUID()
