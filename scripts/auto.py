@@ -1,6 +1,9 @@
 # 用于给 law.json 增加 id
 
 import json
+from operator import truediv
+from pickle import TRUE
+from tkinter import Spinbox
 from uuid import uuid4
 import glob
 import shutil
@@ -37,7 +40,7 @@ def addMissingLaw():
         ret = dict()
         data.append(ret)
         return ret
-    
+
     ignorePattern = ".+民法典|.+刑法"
     allLaws = set(map(lambda x: x["name"], functools.reduce(lambda a,b : a + b ,map(lambda x:x["laws"], data))))
     for line in glob.glob("./法律法规/**/*.md", recursive=True):
@@ -69,10 +72,34 @@ def renameFiles():
         newPath = line.replace("/中华人民共和国", "")
         shutil.move(line, newPath)
 
+def clean():
+    for filename in glob.glob("法律法规/**/*.md", recursive=True):
+        print(filename)
+        with open(filename, "r") as f:
+            data = f.readlines()
+        flag = False
+        for i, line in enumerate(data):
+            if not line.strip():
+                continue
+            if line.startswith("#"):
+                continue
+            if line.startswith("<!-- INFO END -->"):
+                flag = TRUE
+                continue
+            if not flag:
+                continue
+
+            spliced = line.split(" ", 1)
+            if len(spliced) == 2 and " " in spliced[1]:
+                spliced[1] = spliced[1].replace(" ", "")
+                data[i] = " ".join(spliced)
+        with open(filename, "w") as f:
+            f.writelines(data)
 def main():
     renameFiles()
     addMissingLaw()
     addUUID()
+    clean()
 
 if __name__ == "__main__":
     main()
