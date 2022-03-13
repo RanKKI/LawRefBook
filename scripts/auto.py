@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # 用于给 law.json 增加 id
 
 import json
