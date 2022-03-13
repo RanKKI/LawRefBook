@@ -31,6 +31,8 @@ struct FontSettingView: View {
 
     @AppStorage("font_content")
     var contentFontSize: Int = 17
+    
+    @State private var searchText = ""
 
     var body: some View {
 
@@ -43,7 +45,7 @@ struct FontSettingView: View {
                 LawContentHeaderView(text: "第一章  一般规定", indent: 2)
                 Divider()
                 ForEach(exampleLines, id: \.self) { text in
-                    LawContentLineView(text: text)
+                    LawContentLineView(text: text, searchText: $searchText)
                         .font(.system(size: CGFloat(contentFontSize)))
                     Divider()
                 }

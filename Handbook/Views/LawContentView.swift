@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 struct LawContentTitleView: View {
-
+    
     var text: String
     var body: some View {
         Text(text)
@@ -14,7 +14,7 @@ struct LawContentTitleView: View {
 
 
 struct LawContentHeaderView: View {
-
+    
     var text: String
     var indent: Int
     var body: some View {
@@ -27,35 +27,54 @@ struct LawContentHeaderView: View {
 }
 
 struct LawContentLineView: View {
-
+    
+    @AppStorage("font_content")
+    var contentFontSize: Int = 17
+    
     var text: String
+    @Binding var searchText: String
+    
+    func highlightText(_ str: Substring) -> Text {
+        guard !str.isEmpty && !searchText.isEmpty else { return Text(str) }
+        
+        var result: Text!
+        let parts = str.components(separatedBy: searchText)
+        for i in parts.indices {
+            result = (result == nil ? Text(parts[i]) : result + Text(parts[i]))
+            if i != parts.count - 1 {
+                result = result + Text(searchText).font(.system(size: CGFloat(contentFontSize + 2))).bold()
+            }
+        }
+        return result ?? Text(str)
+    }
+    
     var body: some View {
-        let arr = text.split(separator: " ")
-        if arr.count == 1{
-            return Text(text)
-        }
-        if arr[0] .range(of: "^第.+?条", options: .regularExpression) == nil {
-            return Text(text)
-        }
-        return Text(arr[0]).bold() + Text(" " + arr[1])
+        Group {
+            let arr = text.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
+            if arr.count == 1 || arr[0].range(of: "^第.+?条", options: .regularExpression) == nil {
+                let range = text.startIndex..<text.endIndex
+                highlightText(text[range])
+            }else{
+                Text(arr[0]).bold() + Text(" ") + highlightText(arr[1])
+            }
+        }.font(.system(size: CGFloat(contentFontSize)))
     }
 }
 
 
 private struct LawLineView: View {
-
-    @AppStorage("font_content")
-    var contentFontSize: Int = 17
-
+    
     var lawID: UUID
     @ObservedObject var law: LawContent
-
+    
     @State var text: String
     @State var showActions = false
-
+    
+    @Binding var searchText: String
+    
     var body: some View {
-        LawContentLineView(text: text)
-            .font(.system(size: CGFloat(contentFontSize)))
+        LawContentLineView(text: text, searchText: $searchText)
+            
             .contextMenu {
                 Button {
                     LawProvider.shared.favoriteContent(lawID, line: text)
@@ -78,12 +97,12 @@ private struct LawLineView: View {
 }
 
 struct LawContentList: View {
-
+    
     var lawID: UUID
     @ObservedObject var obj: LawContent
     @State var content: [TextContent] = []
     @State var searchText = ""
-
+    
     var title: some View {
         VStack {
             ForEach($obj.Titles.indices, id: \.self) { i in
@@ -91,7 +110,7 @@ struct LawContentList: View {
             }
         }
     }
-
+    
     var bodyList: some View {
         ForEach(obj.Content, id: \.id) { (content: TextContent) in
             if self.searchText.isEmpty || (!self.searchText.isEmpty && !content.children.isEmpty){
@@ -104,14 +123,14 @@ struct LawContentList: View {
             if !content.children.isEmpty {
                 Divider()
                 ForEach(content.children, id:\.id) {  line in
-                    LawLineView(lawID: lawID, law: obj, text: line.text)
+                    LawLineView(lawID: lawID, law: obj, text: line.text, searchText: $searchText)
                         .id(line.line + 1)
                     Divider()
                 }
             }
         }
     }
-
+    
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 8){
@@ -129,15 +148,15 @@ struct LawContentList: View {
 }
 
 struct LawContentView: View {
-
+    
     class SheetMananger: ObservableObject{
-
+        
         enum SheetState {
             case none
             case info
             case toc
         }
-
+        
         @Published var isShowingSheet = false
         @Published var sheetState: SheetState = .none {
             didSet {
@@ -147,15 +166,15 @@ struct LawContentView: View {
             }
         }
     }
-
+    
     @StateObject var sheetManager = SheetMananger()
-
+    
     var lawID: UUID
     @ObservedObject var content: LawContent
-
+    
     @State var isFav = false
     @State private var scrollTarget: Int?
-
+    
     var body: some View{
         ScrollViewReader { scrollProxy in
             LawContentList(lawID: lawID, obj: content)

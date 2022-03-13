@@ -140,7 +140,6 @@ class LawContent: ObservableObject {
                 let children = val.children.filter { $0.text.contains(text) }
                 newBody.append(TextContent(id: val.id, text: val.text, children: children, line: val.line, indent: val.indent))
             }
-            print(newBody)
             self.Content = newBody
         }
     }
