@@ -42,7 +42,7 @@ struct LawContentLineView: View {
         for i in parts.indices {
             result = (result == nil ? Text(parts[i]) : result + Text(parts[i]))
             if i != parts.count - 1 {
-                result = result + Text(searchText).font(.system(size: CGFloat(contentFontSize + 2))).bold()
+                result = result + Text(searchText).font(.system(size: CGFloat(contentFontSize + 2))).bold().foregroundColor(Color.accentColorg)
             }
         }
         return result ?? Text(str)
