@@ -146,7 +146,7 @@ struct LawContentList: View {
         .onChange(of: searchText) { text in
             obj.filterText(text: searchText)
         }
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "当前法律内搜索")
     }
 }
 

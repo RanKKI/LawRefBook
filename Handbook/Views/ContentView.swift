@@ -41,7 +41,7 @@ struct LawList: View {
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "宪法修正案")
+        .searchable(text: $searchText, prompt: "搜索")
         .onChange(of: searchText){ text in
             withAnimation {
                 law.filterLawList(text: text)
