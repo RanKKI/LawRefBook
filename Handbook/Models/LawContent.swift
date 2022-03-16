@@ -25,6 +25,7 @@ class LawContent: ObservableObject {
     var folder: String
 
     private var loaded: Bool = false
+    private var forceBreak: Bool = false
 
     init(_ filename: String, _ folder: String){
         self.filename = filename
@@ -108,6 +109,11 @@ class LawContent: ObservableObject {
             if self.Body.isEmpty {
                 self.Body.append(TextContent(text: "", line: no, indent: 1))
             }
+            
+            if text == "<!-- FORCE BREAK -->" {
+                self.forceBreak = true
+                continue
+            }
 
             self.parseContent(&Body[Body.count - 1].children, text, isFix: isFix, no: no)
         }
@@ -115,9 +121,16 @@ class LawContent: ObservableObject {
         self.Content = Body
     }
 
+    func isNewLine(text: String, isFix: Bool) -> Bool {
+        if self.forceBreak {
+            self.forceBreak = false
+            return true
+        }
+        return (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.+?条", options: .regularExpression) != nil)
+    }
+
     func parseContent(_ children: inout [TextContent.Content], _ text: String, isFix: Bool, no: Int) {
-        if children.isEmpty || (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.+?条", options: .regularExpression) != nil ){
-//            children.append(text)
+        if children.isEmpty || isNewLine(text: text, isFix: isFix) {
             children.append(TextContent.Content(no, text))
         } else {
             let newLine = text.trimmingCharacters(in: ["-"," "])
@@ -125,7 +138,6 @@ class LawContent: ObservableObject {
                 children[children.count - 1].text = children[children.count - 1].text.addNewLine(str: "")
             }
             children[children.count - 1].text = children[children.count - 1].text.addNewLine(str: newLine)
-    
         }
     }
 

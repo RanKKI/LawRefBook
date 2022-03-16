@@ -57,7 +57,10 @@ struct LawContentLineView: View {
             }else{
                 Text(arr[0]).bold() + Text(" ") + highlightText(arr[1])
             }
-        }.font(.system(size: CGFloat(contentFontSize)))
+        }
+        .font(.system(size: CGFloat(contentFontSize)))
+        .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+        .background(Color.white)
     }
 }
 
@@ -133,7 +136,7 @@ struct LawContentList: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 8){
+            LazyVStack(alignment: .leading, spacing: 4){
                 title
                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing:0))
                 bodyList
