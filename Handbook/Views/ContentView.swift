@@ -1,7 +1,7 @@
 import SwiftUI
 import CoreData
 
-private struct NaviLawLink : View {
+struct NaviLawLink : View {
     var uuid: UUID
     @ObservedObject var law  = LawProvider.shared
     var body: some View {

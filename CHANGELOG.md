@@ -13,6 +13,7 @@
 ## [Unreleased]
 ### Added
  - 支持强制换行
+ - 相关法律法规
 
 ### Changed
  - 长按法条的显示

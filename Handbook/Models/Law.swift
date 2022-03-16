@@ -7,6 +7,7 @@ class Law: Codable {
     var level: String
     var filename: String?
 
+    var links: [UUID]?
     var cateogry: LawCategory?
 }
 
@@ -15,6 +16,8 @@ class LawCategory: Codable {
     var laws: [Law]
     var id: UUID
     var folder: String?
+    
+    var links: [UUID]? // 该目录下所有法律都会继承这个
 }
 
 struct TextContent : Identifiable {

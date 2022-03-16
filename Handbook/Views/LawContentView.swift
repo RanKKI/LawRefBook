@@ -216,7 +216,7 @@ struct LawContentView: View {
                     TableOfContentView(obj: LawProvider.shared.getLawContent(lawID), sheetState: $sheetManager.sheetState, scrollID: $scrollTarget)
                         .navigationBarTitle("目录", displayMode: .inline)
                 }
-            }
+            }.navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

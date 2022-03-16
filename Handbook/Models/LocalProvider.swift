@@ -36,11 +36,57 @@ class LocalProvider {
                         $0.cateogry = category
                     }
                 }
+                self.analyzeLinks()
             }
         } catch {
             print("decode error", error)
         }
         return self.lawList
+    }
+    
+    private func analyzeLinks(){
+        let laws = self.lawList.flatMap { $0.laws }
+        var linkMap = [UUID: [UUID]]()
+        
+        for law in laws {
+            guard let cateogry = law.cateogry else { continue }
+            guard let cateogryLinks = cateogry.links else { continue }
+            if var arr = linkMap[law.id] {
+                arr.append(contentsOf: cateogryLinks.filter { !arr.contains($0) })
+                linkMap[law.id] = arr
+            } else {
+                linkMap[law.id] = cateogryLinks
+            }
+        }
+        
+        for law in laws {
+            guard let links = law.links else { continue }
+            links.forEach { id in
+                if var arr = linkMap[law.id] {
+                    if !arr.contains(id){
+                        arr.append(id)
+                        linkMap[law.id] = arr
+                    }
+                } else {
+                    linkMap[law.id] = [id]
+                }
+                
+                if var arr = linkMap[id] {
+                    if !arr.contains(law.id){
+                        arr.append(law.id)
+                        linkMap[id] = arr
+                    }
+                } else {
+                    linkMap[id] = [law.id]
+                }
+            }
+        }
+
+        for (key, arr) in linkMap {
+            if let law = getLaw(key) {
+                law.links = arr.filter { $0 != law.id }
+            }
+        }
     }
 
     private func readLocalFile(forName name: String, type: String) -> Data? {
