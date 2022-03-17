@@ -1,6 +1,6 @@
 ![Swift](https://img.shields.io/badge/swift-F54A2A?style=for-the-badge&logo=swift&logoColor=white)
 [![App Store](https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white)
-](https://apps.apple.com/au/app/%E4%B8%AD%E5%9B%BD%E6%B3%95%E5%BE%8B%E5%BF%AB%E6%9F%A5%E6%89%8B%E5%86%8C/id1612953870)
+](https://apps.apple.com/app/apple-store/id1612953870?pt=124208302&ct=github&mt=8)
 
 # 中国法律
 

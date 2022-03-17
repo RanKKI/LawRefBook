@@ -17,7 +17,8 @@ let desc = """
 """
 
 let Contributors: [String] = [
-    "@文涛"
+    "@文涛",
+    "@nuomi1",
 ]
 let ContributorsText = String(format: "贡献者: %@", Contributors.isEmpty ? "欢迎你来贡献！" : Contributors.joined(separator: ","))
 
@@ -41,7 +42,7 @@ struct SettingView: View {
                     ForEach(LawGroupingMethod.allCases, id: \.self) {
                         Text($0.rawValue)
                    }
-                }   
+                }
                 NavigationLink {
                     FontSettingView()
                 } label: {
