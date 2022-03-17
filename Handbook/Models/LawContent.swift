@@ -19,8 +19,9 @@ class LawContent: ObservableObject {
     @Published var Infomations: [LawInfo] = []
     @Published var Content: [TextContent] = []
     @Published var TOC: [TocListData] = []
-    
+
     var Body: [TextContent] = []
+
     var filename: String
     var folder: String
     
@@ -163,6 +164,20 @@ class LawContent: ObservableObject {
             }
             self.Content = newBody
         }
+    }
+
+    func getLine(line: Int64) -> String {
+        for body in Body {
+            for child in body.children {
+                if child.line == line {
+                    return child.text
+                }
+            }
+            if body.line > line {
+                break
+            }
+        }
+        return ""
     }
     
     func hasToc() -> Bool {
