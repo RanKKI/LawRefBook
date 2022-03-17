@@ -29,11 +29,13 @@ private struct FavLine: View {
     @Environment(\.managedObjectContext) var moc
 
     var body: some View {
-        Text(LawProvider.shared.getLawContentOf(uuid: fav.lawId!, line: fav.line))
+        Text(content)
             .contextMenu {
                 Button {
-                    moc.delete(fav)
-                    try? moc.save()
+                    withAnimation {
+                        moc.delete(fav)
+                        try? moc.save()
+                    }
                 } label: {
                     Label("取消收藏", systemImage: "heart.slash")
                         .foregroundColor(.red)
