@@ -23,14 +23,19 @@ private func convert(_ result: FetchedResults<FavContent>) -> [[FavContent]] {
 private struct FavLine: View {
     
     var fav: FavContent
+
+    var content: String
+    
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
-        Text(LawProvider.shared.getLawContentOf(uuid: fav.lawId!, line: fav.line))
+        Text(content)
             .contextMenu {
                 Button {
-                    moc.delete(fav)
-                    try? moc.save()
+                    withAnimation {
+                        moc.delete(fav)
+                        try? moc.save()
+                    }
                 } label: {
                     Label("取消收藏", systemImage: "heart.slash")
                         .foregroundColor(.red)
@@ -41,17 +46,19 @@ private struct FavLine: View {
 
 private struct FavLineSection: View {
     
+    var lawID: UUID
+    
     @ObservedObject
     var lawContent: LawContent
     
-    var section: [UUID]
-    
-//    LawProvider.shared.getLawTitleByUUID(section[0].lawId!)
-    
+    var section: [FavContent]
+
     var body: some View {
-        Section(header: Text()){
+        Section(header: Text(LawProvider.shared.getLawTitleByUUID(lawID))){
             ForEach(section, id: \.id) { (fav: FavContent) in
-                FavLine(fav: fav)
+                if let content = lawContent.getLine(line: fav.line) {
+                    FavLine(fav: fav, content: content)
+                }
             }
         }
     }
@@ -64,7 +71,11 @@ private struct FavList: View {
 
     var body: some View {
         List(convert(favorites), id: \.self) { (section: [FavContent]) in
-            if let lawID = section.first?.lawId?
+            if let lawID = section.first?.lawId {
+                if let content = LawProvider.shared.getLawContent(lawID) {
+                    FavLineSection(lawID: lawID, lawContent: content, section: section)
+                }
+            }
         }
     }
 }
