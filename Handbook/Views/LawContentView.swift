@@ -71,16 +71,16 @@ private struct LawLineView: View {
     @ObservedObject var law: LawContent
     
     @State var text: String
+    @State var line: Int64
     @State var showActions = false
     
     @Binding var searchText: String
     
     var body: some View {
         LawContentLineView(text: text, searchText: $searchText)
-            
             .contextMenu {
                 Button {
-                    LawProvider.shared.favoriteContent(lawID, line: text)
+                    LawProvider.shared.favoriteContent(lawID, line: line)
                 } label: {
                     Label("收藏", systemImage: "suit.heart")
                 }
@@ -126,8 +126,11 @@ struct LawContentList: View {
             if !content.children.isEmpty {
                 Divider()
                 ForEach(content.children, id:\.id) {  line in
-                    LawLineView(lawID: lawID, law: obj, text: line.text, searchText: $searchText)
-                        .id(line.line + 1)
+                    LawLineView(lawID: lawID, law: obj, text: line.text, line: line.line, searchText: $searchText)
+                        .id(line.line)
+                        .onTapGesture {
+                            print(line.line, line.text)
+                        }
                     Divider()
                 }
             }
@@ -176,8 +179,8 @@ struct LawContentView: View {
     @ObservedObject var content: LawContent
     
     @State var isFav = false
-    @State private var scrollTarget: Int?
-    
+    @State private var scrollTarget: Int64?
+
     var body: some View{
         ScrollViewReader { scrollProxy in
             LawContentList(lawID: lawID, obj: content)

@@ -7,7 +7,7 @@ struct TOCList: View {
 
     @Binding var sheetState: LawContentView.SheetMananger.SheetState
     @State private var isExpand = false
-    @Binding var scrollID: Int?
+    @Binding var scrollID: Int64?
 
     var body: some View {
         if content.children.isEmpty {
@@ -31,7 +31,7 @@ struct TableOfContentView: View {
 
     @ObservedObject var obj: LawContent
     @Binding var sheetState: LawContentView.SheetMananger.SheetState
-    @Binding var scrollID: Int?
+    @Binding var scrollID: Int64?
 
     var body: some View {
         List(obj.TOC, id: \.id) { content in
