@@ -20,4 +20,4 @@ jobs:
           platform: ${{ 'iOS Simulator' }}
         run: |
           brew install xcbeautify
-          xcodebuild -project law.handbook.xcodeproj -scheme law.handbook \ -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.4' test | xcbeautify
+          xcodebuild -project law.handbook.xcodeproj -scheme law.handbook -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.4' test | xcbeautify
