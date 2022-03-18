@@ -90,7 +90,8 @@ private struct LawLineView: View {
                     Label("反馈", systemImage: "flag")
                 }
                 Button {
-                    let message = String(format: "%@\n\n%@", LawProvider.shared.getLawTitleByUUID(lawID), text)
+                    let title = LawProvider.shared.getLawTitleByUUID(lawID)
+                    let message = String(format: "%@\n\n%@", title, text)
                     UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
                 } label: {
                     Label("复制", systemImage: "doc")

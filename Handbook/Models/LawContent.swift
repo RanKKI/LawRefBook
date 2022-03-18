@@ -21,16 +21,31 @@ class LawContent: ObservableObject {
     @Published var TOC: [TocListData] = []
 
     var Body: [TextContent] = []
-
-    var filename: String
-    var folder: String
-    
+        
+    private var filePath: String?
     private var loaded: Bool = false
     private var forceBreak: Bool = false
 
     init(_ filename: String, _ folder: String){
-        self.filename = filename
-        self.folder = folder
+        self.filePath = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: folder)
+    }
+    
+    func isExists() -> Bool {
+        return self.filePath != nil
+    }
+    
+    private func fileData() -> String? {
+        if !self.isExists() {
+            return nil
+        }
+        if let filepath = self.filePath {
+            do {
+                return try String(contentsOfFile: filepath)
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
     }
 
     func load() {
@@ -38,18 +53,20 @@ class LawContent: ObservableObject {
             return
         }
         self.loaded = true
-        print("load", folder, filename)
-        if let filepath = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: folder) {
-            do {
-                let contents = try String(contentsOfFile: filepath)
-                DispatchQueue.main.async {
-                    self.parse(contents:contents)
-                }
-            } catch let error as NSError {
-                print(error.localizedDescription)
+        if let content = self.fileData() {
+            self.parse(contents:content)
+        }
+    }
+
+    func loadAsync() {
+        if loaded {
+            return
+        }
+        self.loaded = true
+        if let content = self.fileData() {
+            DispatchQueue.main.async {
+                self.parse(contents:content)
             }
-        } else {
-            print("File not found")
         }
     }
 
