@@ -17,7 +17,7 @@ private func convert(_ result: FetchedResults<FavContent>) -> [[FavContent]] {
         return name1 < name2
     }
     .map { $0.value }
-    .map { $0.sorted { $0.line < $1.line } }
+    .map { $0.filter{ $0.line > 0 }.sorted { $0.line < $1.line } }
 }
 
 private struct FavLine: View {
