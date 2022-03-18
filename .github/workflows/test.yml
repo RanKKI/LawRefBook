@@ -16,8 +16,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Testing
         env:
-          scheme: ${{ 'default' }}
           platform: ${{ 'iOS Simulator' }}
         run: |
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
           brew install xcbeautify
-          xcodebuild -project law.handbook.xcodeproj -scheme law.handbook -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.4' test | xcbeautify
+          xcodebuild -project law.handbook.xcodeproj -scheme law.handbook -sdk iphonesimulator -destination "platform=$platform,name=$device" test | xcbeautify
