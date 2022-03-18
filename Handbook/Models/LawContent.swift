@@ -117,7 +117,6 @@ class LawContent: ObservableObject {
             }
 
             if out[0].hasPrefix("#") { // 标题
-                noOfLine += 1;
                 let indent = out[0].count - 1
                 let title = out.count > 1 ? out[1] : ""
                 if indent == 1 || self.TOC.isEmpty {
