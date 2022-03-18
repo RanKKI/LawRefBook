@@ -5,6 +5,12 @@ struct MainApp: App {
 
     @State var showNewPage = false
 
+    @AppStorage("lastVersion")
+    var lastVersion: String?
+
+    @AppStorage("launchTimes")
+    var launchTime: Int = 0
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -13,27 +19,25 @@ struct MainApp: App {
                     WhatNewView()
                 }
                 .onAppear {
-//                    self.checkVersionUpdate()
+                    self.checkVersionUpdate()
                     LawProvider.shared.loadLawList()
                 }
         }
     }
 
     private func checkVersionUpdate(){
-        let lastVersion = UserDefaults.standard.string(forKey: "lastVersion")
         let curVersion = UIApplication.appVersion
         if lastVersion == nil || lastVersion != curVersion {
             showNewPage.toggle()
-            UserDefaults.standard.set(curVersion, forKey: "lastVersion")
+            lastVersion = curVersion
         }
     }
 
     private func checkRunTimes(){
-        let launchTime = UserDefaults.standard.integer(forKey: "launchTimes")
         if launchTime == 2 {
             AppStoreReviewManager.requestReviewIfAppropriate()
         }
-        UserDefaults.standard.set(launchTime + 1, forKey: "launchTimes")
+        launchTime += 1;
     }
 
 }

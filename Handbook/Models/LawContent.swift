@@ -14,7 +14,7 @@ extension String {
 }
 
 class LawContent: ObservableObject {
-    
+
     @Published var Titles: [String] = []
     @Published var Infomations: [LawInfo] = []
     @Published var Content: [TextContent] = []
@@ -86,19 +86,19 @@ class LawContent: ObservableObject {
             if text.isEmpty {
                 continue
             }
-            
+
             let out = text.split(separator: " ", maxSplits: 1).map { String($0) }
-            
+
             if out.isEmpty {
                 continue
             }
-            
+
             if out[0] == "#" { // 标题
                 Titles.append(out[1])
                 isFix = isFix || text.contains("修正")
                 continue
             }
-            
+
             if text.starts(with: "<!-- INFO END -->") { // 信息部分结束
                 isDesc = false
                 continue
@@ -148,10 +148,10 @@ class LawContent: ObservableObject {
                 noOfLine += 1
             }
         }
-        
+
         self.Content = Body
     }
-    
+
     func isNewLine(text: String, isFix: Bool) -> Bool {
         if self.forceBreak {
             self.forceBreak = false
@@ -172,7 +172,7 @@ class LawContent: ObservableObject {
         children[children.count - 1].text = children[children.count - 1].text.addNewLine(str: newLine)
         return false
     }
-    
+
     func filterText(text: String){
         if text.isEmpty {
             self.Content = self.Body
@@ -211,5 +211,5 @@ class LawContent: ObservableObject {
         }
         return true
     }
-    
+
 }

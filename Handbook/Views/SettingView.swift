@@ -70,6 +70,14 @@ struct SettingView: View {
                 } label: {
                     Text("LICENSE")
                 }
+                Button {
+                    LawProvider.shared.lawList.flatMap { $0 }
+                        .forEach { uuid in
+                            addLawContentToSpotlight(lawUUID: uuid)
+                        }
+                } label: {
+                    Text("创建 Spotlight 索引")
+                }
             }
             Text(desc)
                 .listRowBackground(Color.clear)
