@@ -17,7 +17,7 @@ private func convert(_ result: FetchedResults<FavContent>) -> [[FavContent]] {
         return name1 < name2
     }
     .map { $0.value }
-    .map { $0.sorted { $0.line < $1.line } }
+    .map { $0.filter{ $0.line > 0 }.sorted { $0.line < $1.line } }
 }
 
 private struct FavLine: View {
@@ -29,13 +29,11 @@ private struct FavLine: View {
     @Environment(\.managedObjectContext) var moc
 
     var body: some View {
-        Text(content)
+        Text(LawProvider.shared.getLawContentOf(uuid: fav.lawId!, line: fav.line))
             .contextMenu {
                 Button {
-                    withAnimation {
-                        moc.delete(fav)
-                        try? moc.save()
-                    }
+                    moc.delete(fav)
+                    try? moc.save()
                 } label: {
                     Label("取消收藏", systemImage: "heart.slash")
                         .foregroundColor(.red)

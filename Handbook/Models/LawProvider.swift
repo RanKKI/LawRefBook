@@ -108,6 +108,12 @@ class LawProvider: ObservableObject{
         return contents[uuid]!
     }
 
+    func getLawContentOf(uuid: UUID, line: Int64) -> String {
+        let content = getLawContent(uuid)
+        content.load()
+        return content.Body.first { $0.line == line }?.text ?? ""
+    }
+
     func getLawInfo(_ uuid: UUID) -> [LawInfo]{
         return getLawContent(uuid).Infomations
     }

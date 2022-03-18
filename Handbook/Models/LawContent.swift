@@ -89,7 +89,6 @@ class LawContent: ObservableObject {
             }
 
             let out = text.split(separator: " ", maxSplits: 1).map { String($0) }
-
             if out.isEmpty {
                 continue
             }
@@ -104,12 +103,10 @@ class LawContent: ObservableObject {
                 isDesc = false
                 continue
             }
-
             if text.starts(with: "<!-- FORCE BREAK -->") {
                 self.forceBreak = true
                 continue
             }
-
             if isDesc {
                 if out.count > 1 {
                     Infomations.append(LawInfo(header: out[0], content: out[1]))
@@ -120,6 +117,7 @@ class LawContent: ObservableObject {
             }
 
             if out[0].hasPrefix("#") { // 标题
+                noOfLine += 1;
                 let indent = out[0].count - 1
                 let title = out.count > 1 ? out[1] : ""
                 if indent == 1 || self.TOC.isEmpty {
