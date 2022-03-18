@@ -112,12 +112,12 @@ class LawProvider: ObservableObject{
         return getLawContent(uuid).Infomations
     }
 
-    func favoriteContent(_ uuid: UUID, line: String) {
+    func favoriteContent(_ uuid: UUID, line: Int64) {
         let moc = container.viewContext
         moc.perform {
             let fav = FavContent(context: moc)
             fav.id = UUID()
-            fav.content = line
+            fav.line = line
             fav.lawId = uuid
             try? moc.save()
         }
