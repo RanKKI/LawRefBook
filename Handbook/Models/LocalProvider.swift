@@ -12,7 +12,7 @@ class LocalProvider {
         }
         return ret
     }()
-    
+
     lazy var ANIT996_LICENSE: String = {
         if let data = self.readLocalFile(forName: "LICENSE", type: "") {
             return String(decoding: data, as: UTF8.self)
@@ -43,11 +43,11 @@ class LocalProvider {
         }
         return self.lawList
     }
-    
+
     private func analyzeLinks(){
         let laws = self.lawList.flatMap { $0.laws }
         var linkMap = [UUID: [UUID]]()
-        
+
         for law in laws {
             guard let cateogry = law.cateogry else { continue }
             guard let cateogryLinks = cateogry.links else { continue }
@@ -58,7 +58,7 @@ class LocalProvider {
                 linkMap[law.id] = cateogryLinks
             }
         }
-        
+
         for law in laws {
             guard let links = law.links else { continue }
             links.forEach { id in
@@ -70,7 +70,7 @@ class LocalProvider {
                 } else {
                     linkMap[law.id] = [id]
                 }
-                
+
                 if var arr = linkMap[id] {
                     if !arr.contains(law.id){
                         arr.append(law.id)

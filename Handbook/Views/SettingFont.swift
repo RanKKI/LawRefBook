@@ -31,7 +31,7 @@ struct FontSettingView: View {
 
     @AppStorage("font_content")
     var contentFontSize: Int = 17
-    
+
     @State private var searchText = ""
 
     var body: some View {

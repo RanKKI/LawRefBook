@@ -2,11 +2,11 @@ import Foundation
 import SwiftUI
 
 struct LawInfoPage: View {
-    
+
     var lawID: UUID
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         List{
             ForEach(LawProvider.shared.getLawInfo(lawID), id: \.id) { info in
@@ -32,7 +32,7 @@ struct LawInfoPage: View {
                     }
                 }
             }
-            
+
         }
         .listStyle(.plain)
         .toolbar {

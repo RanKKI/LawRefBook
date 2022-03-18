@@ -14,14 +14,14 @@ extension String {
 }
 
 class LawContent: ObservableObject {
-    
+
     @Published var Titles: [String] = []
     @Published var Infomations: [LawInfo] = []
     @Published var Content: [TextContent] = []
     @Published var TOC: [TocListData] = []
 
     var Body: [TextContent] = []
-        
+
     private var filePath: String?
     private var loaded: Bool = false
     private var forceBreak: Bool = false
@@ -29,11 +29,11 @@ class LawContent: ObservableObject {
     init(_ filename: String, _ folder: String){
         self.filePath = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: folder)
     }
-    
+
     func isExists() -> Bool {
         return self.filePath != nil
     }
-    
+
     private func fileData() -> String? {
         if !self.isExists() {
             return nil
@@ -48,13 +48,20 @@ class LawContent: ObservableObject {
         return nil
     }
 
-    func load() {
+    func loadFromString(content: String) {
         if loaded {
             return
         }
         self.loaded = true
+        self.parse(contents:content)
+    }
+
+    func load() {
+        if loaded {
+            return
+        }
         if let content = self.fileData() {
-            self.parse(contents:content)
+            self.loadFromString(content:content)
         }
     }
 
@@ -62,48 +69,47 @@ class LawContent: ObservableObject {
         if loaded {
             return
         }
-        self.loaded = true
         if let content = self.fileData() {
             DispatchQueue.main.async {
-                self.parse(contents:content)
+                self.loadFromString(content: content)
             }
         }
     }
 
-    func parse(contents: String) {
+    private func parse(contents: String) {
         var isDesc = true // 是否为信息部分
         var isFix = false // 是否为修正案
         var noOfLine: Int64 = 0
-        
+
         for line in contents.components(separatedBy: "\n") {
             let text = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            
+
             if text.isEmpty {
                 continue
             }
-            
+
             let out = text.split(separator: " ", maxSplits: 1).map { String($0) }
-            
+
             if out.isEmpty {
                 continue
             }
-            
+
             if out[0] == "#" { // 标题
                 Titles.append(out[1])
                 isFix = isFix || text.contains("修正")
                 continue
             }
-            
+
             if text.starts(with: "<!-- INFO END -->") { // 信息部分结束
                 isDesc = false
                 continue
             }
-            
+
             if text.starts(with: "<!-- FORCE BREAK -->") {
                 self.forceBreak = true
                 continue
             }
-            
+
             if isDesc {
                 if out.count > 1 {
                     Infomations.append(LawInfo(header: out[0], content: out[1]))
@@ -114,7 +120,6 @@ class LawContent: ObservableObject {
             }
 
             if out[0].hasPrefix("#") { // 标题
-                noOfLine += 1;
                 let indent = out[0].count - 1
                 let title = out.count > 1 ? out[1] : ""
                 if indent == 1 || self.TOC.isEmpty {
@@ -129,24 +134,25 @@ class LawContent: ObservableObject {
                     targetToc.children.append(TocListData(title: title, indent: indent, line: noOfLine))
                 }
                 self.Body.append(TextContent(text: title, line: noOfLine, indent: indent))
+                noOfLine += 1;
                 continue
             }
 
             if self.Body.isEmpty {
-                noOfLine += 1;
                 self.Body.append(TextContent(text: "", line: noOfLine, indent: 1))
+                noOfLine += 1;
             }
 
             let newLine = self.parseContent(&Body[Body.count - 1].children, text, isFix: isFix, no: noOfLine)
-            
+
             if newLine {
                 noOfLine += 1
             }
         }
-        
+
         self.Content = Body
     }
-    
+
     func isNewLine(text: String, isFix: Bool) -> Bool {
         if self.forceBreak {
             self.forceBreak = false
@@ -154,7 +160,7 @@ class LawContent: ObservableObject {
         }
         return (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.+?条", options: .regularExpression) != nil)
     }
-    
+
     func parseContent(_ children: inout [TextContent.Content], _ text: String, isFix: Bool, no: Int64) -> Bool {
         if children.isEmpty || isNewLine(text: text, isFix: isFix) {
             children.append(TextContent.Content(no, text))
@@ -167,7 +173,7 @@ class LawContent: ObservableObject {
         children[children.count - 1].text = children[children.count - 1].text.addNewLine(str: newLine)
         return false
     }
-    
+
     func filterText(text: String){
         if text.isEmpty {
             self.Content = self.Body
@@ -185,6 +191,9 @@ class LawContent: ObservableObject {
 
     func getLine(line: Int64) -> String {
         for body in Body {
+            if body.line == line {
+                return body.text
+            }
             for child in body.children {
                 if child.line == line {
                     return child.text
@@ -196,12 +205,12 @@ class LawContent: ObservableObject {
         }
         return ""
     }
-    
+
     func hasToc() -> Bool {
         if self.TOC.isEmpty || self.TOC.count == 1{
             return false
         }
         return true
     }
-    
+
 }

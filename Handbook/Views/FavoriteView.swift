@@ -21,13 +21,13 @@ private func convert(_ result: FetchedResults<FavContent>) -> [[FavContent]] {
 }
 
 private struct FavLine: View {
-    
+
     var fav: FavContent
 
     var content: String
-    
+
     @Environment(\.managedObjectContext) var moc
-    
+
     var body: some View {
         Text(content)
             .contextMenu {
@@ -45,12 +45,12 @@ private struct FavLine: View {
 }
 
 private struct FavLineSection: View {
-    
+
     var lawID: UUID
-    
+
     @ObservedObject
     var lawContent: LawContent
-    
+
     var section: [FavContent]
 
     var body: some View {
@@ -65,7 +65,7 @@ private struct FavLineSection: View {
 }
 
 private struct FavList: View {
-    
+
     @FetchRequest(sortDescriptors: [], predicate: nil)
     var favorites: FetchedResults<FavContent>
 
