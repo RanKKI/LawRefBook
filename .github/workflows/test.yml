@@ -1,0 +1,23 @@
+name: Test
+
+on:
+  push:
+    branches: [ feat/test ]
+  pull_request:
+    branches: [ feat/test ]
+
+jobs:
+  build:
+    name: UnitTest
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Testing
+        env:
+          scheme: ${{ 'default' }}
+          platform: ${{ 'iOS Simulator' }}
+        run: |
+          brew install xcbeautify
+          xcodebuild -project law.handbook.xcodeproj -scheme law.handbook \ -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.4' test | xcbeautify
