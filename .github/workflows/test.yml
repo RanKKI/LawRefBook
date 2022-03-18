@@ -18,6 +18,6 @@ jobs:
         env:
           platform: ${{ 'iOS Simulator' }}
         run: |
-          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(S]+' | head -1 | awk '{$1=$1;print}'`
           brew install xcbeautify
           xcodebuild -project law.handbook.xcodeproj -scheme law.handbook -sdk iphonesimulator -destination "platform=$platform,name=$device" test | xcbeautify
