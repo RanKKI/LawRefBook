@@ -8,16 +8,19 @@ on:
 
 jobs:
   build:
-    name: UnitTest
+    name: Tests
     runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Testing
-        env:
-          platform: ${{ 'iOS Simulator' }}
+
+      - name: Install fastlane
         run: |
-          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(S]+' | head -1 | awk '{$1=$1;print}'`
-          brew install xcbeautify
-          xcodebuild -project law.handbook.xcodeproj -scheme law.handbook -sdk iphonesimulator -destination "platform=$platform,name=$device" test | xcbeautify
+          brew install fastlane
+
+      - name: Run Tests
+        run: |
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+          fastlane tests
