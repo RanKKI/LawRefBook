@@ -11,6 +11,7 @@
 		1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3627D6277F00B42167 /* WhatNewView.swift */; };
 		1632AD3F27D8719600B42167 /* SettingFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* SettingFont.swift */; };
 		16BA35C727CDDE8700694880 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C627CDDE8700694880 /* Util.swift */; };
+		16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0011227E43AA100AB6446 /* TestLawContent.swift */; };
 		16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C3362B27DB182500D3F1F0 /* LicenseView.swift */; };
 		16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 16C3362D27DB18D700D3F1F0 /* LICENSE */; };
 		16D28E9A27CF803D001FB6B8 /* law.json in Resources */ = {isa = PBXBuildFile; fileRef = 16D28E9927CF803D001FB6B8 /* law.json */; };
@@ -32,11 +33,24 @@
 		9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983B27C9F96400C8D9E7 /* SettingView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		16C0011427E43AA100AB6446 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 902DAE4C27C7CBC100926036 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 902DAE5327C7CBC100926036;
+			remoteInfo = law.handbook;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1632AD3427D5CAD200B42167 /* TOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCView.swift; sourceTree = "<group>"; };
 		1632AD3627D6277F00B42167 /* WhatNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatNewView.swift; sourceTree = "<group>"; };
 		1632AD3E27D8719600B42167 /* SettingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFont.swift; sourceTree = "<group>"; };
 		16BA35C627CDDE8700694880 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		16C0011027E43AA100AB6446 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		16C0011227E43AA100AB6446 /* TestLawContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLawContent.swift; sourceTree = "<group>"; };
+		16C0011C27E44BE800AB6446 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16C3362B27DB182500D3F1F0 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		16C3362D27DB18D700D3F1F0 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		16D28E9927CF803D001FB6B8 /* law.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = law.json; sourceTree = "<group>"; };
@@ -60,6 +74,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		16C0010D27E43AA100AB6446 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		902DAE5127C7CBC100926036 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -70,6 +91,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16C0011127E43AA100AB6446 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				16C0011227E43AA100AB6446 /* TestLawContent.swift */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
 		900EBCDB27D35C9D00E20FE4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +147,7 @@
 		900EBCEE27D3844600E20FE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				16C0011C27E44BE800AB6446 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -139,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				16C3362D27DB18D700D3F1F0 /* LICENSE */,
+				16C0011127E43AA100AB6446 /* UnitTests */,
 				902DAE5527C7CBC100926036 /* Products */,
 				900EBCF127D38AFF00E20FE4 /* Handbook */,
 				902DAE5D27C7CBC200926036 /* Preview Content */,
@@ -152,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				902DAE5427C7CBC100926036 /* 中国法律.app */,
+				16C0011027E43AA100AB6446 /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -167,9 +199,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		902DAE5327C7CBC100926036 /* law.handbook */ = {
+		16C0010F27E43AA100AB6446 /* UnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 902DAE6227C7CBC200926036 /* Build configuration list for PBXNativeTarget "law.handbook" */;
+			buildConfigurationList = 16C0011827E43AA100AB6446 /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				16C0010C27E43AA100AB6446 /* Sources */,
+				16C0010D27E43AA100AB6446 /* Frameworks */,
+				16C0010E27E43AA100AB6446 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				16C0011527E43AA100AB6446 /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 16C0011027E43AA100AB6446 /* UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		902DAE5327C7CBC100926036 /* RefBook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 902DAE6227C7CBC200926036 /* Build configuration list for PBXNativeTarget "RefBook" */;
 			buildPhases = (
 				902DAE5027C7CBC100926036 /* Sources */,
 				902DAE5127C7CBC100926036 /* Frameworks */,
@@ -179,7 +229,7 @@
 			);
 			dependencies = (
 			);
-			name = law.handbook;
+			name = RefBook;
 			productName = law.handbook;
 			productReference = 902DAE5427C7CBC100926036 /* 中国法律.app */;
 			productType = "com.apple.product-type.application";
@@ -191,9 +241,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					16C0010F27E43AA100AB6446 = {
+						CreatedOnToolsVersion = 13.3;
+						TestTargetID = 902DAE5327C7CBC100926036;
+					};
 					902DAE5327C7CBC100926036 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -211,12 +265,20 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				902DAE5327C7CBC100926036 /* law.handbook */,
+				902DAE5327C7CBC100926036 /* RefBook */,
+				16C0010F27E43AA100AB6446 /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		16C0010E27E43AA100AB6446 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		902DAE5227C7CBC100926036 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,6 +294,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		16C0010C27E43AA100AB6446 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		902DAE5027C7CBC100926036 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -259,7 +329,53 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		16C0011527E43AA100AB6446 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 902DAE5327C7CBC100926036 /* RefBook */;
+			targetProxy = 16C0011427E43AA100AB6446 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		16C0011627E43AA100AB6446 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YFKW2KV54P;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankkki.law-handbook.UnitTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/中国法律.app/中国法律";
+			};
+			name = Debug;
+		};
+		16C0011727E43AA100AB6446 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YFKW2KV54P;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankkki.law-handbook.UnitTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/中国法律.app/中国法律";
+			};
+			name = Release;
+		};
 		902DAE6027C7CBC200926036 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -386,6 +502,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -417,6 +534,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -441,6 +559,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		16C0011827E43AA100AB6446 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16C0011627E43AA100AB6446 /* Debug */,
+				16C0011727E43AA100AB6446 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		902DAE4F27C7CBC100926036 /* Build configuration list for PBXProject "law.handbook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -450,7 +577,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		902DAE6227C7CBC200926036 /* Build configuration list for PBXNativeTarget "law.handbook" */ = {
+		902DAE6227C7CBC200926036 /* Build configuration list for PBXNativeTarget "RefBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				902DAE6327C7CBC200926036 /* Debug */,

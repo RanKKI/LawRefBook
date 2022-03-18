@@ -21,11 +21,11 @@ private func convert(_ result: FetchedResults<FavContent>) -> [[FavContent]] {
 }
 
 private struct FavLine: View {
-    
+
     var fav: FavContent
 
     var content: String
-    
+
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {

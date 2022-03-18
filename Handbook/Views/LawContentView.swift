@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 struct LawContentTitleView: View {
-    
+
     var text: String
     var body: some View {
         Text(text)
@@ -14,7 +14,7 @@ struct LawContentTitleView: View {
 
 
 struct LawContentHeaderView: View {
-    
+
     var text: String
     var indent: Int
     var body: some View {
@@ -27,16 +27,16 @@ struct LawContentHeaderView: View {
 }
 
 struct LawContentLineView: View {
-    
+
     @AppStorage("font_content")
     var contentFontSize: Int = 17
-    
+
     var text: String
     @Binding var searchText: String
-    
+
     func highlightText(_ str: Substring) -> Text {
         guard !str.isEmpty && !searchText.isEmpty else { return Text(str) }
-        
+
         var result: Text!
         let parts = str.components(separatedBy: searchText)
         for i in parts.indices {
@@ -47,7 +47,7 @@ struct LawContentLineView: View {
         }
         return result ?? Text(str)
     }
-    
+
     var body: some View {
         Group {
             let arr = text.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
@@ -66,16 +66,16 @@ struct LawContentLineView: View {
 
 
 private struct LawLineView: View {
-    
+
     var lawID: UUID
     @ObservedObject var law: LawContent
-    
+
     @State var text: String
     @State var line: Int64
     @State var showActions = false
-    
+
     @Binding var searchText: String
-    
+
     var body: some View {
         LawContentLineView(text: text, searchText: $searchText)
             .contextMenu {
@@ -90,7 +90,8 @@ private struct LawLineView: View {
                     Label("反馈", systemImage: "flag")
                 }
                 Button {
-                    let message = String(format: "%@\n\n%@", LawProvider.shared.getLawTitleByUUID(lawID), text)
+                    let title = LawProvider.shared.getLawTitleByUUID(lawID)
+                    let message = String(format: "%@\n\n%@", title, text)
                     UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
                 } label: {
                     Label("复制", systemImage: "doc")
@@ -100,12 +101,12 @@ private struct LawLineView: View {
 }
 
 struct LawContentList: View {
-    
+
     var lawID: UUID
     @ObservedObject var obj: LawContent
     @State var content: [TextContent] = []
     @State var searchText = ""
-    
+
     var title: some View {
         VStack {
             ForEach($obj.Titles.indices, id: \.self) { i in
@@ -113,7 +114,7 @@ struct LawContentList: View {
             }
         }
     }
-    
+
     var bodyList: some View {
         ForEach(obj.Content, id: \.id) { (content: TextContent) in
             if self.searchText.isEmpty || (!self.searchText.isEmpty && !content.children.isEmpty){
@@ -136,7 +137,7 @@ struct LawContentList: View {
             }
         }
     }
-    
+
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 4){
@@ -154,15 +155,15 @@ struct LawContentList: View {
 }
 
 struct LawContentView: View {
-    
+
     class SheetMananger: ObservableObject{
-        
+
         enum SheetState {
             case none
             case info
             case toc
         }
-        
+
         @Published var isShowingSheet = false
         @Published var sheetState: SheetState = .none {
             didSet {
@@ -172,12 +173,12 @@ struct LawContentView: View {
             }
         }
     }
-    
+
     @StateObject var sheetManager = SheetMananger()
-    
+
     var lawID: UUID
     @ObservedObject var content: LawContent
-    
+
     @State var isFav = false
     @State private var scrollTarget: Int64?
 

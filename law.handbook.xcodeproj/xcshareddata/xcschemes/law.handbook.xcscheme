@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "902DAE5327C7CBC100926036"
                BuildableName = "&#x4e2d;&#x56fd;&#x6cd5;&#x5f8b;.app"
-               BlueprintName = "law.handbook"
+               BlueprintName = "RefBook"
                ReferencedContainer = "container:law.handbook.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,8 +26,19 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "16C0010F27E43AA100AB6446"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
+               ReferencedContainer = "container:law.handbook.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -46,7 +57,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "902DAE5327C7CBC100926036"
             BuildableName = "&#x4e2d;&#x56fd;&#x6cd5;&#x5f8b;.app"
-            BlueprintName = "law.handbook"
+            BlueprintName = "RefBook"
             ReferencedContainer = "container:law.handbook.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,7 +80,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "902DAE5327C7CBC100926036"
             BuildableName = "&#x4e2d;&#x56fd;&#x6cd5;&#x5f8b;.app"
-            BlueprintName = "law.handbook"
+            BlueprintName = "RefBook"
             ReferencedContainer = "container:law.handbook.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

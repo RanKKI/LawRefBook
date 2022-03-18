@@ -16,23 +16,23 @@ class LawCategory: Codable {
     var laws: [Law]
     var id: UUID
     var folder: String?
-    
+
     var links: [UUID]? // 该目录下所有法律都会继承这个
 }
 
 struct TextContent : Identifiable {
-    
+
     class Content: Identifiable{
         var id: UUID = UUID()
         var line: Int64
         var text: String
-        
+
         init(_ line: Int64, _ text: String) {
             self.line = line
             self.text = text
         }
     }
-    
+
     var id: UUID = UUID()
     var text: String
     var children: [Content] = []
