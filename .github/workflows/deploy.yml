@@ -1,0 +1,47 @@
+name: Deploy to App Store
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install fastlane
+        run: |
+          brew install fastlane
+
+      - name: Run Tests
+        run: |
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+          fastlane tests
+
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: "Set version"
+        run: |
+          sed -i "" 's/MARKETING_VERSION = .*;/MARKETING_VERSION = $RELEASE_VERSION;/g' "law.handbook.xcodeproj/project.pbxproj"
+          echo "Set Version to" $RELEASE_VERSION
+
+      - name: Deploying
+        run: |
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+          fastlane beta
+        env:
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
+
+      - name: "Sending Notification"
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: ${{ secrets.NOTICE_URL }}
