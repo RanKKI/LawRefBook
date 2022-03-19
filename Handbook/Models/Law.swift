@@ -65,3 +65,11 @@ enum LawGroupingMethod: String, CaseIterable {
     case department = "法律部门"
     case level = "法律阶位"
 }
+
+extension FavFolder {
+    
+    public var contents: [FavContent] {
+        return content?.allObjects as! [FavContent]
+    }
+    
+}
