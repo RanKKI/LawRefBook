@@ -18,6 +18,8 @@ end
 lane :beta do
   increment_build_number(build_number: number_of_commits)
 
+  match
+
   build_ios_app(
       scheme: "law.handbook",
       include_bitcode: true
