@@ -11,6 +11,7 @@ private let ArrayLevelSort = [
     "经济特区法规",
     "自治条例",
     "单行条例",
+    "案例",
     "其他",
 ]
 
