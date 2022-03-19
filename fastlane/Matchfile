@@ -1,4 +1,4 @@
-git_url("git@github.com:RanKKI/match.git")
+git_url("https://github.com/RanKKI/match.git")
 
 storage_mode("git")
 
