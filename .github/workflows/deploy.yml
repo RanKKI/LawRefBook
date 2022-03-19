@@ -26,8 +26,8 @@ jobs:
 
       - name: Set env
         run: |
-          export RELEASE_VERSION=${GITHUB_REF#refs/*/}
-          echo $RELEASE_VERSION | tr -d "v" >> $GITHUB_ENV
+          export version_tag=${GITHUB_REF#refs/*/}
+          echo "RELEASE_VERSION=`echo $version_tag | tr -d 'v'`" >> $GITHUB_ENV
 
       - name: "Set version"
         run: |
