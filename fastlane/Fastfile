@@ -18,7 +18,7 @@ end
 lane :beta do
   increment_build_number(build_number: number_of_commits)
 
-  match
+  match(git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"])
 
   build_ios_app(
       scheme: "law.handbook",
