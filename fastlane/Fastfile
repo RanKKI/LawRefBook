@@ -1,10 +1,7 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :custom_lane do
-    # add actions here: https://docs.fastlane.tools/actions
-  end
+
 end
 
 
@@ -16,6 +13,7 @@ lane :tests do
 end
 
 lane :beta do
+  setup_ci if ENV['CI']
   increment_build_number(build_number: number_of_commits)
 
   match(git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"])
