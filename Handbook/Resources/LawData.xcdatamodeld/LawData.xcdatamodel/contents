@@ -9,6 +9,7 @@
     <entity name="FavFolder" representedClassName="FavFolder" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="content" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FavContent" inverseName="folder" inverseEntity="FavContent"/>
     </entity>
     <entity name="FavLaw" representedClassName="FavLaw" syncable="YES" codeGenerationType="class">
@@ -17,7 +18,7 @@
     </entity>
     <elements>
         <element name="FavContent" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="FavFolder" positionX="-54" positionY="18" width="128" height="89"/>
         <element name="FavLaw" positionX="-54" positionY="18" width="128" height="59"/>
-        <element name="FavFolder" positionX="-54" positionY="18" width="128" height="74"/>
     </elements>
 </model>

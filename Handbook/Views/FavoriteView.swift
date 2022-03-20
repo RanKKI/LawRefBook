@@ -119,6 +119,36 @@ private struct FavFolderView: View {
     }
 }
 
+struct FolderItemView: View {
+    
+    @Environment(\.managedObjectContext)
+    private var moc
+    
+    @StateObject
+    var folder: FavFolder
+    
+    var body: some View {
+        NavigationLink {
+            FavFolderView(folder: folder)
+        } label: {
+            Text(folder.name ?? "")
+        }
+        .swipeActions {
+            Button {
+                folder.content?.forEach {
+                    moc.delete($0 as! NSManagedObject)
+                }
+                moc.delete(folder)
+                try? moc.save()
+             } label: {
+                 Label("删除文件夹", systemImage: "folder.badge.minus")
+             }
+             .tint(.red)
+        }
+    }
+    
+}
+
 struct FavoriteView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -135,6 +165,9 @@ struct FavoriteView: View {
     @State
     private var addFolderToggle = false
     
+    @State
+    private var isEditing = false
+    
     private var contentWithoutFolder: [[FavContent]] {
         convert(favorites).map {
             $0.filter {
@@ -146,40 +179,46 @@ struct FavoriteView: View {
     }
     
     var body: some View {
-        VStack {
+        Group {
             if (favorites.isEmpty && folders.isEmpty) {
                 Text("空空如也")
             } else {
                 List{
                     if !folders.isEmpty {
                         ForEach(folders, id: \.self) { (folder: FavFolder) in
-                            NavigationLink {
-                                FavFolderView(folder: folder)
-                            } label: {
-                                Text(folder.name ?? "")
-                            }
-                            .swipeActions {
-                                Button {
-                                    folder.content?.forEach {
-                                        moc.delete($0 as! NSManagedObject)
+                            FolderItemView(folder: folder)
+                        }
+                        .onDelete { _ in
+                        
+                        }
+                        .onMove { from, to in
+
+                        }
+                        .contextMenu {
+                            Button {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    withAnimation(.easeIn(duration: 0.4)) {
+                                        isEditing.toggle()
                                     }
-                                    moc.delete(folder)
-                                    try? moc.save()
-                                 } label: {
-                                     Label("删除文件夹", systemImage: "folder.badge.minus")
-                                 }
-                                 .tint(.red)
+                                }
+                            } label: {
+                                Text("修改")
                             }
                         }
                     }
-                    ForEach(contentWithoutFolder, id: \.self) { (section: [FavContent]) in
-                        if let lawID = section.first?.lawId {
-                            if let content = LawProvider.shared.getLawContent(lawID) {
-                                FavLineSection(lawID: lawID, lawContent: content, section: section)
+                    if !isEditing {
+                        ForEach(contentWithoutFolder, id: \.self) { (section: [FavContent]) in
+                            if let lawID = section.first?.lawId {
+                                if let content = LawProvider.shared.getLawContent(lawID) {
+                                    FavLineSection(lawID: lawID, lawContent: content, section: section)
+                                }
                             }
                         }
+                        .transition(.slide)
                     }
                 }
+                .animation(.spring(), value: isEditing)
+                .environment(\.editMode, .constant(self.isEditing ? EditMode.active : EditMode.inactive))
             }
         }
         .alert(isPresented: $addFolderToggle, AlertConfig(title: "新建文件夹", action: { name in
@@ -195,11 +234,22 @@ struct FavoriteView: View {
         }))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing){
-                IconButton(icon: "folder.badge.plus") {
-                    addFolderToggle.toggle()
-                }
-                CloseSheetItem() {
-                    dismiss()
+                if !isEditing {
+                    IconButton(icon: "folder.badge.plus") {
+                        addFolderToggle.toggle()
+                    }
+                    CloseSheetItem() {
+                        dismiss()
+                    }
+                } else {
+                    Button {
+                        withAnimation {
+                            isEditing.toggle()
+                        }
+                    } label: {
+                        Text("完成")
+                            .foregroundColor(.red)
+                    }
                 }
             }
         }
