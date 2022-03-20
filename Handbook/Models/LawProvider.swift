@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-private let ArrayLevelSort = [
+let ArrayLevelSort = [
     "宪法",
     "法律",
     "司法解释",

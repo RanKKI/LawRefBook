@@ -2,7 +2,7 @@ import XCTest
 
 @testable import 中国法律
 
-class UnitTests: XCTestCase {
+class TestLaws: XCTestCase {
 
     func testContentPaser() throws {
         let str = """
