@@ -75,9 +75,15 @@ private struct FavLineSection: View {
     }
 }
 
-private struct FavList: View {
+private struct FavFolderView: View {
     
-    var folder: FavFolder
+    @StateObject var folder: FavFolder
+
+    @State
+    private var editNameToggler = false
+    
+    @Environment(\.managedObjectContext)
+    private var moc
     
     var body: some View {
         ZStack {
@@ -94,6 +100,22 @@ private struct FavList: View {
             }
         }
         .navigationTitle(folder.name ?? "")
+        .alert(isPresented: $editNameToggler, AlertConfig(title: "修改文件夹名", action: { name in
+            if let txt = name {
+                if txt.isEmpty {
+                    return
+                }
+                folder.name = txt
+                try? moc.save()
+            }
+        }))
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing){
+                IconButton(icon: "square.and.pencil") {
+                    editNameToggler.toggle()
+                }
+            }
+        }
     }
 }
 
@@ -129,11 +151,25 @@ struct FavoriteView: View {
                 Text("空空如也")
             } else {
                 List{
-                    ForEach(folders, id: \.self) { (folder: FavFolder) in
-                        NavigationLink {
-                            FavList(folder: folder)
-                        } label: {
-                            Text(folder.name ?? "")
+                    if !folders.isEmpty {
+                        ForEach(folders, id: \.self) { (folder: FavFolder) in
+                            NavigationLink {
+                                FavFolderView(folder: folder)
+                            } label: {
+                                Text(folder.name ?? "")
+                            }
+                            .swipeActions {
+                                Button {
+                                    folder.content?.forEach {
+                                        moc.delete($0 as! NSManagedObject)
+                                    }
+                                    moc.delete(folder)
+                                    try? moc.save()
+                                 } label: {
+                                     Label("删除文件夹", systemImage: "folder.badge.minus")
+                                 }
+                                 .tint(.red)
+                            }
                         }
                     }
                     ForEach(contentWithoutFolder, id: \.self) { (section: [FavContent]) in
