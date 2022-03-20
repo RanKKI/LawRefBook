@@ -30,11 +30,4 @@ lane :beta do
     )
 
   upload_to_testflight
-
-  commit_version_bump(
-    message: "Auto Depoly To Apple Connect By Fastlane",
-  )
-
-  push_to_git_remote
-
 end
