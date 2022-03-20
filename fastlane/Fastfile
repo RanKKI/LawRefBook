@@ -14,7 +14,6 @@ end
 
 lane :beta do
   setup_ci if ENV['CI']
-  increment_build_number(build_number: number_of_commits)
 
   match(git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"])
 
@@ -29,5 +28,7 @@ lane :beta do
       key_content: ENV["APP_STORE_CONNECT_KEY_CONTENT"],
     )
 
-  upload_to_testflight
+  upload_to_testflight(
+    skip_waiting_for_build_processing: true,
+  )
 end
