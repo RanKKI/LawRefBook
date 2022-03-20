@@ -6,7 +6,10 @@ struct CloseSheetItem : View {
     var action: () -> Void = {}
 
     var body: some View {
-        IconButton(icon: "xmark.circle", action: action)
+        Button(action: action, label: {
+            Text("关闭")
+                .foregroundColor(.red)
+        })
     }
 
 }
