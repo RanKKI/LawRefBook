@@ -33,6 +33,9 @@ struct LawContentLineView: View {
 
     var text: String
     @Binding var searchText: String
+    
+    @Environment(\.colorScheme)
+    private var colorScheme
 
     func highlightText(_ str: Substring) -> Text {
         guard !str.isEmpty && !searchText.isEmpty else { return Text(str) }
@@ -60,7 +63,7 @@ struct LawContentLineView: View {
         }
         .font(.system(size: CGFloat(contentFontSize)))
         .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
-        .background(Color.white)
+        .background(colorScheme == .dark ? Color.black : Color.white)
     }
 }
 
