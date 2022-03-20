@@ -28,7 +28,7 @@ jobs:
         run: |
           export version_tag=${GITHUB_REF#refs/*/}
           echo "RELEASE_VERSION=`echo $version_tag | tr -d 'v'`" >> $GITHUB_ENV
-          echo "RELEASE_BUILD_VERSION=`git rev-list master --count`" >> $GITHUB_ENV
+          echo "RELEASE_BUILD_VERSION=`git rev-list HEAD --count`" >> $GITHUB_ENV
 
       - name: "Set Version and Build Number"
         run: |
