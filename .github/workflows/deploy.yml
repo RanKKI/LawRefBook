@@ -20,11 +20,11 @@ jobs:
         run: |
           brew install fastlane
 
-      # - name: Run Tests
-      #   run: |
-      #     export LC_ALL=en_US.UTF-8
-      #     export LANG=en_US.UTF-8
-      #     fastlane tests
+      - name: Run Tests
+        run: |
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+          fastlane tests
 
       - name: Set env
         run: |
