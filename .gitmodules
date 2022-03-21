@@ -1,3 +1,4 @@
 [submodule "Laws"]
 	path = Laws
 	url = git@github.com:LawRefBook/Laws.git
+	branch = master
