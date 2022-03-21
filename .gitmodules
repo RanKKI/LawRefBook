@@ -1,0 +1,3 @@
+[submodule "法律法规"]
+	path = 法律法规
+	url = git@github.com:LawRefBook/Laws.git
