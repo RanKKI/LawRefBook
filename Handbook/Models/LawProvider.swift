@@ -100,7 +100,7 @@ class LawProvider: ObservableObject{
     func getLawContent(_ uuid: UUID) -> LawContent {
         if contents[uuid] == nil {
             if let law = LocalProvider.shared.getLaw(uuid) {
-                let folder: [String?] = ["法律法规", law.cateogry?.folder].filter { $0 != nil }
+                let folder: [String?] = ["Laws", law.cateogry?.folder].filter { $0 != nil }
                 contents[uuid] = LawContent(law.filename ?? law.name, folder.map{ $0! }.joined(separator: "/"))
             } else {
                 fatalError("unexpected law uuid: \(uuid)")
