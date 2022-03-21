@@ -3,4 +3,4 @@
 	url = git@github.com:LawRefBook/Laws.git
 [submodule "Laws"]
 	path = Laws
-	url = https://github.com/LawRefBook/Laws
+	url = git@github.com:LawRefBook/Laws.git
