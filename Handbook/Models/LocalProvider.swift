@@ -29,7 +29,7 @@ class LocalProvider {
             return self.lawList
         }
         do {
-            if let jsonData = self.readLocalFile(forName: "law", type: "json") {
+            if let jsonData = self.readLocalFile(forName: "law", type: "json", inDirectory: "法律法规") {
                 self.lawList = try JSONDecoder().decode([LawCategory].self, from: jsonData)
                 self.lawList.forEach { category in
                     category.laws.forEach {
@@ -89,9 +89,9 @@ class LocalProvider {
         }
     }
 
-    private func readLocalFile(forName name: String, type: String) -> Data? {
+    private func readLocalFile(forName name: String, type: String, inDirectory: String? = nil) -> Data? {
         do {
-            if let bundlePath = Bundle.main.path(forResource: name, ofType: type),
+            if let bundlePath = Bundle.main.path(forResource: name, ofType: type, inDirectory: inDirectory),
                let ret = try String(contentsOfFile: bundlePath).data(using: .utf8) {
                 return ret
             }
