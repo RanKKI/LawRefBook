@@ -95,4 +95,8 @@ class TestLaws: XCTestCase {
         }
     }
 
+    func testJSONFileExists() throws {
+        XCTAssertTrue(!LawProvider.shared.lawList.isEmpty, "没有找到任何法律法规！")
+    }
+
 }
