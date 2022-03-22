@@ -30,12 +30,22 @@ struct LawContentLineView: View {
 
     @AppStorage("font_content")
     var contentFontSize: Int = 17
+    
+    @AppStorage("font_kerning")
+    var kerning: Double = 0.0
+    
+    @AppStorage("font_tracking")
+    var tracking: Double = 0.0
+    
+    @AppStorage("font_baseline")
+    var baseline: Double = 0.0
 
     var text: String
     @Binding var searchText: String
     
     @Environment(\.colorScheme)
     private var colorScheme
+
 
     func highlightText(_ str: Substring) -> Text {
         guard !str.isEmpty && !searchText.isEmpty else { return Text(str) }
@@ -57,8 +67,14 @@ struct LawContentLineView: View {
             if arr.count == 1 || arr[0].range(of: "^第.+?条", options: .regularExpression) == nil {
                 let range = text.startIndex..<text.endIndex
                 highlightText(text[range])
+                    .kerning(kerning)
+                    .tracking(tracking)
+                    .baselineOffset(baseline)
             }else{
                 Text(arr[0]).bold() + Text(" ") + highlightText(arr[1])
+                    .kerning(kerning)
+                    .tracking(tracking)
+                    .baselineOffset(baseline)
             }
         }
         .font(.system(size: CGFloat(contentFontSize)))

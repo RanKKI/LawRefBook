@@ -6,20 +6,31 @@ private let exampleLines = [
     "第二百一十六条 不动产登记簿是物权归属和内容的根据。",
 ]
 
-private struct AdjustSteppter: View {
+private struct AdjustSteppter<Value: Numeric>: View {
 
     var title: String
-    @Binding var value: Int
+
+    @Binding
+    var value: Value
+    
+    var step: Value
+    
+    var valueStr: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        let spelledOutNumber = formatter.string(for: value)!
+        return spelledOutNumber
+    }
 
     var body: some View {
         Group {
             Divider()
             Stepper {
-                Text("\(title): \(value)")
+                Text("\(title): \(valueStr)")
             } onIncrement: {
-                value += 1
+                value += step
             } onDecrement: {
-                value = max(1, value - 1)
+                value -= step
             }
             Divider()
         }
@@ -31,13 +42,25 @@ struct FontSettingView: View {
 
     @AppStorage("font_content")
     var contentFontSize: Int = 17
+    
+    @AppStorage("font_kerning")
+    var kerning: Double = 0.0
+    
+    @AppStorage("font_tracking")
+    var tracking: Double = 0.0
+    
+    @AppStorage("font_baseline")
+    var baseline: Double = 0.0
 
     @State private var searchText = ""
 
     var body: some View {
 
         VStack(alignment: .leading) {
-            AdjustSteppter(title: "正文", value: $contentFontSize)
+            AdjustSteppter(title: "正文", value: $contentFontSize, step: 1)
+            AdjustSteppter(title: "kerning", value: $kerning, step: 0.1)
+            AdjustSteppter(title: "tracking", value: $tracking, step: 0.1)
+            AdjustSteppter(title: "baseline", value: $baseline, step: 0.1)
             Group {
                 LawContentTitleView(text: "中华人民共和国民法典")
                 LawContentTitleView(text: "物权编")
@@ -46,7 +69,6 @@ struct FontSettingView: View {
                 Divider()
                 ForEach(exampleLines, id: \.self) { text in
                     LawContentLineView(text: text, searchText: $searchText)
-                        .font(.system(size: CGFloat(contentFontSize)))
                     Divider()
                 }
             }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
