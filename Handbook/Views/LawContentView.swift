@@ -62,22 +62,24 @@ struct LawContentLineView: View {
     }
 
     var body: some View {
-        Group {
+        VStack {
             let arr = text.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
             if arr.count == 1 || arr[0].range(of: "^第.+?条", options: .regularExpression) == nil {
                 let range = text.startIndex..<text.endIndex
                 highlightText(text[range])
+                    .font(.system(size: CGFloat(contentFontSize)))
                     .kerning(kerning)
                     .tracking(tracking)
-                    .baselineOffset(baseline)
+                    .lineSpacing(baseline)
+
             }else{
-                Text(arr[0]).bold() + Text(" ") + highlightText(arr[1])
+                (Text(arr[0]).bold() + Text(" ") + highlightText(arr[1]))
+                    .font(.system(size: CGFloat(contentFontSize)))
                     .kerning(kerning)
                     .tracking(tracking)
-                    .baselineOffset(baseline)
+                    .lineSpacing(baseline)
             }
         }
-        .font(.system(size: CGFloat(contentFontSize)))
         .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
         .background(colorScheme == .dark ? Color.black : Color.white)
     }
