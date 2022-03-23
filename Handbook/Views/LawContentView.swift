@@ -57,8 +57,10 @@ struct LawContentLineView: View {
             if arr.count == 1 || arr[0].range(of: "^第.+?条", options: .regularExpression) == nil {
                 let range = text.startIndex..<text.endIndex
                 highlightText(text[range])
+                    .asLawContent()
             }else{
-                Text(arr[0]).bold() + Text(" ") + highlightText(arr[1])
+                (Text(arr[0]).bold() + Text(" ") + highlightText(arr[1]))
+                    .asLawContent()
             }
         }
         .font(.system(size: CGFloat(contentFontSize)))
