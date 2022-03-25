@@ -48,7 +48,8 @@ struct FontSettingView: View {
     @AppStorage("font_spacing")
     var spacing: Double = 4.5
 
-    @State private var searchText = ""
+    @State
+    private var searchText = ""
 
     var body: some View {
 
@@ -67,7 +68,8 @@ struct FontSettingView: View {
                     LawContentLineView(text: text, searchText: $searchText)
                     Divider()
                 }
-            }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+            }
+            .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
 
             Spacer()
         }

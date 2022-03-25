@@ -78,7 +78,7 @@ struct LawContentLineView: View {
             }
         }
         .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
-        .background(colorScheme == .dark ? Color.black : Color.white)
+        .background(colorScheme == .dark ? Color.clear : Color.white)
     }
 }
 
