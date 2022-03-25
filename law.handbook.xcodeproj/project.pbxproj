@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16151CAE27E842E500E09E0C /* Laws in Resources */ = {isa = PBXBuildFile; fileRef = 16151CAD27E842E500E09E0C /* Laws */; };
 		1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3427D5CAD200B42167 /* TOCView.swift */; };
 		1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3627D6277F00B42167 /* WhatNewView.swift */; };
 		1632AD3F27D8719600B42167 /* SettingFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* SettingFont.swift */; };
@@ -14,7 +15,6 @@
 		16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0011227E43AA100AB6446 /* TestLawContent.swift */; };
 		16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C3362B27DB182500D3F1F0 /* LicenseView.swift */; };
 		16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 16C3362D27DB18D700D3F1F0 /* LICENSE */; };
-		16D28E9A27CF803D001FB6B8 /* law.json in Resources */ = {isa = PBXBuildFile; fileRef = 16D28E9927CF803D001FB6B8 /* law.json */; };
 		16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */; };
 		900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */; };
 		900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE127D35E3500E20FE4 /* LawInfoView.swift */; };
@@ -29,7 +29,6 @@
 		902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5B27C7CBC200926036 /* Assets.xcassets */; };
 		902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5E27C7CBC200926036 /* Preview Assets.xcassets */; };
 		9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035982B27C9012B00C8D9E7 /* LawContent.swift */; };
-		9035983827C91E0300C8D9E7 /* 法律法规 in Resources */ = {isa = PBXBuildFile; fileRef = 9035983727C91E0300C8D9E7 /* 法律法规 */; };
 		9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983927C9F57D00C8D9E7 /* LawContentView.swift */; };
 		9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983B27C9F96400C8D9E7 /* SettingView.swift */; };
 		90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B74D7727E4DB1B00723535 /* Spotlight.swift */; };
@@ -46,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		16151CAD27E842E500E09E0C /* Laws */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Laws; sourceTree = "<group>"; };
 		1632AD3427D5CAD200B42167 /* TOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCView.swift; sourceTree = "<group>"; };
 		1632AD3627D6277F00B42167 /* WhatNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatNewView.swift; sourceTree = "<group>"; };
 		1632AD3E27D8719600B42167 /* SettingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFont.swift; sourceTree = "<group>"; };
@@ -55,7 +55,6 @@
 		16C0011C27E44BE800AB6446 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16C3362B27DB182500D3F1F0 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		16C3362D27DB18D700D3F1F0 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		16D28E9927CF803D001FB6B8 /* law.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = law.json; sourceTree = "<group>"; };
 		16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseSheetItem.swift; sourceTree = "<group>"; };
 		900EBCE127D35E3500E20FE4 /* LawInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawInfoView.swift; sourceTree = "<group>"; };
@@ -71,7 +70,6 @@
 		902DAE5B27C7CBC200926036 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		902DAE5E27C7CBC200926036 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9035982B27C9012B00C8D9E7 /* LawContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContent.swift; sourceTree = "<group>"; };
-		9035983727C91E0300C8D9E7 /* 法律法规 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "法律法规"; sourceTree = "<group>"; };
 		9035983927C9F57D00C8D9E7 /* LawContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentView.swift; sourceTree = "<group>"; };
 		9035983B27C9F96400C8D9E7 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		90B74D7727E4DB1B00723535 /* Spotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
@@ -99,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				16C0011227E43AA100AB6446 /* TestLawContent.swift */,
+				9016D22527E7E7B80027D69D /* TestGrouping.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -182,13 +181,12 @@
 		902DAE4B27C7CBC100926036 = {
 			isa = PBXGroup;
 			children = (
+				16151CAD27E842E500E09E0C /* Laws */,
 				16C3362D27DB18D700D3F1F0 /* LICENSE */,
 				16C0011127E43AA100AB6446 /* UnitTests */,
 				902DAE5527C7CBC100926036 /* Products */,
 				900EBCF127D38AFF00E20FE4 /* Handbook */,
 				902DAE5D27C7CBC200926036 /* Preview Content */,
-				16D28E9927CF803D001FB6B8 /* law.json */,
-				9035983727C91E0300C8D9E7 /* 法律法规 */,
 				900EBCEE27D3844600E20FE4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -297,11 +295,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16D28E9A27CF803D001FB6B8 /* law.json in Resources */,
-				9035983827C91E0300C8D9E7 /* 法律法规 in Resources */,
 				902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */,
 				902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */,
 				16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */,
+				16151CAE27E842E500E09E0C /* Laws in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9016D22627E7E7B80027D69D /* TestGrouping.swift in Sources */,
 				16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,7 +511,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 166;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
@@ -533,6 +532,7 @@
 				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore xyz.rankki.law-handbook";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -545,7 +545,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 166;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
@@ -565,6 +566,7 @@
 				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore xyz.rankki.law-handbook";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

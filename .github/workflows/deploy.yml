@@ -11,8 +11,11 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: true
 
       - name: Install fastlane
         run: |
@@ -28,11 +31,14 @@ jobs:
         run: |
           export version_tag=${GITHUB_REF#refs/*/}
           echo "RELEASE_VERSION=`echo $version_tag | tr -d 'v'`" >> $GITHUB_ENV
+          echo "RELEASE_BUILD_VERSION=`git rev-list HEAD --count`" >> $GITHUB_ENV
 
-      - name: "Set version"
+      - name: "Set Version and Build Number"
         run: |
           sed -i "" 's/MARKETING_VERSION = .*;/MARKETING_VERSION = $RELEASE_VERSION;/g' "law.handbook.xcodeproj/project.pbxproj"
+          sed -i "" 's/CURRENT_PROJECT_VERSION = .*;/CURRENT_PROJECT_VERSION = $RELEASE_BUILD_VERSION;/g' "law.handbook.xcodeproj/project.pbxproj"
           echo "Set Version to" $RELEASE_VERSION
+          echo "Set Build Number to" $RELEASE_BUILD_VERSION
 
       - name: Deploying
         run: |
@@ -44,6 +50,8 @@ jobs:
           APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
 
       - name: "Sending Notification"
         uses: fjogeleit/http-request-action@master

@@ -38,10 +38,15 @@ struct SettingView: View {
                 Text("https://flk.npc.gov.cn")
             }
             Section(header: Text("偏好设置")) {
-                Picker("分组方式", selection: $groupingMethod) {
-                    ForEach(LawGroupingMethod.allCases, id: \.self) {
-                        Text($0.rawValue)
-                   }
+                HStack {
+                    Text("分组方式")
+                    Spacer()
+                    Picker("分组方式", selection: $groupingMethod) {
+                        ForEach(LawGroupingMethod.allCases, id: \.self) {
+                            Text($0.rawValue)
+                       }
+                    }
+                    .pickerStyle(.menu)
                 }
                 NavigationLink {
                     FontSettingView()

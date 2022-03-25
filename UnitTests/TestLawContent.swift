@@ -2,7 +2,7 @@ import XCTest
 
 @testable import 中国法律
 
-class UnitTests: XCTestCase {
+class TestLaws: XCTestCase {
 
     func testContentPaser() throws {
         let str = """
@@ -93,6 +93,11 @@ class UnitTests: XCTestCase {
             content.load()
             XCTAssertTrue(!content.Titles.isEmpty, "\(LawProvider.shared.getLawNameByUUID(uuid)) has no title")
         }
+    }
+
+    func testJSONFileExists() throws {
+        XCTAssertNotNil(LocalProvider.shared.DATA_FILE_PATH, "没有找到法律法规数据")
+        XCTAssertGreaterThan(LocalProvider.shared.getLawList().count, 0, "没有法律法规数据")
     }
 
 }

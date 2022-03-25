@@ -19,6 +19,10 @@ class LocalProvider {
         }
         return ""
     }()
+    
+    lazy var DATA_FILE_PATH: String? = {
+        Bundle.main.path(forResource: "data", ofType: "json", inDirectory: "Laws")
+    }()
 
     func getLaw(_ uuid: UUID) -> Law? {
         return lawMap[uuid]
@@ -29,7 +33,7 @@ class LocalProvider {
             return self.lawList
         }
         do {
-            if let jsonData = self.readLocalFile(forName: "law", type: "json") {
+            if let jsonData = self.readLocalFile(bundlePath: DATA_FILE_PATH) {
                 self.lawList = try JSONDecoder().decode([LawCategory].self, from: jsonData)
                 self.lawList.forEach { category in
                     category.laws.forEach {
@@ -89,9 +93,9 @@ class LocalProvider {
         }
     }
 
-    private func readLocalFile(forName name: String, type: String) -> Data? {
+    private func readLocalFile(bundlePath: String?) -> Data? {
         do {
-            if let bundlePath = Bundle.main.path(forResource: name, ofType: type),
+            if let bundlePath = bundlePath,
                let ret = try String(contentsOfFile: bundlePath).data(using: .utf8) {
                 return ret
             }
@@ -100,6 +104,10 @@ class LocalProvider {
         }
 
         return nil
+    }
+    
+    private func readLocalFile(forName name: String, type: String, inDirectory: String? = nil) -> Data? {
+        return readLocalFile(bundlePath: Bundle.main.path(forResource: name, ofType: type, inDirectory: inDirectory))
     }
 
 }
