@@ -58,7 +58,7 @@ class LawProvider: ObservableObject{
         self.lawList = self.getLawList()
     }
     
-    @State
+    @Published
     var isLoading: Bool = false
 
     func filterLawList(text: String, type: SearchType = .catalogue) {
@@ -72,12 +72,12 @@ class LawProvider: ObservableObject{
     }
     
     private func filterListByContent(text: String) {
-        self.isLoading = true
         let data = self.getLawList()
         if text.isEmpty {
-            self.lawList = data
+            self.lawList = []
             return
         }
+        self.isLoading = true
         var ret: [[UUID]] = []
         data.forEach {
             let arr = $0.filter {

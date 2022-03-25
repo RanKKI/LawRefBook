@@ -57,31 +57,35 @@ struct LawList: View {
                     }
                 }
                 .pickerStyle(.segmented)
-                .padding(.leading, 8)
-                .padding(.trailing, 8)
+                .padding(.leading, 16)
+                .padding(.trailing, 16)
+                .transition(.opacity)
+                .animation(.default, value: showSearching)
+                .zIndex(5)
             }
-            List {
-                if !showSearching  && !law.favoriteUUID.isEmpty {
-                    Section(header: Text("收藏")) {
-                        ForEach(law.favoriteUUID, id: \.self) { id  in
-                            NaviLawLink(uuid: id, searchText: sText)
+            if law.isLoading {
+                Text("加载中....")
+                    .foregroundColor(.gray)
+                Spacer()
+            } else {
+                List {
+                    if !showSearching  && !law.favoriteUUID.isEmpty {
+                        Section(header: Text("收藏")) {
+                            ForEach(law.favoriteUUID, id: \.self) { id  in
+                                NaviLawLink(uuid: id, searchText: sText)
+                            }
                         }
                     }
-                }
-                ForEach(law.lawList, id: \.self) { ids  in
-                    Section(header: Text(law.getCategoryName(ids[0]))) {
-                        ForEach(ids, id: \.self) { uuid in
-                            NaviLawLink(uuid: uuid, searchText: sText)
+                    ForEach(law.lawList, id: \.self) { ids  in
+                        Section(header: Text(law.getCategoryName(ids[0]))) {
+                            ForEach(ids, id: \.self) { uuid in
+                                NaviLawLink(uuid: uuid, searchText: sText)
+                            }
                         }
                     }
                 }
             }
         }
-//        .transition(.asymmetric(
-//            insertion: .move(edge: .top),
-//            removal: .opacity
-//        ))
-//        .animation(.default, value: showSearching)
         .onChange(of: searchText){ text in
             withAnimation {
                 law.filterLawList(text: text, type: searchType)
@@ -93,8 +97,15 @@ struct LawList: View {
             }
         }
         .onChange(of: isSearching) { val in
-            withAnimation {
+            if val {
+                withAnimation {
+                    showSearching = val
+                }
+            } else {
                 showSearching = val
+            }
+            if(!val){
+                searchType = .catalogue
             }
         }
     }
