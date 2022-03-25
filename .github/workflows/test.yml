@@ -5,7 +5,6 @@ on:
     branches: [ master ]
     paths:
       - '**.swift'
-      - '法律法规/**/**.md'
   pull_request:
     types: [opened, reopened]
 
