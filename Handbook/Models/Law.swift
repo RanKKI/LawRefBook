@@ -60,17 +60,19 @@ struct LawInfo {
     var content: String
 }
 
+extension FavFolder {
+    
+    public var contents: [FavContent] {
+        return content?.allObjects as! [FavContent]
+    }
+}
 
 enum LawGroupingMethod: String, CaseIterable {
     case department = "法律部门"
     case level = "法律阶位"
 }
 
-
-extension FavFolder {
-    
-    public var contents: [FavContent] {
-        return content?.allObjects as! [FavContent]
-    }
-
+enum SearchType : String, CaseIterable {
+    case catalogue = "目录"
+    case fullText = "全文"
 }

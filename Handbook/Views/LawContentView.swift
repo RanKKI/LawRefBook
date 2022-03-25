@@ -32,7 +32,9 @@ struct LawContentLineView: View {
     var contentFontSize: Int = 17
     
     var text: String
-    @Binding var searchText: String
+
+    @Binding
+    var searchText: String
     
     @Environment(\.colorScheme)
     private var colorScheme
@@ -166,6 +168,11 @@ struct LawContentList: View {
             obj.filterText(text: searchText)
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "当前法律内搜索")
+        .onAppear {
+            if !searchText.isEmpty {
+                obj.filterText(text: searchText)
+            }
+        }
     }
 }
 
@@ -188,18 +195,26 @@ struct LawContentView: View {
             }
         }
     }
-    
-    @StateObject var sheetManager = SheetMananger()
-    
+
     var lawID: UUID
-    @ObservedObject var content: LawContent
+
+    @ObservedObject
+    var content: LawContent
+
+    @State
+    var isFav = false
     
-    @State var isFav = false
-    @State private var scrollTarget: Int64?
+    var searchText: String = ""
+
+    @State
+    private var scrollTarget: Int64?
     
+    @StateObject
+    private var sheetManager = SheetMananger()
+
     var body: some View{
         ScrollViewReader { scrollProxy in
-            LawContentList(lawID: lawID, obj: content)
+            LawContentList(lawID: lawID, obj: content, searchText: searchText)
                 .onChange(of: scrollTarget) { target in
                     if let target = target {
                         scrollTarget = nil
