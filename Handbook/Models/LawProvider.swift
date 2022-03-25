@@ -57,24 +57,57 @@ class LawProvider: ObservableObject{
     func loadLawList() {
         self.lawList = self.getLawList()
     }
+    
+    @Published
+    var isLoading: Bool = false
 
-    func filterLawList(text: String) {
+    func filterLawList(text: String, type: SearchType = .catalogue) {
         DispatchQueue.main.async {
-            let data = self.getLawList()
-            if text.isEmpty {
-                self.lawList = data
-            } else {
-                var ret: [[UUID]] = []
-                data.forEach {
-                    let arr = $0.filter {
-                        self.getLawNameByUUID($0).contains(text)
-                    }
-                    if !arr.isEmpty {
-                        ret.append(arr)
-                    }
-                }
-                self.lawList = ret
+            if type == .catalogue {
+                self.filterListByName(text: text)
+            } else if type == .fullText {
+                self.filterListByContent(text: text)
             }
+        }
+    }
+    
+    private func filterListByContent(text: String) {
+        let data = self.getLawList()
+        if text.isEmpty {
+            self.lawList = []
+            return
+        }
+        self.isLoading = true
+        var ret: [[UUID]] = []
+        data.forEach {
+            let arr = $0.filter {
+                let content = self.getLawContent($0)
+                content.load()
+                return content.containsText(text: text)
+            }
+            if !arr.isEmpty {
+                ret.append(arr)
+            }
+        }
+        self.isLoading = false
+        self.lawList = ret
+    }
+    
+    private func filterListByName(text: String) {
+        let data = self.getLawList()
+        if text.isEmpty {
+            self.lawList = data
+        } else {
+            var ret: [[UUID]] = []
+            data.forEach {
+                let arr = $0.filter {
+                    self.getLawNameByUUID($0).contains(text)
+                }
+                if !arr.isEmpty {
+                    ret.append(arr)
+                }
+            }
+            self.lawList = ret
         }
     }
 
@@ -113,13 +146,14 @@ class LawProvider: ObservableObject{
         return getLawContent(uuid).Infomations
     }
 
-    func favoriteContent(_ uuid: UUID, line: Int64) {
+    func favoriteContent(_ uuid: UUID, line: Int64, folder: FavFolder) {
         let moc = container.viewContext
         moc.perform {
             let fav = FavContent(context: moc)
             fav.id = UUID()
             fav.line = line
             fav.lawId = uuid
+            fav.folder = folder
             try? moc.save()
         }
     }

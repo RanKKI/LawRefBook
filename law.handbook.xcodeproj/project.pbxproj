@@ -23,7 +23,7 @@
 		900EBCE827D361AE00E20FE4 /* LocalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE727D361AE00E20FE4 /* LocalProvider.swift */; };
 		900EBCEA27D3621700E20FE4 /* Law.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE927D3621700E20FE4 /* Law.swift */; };
 		900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */; };
-		9016D22627E7E7B80027D69D /* TestGrouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9016D22527E7E7B80027D69D /* TestGrouping.swift */; };
+		9016D22427E61BEA0027D69D /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9016D22327E61BEA0027D69D /* Alert.swift */; };
 		902DAE5827C7CBC100926036 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DAE5727C7CBC100926036 /* App.swift */; };
 		902DAE5A27C7CBC100926036 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DAE5927C7CBC100926036 /* ContentView.swift */; };
 		902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5B27C7CBC200926036 /* Assets.xcassets */; };
@@ -63,7 +63,7 @@
 		900EBCE727D361AE00E20FE4 /* LocalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalProvider.swift; sourceTree = "<group>"; };
 		900EBCE927D3621700E20FE4 /* Law.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Law.swift; sourceTree = "<group>"; };
 		900EBCEC27D3815900E20FE4 /* LawData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LawData.xcdatamodel; sourceTree = "<group>"; };
-		9016D22527E7E7B80027D69D /* TestGrouping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGrouping.swift; sourceTree = "<group>"; };
+		9016D22327E61BEA0027D69D /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		902DAE5427C7CBC100926036 /* 中国法律.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "中国法律.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		902DAE5727C7CBC100926036 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		902DAE5927C7CBC100926036 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -114,6 +114,7 @@
 		900EBCDC27D35CB800E20FE4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9016D22227E61BBF0027D69D /* Ext */,
 				16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */,
 				9035983B27C9F96400C8D9E7 /* SettingView.swift */,
 				902DAE5927C7CBC100926036 /* ContentView.swift */,
@@ -167,6 +168,14 @@
 				90B74D7727E4DB1B00723535 /* Spotlight.swift */,
 			);
 			path = Handbook;
+			sourceTree = "<group>";
+		};
+		9016D22227E61BBF0027D69D /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+				9016D22327E61BEA0027D69D /* Alert.swift */,
+			);
+			path = Ext;
 			sourceTree = "<group>";
 		};
 		902DAE4B27C7CBC100926036 = {
@@ -327,6 +336,7 @@
 				900EBCE827D361AE00E20FE4 /* LocalProvider.swift in Sources */,
 				1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */,
 				9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */,
+				9016D22427E61BEA0027D69D /* Alert.swift in Sources */,
 				900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
