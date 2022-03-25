@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D49" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="FavContent" representedClassName="FavContent" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="lawId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="line" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavFolder" inverseName="content" inverseEntity="FavFolder"/>
+    </entity>
+    <entity name="FavFolder" representedClassName="FavFolder" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="content" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FavContent" inverseName="folder" inverseEntity="FavContent"/>
     </entity>
     <entity name="FavLaw" representedClassName="FavLaw" syncable="YES" codeGenerationType="class">
         <attribute name="favAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="FavContent" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="FavContent" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="FavFolder" positionX="-54" positionY="18" width="128" height="89"/>
         <element name="FavLaw" positionX="-54" positionY="18" width="128" height="59"/>
     </elements>
 </model>
