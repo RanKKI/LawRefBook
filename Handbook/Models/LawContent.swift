@@ -187,6 +187,17 @@ class LawContent: ObservableObject {
             self.Content = newBody
         }
     }
+    
+    func containsText(text: String) -> Bool {
+        if text.isEmpty {
+            return false
+        }
+        return self.Body.first {
+            return $0.children.first {
+                $0.text.contains(text)
+            } != nil
+        } != nil
+    }
 
     func getLine(line: Int64) -> String {
         for body in Body {

@@ -65,3 +65,8 @@ enum LawGroupingMethod: String, CaseIterable {
     case department = "法律部门"
     case level = "法律阶位"
 }
+
+enum SearchType : String, CaseIterable {
+    case catalogue = "目录"
+    case fullText = "全文"
+}
