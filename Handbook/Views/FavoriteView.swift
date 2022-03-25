@@ -41,7 +41,7 @@ private struct FavLine: View {
     
     var body: some View {
         Text(content)
-            .contextMenu {
+            .swipeActions {
                 Button {
                     withAnimation {
                         moc.delete(fav)
@@ -49,8 +49,8 @@ private struct FavLine: View {
                     }
                 } label: {
                     Label("取消收藏", systemImage: "heart.slash")
-                        .foregroundColor(.red)
                 }
+                .tint(.red)
             }
     }
 }
@@ -78,12 +78,12 @@ private struct FavLineSection: View {
 private struct FavFolderView: View {
     
     @StateObject var folder: FavFolder
-
-    @State
-    private var editNameToggler = false
     
     @Environment(\.managedObjectContext)
     private var moc
+    
+    @State
+    private var editNameToggler = false
     
     var body: some View {
         ZStack {
@@ -127,6 +127,17 @@ struct FolderItemView: View {
     @StateObject
     var folder: FavFolder
     
+    @State
+    private var deleteAlert = false
+    
+    func delete() {
+        folder.content?.forEach {
+            moc.delete($0 as! NSManagedObject)
+        }
+        moc.delete(folder)
+        try? moc.save()
+    }
+    
     var body: some View {
         NavigationLink {
             FavFolderView(folder: folder)
@@ -135,15 +146,24 @@ struct FolderItemView: View {
         }
         .swipeActions {
             Button {
-                folder.content?.forEach {
-                    moc.delete($0 as! NSManagedObject)
+                if (folder.content?.count ?? 0) <= 0 {
+                    delete()
+                } else {
+                    deleteAlert.toggle()
                 }
-                moc.delete(folder)
-                try? moc.save()
-             } label: {
-                 Label("删除文件夹", systemImage: "folder.badge.minus")
-             }
-             .tint(.red)
+            } label: {
+                Label("删除文件夹", systemImage: "folder.badge.minus")
+            }
+            .tint(.red)
+        }
+
+        .alert("确认删除？", isPresented: $deleteAlert) {
+            Button("确定") {
+                delete()
+            }
+            Button("取消", role: .cancel) { }
+        } message: {
+            Text("文件夹里有 \(folder.content?.count ?? 0) 条收藏。")
         }
     }
     
@@ -165,9 +185,6 @@ struct FavoriteView: View {
     @State
     private var addFolderToggle = false
     
-    @State
-    private var isEditing = false
-    
     private var contentWithoutFolder: [[FavContent]] {
         convert(favorites).map {
             $0.filter {
@@ -183,42 +200,21 @@ struct FavoriteView: View {
             if (favorites.isEmpty && folders.isEmpty) {
                 Text("空空如也")
             } else {
-                List{
+                List {
                     if !folders.isEmpty {
                         ForEach(folders, id: \.self) { (folder: FavFolder) in
                             FolderItemView(folder: folder)
                         }
-                        .onDelete { _ in
-                        
-                        }
-                        .onMove { from, to in
-
-                        }
-                        .contextMenu {
-                            Button {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    withAnimation(.easeIn(duration: 0.4)) {
-                                        isEditing.toggle()
-                                    }
-                                }
-                            } label: {
-                                Text("修改")
+                    }
+                    ForEach(contentWithoutFolder, id: \.self) { (section: [FavContent]) in
+                        if let lawID = section.first?.lawId {
+                            if let content = LawProvider.shared.getLawContent(lawID) {
+                                FavLineSection(lawID: lawID, lawContent: content, section: section)
                             }
                         }
                     }
-                    if !isEditing {
-                        ForEach(contentWithoutFolder, id: \.self) { (section: [FavContent]) in
-                            if let lawID = section.first?.lawId {
-                                if let content = LawProvider.shared.getLawContent(lawID) {
-                                    FavLineSection(lawID: lawID, lawContent: content, section: section)
-                                }
-                            }
-                        }
-                        .transition(.slide)
-                    }
+                    .transition(.slide)
                 }
-                .animation(.spring(), value: isEditing)
-                .environment(\.editMode, .constant(self.isEditing ? EditMode.active : EditMode.inactive))
             }
         }
         .alert(isPresented: $addFolderToggle, AlertConfig(title: "新建文件夹", action: { name in
@@ -234,22 +230,11 @@ struct FavoriteView: View {
         }))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing){
-                if !isEditing {
-                    IconButton(icon: "folder.badge.plus") {
-                        addFolderToggle.toggle()
-                    }
-                    CloseSheetItem() {
-                        dismiss()
-                    }
-                } else {
-                    Button {
-                        withAnimation {
-                            isEditing.toggle()
-                        }
-                    } label: {
-                        Text("完成")
-                            .foregroundColor(.red)
-                    }
+                IconButton(icon: "folder.badge.plus") {
+                    addFolderToggle.toggle()
+                }
+                CloseSheetItem() {
+                    dismiss()
                 }
             }
         }
@@ -269,7 +254,7 @@ struct SelectFolderView: View {
     
     @State
     private var addFolderToggle = false
-        
+    
     var action: (FavFolder?) -> Void
     
     var body: some View {
@@ -310,5 +295,4 @@ struct SelectFolderView: View {
             }
         }
     }
-    
 }
