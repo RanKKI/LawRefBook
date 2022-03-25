@@ -99,7 +99,6 @@ private struct FavFolderView: View {
                 }
             }
         }
-        .navigationTitle(folder.name ?? "")
         .alert(isPresented: $editNameToggler, AlertConfig(title: "修改文件夹名", action: { name in
             if let txt = name {
                 if txt.isEmpty {
@@ -141,6 +140,7 @@ struct FolderItemView: View {
     var body: some View {
         NavigationLink {
             FavFolderView(folder: folder)
+                .navigationTitle(folder.name ?? "")
         } label: {
             Text(folder.name ?? "")
         }
@@ -196,7 +196,7 @@ struct FavoriteView: View {
     }
     
     var body: some View {
-        Group {
+        ZStack {
             if (favorites.isEmpty && folders.isEmpty) {
                 Text("空空如也")
             } else {
