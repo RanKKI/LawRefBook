@@ -24,7 +24,6 @@ private struct AdjustSteppter<Value: Numeric>: View {
 
     var body: some View {
         Group {
-            Divider()
             Stepper {
                 Text("\(title): \(valueStr)")
             } onIncrement: {
@@ -42,25 +41,22 @@ struct FontSettingView: View {
 
     @AppStorage("font_content")
     var contentFontSize: Int = 17
-    
-    @AppStorage("font_kerning")
-    var kerning: Double = 0.0
-    
+
     @AppStorage("font_tracking")
-    var tracking: Double = 0.0
+    var tracking: Double = 0.6
     
-    @AppStorage("font_baseline")
-    var baseline: Double = 0.0
+    @AppStorage("font_spacing")
+    var spacing: Double = 4.5
 
     @State private var searchText = ""
 
     var body: some View {
 
         VStack(alignment: .leading) {
-            AdjustSteppter(title: "正文", value: $contentFontSize, step: 1)
-            AdjustSteppter(title: "kerning", value: $kerning, step: 0.1)
-            AdjustSteppter(title: "tracking", value: $tracking, step: 0.1)
-            AdjustSteppter(title: "baseline", value: $baseline, step: 0.1)
+            Divider()
+            AdjustSteppter(title: "正文大小", value: $contentFontSize, step: 1)
+            AdjustSteppter(title: "左右间距", value: $tracking, step: 0.1)
+            AdjustSteppter(title: "上下间距", value: $spacing, step: 0.1)
             Group {
                 LawContentTitleView(text: "中华人民共和国民法典")
                 LawContentTitleView(text: "物权编")
@@ -74,6 +70,15 @@ struct FontSettingView: View {
             }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
 
             Spacer()
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                IconButton(icon: "wrench") {
+                    contentFontSize = 17
+                    tracking = 0.6
+                    spacing = 4.5
+                }
+            }
         }
 
     }

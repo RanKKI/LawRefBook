@@ -31,14 +31,11 @@ struct LawContentLineView: View {
     @AppStorage("font_content")
     var contentFontSize: Int = 17
     
-    @AppStorage("font_kerning")
-    var kerning: Double = 0.0
-    
     @AppStorage("font_tracking")
-    var tracking: Double = 0.0
+    var tracking: Double = 0.6
     
-    @AppStorage("font_baseline")
-    var baseline: Double = 0.0
+    @AppStorage("font_spacing")
+    var spacing: Double = 4.5
 
     var text: String
     @Binding var searchText: String
@@ -68,16 +65,14 @@ struct LawContentLineView: View {
                 let range = text.startIndex..<text.endIndex
                 highlightText(text[range])
                     .font(.system(size: CGFloat(contentFontSize)))
-                    .kerning(kerning)
                     .tracking(tracking)
-                    .lineSpacing(baseline)
+                    .lineSpacing(spacing)
 
             }else{
                 (Text(arr[0]).bold() + Text(" ") + highlightText(arr[1]))
                     .font(.system(size: CGFloat(contentFontSize)))
-                    .kerning(kerning)
                     .tracking(tracking)
-                    .lineSpacing(baseline)
+                    .lineSpacing(spacing)
             }
         }
         .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))

@@ -50,6 +50,7 @@ struct SettingView: View {
                 }
                 NavigationLink {
                     FontSettingView()
+                        .navigationBarTitle("字体设置")
                 } label: {
                     Text("字体设置")
                 }
