@@ -11,7 +11,9 @@ private struct Change {
 }
 
 private var changes = [
-    Change(icon: "magnifyingglass", title: "Spotlight 索引", content: "你可以在设置中创建 Spotlight 索引，方便以后查找法律。（Spotlight即下拉搜索）"),
+    Change(icon: "text.justify.trailing", title: "字体间距调整", content: "可以在设置中调整字体的横向间距和竖向间距"),
+    Change(icon: "folder", title: "收藏文件夹", content: "可以按照不同的文件夹进行收藏，区分不同的场景"),
+    Change(icon: "magnifyingglass", title: "全文搜索", content: "首页下拉搜索现在支持全文搜索了！"),
 ]
 
 struct WhatNewView : View {
@@ -20,7 +22,7 @@ struct WhatNewView : View {
 
     var body: some View {
         VStack(spacing: 36) {
-            Text("看看有什么更新!")
+            Text("看看有什么更新！")
                 .font(.largeTitle)
             ForEach(changes, id: \.id) { change in
                 HStack(spacing: 16) {
