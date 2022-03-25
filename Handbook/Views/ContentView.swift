@@ -59,6 +59,7 @@ struct LawList: View {
                 .pickerStyle(.segmented)
                 .padding(.leading, 16)
                 .padding(.trailing, 16)
+                .padding(.top, 8)
                 .transition(.opacity)
                 .animation(.default, value: showSearching)
                 .zIndex(5)
