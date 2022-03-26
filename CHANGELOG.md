@@ -12,6 +12,10 @@
 
 ## [Unreleased]
 
+## [0.6.0] 2020-03-26
+### Added
+ - 很多法律，可以在[d7dff84](https://github.com/LawRefBook/Laws/commit/d7dff8469fd023ff2455d74c99ff1cb93189bdbb)查看
+
 ## [0.5.0] 2020-03-25
 ### Added
  - 字体间距调整
