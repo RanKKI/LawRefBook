@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-class Law: Codable {
+class Law: Codable, Identifiable {
     var name: String
     var id: UUID
     var level: String
@@ -11,7 +11,7 @@ class Law: Codable {
     var cateogry: LawCategory?
 }
 
-class LawCategory: Codable {
+class LawCategory: Codable, Identifiable {
     var category: String
     var laws: [Law]
     var id: UUID
