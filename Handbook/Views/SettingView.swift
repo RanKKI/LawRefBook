@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-let desc = """
+let COPYRIGHT_DECLARE = """
 根据《中华人民共和国著作权法》第五条，本作品不适用于该法。如不受其他法律、法规保护，本作品在中国大陆和其他地区属于公有领域。
 不适用于《中华人民共和国著作权法》的作品包括：
 （一）法律、法规，国家机关的决议、决定、命令和其他具有立法、行政、司法性质的文件，及其官方正式译文；
@@ -85,7 +85,7 @@ struct SettingView: View {
                     Text("创建 Spotlight 索引")
                 }
             }
-            Text(desc)
+            Text(COPYRIGHT_DECLARE)
                 .listRowBackground(Color.clear)
                 .font(.footnote)
         }

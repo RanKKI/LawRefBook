@@ -23,10 +23,9 @@ struct MainApp: App {
                         self.checkVersionUpdate()
                         LawProvider.shared.loadLawList()
                     }
+                WelcomeView()
             }
-            #if os(iOS)
-            .navigationViewStyle(.stack)
-            #endif
+            .phoneOnlyStackNavigationView()
         }
     }
 
