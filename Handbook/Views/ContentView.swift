@@ -5,7 +5,7 @@ struct ContentView: View {
     
     @State
     private var searchText: String = ""
-
+    
     @ObservedObject
     private var sheetManager = SheetMananger()
     
@@ -64,53 +64,71 @@ extension ContentView {
     
 }
 
-struct LawList: View {
-
+private struct SearchListView: View {
+    
+    @ObservedObject
+    var viewModel: LawList.ViewModel
+    
     @Binding
     var searchText: String
+    
+    @State
+    private var searchType = SearchType.catalogue
+    
+    var body: some View {
+        VStack {
+            SearchTypePicker(searchType: $searchType)
+            if viewModel.isLoading {
+                Spacer()
+                ProgressView()
+                Spacer()
+            } else if viewModel.searchResults.isEmpty {
+                if !searchText.isEmpty {
+                    Spacer()
+                    Text("没有结果")
+                }
+                Spacer()
+            } else {
+                List(viewModel.searchResults) {
+                    if searchType == .fullText {
+                        NaviLawLink(uuid: $0.id, searchText: searchText)
+                    } else {
+                        NaviLawLink(uuid: $0.id)
+                    }
+                }
+            }
+        }
+        
+        .onChange(of: searchText) { newValue in
+            viewModel.searchText(text: searchText, type: searchType)
+        }
+        .onChange(of: searchType) { newValue in
+            viewModel.searchText(text: searchText, type: searchType)
+        }
+    }
+}
 
+struct LawList: View {
+    
+    @Binding
+    var searchText: String
+    
     @ObservedObject
     var viewModel: ViewModel
     
     @ObservedObject
     private var provider = LawProvider.shared
-
+    
     @Environment(\.isSearching)
     private var isSearching
     
-    @State
-    private var searchType = SearchType.catalogue
-
     @AppStorage("defaultGroupingMethod", store: .standard)
     private var groupingMethod = LawGroupingMethod.department
 
     var body: some View {
         VStack {
             if isSearching {
-                SearchTypePicker(searchType: $searchType)
-                if viewModel.isLoading {
-                    Spacer()
-                    ProgressView()
-                    Spacer()
-                } else if viewModel.searchResults.isEmpty {
-                    if !searchText.isEmpty {
-                        Spacer()
-                        Text("没有结果")
-                    }
-                    Spacer()
-                } else {
-                    List(viewModel.searchResults) {
-                        if searchType == .fullText {
-                            NaviLawLink(uuid: $0.id, searchText: searchText)
-                        } else {
-                            NaviLawLink(uuid: $0.id)
-                        }
-                    }
-                }
-            } else if viewModel.isLoading {
-                Spacer()
-                ProgressView()
-                Spacer()
+                SearchListView(viewModel: viewModel, searchText: $searchText)
             } else {
                 List {
                     if !provider.favoriteUUID.isEmpty {
@@ -129,12 +147,6 @@ struct LawList: View {
                 searchText = ""
             }
         }
-        .onChange(of: searchText) { newValue in
-            viewModel.searchText(text: searchText, type: searchType)
-        }
-        .onChange(of: searchType) { newValue in
-            viewModel.searchText(text: searchText, type: searchType)
-        }
         .onChange(of: groupingMethod) { newValue in
             viewModel.onGroupingChange(method: newValue)
         }
@@ -145,7 +157,7 @@ struct LawList: View {
 }
 
 private struct LawSection: View {
-
+    
     var section: String
     var laws: [Law]
     
@@ -176,7 +188,7 @@ private struct SearchTypePicker: View {
         .padding(.trailing, 16)
         .padding(.top, 8)
     }
-
+    
 }
 
 struct NaviLawLink : View {

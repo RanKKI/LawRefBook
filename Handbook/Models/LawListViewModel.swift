@@ -69,7 +69,6 @@ extension LawList {
                         LawCategory($0.key, $0.value)
                     }
             }
-            print("onGroupingChange \(arr)")
             self.categories = arr
             
         }
