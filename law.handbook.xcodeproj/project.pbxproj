@@ -24,8 +24,12 @@
 		900EBCEA27D3621700E20FE4 /* Law.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE927D3621700E20FE4 /* Law.swift */; };
 		900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */; };
 		9016D22427E61BEA0027D69D /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9016D22327E61BEA0027D69D /* Alert.swift */; };
+		90193EF827F57E78008CF0A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EF727F57E78008CF0A6 /* ContentView.swift */; };
+		90193EFA27F57E93008CF0A6 /* LawListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EF927F57E93008CF0A6 /* LawListViewModel.swift */; };
+		90193EFC27F5985E008CF0A6 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFB27F5985E008CF0A6 /* View.swift */; };
+		90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFD27F599A5008CF0A6 /* WelcomeView.swift */; };
+		90193F0027F5A376008CF0A6 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFF27F5A376008CF0A6 /* Consts.swift */; };
 		902DAE5827C7CBC100926036 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DAE5727C7CBC100926036 /* App.swift */; };
-		902DAE5A27C7CBC100926036 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DAE5927C7CBC100926036 /* ContentView.swift */; };
 		902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5B27C7CBC200926036 /* Assets.xcassets */; };
 		902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5E27C7CBC200926036 /* Preview Assets.xcassets */; };
 		9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035982B27C9012B00C8D9E7 /* LawContent.swift */; };
@@ -64,9 +68,13 @@
 		900EBCE927D3621700E20FE4 /* Law.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Law.swift; sourceTree = "<group>"; };
 		900EBCEC27D3815900E20FE4 /* LawData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LawData.xcdatamodel; sourceTree = "<group>"; };
 		9016D22327E61BEA0027D69D /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		90193EF727F57E78008CF0A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		90193EF927F57E93008CF0A6 /* LawListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawListViewModel.swift; sourceTree = "<group>"; };
+		90193EFB27F5985E008CF0A6 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		90193EFD27F599A5008CF0A6 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		90193EFF27F5A376008CF0A6 /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		902DAE5427C7CBC100926036 /* 中国法律.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "中国法律.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		902DAE5727C7CBC100926036 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
-		902DAE5927C7CBC100926036 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		902DAE5B27C7CBC200926036 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		902DAE5E27C7CBC200926036 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9035982B27C9012B00C8D9E7 /* LawContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContent.swift; sourceTree = "<group>"; };
@@ -97,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				16C0011227E43AA100AB6446 /* TestLawContent.swift */,
-				9016D22527E7E7B80027D69D /* TestGrouping.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -116,14 +123,15 @@
 			children = (
 				9016D22227E61BBF0027D69D /* Ext */,
 				16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */,
-				9035983B27C9F96400C8D9E7 /* SettingView.swift */,
-				902DAE5927C7CBC100926036 /* ContentView.swift */,
+				90193EF727F57E78008CF0A6 /* ContentView.swift */,
 				9035983927C9F57D00C8D9E7 /* LawContentView.swift */,
 				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
 				1632AD3627D6277F00B42167 /* WhatNewView.swift */,
 				1632AD3E27D8719600B42167 /* SettingFont.swift */,
+				9035983B27C9F96400C8D9E7 /* SettingView.swift */,
 				16C3362B27DB182500D3F1F0 /* LicenseView.swift */,
+				90193EFD27F599A5008CF0A6 /* WelcomeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -135,6 +143,7 @@
 				900EBCE527D35FDE00E20FE4 /* LawProvider.swift */,
 				900EBCE727D361AE00E20FE4 /* LocalProvider.swift */,
 				900EBCE927D3621700E20FE4 /* Law.swift */,
+				90193EF927F57E93008CF0A6 /* LawListViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -161,11 +170,12 @@
 			children = (
 				902DAE5727C7CBC100926036 /* App.swift */,
 				16BA35C627CDDE8700694880 /* Util.swift */,
+				90B74D7727E4DB1B00723535 /* Spotlight.swift */,
+				90193EFF27F5A376008CF0A6 /* Consts.swift */,
 				900EBCDE27D35CEF00E20FE4 /* Toolbar Items */,
 				900EBCDD27D35CCB00E20FE4 /* Models */,
 				900EBCDC27D35CB800E20FE4 /* Views */,
 				900EBCDB27D35C9D00E20FE4 /* Resources */,
-				90B74D7727E4DB1B00723535 /* Spotlight.swift */,
 			);
 			path = Handbook;
 			sourceTree = "<group>";
@@ -174,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				9016D22327E61BEA0027D69D /* Alert.swift */,
+				90193EFB27F5985E008CF0A6 /* View.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -309,7 +320,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9016D22627E7E7B80027D69D /* TestGrouping.swift in Sources */,
 				16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,8 +329,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
+				90193F0027F5A376008CF0A6 /* Consts.swift in Sources */,
 				900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */,
-				902DAE5A27C7CBC100926036 /* ContentView.swift in Sources */,
+				90193EFC27F5985E008CF0A6 /* View.swift in Sources */,
+				90193EF827F57E78008CF0A6 /* ContentView.swift in Sources */,
 				900EBCE627D35FDE00E20FE4 /* LawProvider.swift in Sources */,
 				16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */,
@@ -328,7 +340,9 @@
 				1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
+				90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */,
 				900EBCEA27D3621700E20FE4 /* Law.swift in Sources */,
+				90193EFA27F57E93008CF0A6 /* LawListViewModel.swift in Sources */,
 				902DAE5827C7CBC100926036 /* App.swift in Sources */,
 				1632AD3F27D8719600B42167 /* SettingFont.swift in Sources */,
 				16BA35C727CDDE8700694880 /* Util.swift in Sources */,

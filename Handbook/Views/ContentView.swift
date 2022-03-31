@@ -9,9 +9,12 @@ struct ContentView: View {
     @ObservedObject
     private var sheetManager = SheetMananger()
     
+    @ObservedObject
+    private var lawListModal = LawList.ViewModel()
+    
     var body: some View {
         VStack {
-            LawList(searchText: $searchText)
+            LawList(searchText: $searchText, viewModel: lawListModal)
         }
         .searchable(text: $searchText, prompt: "搜索")
         .toolbar {
@@ -67,7 +70,7 @@ struct LawList: View {
     var searchText: String
 
     @ObservedObject
-    private var viewModel = ViewModel()
+    var viewModel: ViewModel
     
     @ObservedObject
     private var provider = LawProvider.shared
@@ -77,6 +80,9 @@ struct LawList: View {
     
     @State
     private var searchType = SearchType.catalogue
+
+    @AppStorage("defaultGroupingMethod", store: .standard)
+    private var groupingMethod = LawGroupingMethod.department
 
     var body: some View {
         VStack {
@@ -101,6 +107,10 @@ struct LawList: View {
                         }
                     }
                 }
+            } else if viewModel.isLoading {
+                Spacer()
+                ProgressView()
+                Spacer()
             } else {
                 List {
                     if !provider.favoriteUUID.isEmpty {
@@ -124,6 +134,12 @@ struct LawList: View {
         }
         .onChange(of: searchType) { newValue in
             viewModel.searchText(text: searchText, type: searchType)
+        }
+        .onChange(of: groupingMethod) { newValue in
+            viewModel.onGroupingChange(method: newValue)
+        }
+        .task {
+            viewModel.onGroupingChange(method: groupingMethod)
         }
     }
 }

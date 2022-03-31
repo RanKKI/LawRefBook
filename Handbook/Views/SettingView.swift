@@ -96,8 +96,5 @@ struct SettingView: View {
                 }
             }
         }
-        .onChange(of: groupingMethod) { val in
-            LawProvider.shared.loadLawList()
-        }
     }
 }
