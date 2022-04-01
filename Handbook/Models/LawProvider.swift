@@ -2,19 +2,6 @@ import Foundation
 import CoreData
 import SwiftUI
 
-let ArrayLevelSort = [
-    "宪法",
-    "法律",
-    "司法解释",
-    "行政法规",
-    "地方性法规",
-    "经济特区法规",
-    "自治条例",
-    "单行条例",
-    "案例",
-    "其他",
-]
-
 class LawProvider: ObservableObject{
 
     static let shared = LawProvider()
@@ -47,7 +34,7 @@ class LawProvider: ObservableObject{
         let arr = LocalProvider.shared.getLawList()
         if groupingMethod == .level {
             let dict = Dictionary(grouping: arr.flatMap { $0.laws } , by: { $0.level }).sorted {
-                return ArrayLevelSort.firstIndex(of: $0.key)! < ArrayLevelSort.firstIndex(of: $1.key)!
+                return LawLevel.firstIndex(of: $0.key)! < LawLevel.firstIndex(of: $1.key)!
             }
             return dict.map { $0.value.map {$0.id } }
         }

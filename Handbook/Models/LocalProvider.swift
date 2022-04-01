@@ -5,6 +5,7 @@ class LocalProvider {
     static let shared = LocalProvider()
 
     private var lawList: [LawCategory] = []
+
     lazy var lawMap: [UUID: Law] = {
         var ret = [UUID: Law]()
         self.getLawList().flatMap { $0.laws }.forEach {
@@ -26,6 +27,10 @@ class LocalProvider {
 
     func getLaw(_ uuid: UUID) -> Law? {
         return lawMap[uuid]
+    }
+
+    func getLaws() -> [Law] {
+        return self.lawList.flatMap { $0.laws }
     }
 
     func getLawList() -> [LawCategory] {

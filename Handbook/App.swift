@@ -13,15 +13,19 @@ struct MainApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
-                .sheet(isPresented: $showNewPage) {
-                    WhatNewView()
-                }
-                .onAppear {
-                    self.checkVersionUpdate()
-                    LawProvider.shared.loadLawList()
-                }
+            NavigationView {
+                ContentView()
+                    .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
+                    .sheet(isPresented: $showNewPage) {
+                        WhatNewView()
+                    }
+                    .onAppear {
+                        self.checkVersionUpdate()
+                        LawProvider.shared.loadLawList()
+                    }
+                WelcomeView()
+            }
+            .phoneOnlyStackNavigationView()
         }
     }
 

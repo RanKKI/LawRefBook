@@ -1,7 +1,11 @@
 import Foundation
 import SwiftUI
 
-class Law: Codable {
+class Law: Codable, Identifiable , Equatable{
+    static func == (lhs: Law, rhs: Law) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     var name: String
     var id: UUID
     var level: String
@@ -11,13 +15,25 @@ class Law: Codable {
     var cateogry: LawCategory?
 }
 
-class LawCategory: Codable {
+class LawCategory: Codable, Identifiable, Equatable {
+    static func == (lhs: LawCategory, rhs: LawCategory) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     var category: String
     var laws: [Law]
     var id: UUID
     var folder: String?
 
+    var isSubFolder: Bool?
+
     var links: [UUID]? // 该目录下所有法律都会继承这个
+
+    init(_ name: String, _ laws: [Law]) {
+        self.category = name
+        self.laws = laws
+        self.id = UUID()
+    }
 }
 
 struct TextContent : Identifiable {
@@ -65,14 +81,4 @@ extension FavFolder {
     public var contents: [FavContent] {
         return content?.allObjects as! [FavContent]
     }
-}
-
-enum LawGroupingMethod: String, CaseIterable {
-    case department = "法律部门"
-    case level = "法律阶位"
-}
-
-enum SearchType : String, CaseIterable {
-    case catalogue = "目录"
-    case fullText = "全文"
 }
