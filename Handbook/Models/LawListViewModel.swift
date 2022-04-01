@@ -128,8 +128,21 @@ extension LawList {
 
         override func onGroupingChange(method: LawGroupingMethod) {
             if let target = self.cateogry {
-                if let arr = LocalProvider.shared.getLawList().first(where: { $0.category == target }) {
-                    self.categories = [arr]
+                if method == .department {
+                    if let arr = LocalProvider.shared.getLawList().first(where: { $0.category == target }) {
+                        self.categories = [arr]
+                    }
+                } else if method == .level {
+                    self.categories = Dictionary(grouping: LocalProvider.shared.getLaws(), by: \.level)
+                        .sorted {
+                            return LawLevel.firstIndex(of: $0.key)! < LawLevel.firstIndex(of: $1.key)!
+                        }
+                        .map {
+                            LawCategory($0.key, $0.value)
+                        }
+                        .filter {
+                            $0.category == target
+                        }
                 }
             }
         }
