@@ -96,7 +96,13 @@ extension LawList {
             
             var arr = LocalProvider.shared.getLaws()
             
-            arr = arr.filter { $0.cateogry?.category == self.cateogry }
+            arr = arr.filter {
+                if type == .catalogue {
+                    return $0.cateogry?.category == self.cateogry
+                } else {
+                    return $0.level == self.cateogry
+                }
+            }
             
             if text.isEmpty {
                 self.searchResults = []
