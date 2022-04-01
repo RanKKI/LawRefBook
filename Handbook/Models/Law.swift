@@ -25,8 +25,10 @@ class LawCategory: Codable, Identifiable, Equatable {
     var id: UUID
     var folder: String?
 
+    var isSubFolder: Bool?
+
     var links: [UUID]? // 该目录下所有法律都会继承这个
-    
+
     init(_ name: String, _ laws: [Law]) {
         self.category = name
         self.laws = laws

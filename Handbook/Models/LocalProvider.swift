@@ -28,7 +28,7 @@ class LocalProvider {
     func getLaw(_ uuid: UUID) -> Law? {
         return lawMap[uuid]
     }
-    
+
     func getLaws() -> [Law] {
         return self.lawList.flatMap { $0.laws }
     }

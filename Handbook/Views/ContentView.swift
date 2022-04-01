@@ -116,6 +116,8 @@ struct LawList: View {
     @ObservedObject
     var viewModel: ViewModel
     
+    var showFav = true
+    
     @ObservedObject
     private var provider = LawProvider.shared
     
@@ -124,20 +126,30 @@ struct LawList: View {
     
     @AppStorage("defaultGroupingMethod", store: .standard)
     private var groupingMethod = LawGroupingMethod.department
-
+    
     var body: some View {
         VStack {
             if isSearching {
                 SearchListView(viewModel: viewModel, searchText: $searchText)
             } else {
                 List {
-                    if !provider.favoriteUUID.isEmpty {
-                        LawSection(section: "收藏", laws: provider.favoriteUUID.map {
+                    if showFav && !provider.favoriteUUID.isEmpty {
+                        LawSection(category: LawCategory("收藏", provider.favoriteUUID.map {
                             LocalProvider.shared.getLaw($0)
-                        }.filter { $0 != nil }.map { $0! })
+                        }.filter { $0 != nil }.map { $0! }))
                     }
-                    ForEach(viewModel.categories) {
-                        LawSection(section: $0.category, laws: $0.laws)
+                    if viewModel.categories.count == 1 {
+                        ForEach(viewModel.categories.first!.laws) {
+                            NaviLawLink(uuid: $0.id)
+                        }
+                    } else {
+                        ForEach(viewModel.categories) {
+                            if let isSub = $0.isSubFolder, isSub {
+                                SpecificCategoryLink(category: $0)
+                            } else {
+                                LawSection(category: $0)
+                            }
+                        }
                     }
                 }
             }
@@ -156,18 +168,44 @@ struct LawList: View {
     }
 }
 
-private struct LawSection: View {
+private struct SpecificCategoryLink: View {
     
-    var section: String
-    var laws: [Law]
+    var category: LawCategory
+    var name: String? = nil
+    
+    @State
+    private var searchText = ""
     
     var body: some View {
         Section {
-            ForEach(laws) {
+            NavigationLink {
+                LawList(searchText: $searchText,
+                        viewModel: LawList.SpecificCategoryViewModal(category: category.category),
+                        showFav: false)
+                .searchable(text: $searchText)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle(category.category)
+            } label: {
+                Text(name ?? category.category)
+            }
+        }
+    }
+}
+
+private struct LawSection: View {
+    
+    var category: LawCategory
+    
+    var body: some View {
+        Section {
+            ForEach(category.laws[0..<min(category.laws.count, 5)]) {
                 NaviLawLink(uuid: $0.id)
             }
+            if category.laws.count > 5 {
+                SpecificCategoryLink(category: category, name: "更多")
+            }
         } header: {
-            Text(section)
+            Text(category.category)
         }
     }
 }
