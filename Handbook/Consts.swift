@@ -39,3 +39,6 @@ let Contributors: [String] = [
 ]
 
 let DeveloperMail = "rankki.dev@icloud.com"
+
+private let chineseNumbers = "一二三四五六七八九十零"
+let lineStartRe = String(format: "^((第[%@]+条)|[%@]+、)", chineseNumbers, chineseNumbers)

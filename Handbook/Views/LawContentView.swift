@@ -63,7 +63,7 @@ struct LawContentLineView: View {
     var body: some View {
         VStack {
             let arr = text.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
-            if arr.count == 1 || arr[0].range(of: "^第.+?条", options: .regularExpression) == nil {
+            if arr.count == 1 || arr[0].range(of: lineStartRe, options: .regularExpression) == nil {
                 let range = text.startIndex..<text.endIndex
                 highlightText(text[range])
                     .font(.system(size: CGFloat(contentFontSize)))

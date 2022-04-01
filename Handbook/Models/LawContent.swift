@@ -157,7 +157,7 @@ class LawContent: ObservableObject {
             self.forceBreak = false
             return true
         }
-        return (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: "^第.+?条", options: .regularExpression) != nil)
+        return (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: lineStartRe, options: .regularExpression) != nil)
     }
 
     func parseContent(_ children: inout [TextContent.Content], _ text: String, isFix: Bool, no: Int64) -> Bool {
