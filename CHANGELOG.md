@@ -12,6 +12,15 @@
 
 ## [Unreleased]
 
+## [0.6.2] 2020-04-01
+### Fixed
+ - 全文搜索在以阶位分组中不能使用
+## [0.6.1] 2020-04-01
+### Added
+ - 一些司法解释
+### Changed
+ - 重构目录界面
+
 ## [0.6.0] 2020-03-26
 ### Added
  - 很多法律，可以在[d7dff84](https://github.com/LawRefBook/Laws/commit/d7dff8469fd023ff2455d74c99ff1cb93189bdbb)查看
