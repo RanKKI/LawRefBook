@@ -75,7 +75,7 @@ struct FontSettingView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                IconButton(icon: "wrench") {
+                IconButton(icon: "gobackward") {
                     contentFontSize = 17
                     tracking = 0.6
                     spacing = 4.5

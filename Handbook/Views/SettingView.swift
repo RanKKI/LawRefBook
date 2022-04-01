@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-private let ContributorsText = String(format: "贡献者: %@", Contributors.isEmpty ? "欢迎你来贡献！" : Contributors.joined(separator: ","))
+private let ContributorsText = String(format: "特别感谢以下朋友的贡献: %@", Contributors.isEmpty ? "欢迎你来贡献！" : Contributors.joined(separator: ", "))
 
 struct SettingView: View {
 
@@ -34,7 +34,7 @@ struct SettingView: View {
                     Text("字体设置")
                 }
             }
-            Section(header: Text("开发者"), footer: Text(ContributorsText)){
+            Section(header: Text("开发者")){
                 Text("@RanKKI")
                 Text(DeveloperMail)
                     .foregroundColor(.accentColor)
@@ -67,6 +67,13 @@ struct SettingView: View {
             Text(COPYRIGHT_DECLARE)
                 .listRowBackground(Color.clear)
                 .font(.footnote)
+            
+            Text(ContributorsText)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .multilineTextAlignment(.leading)
+                .font(.footnote)
+                .padding(.top, 16)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){
