@@ -144,10 +144,13 @@ struct LawList: View {
                         }
                     } else {
                         ForEach(viewModel.categories) {
-                            if let isSub = $0.isSubFolder, isSub {
-                                SpecificCategoryLink(category: $0)
-                            } else {
-                                LawSection(category: $0)
+                            LawSection(category: $0)
+                        }
+                        if !viewModel.folders.isEmpty {
+                            Section {
+                                ForEach(viewModel.folders) {
+                                    SpecificCategoryLink(category: $0)
+                                }
                             }
                         }
                     }
@@ -177,17 +180,15 @@ private struct SpecificCategoryLink: View {
     private var searchText = ""
     
     var body: some View {
-        Section {
-            NavigationLink {
-                LawList(searchText: $searchText,
-                        viewModel: LawList.SpecificCategoryViewModal(category: category.category),
-                        showFav: false)
-                .searchable(text: $searchText)
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle(category.category)
-            } label: {
-                Text(name ?? category.category)
-            }
+        NavigationLink {
+            LawList(searchText: $searchText,
+                    viewModel: LawList.SpecificCategoryViewModal(category: category.category),
+                    showFav: false)
+            .searchable(text: $searchText)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(category.category)
+        } label: {
+            Text(name ?? category.category)
         }
     }
 }

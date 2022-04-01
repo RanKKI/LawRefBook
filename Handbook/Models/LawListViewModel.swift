@@ -8,6 +8,9 @@ extension LawList {
         fileprivate(set) var categories: [LawCategory] = []
 
         @Published
+        fileprivate(set) var folders: [LawCategory] = []
+
+        @Published
         fileprivate(set) var searchResults: [Law] = [Law]()
 
         @Published
@@ -28,13 +31,10 @@ extension LawList {
             searchResults = LocalProvider.shared.getLaws()
             queue = DispatchQueue(label: "viewmodal", qos: .background)
         }
-
-        func searchText(text: String, type: SearchType) {
-
+        
+        fileprivate func searchTextInLaws(text: String, type: SearchType, arr: [Law]) {
             self.searchQueueItem?.cancel()
-            
-            var arr = LocalProvider.shared.getLaws()
-            
+
             if text.isEmpty {
                 self.searchResults = []
                 self.isLoading = false
@@ -42,17 +42,18 @@ extension LawList {
             }
 
             self.searchQueueItem = DispatchWorkItem {
+                var restuls = [Law]()
                 if type == .catalogue {
-                    arr = arr.filter { $0.name.contains(text) }
+                    restuls = arr.filter { $0.name.contains(text) }
                 } else if type == .fullText {
-                    arr = arr.filter {
+                    restuls = arr.filter {
                         let content = LawProvider.shared.getLawContent($0.id)
                         content.load()
                         return content.containsText(text: text)
                     }
                 }
                 DispatchQueue.main.async {
-                    self.searchResults = arr
+                    self.searchResults = restuls
                     self.isLoading = false
                 }
             }
@@ -63,7 +64,11 @@ extension LawList {
             }
         }
 
-        func onGroupingChange(method: LawGroupingMethod) {
+        func searchText(text: String, type: SearchType) {
+            searchTextInLaws(text: text, type: type, arr: LocalProvider.shared.getLaws())
+        }
+        
+        fileprivate func refreshLaws(method: LawGroupingMethod) -> [LawCategory]{
             var arr: [LawCategory] = []
             if method == .department {
                 arr = LocalProvider.shared.getLawList()
@@ -76,7 +81,13 @@ extension LawList {
                         LawCategory($0.key, $0.value)
                     }
             }
-            self.categories = arr
+            return arr
+        }
+
+        func onGroupingChange(method: LawGroupingMethod) {
+            let arr = refreshLaws(method: method)
+            self.categories = arr.filter { $0.isSubFolder == nil || $0.isSubFolder == false }
+            self.folders = arr.filter { $0.isSubFolder ?? false }
         }
 
     }
@@ -92,65 +103,26 @@ extension LawList {
             guard self.cateogry != nil else {
                 return
             }
-            self.searchQueueItem?.cancel()
-            
-            var arr = LocalProvider.shared.getLaws()
-            
-            arr = arr.filter {
+            let arr = LocalProvider.shared.getLaws()
+            self.searchTextInLaws(text: text, type: type, arr: arr.filter {
                 if type == .catalogue {
                     return $0.cateogry?.category == self.cateogry
                 } else {
                     return $0.level == self.cateogry
                 }
-            }
-            
-            if text.isEmpty {
-                self.searchResults = []
-                self.isLoading = false
-                return
-            }
-
-            self.searchQueueItem = DispatchWorkItem {
-                if type == .catalogue {
-                    arr = arr.filter { $0.name.contains(text) }
-                } else if type == .fullText {
-                    arr = arr.filter {
-                        let content = LawProvider.shared.getLawContent($0.id)
-                        content.load()
-                        return content.containsText(text: text)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.searchResults = arr
-                    self.isLoading = false
-                }
-            }
-
-            if let item = self.searchQueueItem {
-                isLoading = true
-                queue.async(execute: item)
-            }
+            })
         }
 
-        override func onGroupingChange(method: LawGroupingMethod) {
-            if let target = self.cateogry {
-                if method == .department {
-                    if let arr = LocalProvider.shared.getLawList().first(where: { $0.category == target }) {
-                        self.categories = [arr]
-                    }
-                } else if method == .level {
-                    self.categories = Dictionary(grouping: LocalProvider.shared.getLaws(), by: \.level)
-                        .sorted {
-                            return LawLevel.firstIndex(of: $0.key)! < LawLevel.firstIndex(of: $1.key)!
-                        }
-                        .map {
-                            LawCategory($0.key, $0.value)
-                        }
-                        .filter {
-                            $0.category == target
-                        }
-                }
+        fileprivate override func refreshLaws(method: LawGroupingMethod) -> [LawCategory]{
+            guard self.cateogry != nil else {
+                return []
             }
+            let arr: [LawCategory] = super.refreshLaws(method: method)
+            return arr.filter { $0.category == self.cateogry}
+        }
+        
+        override func onGroupingChange(method: LawGroupingMethod) {
+            self.categories = refreshLaws(method: method)
         }
 
     }
