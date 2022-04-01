@@ -36,7 +36,7 @@ extension LawList {
             var arr = LocalProvider.shared.getLaws()
             
             if text.isEmpty {
-                self.searchResults = arr
+                self.searchResults = []
                 self.isLoading = false
                 return
             }
@@ -99,7 +99,7 @@ extension LawList {
             arr = arr.filter { $0.cateogry?.category == self.cateogry }
             
             if text.isEmpty {
-                self.searchResults = arr
+                self.searchResults = []
                 self.isLoading = false
                 return
             }
