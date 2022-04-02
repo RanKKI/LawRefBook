@@ -47,6 +47,9 @@ extension LawList {
                     restuls = arr.filter { $0.name.contains(text) }
                 } else if type == .fullText {
                     restuls = arr.filter {
+                        if $0.name.contains(text) {
+                            return true
+                        }
                         let content = LawProvider.shared.getLawContent($0.id)
                         content.load()
                         return content.containsText(text: text)
@@ -114,14 +117,7 @@ extension LawList {
             guard self.cateogry != nil else {
                 return
             }
-            let arr = LocalProvider.shared.getLaws()
-            self.searchTextInLaws(text: text, type: type, arr: arr.filter {
-                if type == .catalogue {
-                    return $0.cateogry?.category == self.cateogry
-                } else {
-                    return $0.level == self.cateogry
-                }
-            })
+            self.searchTextInLaws(text: text, type: type, arr: self.categories.flatMap { $0.laws })
         }
 
         fileprivate override func refreshLaws(method: LawGroupingMethod) -> [LawCategory]{
