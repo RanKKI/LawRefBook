@@ -8,7 +8,7 @@ extension LawList {
         fileprivate(set) var categories: [LawCategory] = []
 
         @Published
-        fileprivate(set) var folders: [LawCategory] = []
+        fileprivate(set) var folders: [[LawCategory]] = []
 
         @Published
         fileprivate(set) var searchResults: [Law] = [Law]()
@@ -87,9 +87,20 @@ extension LawList {
         func onGroupingChange(method: LawGroupingMethod) {
             let arr = refreshLaws(method: method)
             self.categories = arr.filter { $0.isSubFolder == nil || $0.isSubFolder == false }
-            self.folders = arr.filter { $0.isSubFolder ?? false }
+            self.folders = Dictionary(grouping: arr.filter { $0.isSubFolder ?? false }, by: \.group)
+                .sorted {
+                    if $0.key == nil {
+                        return false
+                    } else if $1.key == nil {
+                        return true
+                    } else {
+                        return $0.key! < $1.key!
+                    }
+                }
+                .map {
+                    $0.value
+                }
         }
-
     }
     
     class SpecificCategoryViewModal: ViewModel {

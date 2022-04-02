@@ -146,12 +146,8 @@ struct LawList: View {
                         ForEach(viewModel.categories) {
                             LawSection(category: $0)
                         }
-                        if !viewModel.folders.isEmpty {
-                            Section {
-                                ForEach(viewModel.folders) {
-                                    SpecificCategoryLink(category: $0)
-                                }
-                            }
+                        ForEach(viewModel.folders, id: \.self) {
+                            FolderSection(name: $0.first?.group ?? "", folders: $0)
                         }
                     }
                 }
@@ -191,6 +187,23 @@ private struct SpecificCategoryLink: View {
             Text(name ?? category.category)
         }
     }
+}
+
+private struct FolderSection: View {
+    
+    var name: String
+    var folders: [LawCategory]
+
+    var body: some View {
+        Section {
+            ForEach(folders) {
+                SpecificCategoryLink(category: $0)
+            }
+        } header: {
+            Text(name)
+        }
+    }
+    
 }
 
 private struct LawSection: View {

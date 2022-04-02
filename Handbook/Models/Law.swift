@@ -24,9 +24,13 @@ class Law: Codable, Identifiable , Equatable{
     }
 }
 
-class LawCategory: Codable, Identifiable, Equatable {
+class LawCategory: Codable, Identifiable, Equatable, Hashable {
     static func == (lhs: LawCategory, rhs: LawCategory) -> Bool {
         return lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     var category: String
@@ -34,6 +38,7 @@ class LawCategory: Codable, Identifiable, Equatable {
     var id: UUID
     var folder: String?
     var isSubFolder: Bool?
+    var group: String? // 当类型是 sub foldre 时， 会按照这个变量分组，没赋值的分成一组
     var links: [UUID]? // 该目录下所有法律都会继承这个
 
     init(_ name: String, _ laws: [Law]) {
