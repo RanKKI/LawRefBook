@@ -3,58 +3,62 @@ import Foundation
 class LocalProvider {
 
     static let shared = LocalProvider()
+    
+    private var laws: [Law] = []
+    private var lawCategories: [LawCategory] = []
 
-    private var lawList: [LawCategory] = []
-
-    lazy var lawMap: [UUID: Law] = {
-        var ret = [UUID: Law]()
-        self.getLawList().flatMap { $0.laws }.forEach {
-            ret[$0.id] = $0
-        }
-        return ret
+    private lazy var lawMap: [UUID: Law] = {
+        return Dictionary(uniqueKeysWithValues: self.laws.map { ($0.id, $0) })
     }()
 
     lazy var ANIT996_LICENSE: String = {
-        if let data = self.readLocalFile(forName: "LICENSE", type: "") {
-            return String(decoding: data, as: UTF8.self)
-        }
-        return ""
+        readLocalFile(forName: "LICENSE", type: "")?.asUTF8String() ?? ""
     }()
-    
-    lazy var DATA_FILE_PATH: String? = {
-        Bundle.main.path(forResource: "data", ofType: "json", inDirectory: "Laws")
-    }()
+
+    var DATA_FILE_PATH: String? = Bundle.main.path(forResource: "data", ofType: "json", inDirectory: "Laws")
 
     func getLaw(_ uuid: UUID) -> Law? {
         return lawMap[uuid]
     }
 
     func getLaws() -> [Law] {
-        return self.lawList.flatMap { $0.laws }
+        return self.laws
     }
 
     func getLawList() -> [LawCategory] {
-        if !lawList.isEmpty {
-            return self.lawList
+        if lawCategories.isEmpty {
+            readLocalLawCategories()
+            parseLaws()
+            parseCategories()
+            parseLinkedLaws()
         }
-        do {
-            if let jsonData = self.readLocalFile(bundlePath: DATA_FILE_PATH) {
-                self.lawList = try JSONDecoder().decode([LawCategory].self, from: jsonData)
-                self.lawList.forEach { category in
-                    category.laws.forEach {
-                        $0.cateogry = category
-                    }
-                }
-                self.analyzeLinks()
-            }
-        } catch {
-            print("decode error", error)
-        }
-        return self.lawList
+        return self.lawCategories
     }
 
-    private func analyzeLinks(){
-        let laws = self.lawList.flatMap { $0.laws }
+    private func readLocalLawCategories() {
+        self.lawCategories = readLocalFile(bundlePath: DATA_FILE_PATH)?.decodeJSON([LawCategory].self) ?? []
+    }
+
+    private func parseCategories() {
+        guard !self.lawCategories.isEmpty else {
+            return
+        }
+        self.lawCategories.forEach { category in
+            category.laws.forEach {
+                $0.cateogry = category
+            }
+        }
+    }
+    
+    private func parseLaws() {
+        self.laws  = self.lawCategories.flatMap { $0.laws }
+    }
+    
+    /**
+        用于找不同法律之间的依赖关系
+     */
+    private func parseLinkedLaws(){
+        let laws = self.lawCategories.flatMap { $0.laws }
         var linkMap = [UUID: [UUID]]()
 
         for law in laws {
@@ -97,22 +101,4 @@ class LocalProvider {
             }
         }
     }
-
-    private func readLocalFile(bundlePath: String?) -> Data? {
-        do {
-            if let bundlePath = bundlePath,
-               let ret = try String(contentsOfFile: bundlePath).data(using: .utf8) {
-                return ret
-            }
-        } catch {
-            print(error)
-        }
-
-        return nil
-    }
-    
-    private func readLocalFile(forName name: String, type: String, inDirectory: String? = nil) -> Data? {
-        return readLocalFile(bundlePath: Bundle.main.path(forResource: name, ofType: type, inDirectory: inDirectory))
-    }
-
 }

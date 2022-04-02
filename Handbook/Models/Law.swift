@@ -5,14 +5,23 @@ class Law: Codable, Identifiable , Equatable{
     static func == (lhs: Law, rhs: Law) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     var name: String
     var id: UUID
     var level: String
     var filename: String?
-
     var links: [UUID]?
+
     var cateogry: LawCategory?
+    var content: LawContent?
+
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case id
+        case level
+        case filename
+        case links
+    }
 }
 
 class LawCategory: Codable, Identifiable, Equatable {
@@ -24,9 +33,7 @@ class LawCategory: Codable, Identifiable, Equatable {
     var laws: [Law]
     var id: UUID
     var folder: String?
-
     var isSubFolder: Bool?
-
     var links: [UUID]? // 该目录下所有法律都会继承这个
 
     init(_ name: String, _ laws: [Law]) {

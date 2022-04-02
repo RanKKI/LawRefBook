@@ -91,9 +91,3 @@ extension Array: RawRepresentable where Element: Codable {
         return result
     }
 }
-
-extension Text {
-    func asLawContent() -> some View {
-        self.tracking(0.6).lineSpacing(4.5)
-    }
-}

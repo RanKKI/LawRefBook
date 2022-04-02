@@ -101,7 +101,7 @@ class LawProvider: ObservableObject{
     private var contents: [UUID: LawContent] = [UUID: LawContent]()
 
     func getLawNameByUUID(_ uuid: UUID) -> String {
-        return LocalProvider.shared.lawMap[uuid]?.name ?? ""
+        return LocalProvider.shared.getLaw(uuid)?.name ?? ""
     }
 
     func getLawTitleByUUID(_ uuid: UUID) -> String {
@@ -112,9 +112,9 @@ class LawProvider: ObservableObject{
 
     func getCategoryName(_ uuid: UUID) -> String {
         if groupingMethod == .level {
-            return LocalProvider.shared.lawMap[uuid]?.level ?? ""
+            return LocalProvider.shared.getLaw(uuid)?.level ?? ""
         }
-        return LocalProvider.shared.lawMap[uuid]?.cateogry?.category ?? ""
+        return LocalProvider.shared.getLaw(uuid)?.cateogry?.category ?? ""
     }
 
     func getLawContent(_ uuid: UUID) -> LawContent {
