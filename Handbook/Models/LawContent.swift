@@ -178,13 +178,17 @@ class LawContent: ObservableObject {
             self.Content = self.Body
             return
         }
-        DispatchQueue.main.async {
+        LawProvider.shared.queue.async {
             var newBody: [TextContent] = []
             self.Body.forEach { val in
                 let children = val.children.filter { $0.text.contains(text) }
-                newBody.append(TextContent(id: val.id, text: val.text, children: children, line: val.line, indent: val.indent))
+                if !children.isEmpty {
+                    newBody.append(TextContent(id: val.id, text: val.text, children: children, line: val.line, indent: val.indent))
+                }
             }
-            self.Content = newBody
+            DispatchQueue.main.async {
+                self.Content = newBody
+            }
         }
     }
     

@@ -158,23 +158,30 @@ struct LawContentList: View {
                 ForEach(content.children, id:\.id) {  line in
                     LawLineView(lawID: lawID, law: obj, text: line.text, line: line.line, searchText: $searchText)
                         .id(line.line)
-                        .onTapGesture {
-                            print(line.line, line.text)
-                        }
                     Divider()
                 }
             }
         }
     }
-    
+
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 4){
-                title
-                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing:0))
-                bodyList
+        Group {
+            if obj.Content.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("没有结果")
+                    Spacer()
+                }
+            } else {
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 4){
+                        title
+                            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing:0))
+                        bodyList
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                }
             }
-            .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
         }
         .onChange(of: searchText) { text in
             obj.filterText(text: searchText)

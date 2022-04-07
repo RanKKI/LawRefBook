@@ -7,7 +7,7 @@ class LawProvider: ObservableObject{
     static let shared = LawProvider()
     
     
-    fileprivate var queue: DispatchQueue
+    var queue: DispatchQueue
     
     init() {
         queue = DispatchQueue(label: "laws", qos: .background)
