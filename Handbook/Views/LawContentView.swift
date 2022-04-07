@@ -124,6 +124,7 @@ private struct LawLineView: View {
                     LawProvider.shared.favoriteContent(lawID, line: line, folder: folder)
                 }
             })
+            .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
         }
     }
 }

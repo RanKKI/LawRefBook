@@ -131,6 +131,10 @@ struct LawList: View {
         VStack {
             if isSearching {
                 SearchListView(viewModel: viewModel, searchText: $searchText)
+            } else if provider.isLoading {
+                Spacer()
+                ProgressView()
+                Spacer()
             } else {
                 List {
                     if showFav && !provider.favoriteUUID.isEmpty {

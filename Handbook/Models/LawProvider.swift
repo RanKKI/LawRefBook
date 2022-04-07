@@ -5,6 +5,13 @@ import SwiftUI
 class LawProvider: ObservableObject{
 
     static let shared = LawProvider()
+    
+    
+    fileprivate var queue: DispatchQueue
+    
+    init() {
+        queue = DispatchQueue(label: "laws", qos: .background)
+    }
 
     // 持久化储存
     lazy var container: NSPersistentContainer = {
@@ -41,60 +48,17 @@ class LawProvider: ObservableObject{
         return arr.map {$0.laws.map {$0.id} }
     }
 
-    func loadLawList() {
-        self.lawList = self.getLawList()
-    }
-    
     @Published
     var isLoading: Bool = false
 
-    func filterLawList(text: String, type: SearchType = .catalogue) {
-        DispatchQueue.main.async {
-            if type == .catalogue {
-                self.filterListByName(text: text)
-            } else if type == .fullText {
-                self.filterListByContent(text: text)
+    func loadLawList() {
+        isLoading = true
+        queue.async {
+            let arr = self.getLawList()
+            DispatchQueue.main.async {
+                self.lawList = arr
+                self.isLoading = false
             }
-        }
-    }
-    
-    private func filterListByContent(text: String) {
-        let data = self.getLawList()
-        if text.isEmpty {
-            self.lawList = []
-            return
-        }
-        self.isLoading = true
-        var ret: [[UUID]] = []
-        data.forEach {
-            let arr = $0.filter {
-                let content = self.getLawContent($0)
-                content.load()
-                return content.containsText(text: text)
-            }
-            if !arr.isEmpty {
-                ret.append(arr)
-            }
-        }
-        self.isLoading = false
-        self.lawList = ret
-    }
-    
-    private func filterListByName(text: String) {
-        let data = self.getLawList()
-        if text.isEmpty {
-            self.lawList = data
-        } else {
-            var ret: [[UUID]] = []
-            data.forEach {
-                let arr = $0.filter {
-                    self.getLawNameByUUID($0).contains(text)
-                }
-                if !arr.isEmpty {
-                    ret.append(arr)
-                }
-            }
-            self.lawList = ret
         }
     }
 
