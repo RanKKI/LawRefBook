@@ -22,13 +22,11 @@ extension LawList {
         fileprivate var cateogry: String?
 
         init() {
-            searchResults = LocalProvider.shared.getLaws()
             queue = DispatchQueue(label: "viewmodal", qos: .background)
         }
         
         init(category: String) {
             self.cateogry = category
-            searchResults = LocalProvider.shared.getLaws()
             queue = DispatchQueue(label: "viewmodal", qos: .background)
         }
         
@@ -88,21 +86,29 @@ extension LawList {
         }
 
         func onGroupingChange(method: LawGroupingMethod) {
-            let arr = refreshLaws(method: method)
-            self.categories = arr.filter { $0.isSubFolder == nil || $0.isSubFolder == false }
-            self.folders = Dictionary(grouping: arr.filter { $0.isSubFolder ?? false }, by: \.group)
-                .sorted {
-                    if $0.key == nil {
-                        return false
-                    } else if $1.key == nil {
-                        return true
-                    } else {
-                        return $0.key! < $1.key!
+            self.isLoading = true
+            queue.async {
+                let arr = self.refreshLaws(method: method)
+                let cateogires = arr.filter { $0.isSubFolder == nil || $0.isSubFolder == false }
+                let folders = Dictionary(grouping: arr.filter { $0.isSubFolder ?? false }, by: \.group)
+                    .sorted {
+                        if $0.key == nil {
+                            return false
+                        } else if $1.key == nil {
+                            return true
+                        } else {
+                            return $0.key! < $1.key!
+                        }
                     }
+                    .map {
+                        $0.value
+                    }
+                DispatchQueue.main.async {
+                    self.folders = folders
+                    self.categories = cateogires
+                    self.isLoading = false
                 }
-                .map {
-                    $0.value
-                }
+            }
         }
     }
     
@@ -110,7 +116,6 @@ extension LawList {
         
         override init(category: String) {
             super.init(category: category)
-            searchResults = searchResults.filter {$0.cateogry?.category == category }
         }
 
         override func searchText(text: String, type: SearchType) {
@@ -129,7 +134,14 @@ extension LawList {
         }
         
         override func onGroupingChange(method: LawGroupingMethod) {
-            self.categories = refreshLaws(method: method)
+            self.isLoading = true
+            queue.async {
+                let arr = self.refreshLaws(method: method)
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.categories = arr
+                }
+            }
         }
 
     }

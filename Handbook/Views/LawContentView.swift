@@ -132,10 +132,13 @@ private struct LawLineView: View {
 struct LawContentList: View {
     
     var lawID: UUID
-    @ObservedObject var obj: LawContent
+
+    @ObservedObject
+    var obj: LawContent
+
     @State var content: [TextContent] = []
     @State var searchText = ""
-    
+
     var title: some View {
         VStack {
             ForEach($obj.Titles.indices, id: \.self) { i in
@@ -143,7 +146,7 @@ struct LawContentList: View {
             }
         }
     }
-    
+
     var bodyList: some View {
         ForEach(obj.Content, id: \.id) { (content: TextContent) in
             if self.searchText.isEmpty || (!self.searchText.isEmpty && !content.children.isEmpty){

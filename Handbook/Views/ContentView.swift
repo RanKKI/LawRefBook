@@ -131,7 +131,7 @@ struct LawList: View {
         VStack {
             if isSearching {
                 SearchListView(viewModel: viewModel, searchText: $searchText)
-            } else if provider.isLoading {
+            } else if viewModel.isLoading {
                 Spacer()
                 ProgressView()
                 Spacer()
