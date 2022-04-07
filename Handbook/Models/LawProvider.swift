@@ -77,18 +77,18 @@ class LawProvider: ObservableObject{
     }
     
     private var writeLocker = NSLock()
-    
+
     func getLawContent(_ uuid: UUID) -> LawContent {
+        writeLocker.lock()
         if contents[uuid] == nil {
-            writeLocker.lock()
             if let law = LocalProvider.shared.getLaw(uuid) {
                 let folder: [String?] = ["Laws", law.cateogry?.folder].filter { $0 != nil }
                 contents[uuid] = LawContent(law.filename ?? law.name, folder.map{ $0! }.joined(separator: "/"))
             } else {
                 fatalError("unexpected law uuid: \(uuid)")
             }
-            writeLocker.unlock()
         }
+        writeLocker.unlock()
         return contents[uuid]!
     }
 

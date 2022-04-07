@@ -16,7 +16,6 @@ extension UIAlertController {
 }
 
 
-
 struct AlertHelper<Content: View>: UIViewControllerRepresentable {
 
     @Binding var isPresented: Bool

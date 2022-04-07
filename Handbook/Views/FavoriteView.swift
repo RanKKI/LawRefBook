@@ -52,6 +52,25 @@ private struct FavLine: View {
                 }
                 .tint(.red)
             }
+            .contextMenu {
+                Button {
+                    withAnimation {
+                        moc.delete(fav)
+                        try? moc.save()
+                    }
+                } label: {
+                    Label("取消收藏", systemImage: "heart.slash")
+                }
+                Button {
+                    if let lawID = fav.lawId {
+                        let title = LawProvider.shared.getLawTitleByUUID(lawID)
+                        let message = String(format: "%@\n\n%@", title, content)
+                        UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
+                    }
+                } label: {
+                    Label("复制", systemImage: "doc")
+                }
+            }
     }
 }
 
@@ -251,7 +270,7 @@ struct SelectFolderView: View {
     
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     @State
     private var addFolderToggle = false
     
