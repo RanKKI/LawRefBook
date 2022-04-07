@@ -5,13 +5,8 @@ import SwiftUI
 class LawProvider: ObservableObject{
 
     static let shared = LawProvider()
-    
-    
-    var queue: DispatchQueue
-    
-    init() {
-        queue = DispatchQueue(label: "laws", qos: .background)
-    }
+
+    var queue: DispatchQueue = DispatchQueue(label: "laws", qos: .background)
 
     // 持久化储存
     lazy var container: NSPersistentContainer = {
@@ -80,15 +75,19 @@ class LawProvider: ObservableObject{
         }
         return LocalProvider.shared.getLaw(uuid)?.cateogry?.category ?? ""
     }
-
+    
+    private var writeLocker = NSLock()
+    
     func getLawContent(_ uuid: UUID) -> LawContent {
         if contents[uuid] == nil {
+            writeLocker.lock()
             if let law = LocalProvider.shared.getLaw(uuid) {
                 let folder: [String?] = ["Laws", law.cateogry?.folder].filter { $0 != nil }
                 contents[uuid] = LawContent(law.filename ?? law.name, folder.map{ $0! }.joined(separator: "/"))
             } else {
                 fatalError("unexpected law uuid: \(uuid)")
             }
+            writeLocker.unlock()
         }
         return contents[uuid]!
     }

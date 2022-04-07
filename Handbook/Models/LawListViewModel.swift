@@ -16,22 +16,25 @@ extension LawList {
         @Published
         fileprivate(set) var isLoading = false
 
-        fileprivate var queue: DispatchQueue
-        fileprivate var searchQueueItem: DispatchWorkItem?
+        fileprivate var queue: DispatchQueue = DispatchQueue(label: "viewmodal", qos: .background)
+        fileprivate var searchOpQueue: OperationQueue = OperationQueue()
         fileprivate var listWorkItem: DispatchWorkItem?
         fileprivate var cateogry: String?
+        
+        fileprivate var searchText: String = ""
 
         init() {
-            queue = DispatchQueue(label: "viewmodal", qos: .background)
+
         }
         
         init(category: String) {
             self.cateogry = category
-            queue = DispatchQueue(label: "viewmodal", qos: .background)
         }
-        
+
         fileprivate func searchTextInLaws(text: String, type: SearchType, arr: [Law]) {
-            self.searchQueueItem?.cancel()
+            self.searchText = text
+            searchOpQueue.cancelAllOperations()
+            let start = Date.currentTimestamp()
 
             if text.isEmpty {
                 self.searchResults = []
@@ -39,29 +42,31 @@ extension LawList {
                 return
             }
 
-            self.searchQueueItem = DispatchWorkItem {
-                var restuls = [Law]()
-                if type == .catalogue {
-                    restuls = arr.filter { $0.name.contains(text) }
-                } else if type == .fullText {
-                    restuls = arr.filter {
-                        if $0.name.contains(text) {
-                            return true
+            isLoading = true
+            queue.async { [weak self] in
+                var results = [Law]()
+                for law in arr {
+                    self?.searchOpQueue.addOperation {
+                        var add = law.name.contains(text)
+                        if type == .fullText && !add {
+                            let content = LawProvider.shared.getLawContent(law.id)
+                            content.load()
+                            add = content.containsText(text: text)
                         }
-                        let content = LawProvider.shared.getLawContent($0.id)
-                        content.load()
-                        return content.containsText(text: text)
+                        if add {
+                            results.append(law)
+                        }
                     }
                 }
+                self?.searchOpQueue.waitUntilAllOperationsAreFinished()
                 DispatchQueue.main.async {
-                    self.searchResults = restuls
-                    self.isLoading = false
+                    if self?.searchText != text {
+                        return
+                    }
+                    self?.searchResults = results
+                    self?.isLoading = false
+                    print("time cost \(Date.currentTimestamp() - start)")
                 }
-            }
-
-            if let item = self.searchQueueItem {
-                isLoading = true
-                queue.async(execute: item)
             }
         }
 

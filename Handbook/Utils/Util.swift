@@ -91,3 +91,10 @@ extension Array: RawRepresentable where Element: Codable {
         return result
     }
 }
+
+
+extension Date {
+    static func currentTimestamp() -> Int64 {
+        return Int64(Date().timeIntervalSince1970)
+    }
+}
