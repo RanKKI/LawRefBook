@@ -98,3 +98,30 @@ extension Date {
         return Int64(Date().timeIntervalSince1970)
     }
 }
+
+extension String {
+    func tokenised() -> [String] {
+        let locale = CFLocaleCopyCurrent()
+        let range = CFRangeMake(0, CFStringGetLength(self as CFString))
+        let tokenizer = CFStringTokenizerCreate(kCFAllocatorDefault, self as CFString, range, UInt(kCFStringTokenizerUnitWordBoundary), locale)
+        
+        var tokens = [String]()
+        var tokenType = CFStringTokenizerAdvanceToNextToken(tokenizer)
+        
+        
+        while (tokenType != []) {
+            let range = CFStringTokenizerGetCurrentTokenRange(tokenizer)
+            let token = CFStringCreateWithSubstring(kCFAllocatorDefault, self as CFString, range)
+            if let token = token {
+                tokens.append(token as String)
+            }
+            tokenType = CFStringTokenizerAdvanceToNextToken(tokenizer)
+        }
+        
+        return tokens
+    }
+    
+    func separatedStringWithSeparator(separator: String) -> String {
+        return (self.tokenised() as NSArray).componentsJoined(by: (separator))
+    }
+}

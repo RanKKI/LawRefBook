@@ -41,20 +41,24 @@ extension LawList {
                 self.isLoading = false
                 return
             }
-
+            
+            let texts = text.tokenised()
+            let locker = NSLock()
             isLoading = true
             queue.async { [weak self] in
                 var results = [Law]()
                 for law in arr {
                     self?.searchOpQueue.addOperation {
-                        var add = law.name.contains(text)
+                        var add = law.name.contains(text) || texts.allSatisfy { law.name.contains($0) }
                         if type == .fullText && !add {
                             let content = LawProvider.shared.getLawContent(law.id)
                             content.load()
-                            add = content.containsText(text: text)
+                            add = content.containsText(text: text) || texts.allSatisfy { content.containsText(text: $0) }
                         }
                         if add {
+                            locker.lock()
                             results.append(law)
+                            locker.unlock()
                         }
                     }
                 }
