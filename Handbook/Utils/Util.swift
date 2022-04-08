@@ -120,8 +120,8 @@ extension String {
         
         return tokens
     }
-    
-    func separatedStringWithSeparator(separator: String) -> String {
+
+    func tokenisedString(separator: String) -> String {
         return (self.tokenised() as NSArray).componentsJoined(by: (separator))
     }
 }
