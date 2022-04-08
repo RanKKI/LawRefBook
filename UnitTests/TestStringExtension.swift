@@ -13,7 +13,6 @@ class TestStringExtension: XCTestCase {
     }
     
     func testTokenize() throws {
-        XCTAssertEqual("法律第一".tokenised(), ["法律", "第一"])
         XCTAssertEqual("法律中国".tokenised(), ["法律", "中国"])
         XCTAssertEqual("法律中国测试".tokenised(), ["法律", "中国", "测试"])
         XCTAssertEqual("法律中国测试".tokenisedString(separator: ","), "法律,中国,测试")
