@@ -125,3 +125,26 @@ extension String {
         return (self.tokenised() as NSArray).componentsJoined(by: (separator))
     }
 }
+
+
+extension String {
+    public func components(separatedBy separators: [String]) -> [String] {
+        var output: [String] = [self]
+        for separator in separators {
+            output = output.flatMap {
+                $0.components(separatedBy:  separator) // first split
+                                        .flatMap { [$0, separator] } // add the separator after each split
+                                        .dropLast() // remove the last separator added
+                                        .filter { $0 != "" } // remove empty strings
+            }
+        }
+        return output
+    }
+}
+
+extension Substring {
+    public func components(separatedBy separators: [String]) -> [String] {
+        return String(self).components(separatedBy: separators)
+    }
+}
+

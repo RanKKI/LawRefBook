@@ -26,6 +26,12 @@ struct LawContentHeaderView: View {
     }
 }
 
+fileprivate extension Text {
+    func highlight(size: CGFloat) -> Text {
+        self.font(.system(size: size)).bold().foregroundColor(Color.accentColor)
+    }
+}
+
 struct LawContentLineView: View {
     
     @AppStorage("font_content")
@@ -48,14 +54,20 @@ struct LawContentLineView: View {
 
     func highlightText(_ str: Substring) -> Text {
         guard !str.isEmpty && !searchText.isEmpty else { return Text(str) }
-        
+
+        var highlightTexts = searchText.tokenised()
+        if !highlightTexts.contains(searchText) {
+            highlightTexts.append(searchText)
+        }
         var result: Text!
-        let parts = str.components(separatedBy: searchText)
-        for i in parts.indices {
-            result = (result == nil ? Text(parts[i]) : result + Text(parts[i]))
-            if i != parts.count - 1 {
-                result = result + Text(searchText).font(.system(size: CGFloat(contentFontSize + 2))).bold().foregroundColor(Color.accentColor)
+        let parts = str.components(separatedBy: highlightTexts)
+        for part in parts {
+            let isKeyword = highlightTexts.contains(part)
+            var text = Text(part)
+            if isKeyword {
+                text = text.highlight(size: CGFloat(contentFontSize + 2))
             }
+            result = result == nil ? text : (result + text)
         }
         return result ?? Text(str)
     }

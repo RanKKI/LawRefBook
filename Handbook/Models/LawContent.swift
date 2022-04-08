@@ -179,9 +179,13 @@ class LawContent: ObservableObject {
             return
         }
         LawProvider.shared.queue.async {
+            let texts = text.tokenised()
             var newBody: [TextContent] = []
             self.Body.forEach { val in
-                let children = val.children.filter { $0.text.contains(text) }
+                let children = val.children.filter { child in
+                    let t = child.text
+                    return t.contains(text) || texts.allSatisfy { t.contains($0) }
+                }
                 if !children.isEmpty {
                     newBody.append(TextContent(id: val.id, text: val.text, children: children, line: val.line, indent: val.indent))
                 }
