@@ -2,7 +2,9 @@ import SwiftUI
 
 extension LawList {
     
-    class ViewModel: ObservableObject {
+    class ViewModel: ObservableObject, Identifiable {
+        
+        var id = UUID()
         
         @Published
         fileprivate(set) var categories: [LawCategory] = []
@@ -22,6 +24,7 @@ extension LawList {
         fileprivate var cateogry: String?
         
         fileprivate var searchText: String = ""
+        fileprivate var groupMethod: LawGroupingMethod? = nil
 
         init() {
 
@@ -93,8 +96,8 @@ extension LawList {
             }
             return arr
         }
-
-        func onGroupingChange(method: LawGroupingMethod) {
+        
+        fileprivate func doRefresh(method: LawGroupingMethod) {
             self.isLoading = true
             queue.async {
                 let arr = self.refreshLaws(method: method)
@@ -119,6 +122,16 @@ extension LawList {
                 }
             }
         }
+
+        func refresh(method: LawGroupingMethod) {
+            if let groupMethod = self.groupMethod {
+                if groupMethod == method {
+                    return
+                }
+            }
+            self.groupMethod = method
+            self.doRefresh(method: method)
+        }
     }
     
     class SpecificCategoryViewModal: ViewModel {
@@ -142,7 +155,7 @@ extension LawList {
             return arr.filter { $0.category == self.cateogry}
         }
         
-        override func onGroupingChange(method: LawGroupingMethod) {
+        override func doRefresh(method: LawGroupingMethod) {
             self.isLoading = true
             queue.async {
                 let arr = self.refreshLaws(method: method)

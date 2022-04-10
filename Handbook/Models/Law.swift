@@ -7,6 +7,7 @@ class Law: Codable, Identifiable , Equatable{
     }
 
     var name: String
+    var subtitle: String?
     var id: UUID
     var level: String
     var filename: String?
@@ -21,6 +22,7 @@ class Law: Codable, Identifiable , Equatable{
         case level
         case filename
         case links
+        case subtitle
     }
 }
 

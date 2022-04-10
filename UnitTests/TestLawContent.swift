@@ -67,7 +67,7 @@ class TestLaws: XCTestCase {
     }
 
     func testAllFileExist() throws {
-        let laws = LawProvider.shared.lawList
+        let laws = LocalProvider.shared.getLaws()
         let arr = laws.flatMap { $0 }
         for uuid in arr {
             let content = LawProvider.shared.getLawContent(uuid)
@@ -76,7 +76,7 @@ class TestLaws: XCTestCase {
     }
 
     func testAllFileHasContent() throws {
-        let laws = LawProvider.shared.lawList
+        let laws = LocalProvider.shared.getLaws()
         let arr = laws.flatMap { $0 }
         for uuid in arr {
             let content = LawProvider.shared.getLawContent(uuid)
@@ -86,7 +86,7 @@ class TestLaws: XCTestCase {
     }
 
     func testAllFileHasTitlte() throws {
-        let laws = LawProvider.shared.lawList
+        let laws = LocalProvider.shared.getLaws()
         let arr = laws.flatMap { $0 }
         for uuid in arr {
             let content = LawProvider.shared.getLawContent(uuid)

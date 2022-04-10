@@ -27,8 +27,6 @@ class LawProvider: ObservableObject{
         return container
     }()
 
-    @Published var lawList: [[UUID]] = []
-
     @AppStorage("defaultGroupingMethod", store: .standard)
     private var groupingMethod = LawGroupingMethod.department
 
@@ -43,25 +41,16 @@ class LawProvider: ObservableObject{
         return arr.map {$0.laws.map {$0.id} }
     }
 
-    @Published
-    var isLoading: Bool = false
-
-    func loadLawList() {
-        isLoading = true
-        queue.async {
-            let arr = self.getLawList()
-            DispatchQueue.main.async {
-                self.lawList = arr
-                self.isLoading = false
-            }
-        }
-    }
-
     private var contents: [UUID: LawContent] = [UUID: LawContent]()
 
     func getLawNameByUUID(_ uuid: UUID) -> String {
         return LocalProvider.shared.getLaw(uuid)?.name ?? ""
     }
+
+    func getLawSubtitleByUUID(_ uuid: UUID) -> String {
+        return LocalProvider.shared.getLaw(uuid)?.subtitle ?? ""
+    }
+
 
     func getLawTitleByUUID(_ uuid: UUID) -> String {
         let content = getLawContent(uuid)

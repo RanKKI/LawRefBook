@@ -98,7 +98,6 @@ private struct SearchListView: View {
                 }
             }
         }
-        
         .onChange(of: searchText) { newValue in
             viewModel.searchText(text: searchText, type: searchType)
         }
@@ -163,10 +162,10 @@ struct LawList: View {
             }
         }
         .onChange(of: groupingMethod) { newValue in
-            viewModel.onGroupingChange(method: newValue)
+            viewModel.refresh(method: newValue)
         }
         .task {
-            viewModel.onGroupingChange(method: groupingMethod)
+            viewModel.refresh(method: groupingMethod)
         }
     }
 }
@@ -187,6 +186,7 @@ private struct SpecificCategoryLink: View {
             .searchable(text: $searchText)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(category.category)
+            .listStyle(.plain)
         } label: {
             Text(name ?? category.category)
         }
@@ -265,7 +265,16 @@ struct NaviLawLink : View {
                 law.getLawContent(uuid).load()
             }
         } label: {
-            Text(law.getLawNameByUUID(uuid))
+            VStack(alignment: .leading) {
+                if let subTitle = law.getLawSubtitleByUUID(uuid) {
+                    if !subTitle.isEmpty {
+                        Text(subTitle)
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
+                }
+                Text(law.getLawNameByUUID(uuid))
+            }
         }
     }
 }

@@ -56,9 +56,9 @@ struct SettingView: View {
                     Text("LICENSE")
                 }
                 Button {
-                    LawProvider.shared.lawList.flatMap { $0 }
-                        .forEach { uuid in
-                            addLawContentToSpotlight(lawUUID: uuid)
+                    LocalProvider.shared.getLaws()
+                        .forEach { law in
+                            addLawContentToSpotlight(lawUUID: law.id)
                         }
                 } label: {
                     Text("创建 Spotlight 索引")

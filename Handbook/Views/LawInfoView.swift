@@ -27,7 +27,7 @@ struct LawInfoPage: View {
                 if let arr = law.links {
                     Section(header: Text("相关法律法规")) {
                         ForEach(arr, id: \.self) { uid in
-//                            NaviLawLink(uuid: uid)
+                            NaviLawLink(uuid: uid)
                         }
                     }
                 }

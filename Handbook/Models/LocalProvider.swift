@@ -1,15 +1,12 @@
 import Foundation
 
-class LocalProvider {
+class LocalProvider: ObservableObject {
 
     static let shared = LocalProvider()
     
     private var laws: [Law] = []
     private var lawCategories: [LawCategory] = []
-
-    private lazy var lawMap: [UUID: Law] = {
-        return Dictionary(uniqueKeysWithValues: self.laws.map { ($0.id, $0) })
-    }()
+    private lazy var lawMap =  [UUID: Law]()
 
     lazy var ANIT996_LICENSE: String = {
         readLocalFile(forName: "LICENSE", type: "")?.asUTF8String() ?? ""
@@ -25,12 +22,19 @@ class LocalProvider {
         return self.laws
     }
 
-    func getLawList() -> [LawCategory] {
+    func initLawList() {
         if lawCategories.isEmpty {
             readLocalLawCategories()
             parseLaws()
             parseCategories()
             parseLinkedLaws()
+            self.lawMap = Dictionary(uniqueKeysWithValues: self.laws.map { ($0.id, $0) })
+        }
+    }
+
+    func getLawList() -> [LawCategory] {
+        if lawCategories.isEmpty {
+            self.initLawList()
         }
         return self.lawCategories
     }
