@@ -68,30 +68,27 @@ class TestLaws: XCTestCase {
 
     func testAllFileExist() throws {
         let laws = LocalProvider.shared.getLaws()
-        let arr = laws.flatMap { $0 }
-        for uuid in arr {
-            let content = LawProvider.shared.getLawContent(uuid)
+        for law in laws {
+            let content = LawProvider.shared.getLawContent(law.id)
             XCTAssertTrue(content.isExists())
         }
     }
 
     func testAllFileHasContent() throws {
         let laws = LocalProvider.shared.getLaws()
-        let arr = laws.flatMap { $0 }
-        for uuid in arr {
-            let content = LawProvider.shared.getLawContent(uuid)
+        for law in laws {
+            let content = LawProvider.shared.getLawContent(law.id)
             content.load()
-            XCTAssertTrue(!content.Body.isEmpty, "\(LawProvider.shared.getLawNameByUUID(uuid)) has no content")
+            XCTAssertTrue(!content.Body.isEmpty, "\(law.name) has no content")
         }
     }
 
     func testAllFileHasTitlte() throws {
         let laws = LocalProvider.shared.getLaws()
-        let arr = laws.flatMap { $0 }
-        for uuid in arr {
-            let content = LawProvider.shared.getLawContent(uuid)
+        for law in laws {
+            let content = LawProvider.shared.getLawContent(law.id)
             content.load()
-            XCTAssertTrue(!content.Titles.isEmpty, "\(LawProvider.shared.getLawNameByUUID(uuid)) has no title")
+            XCTAssertTrue(!content.Titles.isEmpty, "\(law.name) has no title")
         }
     }
 
