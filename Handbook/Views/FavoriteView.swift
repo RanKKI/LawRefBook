@@ -175,7 +175,6 @@ struct FolderItemView: View {
             }
             .tint(.red)
         }
-
         .alert("确认删除？", isPresented: $deleteAlert) {
             Button("确定") {
                 delete()

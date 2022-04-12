@@ -271,6 +271,8 @@ struct NaviLawLink : View {
                         Text(subTitle)
                             .font(.footnote)
                             .foregroundColor(.gray)
+                            .lineLimit(1)
+                            .padding(.top, 8)
                     }
                 }
                 Text(law.getLawNameByUUID(uuid))

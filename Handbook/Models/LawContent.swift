@@ -26,8 +26,14 @@ class LawContent: ObservableObject {
     private var loaded: Bool = false
     private var forceBreak: Bool = false
 
-    init(_ filename: String, _ folder: String){
-        self.filePath = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: folder)
+    init(law: Law?){
+        if let law = law {
+            let folder: [String?] = ["Laws", law.cateogry?.folder].filter { $0 != nil }
+            self.filePath = Bundle.main.path(forResource: law.filename ?? law.name, ofType: "md", inDirectory: folder.map{ $0! }.joined(separator: "/"))
+            if filePath == nil && law.subtitle != nil {
+                self.filePath = Bundle.main.path(forResource: law.subtitle, ofType: "md", inDirectory: folder.map{ $0! }.joined(separator: "/"))
+            }
+        }
     }
 
     func isExists() -> Bool {

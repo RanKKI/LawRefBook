@@ -22,6 +22,10 @@ class LocalProvider: ObservableObject {
         return self.laws
     }
 
+    func isLoaded() -> Bool {
+        return !laws.isEmpty
+    }
+
     func initLawList() {
         if lawCategories.isEmpty {
             readLocalLawCategories()

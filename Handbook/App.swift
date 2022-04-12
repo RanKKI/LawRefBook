@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreSpotlight
 
 @main
 struct MainApp: App {
@@ -10,9 +11,6 @@ struct MainApp: App {
 
     @AppStorage("launchTimes")
     var launchTime: Int = 0
-    
-    @State
-    private var isLoading = true
 
     var body: some Scene {
         WindowGroup {
@@ -27,12 +25,6 @@ struct MainApp: App {
             .phoneOnlyStackNavigationView()
             .task {
                 self.checkVersionUpdate()
-                DispatchQueue.main.async(group: nil, qos: .background, flags: .assignCurrentContext) {
-                    LocalProvider.shared.initLawList()
-                    DispatchQueue.main.async {
-                        isLoading = false
-                    }
-                }
             }
         }
     }

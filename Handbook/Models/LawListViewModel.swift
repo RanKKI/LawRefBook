@@ -37,7 +37,6 @@ extension LawList {
         fileprivate func searchTextInLaws(text: String, type: SearchType, arr: [Law]) {
             self.searchText = text
             searchOpQueue.cancelAllOperations()
-            let start = Date.currentTimestamp()
 
             if text.isEmpty {
                 self.searchResults = []
@@ -72,7 +71,6 @@ extension LawList {
                     }
                     self?.searchResults = results
                     self?.isLoading = false
-                    print("time cost \(Date.currentTimestamp() - start)")
                 }
             }
         }

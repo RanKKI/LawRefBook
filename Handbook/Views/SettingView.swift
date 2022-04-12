@@ -1,20 +1,28 @@
 import Foundation
 import SwiftUI
 
-private let ContributorsText = String(format: "特别感谢以下朋友的贡献: %@", Contributors.isEmpty ? "欢迎你来贡献！" : Contributors.joined(separator: ", "))
+private let ContributorsText = String(format: "特别感谢以下朋友的贡献: %@",
+                                      Contributors.isEmpty ? "欢迎你来贡献！" : Contributors.joined(separator: ", "))
 
 struct SettingView: View {
 
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss)
+    private var dismiss
 
     @AppStorage("defaultGroupingMethod", store: .standard)
     private var groupingMethod = LawGroupingMethod.department
+    
+    @State
+    private var showSafari: Bool = false
 
+    @State
+    private var url: String?
+    
     var body: some View {
         List{
             Section(header: Text("内容来源"), footer: Text("如果您发现了任何错误，包括但不限于排版、错字、缺失内容，请使用以下联系方式告知开发者，以便修复")){
-                Text("国家法律法规数据库")
-                Text("https://flk.npc.gov.cn")
+                Link(title: "国家法律法规数据库", url: "https://flk.npc.gov.cn")
+                Link(title: "最高人民法院", url: "https://www.court.gov.cn")
             }
             Section(header: Text("偏好设置")) {
                 HStack {
@@ -55,14 +63,7 @@ struct SettingView: View {
                 } label: {
                     Text("LICENSE")
                 }
-                Button {
-                    LocalProvider.shared.getLaws()
-                        .forEach { law in
-                            addLawContentToSpotlight(lawUUID: law.id)
-                        }
-                } label: {
-                    Text("创建 Spotlight 索引")
-                }
+                CreateSpotlightIndex()
             }
             Text(COPYRIGHT_DECLARE)
                 .listRowBackground(Color.clear)
@@ -82,5 +83,56 @@ struct SettingView: View {
                 }
             }
         }
+    }
+}
+
+
+fileprivate struct Link: View {
+    
+    var title: String
+    var url: String
+    
+    @State
+    private var showSafari = false
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(title)
+                Text(url)
+                    .font(.caption)
+            }
+            Spacer()
+            Image(systemName: "arrow.turn.up.right")
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            showSafari.toggle()
+        }
+        .foregroundColor(.accentColor)
+        .fullScreenCover(isPresented: $showSafari, content: {
+            SFSafariViewWrapper(url: URL(string: url)!)
+        })
+    }
+}
+
+struct CreateSpotlightIndex: View {
+        
+    @ObservedObject
+    private var helper: SpotlightHelper = SpotlightHelper.shared
+    
+    var body: some View {
+        Button {
+            helper.createIndexs()
+        } label: {
+            HStack {
+                Text("创建 Spotlight 索引")
+                if helper.isLoading {
+                    Spacer()
+                    ProgressView()
+                }
+            }
+        }
+        .disabled(helper.isLoading)
     }
 }

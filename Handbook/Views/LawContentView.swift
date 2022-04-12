@@ -130,7 +130,8 @@ private struct LawLineView: View {
                         Label("复制", systemImage: "doc")
                     }
                 }
-        }.sheet(isPresented: $selectFolderView) {
+        }
+        .sheet(isPresented: $selectFolderView) {
             SelectFolderView(action: { folder in
                 if let folder = folder {
                     LawProvider.shared.favoriteContent(lawID, line: line, folder: folder)
@@ -237,12 +238,12 @@ struct LawContentView: View {
 
     @State
     var isFav = false
-    
+
     var searchText: String = ""
 
     @State
-    private var scrollTarget: Int64?
-    
+    var scrollTarget: Int64?
+
     @StateObject
     private var sheetManager = SheetMananger()
 
@@ -252,7 +253,9 @@ struct LawContentView: View {
                 .onChange(of: scrollTarget) { target in
                     if let target = target {
                         scrollTarget = nil
-                        scrollProxy.scrollTo(target, anchor: .top)
+                        withAnimation(.easeOut(duration: 1)){
+                            scrollProxy.scrollTo(target, anchor: .top)
+                        }
                     }
                 }
         }

@@ -27,20 +27,6 @@ class LawProvider: ObservableObject{
         return container
     }()
 
-    @AppStorage("defaultGroupingMethod", store: .standard)
-    private var groupingMethod = LawGroupingMethod.department
-
-    private func getLawList() -> [[UUID]] {
-        let arr = LocalProvider.shared.getLawList()
-        if groupingMethod == .level {
-            let dict = Dictionary(grouping: arr.flatMap { $0.laws } , by: { $0.level }).sorted {
-                return LawLevel.firstIndex(of: $0.key)! < LawLevel.firstIndex(of: $1.key)!
-            }
-            return dict.map { $0.value.map {$0.id } }
-        }
-        return arr.map {$0.laws.map {$0.id} }
-    }
-
     private var contents: [UUID: LawContent] = [UUID: LawContent]()
 
     func getLawNameByUUID(_ uuid: UUID) -> String {
@@ -51,18 +37,10 @@ class LawProvider: ObservableObject{
         return LocalProvider.shared.getLaw(uuid)?.subtitle ?? ""
     }
 
-
     func getLawTitleByUUID(_ uuid: UUID) -> String {
         let content = getLawContent(uuid)
         content.load()
         return content.Titles.joined(separator: " ")
-    }
-
-    func getCategoryName(_ uuid: UUID) -> String {
-        if groupingMethod == .level {
-            return LocalProvider.shared.getLaw(uuid)?.level ?? ""
-        }
-        return LocalProvider.shared.getLaw(uuid)?.cateogry?.category ?? ""
     }
     
     private var writeLocker = NSLock()
@@ -71,8 +49,7 @@ class LawProvider: ObservableObject{
         writeLocker.lock()
         if contents[uuid] == nil {
             if let law = LocalProvider.shared.getLaw(uuid) {
-                let folder: [String?] = ["Laws", law.cateogry?.folder].filter { $0 != nil }
-                contents[uuid] = LawContent(law.filename ?? law.name, folder.map{ $0! }.joined(separator: "/"))
+                contents[uuid] = LawContent(law: law)
             } else {
                 fatalError("unexpected law uuid: \(uuid)")
             }

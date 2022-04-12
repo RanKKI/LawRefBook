@@ -24,7 +24,7 @@ class TestLaws: XCTestCase {
             第三条 内容
         """
 
-        let content = LawContent("", "")
+        let content = LawContent(law: nil)
         content.loadFromString(content: str)
 
         XCTAssertTrue(!content.Titles.isEmpty)
@@ -55,7 +55,7 @@ class TestLaws: XCTestCase {
             第三条 内容
         """
 
-        let content = LawContent("", "")
+        let content = LawContent(law: nil)
         content.loadFromString(content: str)
 
         XCTAssertEqual(content.TOC.count, 2)
