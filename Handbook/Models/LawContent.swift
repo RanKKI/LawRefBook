@@ -179,38 +179,30 @@ class LawContent: ObservableObject {
         return false
     }
 
-    func filterText(text: String){
+    func filterText(text: String) -> [TextContent] {
         if text.isEmpty {
-            self.Content = self.Body
-            return
+            return self.Body
         }
-        LawProvider.shared.queue.async {
-            let texts = text.tokenised()
-            var newBody: [TextContent] = []
-            self.Body.forEach { val in
-                let children = val.children.filter { child in
-                    let t = child.text
-                    return t.contains(text) || texts.allSatisfy { t.contains($0) }
-                }
-                if !children.isEmpty {
-                    newBody.append(TextContent(id: val.id, text: val.text, children: children, line: val.line, indent: val.indent))
-                }
+        let texts = text.tokenised()
+        var newBody: [TextContent] = []
+        self.Body.forEach { val in
+            let children = val.children.filter { child in
+                texts.allSatisfy { child.text.contains($0) }
             }
-            DispatchQueue.main.async {
-                self.Content = newBody
+            if !children.isEmpty {
+                newBody.append(TextContent(id: val.id, text: val.text, children: children, line: val.line, indent: val.indent))
             }
         }
+        return newBody
     }
     
-    func containsText(text: String) -> Bool {
-        if text.isEmpty {
-            return false
+    func filterTextAsync(text: String){
+        LawProvider.shared.queue.async {
+            let arr = self.filterText(text: text)
+            DispatchQueue.main.async {
+                self.Content = arr
+            }
         }
-        return self.Body.first {
-            return $0.children.first {
-                $0.text.contains(text)
-            } != nil
-        } != nil
     }
 
     func getLine(line: Int64) -> String {
