@@ -132,12 +132,15 @@ private struct LawLineView: View {
                 }
         }
         .sheet(isPresented: $selectFolderView) {
-            SelectFolderView(action: { folder in
-                if let folder = folder {
-                    LawProvider.shared.favoriteContent(lawID, line: line, folder: folder)
-                }
-            })
-            .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
+            NavigationView {
+                FavoriteFolderView(action: { folder in
+                    if let folder = folder {
+                        LawProvider.shared.favoriteContent(lawID, line: line, folder: folder)
+                    }
+                })
+                .navigationBarTitle("选择位置", displayMode: .inline)
+                .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
+            }
         }
     }
 }

@@ -1,58 +1,6 @@
 import Foundation
 import SwiftUI
 
-extension UIAlertController {
-    convenience init(alert: AlertConfig) {
-        self.init(title: alert.title, message: nil, preferredStyle: .alert)
-        addTextField { $0.placeholder = alert.placeholder }
-        addAction(UIAlertAction(title: alert.cancel, style: .cancel) { _ in
-            alert.action(nil)
-        })
-        let textField = self.textFields?.first
-        addAction(UIAlertAction(title: alert.accept, style: .default) { _ in
-            alert.action(textField?.text)
-        })
-    }
-}
-
-
-struct AlertHelper<Content: View>: UIViewControllerRepresentable {
-
-    @Binding var isPresented: Bool
-
-    let alert: AlertConfig
-    let content: Content
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<AlertHelper>) -> UIHostingController<Content> {
-        UIHostingController(rootView: content)
-    }
-    
-    final class Coordinator {
-        var alertController: UIAlertController?
-        init(_ controller: UIAlertController? = nil) {
-            self.alertController = controller
-        }
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        return Coordinator()
-    }
-    
-    
-    func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: UIViewControllerRepresentableContext<AlertHelper>) {
-        uiViewController.rootView = content
-        if isPresented && uiViewController.presentedViewController == nil {
-            var alert = self.alert
-            alert.action = {
-                self.isPresented = false
-                self.alert.action($0)
-            }
-            context.coordinator.alertController = UIAlertController(alert: alert)
-            uiViewController.present(context.coordinator.alertController!, animated: true)
-        }
-    }
-}
-
 public struct AlertConfig {
     public var title: String
     public var placeholder: String = ""
@@ -62,7 +10,57 @@ public struct AlertConfig {
 }
 
 extension View {
-    public func alert(isPresented: Binding<Bool>, _ alert: AlertConfig) -> some View {
-        AlertHelper(isPresented: isPresented, alert: alert, content: self)
+
+    func alert(config: AlertConfig) {
+        let alert = UIAlertController(title: config.title, message: nil, preferredStyle: .alert)
+        alert.addTextField() { textField in
+            textField.placeholder = config.placeholder
+        }
+        alert.addAction(UIAlertAction(title: config.accept, style: .default) { _ in
+            let textField = alert.textFields![0] as UITextField
+            config.action(textField.text)
+        })
+        alert.addAction(UIAlertAction(title: config.cancel, style: .cancel) { _ in
+            config.action(nil)
+        })
+        showAlert(alert: alert)
     }
+
+    private func showAlert(alert: UIAlertController) {
+        if let controller = topMostViewController() {
+            controller.present(alert, animated: true)
+        }
+    }
+    
+    private func keyWindow() -> UIWindow? {
+        return UIApplication.shared.connectedScenes
+            .filter {$0.activationState == .foregroundActive}
+            .compactMap {$0 as? UIWindowScene}
+            .first?.windows.filter {$0.isKeyWindow}.first
+    }
+    
+    private func topMostViewController() -> UIViewController? {
+        guard let rootController = keyWindow()?.rootViewController else {
+            return nil
+        }
+        return topMostViewController(for: rootController)
+    }
+    
+    private func topMostViewController(for controller: UIViewController) -> UIViewController {
+        if let presentedController = controller.presentedViewController {
+            return topMostViewController(for: presentedController)
+        } else if let navigationController = controller as? UINavigationController {
+            guard let topController = navigationController.topViewController else {
+                return navigationController
+            }
+            return topMostViewController(for: topController)
+        } else if let tabController = controller as? UITabBarController {
+            guard let topController = tabController.selectedViewController else {
+                return tabController
+            }
+            return topMostViewController(for: topController)
+        }
+        return controller
+    }
+    
 }

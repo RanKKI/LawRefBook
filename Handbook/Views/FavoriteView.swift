@@ -1,26 +1,8 @@
-//
-//  Favorite.swift
-//  law.handbook
-//
-//  Created by Hugh Liu on 26/2/2022.
-//
-
 import Foundation
 import CoreData
 import SwiftUI
 
-private func convert(_ result: [FavContent]) -> [[FavContent]] {
-    return Dictionary(grouping: result) { $0.lawId! }
-        .sorted {
-            let name1 = LawProvider.shared.getLawNameByUUID($0.value.first!.lawId!)
-            let name2 = LawProvider.shared.getLawNameByUUID($1.value.first!.lawId!)
-            return name1 < name2
-        }
-        .map { $0.value }
-        .map { $0.filter{ $0.line > 0 }.sorted { $0.line < $1.line } }
-}
-
-private func convert(_ result: FetchedResults<FavContent> ) -> [[FavContent]] {
+private func convert<S>(_ result: S) -> [[FavContent]] where S: Sequence, S.Element == FavContent {
     return Dictionary(grouping: result) { $0.lawId! }
         .sorted {
             let name1 = LawProvider.shared.getLawNameByUUID($0.value.first!.lawId!)
@@ -39,28 +21,25 @@ private struct FavLine: View {
     
     @Environment(\.managedObjectContext) var moc
     
+    private var removeFav: some View {
+        Button {
+            withAnimation {
+                moc.delete(fav)
+                try? moc.save()
+            }
+        } label: {
+            Label("取消收藏", systemImage: "heart.slash")
+        }
+    }
+    
     var body: some View {
         Text(content)
             .swipeActions {
-                Button {
-                    withAnimation {
-                        moc.delete(fav)
-                        try? moc.save()
-                    }
-                } label: {
-                    Label("取消收藏", systemImage: "heart.slash")
-                }
+                removeFav
                 .tint(.red)
             }
             .contextMenu {
-                Button {
-                    withAnimation {
-                        moc.delete(fav)
-                        try? moc.save()
-                    }
-                } label: {
-                    Label("取消收藏", systemImage: "heart.slash")
-                }
+                removeFav
                 Button {
                     if let lawID = fav.lawId {
                         let title = LawProvider.shared.getLawTitleByUUID(lawID)
@@ -101,12 +80,18 @@ private struct FavFolderView: View {
     @Environment(\.managedObjectContext)
     private var moc
     
-    @State
-    private var editNameToggler = false
-    
+    private func editFolderName() {
+        self.alert(config: AlertConfig(title: "修改文件夹名", placeholder: folder.name ?? "", action: { name in
+            if let txt = name, !txt.isEmpty{
+                folder.name = txt
+                try? moc.save()
+            }
+        }))
+    }
+
     var body: some View {
         ZStack {
-            if(folder.contents.isEmpty ) {
+            if folder.contents.isEmpty {
                 Text("空空如也")
             } else {
                 List(convert(folder.contents), id: \.self) { (section: [FavContent]) in
@@ -118,19 +103,10 @@ private struct FavFolderView: View {
                 }
             }
         }
-        .alert(isPresented: $editNameToggler, AlertConfig(title: "修改文件夹名", action: { name in
-            if let txt = name {
-                if txt.isEmpty {
-                    return
-                }
-                folder.name = txt
-                try? moc.save()
-            }
-        }))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing){
                 IconButton(icon: "square.and.pencil") {
-                    editNameToggler.toggle()
+                    editFolderName()
                 }
             }
         }
@@ -155,7 +131,7 @@ struct FolderItemView: View {
         moc.delete(folder)
         try? moc.save()
     }
-    
+
     var body: some View {
         NavigationLink {
             FavFolderView(folder: folder)
@@ -187,55 +163,96 @@ struct FolderItemView: View {
     
 }
 
-struct FavoriteView: View {
+private struct FavoriteContentView: View {
+
+    var folders: [FavFolder]
+        
+    // 兼容之前没有分组的收藏
+    var items: [[FavContent]]
     
-    @Environment(\.dismiss) var dismiss
-    
-    @FetchRequest(sortDescriptors: [], predicate: nil)
-    var favorites: FetchedResults<FavContent>
-    
-    @FetchRequest(sortDescriptors: [], predicate: nil)
-    var folders: FetchedResults<FavFolder>
+    @Environment(\.editMode)
+    private var editMode
     
     @Environment(\.managedObjectContext)
     private var moc
-    
-    @State
-    private var addFolderToggle = false
-    
-    private var contentWithoutFolder: [[FavContent]] {
-        convert(favorites).map {
-            $0.filter {
-                $0.folder == nil
+
+    var body: some View {
+        List {
+            ForEach(folders, id: \.self) { (folder: FavFolder) in
+                FolderItemView(folder: folder)
             }
-        }.filter {
-            !$0.isEmpty
+            .onMove { from, to in
+                DispatchQueue.main.async(group: .none, qos: .background) {
+                    var arr = folders
+                    arr.move(fromOffsets: from, toOffset: to)
+                    arr.enumerated().forEach {
+                        $1.order = Int64($0)
+                    }
+                    try? moc.save()
+                }
+            }
+            .onDelete { idx in }
+            if editMode?.wrappedValue == .inactive {
+                ForEach(items, id: \.self) { (section: [FavContent]) in
+                    if let lawID = section.first?.lawId {
+                        if let content = LawProvider.shared.getLawContent(lawID) {
+                            FavLineSection(lawID: lawID, lawContent: content, section: section)
+                        }
+                    }
+                }
+                .transition(.slide)
+            }
         }
     }
-    
+}
+
+private struct SelectFolderView: View {
+        
+    var folders: [FavFolder]
+    var onSelect: (FavFolder) -> Void
+
     var body: some View {
-        ZStack {
-            if (favorites.isEmpty && folders.isEmpty) {
-                Text("空空如也")
-            } else {
-                List {
-                    if !folders.isEmpty {
-                        ForEach(folders, id: \.self) { (folder: FavFolder) in
-                            FolderItemView(folder: folder)
-                        }
-                    }
-                    ForEach(contentWithoutFolder, id: \.self) { (section: [FavContent]) in
-                        if let lawID = section.first?.lawId {
-                            if let content = LawProvider.shared.getLawContent(lawID) {
-                                FavLineSection(lawID: lawID, lawContent: content, section: section)
-                            }
-                        }
-                    }
-                    .transition(.slide)
+        List {
+            ForEach(folders, id: \.self) { (folder: FavFolder) in
+                HStack {
+                    Text(folder.name ?? "")
+                    Spacer()
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    onSelect(folder)
                 }
             }
         }
-        .alert(isPresented: $addFolderToggle, AlertConfig(title: "新建文件夹", action: { name in
+    }
+}
+
+struct FavoriteFolderView: View {
+    
+    var action: ((FavFolder?) -> Void)?
+
+    @FetchRequest(sortDescriptors: [], predicate: nil)
+    private var favorites: FetchedResults<FavContent>
+    
+    @FetchRequest(sortDescriptors: [
+        SortDescriptor(\.order)
+    ], predicate: nil)
+    private var folders: FetchedResults<FavFolder>
+    
+    private var favoriteItems: [[FavContent]] {
+        convert(favorites).map {
+            $0.filter { $0.folder == nil }
+        }.filter { !$0.isEmpty }
+    }
+    
+    @Environment(\.dismiss)
+    private var dismiss
+
+    @Environment(\.managedObjectContext)
+    private var moc
+
+    private func createFolder() {
+        self.alert(config: AlertConfig(title: "新建文件夹", action: { name in
             if let txt = name {
                 if txt.isEmpty {
                     return
@@ -243,74 +260,49 @@ struct FavoriteView: View {
                 let folder = FavFolder(context: moc)
                 folder.id = UUID()
                 folder.name = txt
+                folder.order = Int64(folders.count)
                 try? moc.save()
             }
         }))
+    }
+    
+    private var isSelecting: Bool {
+        return action != nil
+    }
+    
+    private var isEmpty: Bool {
+        return favorites.isEmpty && folders.isEmpty
+    }
+
+    var body: some View {
+        ZStack {
+            if isEmpty {
+                Text("空空如也")
+            } else if isSelecting {
+                SelectFolderView(folders: folders.map { $0 }, onSelect: { folder in
+                    action?(folder)
+                    dismiss()
+                })
+            } else {
+                FavoriteContentView(folders: folders.map { $0 }, items: favoriteItems)
+            }
+        }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing){
                 IconButton(icon: "folder.badge.plus") {
-                    addFolderToggle.toggle()
+                    createFolder()
                 }
                 CloseSheetItem() {
                     dismiss()
+                    action?(nil)
+                }
+            }
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                if !isSelecting && !isEmpty {
+                    EditButton()
                 }
             }
         }
     }
-}
-
-
-struct SelectFolderView: View {
     
-    @Environment(\.dismiss) var dismiss
-    
-    @FetchRequest(sortDescriptors: [], predicate: nil)
-    var folders: FetchedResults<FavFolder>
-    
-    @Environment(\.managedObjectContext)
-    private var moc
-
-    @State
-    private var addFolderToggle = false
-    
-    var action: (FavFolder?) -> Void
-    
-    var body: some View {
-        NavigationView {
-            List(folders, id: \.self) { (folder: FavFolder) in
-                HStack {
-                    Text(folder.name ?? "")
-                    Spacer()
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    action(folder)
-                    dismiss()
-                }
-            }
-            .navigationBarTitle("选择位置", displayMode: .inline)
-            .alert(isPresented: $addFolderToggle, AlertConfig(title: "新建文件夹", action: { name in
-                if let txt = name {
-                    if txt.isEmpty {
-                        return
-                    }
-                    let folder = FavFolder(context: moc)
-                    folder.id = UUID()
-                    folder.name = txt
-                    try? moc.save()
-                }
-            }))
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing){
-                    IconButton(icon: "folder.badge.plus") {
-                        addFolderToggle.toggle()
-                    }
-                    CloseSheetItem() {
-                        dismiss()
-                        action(nil)
-                    }
-                }
-            }
-        }
-    }
 }
