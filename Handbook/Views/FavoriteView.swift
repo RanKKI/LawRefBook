@@ -31,6 +31,9 @@ private struct FavLine: View {
             Label("取消收藏", systemImage: "heart.slash")
         }
     }
+
+    @State
+    private var selectFolderView = false
     
     var body: some View {
         Text(content)
@@ -48,6 +51,25 @@ private struct FavLine: View {
                     }
                 } label: {
                     Label("复制", systemImage: "doc")
+                }
+                if fav.folder == nil {
+                    Button {
+                        selectFolderView.toggle()
+                    } label: {
+                        Label("移动至文件夹", systemImage: "folder.badge.plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $selectFolderView) {
+                NavigationView {
+                    FavoriteFolderView(action: { folder in
+                        if let folder = folder {
+                            fav.folder = folder
+                            try? moc.save()
+                        }
+                    })
+                    .navigationBarTitle("选择位置", displayMode: .inline)
+                    .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
                 }
             }
     }
