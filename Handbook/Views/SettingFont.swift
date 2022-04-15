@@ -40,45 +40,44 @@ private struct AdjustSteppter<Value: Numeric>: View {
 struct FontSettingView: View {
 
     @AppStorage("font_content")
-    var contentFontSize: Int = 17
+    var contentFontSize: Int = FontSizeDefault
 
     @AppStorage("font_tracking")
-    var tracking: Double = 0.6
+    var tracking: Double = FontTrackingDefault
     
     @AppStorage("font_spacing")
-    var spacing: Double = 4.5
+    var spacing: Double = FontSpacingDefault
 
     @State
     private var searchText = ""
 
     var body: some View {
-
-        VStack(alignment: .leading) {
-            Divider()
-            AdjustSteppter(title: "正文大小", value: $contentFontSize, step: 1)
-            AdjustSteppter(title: "左右间距", value: $tracking, step: 0.1)
-            AdjustSteppter(title: "上下间距", value: $spacing, step: 0.1)
-            Group {
-                LawContentTitleView(text: "中华人民共和国民法典")
-                LawContentTitleView(text: "物权编")
-                LawContentHeaderView(text: "第一分编  通则", indent: 1)
-                LawContentHeaderView(text: "第一章  一般规定", indent: 2)
-                Divider()
-                ForEach(exampleLines, id: \.self) { text in
-                    LawContentLineView(text: text, searchText: $searchText)
+        ScrollView {
+            VStack(alignment: .leading) {
+                AdjustSteppter(title: "正文大小", value: $contentFontSize, step: 1)
+                AdjustSteppter(title: "左右间距", value: $tracking, step: 0.1)
+                AdjustSteppter(title: "上下间距", value: $spacing, step: 0.1)
+                Group {
+                    LawContentTitleView(text: "中华人民共和国民法典")
+                    LawContentTitleView(text: "物权编")
+                    LawContentHeaderView(text: "第一分编  通则", indent: 1)
+                    LawContentHeaderView(text: "第一章  一般规定", indent: 2)
                     Divider()
+                    ForEach(exampleLines, id: \.self) { text in
+                        LawContentLineView(text: text, searchText: $searchText)
+                        Divider()
+                    }
                 }
+                .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                Spacer()
             }
-            .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-
-            Spacer()
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 IconButton(icon: "gobackward") {
-                    contentFontSize = 17
-                    tracking = 0.6
-                    spacing = 4.5
+                    contentFontSize = FontSizeDefault
+                    tracking = FontTrackingDefault
+                    spacing = FontSpacingDefault
                 }
             }
         }

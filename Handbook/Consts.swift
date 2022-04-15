@@ -42,3 +42,7 @@ let DeveloperMail = "rankki.dev@icloud.com"
 
 private let chineseNumbers = "一二三四五六七八九十零百千万"
 let lineStartRe = String(format: "^((第[%@]+条)|[%@]+、)", chineseNumbers, chineseNumbers)
+
+let FontSizeDefault = 17
+let FontTrackingDefault = 0.6
+let FontSpacingDefault = 4.5

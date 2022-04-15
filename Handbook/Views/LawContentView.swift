@@ -35,13 +35,13 @@ fileprivate extension Text {
 struct LawContentLineView: View {
     
     @AppStorage("font_content")
-    var contentFontSize: Int = 17
+    var contentFontSize: Int = FontSizeDefault
 
     @AppStorage("font_tracking")
-    var tracking: Double = 0.6
+    var tracking: Double = FontTrackingDefault
     
     @AppStorage("font_spacing")
-    var spacing: Double = 4.5
+    var spacing: Double = FontSpacingDefault
 
     var text: String
 
