@@ -38,7 +38,7 @@ struct MainApp: App {
     }
 
     private func checkRunTimes(){
-        if launchTime == 2 {
+        if launchTime == 4 {
             AppStoreReviewManager.requestReviewIfAppropriate()
         }
         launchTime += 1;
