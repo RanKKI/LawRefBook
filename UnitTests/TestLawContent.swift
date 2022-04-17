@@ -3,6 +3,10 @@ import XCTest
 @testable import 中国法律
 
 class TestLaws: XCTestCase {
+    
+    override func setUp() async throws {
+        LocalProvider.shared.initLawList()
+    }
 
     func testContentPaser() throws {
         let str = """
@@ -96,5 +100,18 @@ class TestLaws: XCTestCase {
         XCTAssertNotNil(LocalProvider.shared.DATA_FILE_PATH, "没有找到法律法规数据")
         XCTAssertGreaterThan(LocalProvider.shared.getLawList().count, 0, "没有法律法规数据")
     }
+    
+    func testTocTitleHasExactlyOne() throws {
+        let laws = LocalProvider.shared.getLaws()
+        for law in laws {
+            let content = LawProvider.shared.getLawContent(law.id)
+            content.load()
 
+            let titles = content.TOC
+            let dict = Dictionary(grouping: titles, by: \.title)
+            dict.forEach { (key, val) in
+                XCTAssertEqual(val.count, 1, "\(law.name) 多个一样的标题 \(key)")
+            }
+        }
+    }
 }
