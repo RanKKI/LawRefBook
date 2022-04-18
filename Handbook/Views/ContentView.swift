@@ -10,13 +10,20 @@ struct ContentView: View {
     private var sheetManager = SheetMananger()
     
     @ObservedObject
-    private var lawListModal = LawList.ViewModel()
+    private var vm = LawList.ViewModel()
+    
+    @Environment(\.managedObjectContext)
+    private var moc
     
     var body: some View {
         VStack {
-            LawList(searchText: $searchText, viewModel: lawListModal)
+            LawList(searchText: $searchText, viewModel: vm)
         }
         .searchable(text: $searchText, prompt: "搜索")
+        .onSubmit(of: .search, {
+            SearchHistory.add(moc: self.moc, searchText)
+            vm.submitSearch(searchText)
+        })
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 IconButton(icon: "heart.text.square") {
@@ -67,30 +74,34 @@ extension ContentView {
 private struct SearchListView: View {
     
     @ObservedObject
-    var viewModel: LawList.ViewModel
-    
+    var vm: LawList.ViewModel
+
     @Binding
     var searchText: String
     
     @State
-    private var searchType = SearchType.catalogue
-    
+    var searchType: SearchType
+
     var body: some View {
         VStack {
             SearchTypePicker(searchType: $searchType)
-            if viewModel.isLoading {
+            if !vm.isSubmitSearch {
+                SearchHistoryView(lawId: nil, searchText: $searchText) { txt in
+                    searchText = txt
+                    vm.submitSearch(txt)
+                }
+                Spacer()
+            } else if vm.isLoading {
                 Spacer()
                 ProgressView()
                 Spacer()
-            } else if viewModel.searchResults.isEmpty {
-                if !searchText.isEmpty {
-                    Spacer()
-                    Text("没有结果")
-                }
+            } else if vm.searchResults.isEmpty {
+                Spacer()
+                Text("没有结果")
                 Spacer()
             } else {
-                List(viewModel.searchResults) {
-                    if searchType == .fullText {
+                List(vm.searchResults) {
+                    if vm.searchType == .fullText {
                         NaviLawLink(uuid: $0.id, searchText: searchText)
                     } else {
                         NaviLawLink(uuid: $0.id)
@@ -98,11 +109,16 @@ private struct SearchListView: View {
                 }
             }
         }
-        .onChange(of: searchText) { newValue in
-            viewModel.searchText(text: searchText, type: searchType)
+        .onChange(of: searchType) { searchType in
+            vm.searchType = searchType
+            if vm.isSubmitSearch {
+                vm.submitSearch(searchText)
+            }
         }
-        .onChange(of: searchType) { newValue in
-            viewModel.searchText(text: searchText, type: searchType)
+        .onChange(of: searchText) { searchText in
+            if searchText.isEmpty {
+                vm.clearSearchState()
+            }
         }
     }
 }
@@ -129,7 +145,7 @@ struct LawList: View {
     var body: some View {
         VStack {
             if isSearching {
-                SearchListView(viewModel: viewModel, searchText: $searchText)
+                SearchListView(vm: viewModel, searchText: $searchText, searchType: viewModel.searchType)
             } else if viewModel.isLoading {
                 Spacer()
                 ProgressView()
@@ -156,9 +172,10 @@ struct LawList: View {
                 }
             }
         }
-        .onChange(of: isSearching) { newValue in
-            if !newValue {
+        .onChange(of: isSearching) { isSearching in
+            if !isSearching {
                 searchText = ""
+                viewModel.clearSearchState()
             }
         }
         .onChange(of: groupingMethod) { newValue in
@@ -240,8 +257,7 @@ private struct SearchTypePicker: View {
             }
         }
         .pickerStyle(.segmented)
-        .padding(.leading, 16)
-        .padding(.trailing, 16)
+        .padding([.leading, .trailing], 16)
         .padding(.top, 8)
     }
     
@@ -255,15 +271,13 @@ struct NaviLawLink : View {
     @ObservedObject
     private var law  = LawProvider.shared
     
+    private var vm: LawContentView.LawContentViewModel {
+        LawContentView.LawContentViewModel(uuid, searchText)
+    }
+    
     var body: some View {
         NavigationLink {
-            LawContentView(lawID: uuid,
-                           content: law.getLawContent(uuid),
-                           isFav: law.getFavoriteState(uuid),
-                           searchText: searchText)
-            .onAppear {
-                law.getLawContent(uuid).load()
-            }
+            LawContentView(vm: vm, searchText: searchText)
         } label: {
             VStack(alignment: .leading) {
                 if let subTitle = law.getLawSubtitleByUUID(uuid) {

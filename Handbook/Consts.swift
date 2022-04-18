@@ -16,6 +16,11 @@ enum LawGroupingMethod: String, CaseIterable {
     case level = "法律阶位"
 }
 
+enum SearchHistoryType: String, CaseIterable {
+    case standalone = "独立记录"
+    case share = "共享记录"
+}
+
 enum SearchType : String, CaseIterable {
     case catalogue = "目录"
     case fullText = "全文"

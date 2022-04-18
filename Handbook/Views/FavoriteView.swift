@@ -78,7 +78,7 @@ private struct FavLine: View {
 private struct FavLineSection: View {
     
     var lawID: UUID
-    
+
     @ObservedObject
     var lawContent: LawContent
     

@@ -4,22 +4,22 @@ import SwiftUI
 struct TOCList: View {
 
     var content: TocListData
+    
+    var action: (Int64) -> Void
 
-    @Binding var sheetState: LawContentView.SheetMananger.SheetState
-    @State private var isExpand = false
-    @Binding var scrollID: Int64?
+    @State
+    private var isExpand = false
 
     var body: some View {
         if content.children.isEmpty {
             Text(content.title)
                 .onTapGesture {
-                    sheetState = .none
-                    scrollID = content.line
+                    action(content.line)
                 }
         } else {
             DisclosureGroup(content.title, isExpanded: $isExpand) {
                 ForEach(content.children, id: \.id){ sub in
-                    TOCList(content: sub, sheetState: $sheetState, scrollID: $scrollID)
+                    TOCList(content: sub, action: action)
                 }
             }
         }
@@ -29,13 +29,18 @@ struct TOCList: View {
 
 struct TableOfContentView: View {
 
-    @ObservedObject var obj: LawContent
-    @Binding var sheetState: LawContentView.SheetMananger.SheetState
-    @Binding var scrollID: Int64?
+    @ObservedObject
+    var vm: LawContentView.LawContentViewModel
+
+    @Binding
+    var sheetState: LawContentView.SheetMananger.SheetState
 
     var body: some View {
-        List(obj.TOC, id: \.id) { content in
-            TOCList(content: content, sheetState: $sheetState, scrollID: $scrollID)
+        List(vm.content.TOC, id: \.id) { content in
+            TOCList(content: content) { line in
+                sheetState = .none
+                vm.scrollPos = line
+            }
         }
         .listStyle(.plain)
         .toolbar {

@@ -28,6 +28,10 @@ func OpenMail(subject: String, body: String) {
     }
 }
 
+func Report(lawID: UUID, line: String){
+    Report(law: LawProvider.shared.getLawContent(lawID), line: line)
+}
+
 func Report(law: LawContent, line: String){
     let subject = String(format: "反馈问题:%@", law.Titles.joined(separator: "-"))
     let body = line

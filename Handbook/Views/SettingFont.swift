@@ -58,10 +58,10 @@ struct FontSettingView: View {
                 AdjustSteppter(title: "左右间距", value: $tracking, step: 0.1)
                 AdjustSteppter(title: "上下间距", value: $spacing, step: 0.1)
                 Group {
-                    LawContentTitleView(text: "中华人民共和国民法典")
-                    LawContentTitleView(text: "物权编")
-                    LawContentHeaderView(text: "第一分编  通则", indent: 1)
-                    LawContentHeaderView(text: "第一章  一般规定", indent: 2)
+                    Text("中华人民共和国民法典").contentTitle()
+                    Text("物权编").contentTitle()
+                    Text("第一分编  通则").contentHeader(indent: 1)
+                    Text("第一章  一般规定").contentHeader(indent: 2)
                     Divider()
                     ForEach(exampleLines, id: \.self) { text in
                         LawContentLineView(text: text, searchText: $searchText)

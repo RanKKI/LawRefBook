@@ -17,6 +17,12 @@ extension LawList {
 
         @Published
         fileprivate(set) var isLoading = false
+        
+        @Published
+        var isSearching = false
+        
+        @Published
+        var isSubmitSearch = false
 
         fileprivate var queue: DispatchQueue = DispatchQueue(label: "viewmodal", qos: .background)
         fileprivate var searchOpQueue: OperationQueue = OperationQueue()
@@ -24,6 +30,7 @@ extension LawList {
         fileprivate var cateogry: String?
         
         fileprivate var searchText: String = ""
+        var searchType = SearchType.catalogue
         fileprivate var groupMethod: LawGroupingMethod? = nil
 
         init() {
@@ -36,6 +43,7 @@ extension LawList {
 
         fileprivate func searchTextInLaws(text: String, type: SearchType, arr: [Law]) {
             self.searchText = text
+            self.searchType = type
             searchOpQueue.cancelAllOperations()
 
             if text.isEmpty {
@@ -67,7 +75,7 @@ extension LawList {
                 }
                 self?.searchOpQueue.waitUntilAllOperationsAreFinished()
                 DispatchQueue.main.async {
-                    if self?.searchText != text {
+                    if self?.searchText != text || self?.searchType != type {
                         return
                     }
                     self?.searchResults = results
@@ -76,10 +84,18 @@ extension LawList {
             }
         }
 
-        func searchText(text: String, type: SearchType) {
-            searchTextInLaws(text: text, type: type, arr: LocalProvider.shared.getLaws())
+        func submitSearch(_ text: String) {
+            if text.isEmpty {
+                return
+            }
+            isSubmitSearch = true
+            searchTextInLaws(text: text, type: searchType, arr: LocalProvider.shared.getLaws())
         }
         
+        func clearSearchState() {
+            isSubmitSearch = false
+        }
+
         fileprivate func refreshLaws(method: LawGroupingMethod) -> [LawCategory]{
             var arr: [LawCategory] = []
             if method == .department {
@@ -95,7 +111,7 @@ extension LawList {
             }
             return arr
         }
-        
+
         fileprivate func doRefresh(method: LawGroupingMethod) {
             self.isLoading = true
             queue.async {
@@ -139,11 +155,13 @@ extension LawList {
             super.init(category: category)
         }
 
-        override func searchText(text: String, type: SearchType) {
+        override func submitSearch(_ text: String) {
             guard self.cateogry != nil else {
                 return
             }
-            self.searchTextInLaws(text: text, type: type, arr: self.categories.flatMap { $0.laws })
+            isSubmitSearch = true
+            searchTextInLaws(text: text, type: searchType, arr: LocalProvider.shared.getLaws())
+            self.searchTextInLaws(text: text, type: searchType, arr: self.categories.flatMap { $0.laws })
         }
 
         fileprivate override func refreshLaws(method: LawGroupingMethod) -> [LawCategory]{

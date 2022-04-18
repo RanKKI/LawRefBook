@@ -1,26 +1,24 @@
 import Foundation
 import SwiftUI
 
-struct LawContentTitleView: View {
-    
-    var text: String
-    var body: some View {
-        Text(text)
-            .frame(maxWidth: .infinity, alignment: .center)
+extension Text {
+    func center() -> some View {
+        self.frame(maxWidth: .infinity, alignment: .center)
             .multilineTextAlignment(.center)
+    }
+
+    // 内容标题
+    func contentTitle() -> some View {
+        self
+            .center()
             .font(.title2)
     }
-}
 
-
-struct LawContentHeaderView: View {
-    
-    var text: String
-    var indent: Int
-    var body: some View {
-        Text(text)
-            .frame(maxWidth: .infinity)
-            .multilineTextAlignment(.center)
+    // 子标题
+    // 比如 第 n 章
+    func contentHeader(indent: Int) -> some View {
+        self
+            .center()
             .font(indent == 1 ? .headline : .subheadline)
             .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
     }
@@ -98,8 +96,7 @@ struct LawContentLineView: View {
 private struct LawLineView: View {
     
     var lawID: UUID
-    @ObservedObject var law: LawContent
-    
+
     @State var text: String
     @State var line: Int64
     @State var showActions = false
@@ -118,7 +115,7 @@ private struct LawLineView: View {
                         Label("收藏", systemImage: "suit.heart")
                     }
                     Button {
-                        Report(law: law, line: text)
+                        Report(lawID: lawID, line: text)
                     } label: {
                         Label("反馈", systemImage: "flag")
                     }
@@ -145,39 +142,48 @@ private struct LawLineView: View {
     }
 }
 
-struct LawContentList: View {
-    
-    var lawID: UUID
+
+private struct LawContentList: View {
 
     @ObservedObject
-    var obj: LawContent
+    var vm: LawContentView.LawContentViewModel
 
-    @State var content: [TextContent] = []
-    @State var searchText = ""
+    @Binding
+    var searchText: String
 
-    var title: some View {
-        VStack {
-            ForEach($obj.Titles.indices, id: \.self) { i in
-                LawContentTitleView(text: obj.Titles[i])
-            }
-        }
-    }
+    @Environment(\.isSearching)
+    private var isSearching
 
-    var bodyList: some View {
-        ForEach(obj.Content, id: \.id) { (content: TextContent) in
-            if self.searchText.isEmpty || (!self.searchText.isEmpty && !content.children.isEmpty){
-                if !content.text.isEmpty {
-                    LawContentHeaderView(text: content.text, indent: content.indent)
-                        .id(content.line)
-                        .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+    var contentView: some View {
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                LazyVStack {
+                    ForEach(vm.titles, id: \.self) {
+                        Text($0).contentTitle()
+                    }
+                    ForEach(vm.body, id: \.id) { paragraph in
+                        if !paragraph.text.isEmpty && (searchText.isEmpty || !paragraph.children.isEmpty) {
+                            Text(paragraph.text).contentHeader(indent: paragraph.indent)
+                                .id(paragraph.line)
+                                .padding([.top, .bottom], 8)
+                        }
+                        if !paragraph.children.isEmpty {
+                            Divider()
+                            ForEach(paragraph.children, id: \.id) { line in
+                                LawLineView(lawID: vm.lawID, text: line.text, line: line.line, searchText: $searchText)
+                                    .id(line.line)
+                                Divider()
+                            }
+                        }
+                    }
                 }
             }
-            if !content.children.isEmpty {
-                Divider()
-                ForEach(content.children, id:\.id) {  line in
-                    LawLineView(lawID: lawID, law: obj, text: line.text, line: line.line, searchText: $searchText)
-                        .id(line.line)
-                    Divider()
+            .onChange(of: vm.scrollPos) { target in
+                if let target = target {
+                    vm.scrollPos = nil
+                    withAnimation(.easeOut(duration: 1)){
+                        scrollProxy.scrollTo(target, anchor: .top)
+                    }
                 }
             }
         }
@@ -185,36 +191,104 @@ struct LawContentList: View {
 
     var body: some View {
         Group {
-            if obj.Content.isEmpty {
-                VStack {
-                    Spacer()
-                    Text("没有结果")
-                    Spacer()
+            if isSearching && !vm.isSearchSubmit {
+                SearchHistoryView(lawId: vm.lawID, searchText: $searchText) { txt in
+                    vm.doSearchText(txt)
+                    searchText = txt
                 }
+            } else if vm.body.isEmpty {
+                Spacer()
+                Text("没有结果").center()
+                Spacer()
             } else {
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 4){
-                        title
-                            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing:0))
-                        bodyList
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-                }
+                contentView
             }
         }
-        .onChange(of: searchText) { text in
-            obj.filterTextAsync(text: searchText)
+        .onChange(of: isSearching) { isSearching in
+            if !isSearching {
+                vm.clearSearchState()
+            }
         }
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "当前法律内搜索")
-        .onAppear {
-            if !searchText.isEmpty {
-                obj.filterTextAsync(text: searchText)
+        .onChange(of: searchText) { searchText in
+            if vm.isSearchSubmit && searchText != vm.searchText {
+                vm.clearSearchState()
             }
         }
     }
 }
 
 struct LawContentView: View {
+
+    @ObservedObject
+    var vm: LawContentViewModel
+
+    @State
+    var searchText: String = ""
+
+    @StateObject
+    private var sheetManager = SheetMananger()
+    
+    @Environment(\.managedObjectContext)
+    private var moc
+
+    var body: some View{
+        VStack {
+            if vm.isLoading {
+                Spacer()
+                ProgressView()
+                Spacer()
+            } else {
+                LawContentList(vm: vm, searchText: $searchText)
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                if vm.hasToc {
+                    IconButton(icon: "list.bullet.rectangle") {
+                        sheetManager.sheetState = .toc
+                    }
+                    .transition(.opacity)
+                }
+                IconButton(icon: vm.isFav ? "heart.slash" : "heart") {
+                    vm.onFavIconClicked()
+                }
+                IconButton(icon: "info.circle") {
+                    sheetManager.sheetState = .info
+                }
+            }
+        }
+        .onAppear {
+            vm.onAppear()
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "当前法律内搜索")
+        .onSubmit(of: .search) {
+            SearchHistory.add(moc: self.moc, searchText, vm.lawID)
+            vm.doSearchText(searchText)
+        }
+        .onChange(of: searchText) { text in
+            if text.isEmpty {
+                vm.clearSearchState()
+            }
+        }
+        .sheet(isPresented: $sheetManager.isShowingSheet, onDismiss: {
+            sheetManager.sheetState = .none
+        }) {
+            NavigationView {
+                if sheetManager.sheetState == .info {
+                    LawInfoPage(lawID: vm.lawID)
+                        .navigationBarTitle("关于", displayMode: .inline)
+                } else if sheetManager.sheetState == .toc {
+                    TableOfContentView(vm: vm, sheetState: $sheetManager.sheetState)
+                        .navigationBarTitle("目录", displayMode: .inline)
+                }
+            }
+            .phoneOnlyStackNavigationView()
+        }
+    }
+}
+
+extension LawContentView {
     
     class SheetMananger: ObservableObject{
         
@@ -224,8 +298,11 @@ struct LawContentView: View {
             case toc
         }
         
-        @Published var isShowingSheet = false
-        @Published var sheetState: SheetState = .none {
+        @Published
+        var isShowingSheet = false
+
+        @Published
+        var sheetState: SheetState = .none {
             didSet {
                 withAnimation {
                     isShowingSheet = sheetState != .none
@@ -233,64 +310,5 @@ struct LawContentView: View {
             }
         }
     }
-
-    var lawID: UUID
-
-    @ObservedObject
-    var content: LawContent
-
-    @State
-    var isFav = false
-
-    var searchText: String = ""
-
-    @State
-    var scrollTarget: Int64?
-
-    @StateObject
-    private var sheetManager = SheetMananger()
-
-    var body: some View{
-        ScrollViewReader { scrollProxy in
-            LawContentList(lawID: lawID, obj: content, searchText: searchText)
-                .onChange(of: scrollTarget) { target in
-                    if let target = target {
-                        scrollTarget = nil
-                        withAnimation(.easeOut(duration: 1)){
-                            scrollProxy.scrollTo(target, anchor: .top)
-                        }
-                    }
-                }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                if content.hasToc() {
-                    IconButton(icon: "list.bullet.rectangle") {
-                        // show table of content
-                        sheetManager.sheetState = .toc
-                    }
-                }
-                IconButton(icon: isFav ? "heart.slash" : "heart") {
-                    isFav = LawProvider.shared.favoriteLaw(lawID)
-                }
-                IconButton(icon: "info.circle") {
-                    sheetManager.sheetState = .info
-                }
-            }
-        }
-        .sheet(isPresented: $sheetManager.isShowingSheet, onDismiss: {
-            sheetManager.sheetState = .none
-        }) {
-            NavigationView {
-                if sheetManager.sheetState == .info {
-                    LawInfoPage(lawID: lawID)
-                        .navigationBarTitle("关于", displayMode: .inline)
-                } else if sheetManager.sheetState == .toc {
-                    TableOfContentView(obj: LawProvider.shared.getLawContent(lawID), sheetState: $sheetManager.sheetState, scrollID: $scrollTarget)
-                        .navigationBarTitle("目录", displayMode: .inline)
-                }
-            }.navigationViewStyle(StackNavigationViewStyle())
-        }
-    }
+    
 }

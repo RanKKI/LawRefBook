@@ -1,27 +1,31 @@
 import SwiftUI
 import CoreSpotlight
+import CoreData
 
 @main
 struct MainApp: App {
 
-    @State var showNewPage = false
+    @State
+    var showNewPage = false
 
     @AppStorage("lastVersion")
     var lastVersion: String?
 
     @AppStorage("launchTimes")
     var launchTime: Int = 0
+    
+    private(set) var moc = LawProvider.shared.container.viewContext
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 ContentView()
-                    .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
-                    .sheet(isPresented: $showNewPage) {
-                        WhatNewView()
-                    }
                 WelcomeView()
             }
+            .sheet(isPresented: $showNewPage) {
+                WhatNewView()
+            }
+            .environment(\.managedObjectContext, moc)
             .phoneOnlyStackNavigationView()
             .task {
                 self.checkVersionUpdate()

@@ -11,7 +11,10 @@ struct SettingView: View {
 
     @AppStorage("defaultGroupingMethod", store: .standard)
     private var groupingMethod = LawGroupingMethod.department
-    
+
+    @AppStorage("defaultSearchHistoryType")
+    private var searchHistoryType = SearchHistoryType.standalone
+
     @State
     private var showSafari: Bool = false
 
@@ -30,6 +33,16 @@ struct SettingView: View {
                     Spacer()
                     Picker("分组方式", selection: $groupingMethod) {
                         ForEach(LawGroupingMethod.allCases, id: \.self) {
+                            Text($0.rawValue)
+                       }
+                    }
+                    .pickerStyle(.menu)
+                }
+                HStack {
+                    Text("搜索历史")
+                    Spacer()
+                    Picker("搜索历史", selection: $searchHistoryType) {
+                        ForEach(SearchHistoryType.allCases, id: \.self) {
                             Text($0.rawValue)
                        }
                     }
@@ -63,7 +76,7 @@ struct SettingView: View {
                 } label: {
                     Text("LICENSE")
                 }
-                CreateSpotlightIndex()
+                CreateSpotlightIndexView()
             }
             Text(COPYRIGHT_DECLARE)
                 .listRowBackground(Color.clear)
@@ -116,7 +129,7 @@ fileprivate struct Link: View {
     }
 }
 
-struct CreateSpotlightIndex: View {
+private struct CreateSpotlightIndexView: View {
         
     @ObservedObject
     private var helper: SpotlightHelper = SpotlightHelper.shared

@@ -15,12 +15,10 @@ extension String {
 
 class LawContent: ObservableObject {
 
-    @Published var Titles: [String] = []
-    @Published var Infomations: [LawInfo] = []
-    @Published var Content: [TextContent] = []
-    @Published var TOC: [TocListData] = []
-
+    var Titles: [String] = []
+    var Infomations: [LawInfo] = []
     var Body: [TextContent] = []
+    var TOC: [TocListData] = []
 
     private var filePath: String?
     private var loaded: Bool = false
@@ -154,8 +152,6 @@ class LawContent: ObservableObject {
                 noOfLine += 1
             }
         }
-
-        self.Content = Body
     }
 
     func isNewLine(text: String, isFix: Bool) -> Bool {
@@ -194,15 +190,6 @@ class LawContent: ObservableObject {
             }
         }
         return newBody
-    }
-    
-    func filterTextAsync(text: String){
-        LawProvider.shared.queue.async {
-            let arr = self.filterText(text: text)
-            DispatchQueue.main.async {
-                self.Content = arr
-            }
-        }
     }
 
     func getLine(line: Int64) -> String {
