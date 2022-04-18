@@ -11,9 +11,8 @@ private struct Change {
 }
 
 private var changes = [
-    Change(icon: "text.justify.trailing", title: "字体间距调整", content: "可以在设置中调整字体的横向间距和竖向间距"),
-    Change(icon: "folder", title: "收藏文件夹", content: "可以按照不同的文件夹进行收藏，区分不同的场景"),
-    Change(icon: "magnifyingglass", title: "全文搜索", content: "首页下拉搜索现在支持全文搜索了！"),
+    Change(icon: "icloud", title: "iCloud 同步", content: "设置中打开 iCloud 同步，将收藏的内容跨设备使用（注：打开后需要重启 App 并给予网络相关的权限）"),
+    Change(icon: "doc.text.magnifyingglass", title: "搜索历史", content: "搜索记录现会被保存本地，你可在设置中调整是独立记录（即每个法律不共享搜索记录）或者共享记录（注：搜索记录仅保留在本地，不使用 iCloud 同步）"),
 ]
 
 struct WhatNewView : View {
