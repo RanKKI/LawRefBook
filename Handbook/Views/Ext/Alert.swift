@@ -39,7 +39,7 @@ extension View {
             .first?.windows.filter {$0.isKeyWindow}.first
     }
     
-    private func topMostViewController() -> UIViewController? {
+    func topMostViewController() -> UIViewController? {
         guard let rootController = keyWindow()?.rootViewController else {
             return nil
         }

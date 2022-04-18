@@ -126,6 +126,13 @@ private struct LawLineView: View {
                     } label: {
                         Label("复制", systemImage: "doc")
                     }
+                    Button {
+                        let title = LawProvider.shared.getLawTitleByUUID(lawID)
+                        let message = String(format: "%@\n\n%@", title, text)
+                        self.shareText(message)
+                    } label: {
+                        Label("发送至", systemImage: "square.and.arrow.up")
+                    }
                 }
         }
         .sheet(isPresented: $selectFolderView) {

@@ -1,13 +1,7 @@
-//
-//  Util.swift
-//  law.handbook
-//
-//  Created by HCM-B0208 on 2022/3/1.
-//
-
 import Foundation
 import SwiftUI
 import StoreKit
+import UIKit
 
 extension UIApplication {
 
@@ -128,3 +122,13 @@ extension Substring {
     }
 }
 
+extension View {
+    
+    func shareText(_ shareString: String) {
+        if let controller = topMostViewController() {
+            let activityViewController = UIActivityViewController(activityItems: [shareString], applicationActivities: nil);
+            controller.present(activityViewController, animated: true)
+        }
+    }
+    
+}
