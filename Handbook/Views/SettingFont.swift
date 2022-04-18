@@ -47,6 +47,9 @@ struct FontSettingView: View {
     
     @AppStorage("font_spacing")
     var spacing: Double = FontSpacingDefault
+    
+    @AppStorage("font_line_spacing")
+    var lineSpacing: Int = FontLineSpacingDefault
 
     @State
     private var searchText = ""
@@ -57,15 +60,18 @@ struct FontSettingView: View {
                 AdjustSteppter(title: "正文大小", value: $contentFontSize, step: 1)
                 AdjustSteppter(title: "左右间距", value: $tracking, step: 0.1)
                 AdjustSteppter(title: "上下间距", value: $spacing, step: 0.1)
+                AdjustSteppter(title: "行间距", value: $lineSpacing, step: 1)
                 Group {
                     Text("中华人民共和国民法典").contentTitle()
                     Text("物权编").contentTitle()
                     Text("第一分编  通则").contentHeader(indent: 1)
                     Text("第一章  一般规定").contentHeader(indent: 2)
                     Divider()
-                    ForEach(exampleLines, id: \.self) { text in
-                        LawContentLineView(text: text, searchText: $searchText)
-                        Divider()
+                    VStack(alignment: .leading, spacing: CGFloat(lineSpacing)) {
+                        ForEach(exampleLines, id: \.self) { text in
+                            LawContentLineView(text: text, searchText: $searchText)
+                            Divider()
+                        }
                     }
                 }
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
@@ -78,6 +84,7 @@ struct FontSettingView: View {
                     contentFontSize = FontSizeDefault
                     tracking = FontTrackingDefault
                     spacing = FontSpacingDefault
+                    lineSpacing = FontLineSpacingDefault
                 }
             }
         }

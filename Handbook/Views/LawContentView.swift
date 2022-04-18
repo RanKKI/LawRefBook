@@ -153,11 +153,15 @@ private struct LawContentList: View {
 
     @Environment(\.isSearching)
     private var isSearching
+    
+    @AppStorage("font_line_spacing")
+    private var lineSpacing: Int = FontLineSpacingDefault
+
 
     var contentView: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                LazyVStack {
+                LazyVStack(alignment: .leading, spacing: CGFloat(lineSpacing)) {
                     ForEach(vm.titles, id: \.self) {
                         Text($0).contentTitle()
                     }
