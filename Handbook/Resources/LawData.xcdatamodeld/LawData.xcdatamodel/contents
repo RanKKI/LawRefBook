@@ -22,6 +22,11 @@
         <attribute name="searchT" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
     </entity>
+    <configuration name="Cloud" usedWithCloudKit="YES">
+        <memberEntity name="FavContent"/>
+        <memberEntity name="FavLaw"/>
+        <memberEntity name="FavFolder"/>
+    </configuration>
     <elements>
         <element name="FavContent" positionX="-63" positionY="-18" width="128" height="89"/>
         <element name="FavFolder" positionX="-54" positionY="18" width="128" height="89"/>

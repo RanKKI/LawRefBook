@@ -7,24 +7,51 @@ class LawProvider: ObservableObject{
     static let shared = LawProvider()
 
     var queue: DispatchQueue = DispatchQueue(label: "laws", qos: .background)
+    
+    @AppStorage("iCloudSyncToggle")
+    private var enableCloudSync = false
+    
+    lazy var container : NSPersistentContainer = {
+        
+        let container = NSPersistentCloudKitContainer(name: "LawData")
+        container.viewContext.shouldDeleteInaccessibleFaults = true
+        
+        let defaultDesctiption = container.persistentStoreDescriptions.first
+        let url = defaultDesctiption?.url?.deletingLastPathComponent()
 
-    // 持久化储存
-    lazy var container: NSPersistentContainer = {
+        let localStoreDescription = NSPersistentStoreDescription(url: url!.appendingPathComponent("local.sqlite"))
+        localStoreDescription.configuration = "Default"
+        localStoreDescription.shouldInferMappingModelAutomatically = true
+        localStoreDescription.shouldMigrateStoreAutomatically = true
+        
+        var descriptions = [
+            localStoreDescription
+        ]
 
-        let container = NSPersistentContainer(name: "LawData")
+        if enableCloudSync {
+            let cloudStoreDescription = NSPersistentStoreDescription(url: url!.appendingPathComponent("cloud.sqlite"))
+            cloudStoreDescription.configuration = "Cloud"
+            cloudStoreDescription.shouldInferMappingModelAutomatically = true
+            cloudStoreDescription.shouldMigrateStoreAutomatically = true
 
-        guard let description = container.persistentStoreDescriptions.first else {
-            fatalError("Failed to retrieve a persistent store description.")
+
+            // Set the container options on the cloud store
+            cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.xyz.rankki.law-handbook")
+            
+            descriptions.append(cloudStoreDescription)
         }
-
-        container.loadPersistentStores { description, error in
-            if let error = error {
-                fatalError("Core Data failed to load: \(error.localizedDescription)")
+        
+        container.persistentStoreDescriptions = descriptions
+        
+        // Load both stores
+        container.loadPersistentStores { storeDescription, error in
+            guard error == nil else {
+                fatalError("Could not load persistent stores. \(error!)")
             }
         }
-
-        container.viewContext.shouldDeleteInaccessibleFaults = true
+        
         return container
+
     }()
 
     private var contents: [UUID: LawContent] = [UUID: LawContent]()

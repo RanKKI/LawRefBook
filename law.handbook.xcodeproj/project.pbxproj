@@ -42,6 +42,7 @@
 		905B83D627F83BFD00F951E9 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905B83D527F83BFD00F951E9 /* FileUtil.swift */; };
 		906E36A428053BF400A5CC39 /* SFSafariViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906E36A328053BF400A5CC39 /* SFSafariViewWrapper.swift */; };
 		90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */; };
+		90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A7911A280D34F0003367CB /* CloudKit.framework */; };
 		90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B74D7727E4DB1B00723535 /* Spotlight.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,9 @@
 		905B83D527F83BFD00F951E9 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		906E36A328053BF400A5CC39 /* SFSafariViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFSafariViewWrapper.swift; sourceTree = "<group>"; };
 		90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryUtil.swift; sourceTree = "<group>"; };
+		90A79119280D34ED003367CB /* RefBook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RefBook.entitlements; sourceTree = "<group>"; };
+		90A7911A280D34F0003367CB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		90A7911C280D419F003367CB /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		90B74D7727E4DB1B00723535 /* Spotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +133,8 @@
 		900EBCDB27D35C9D00E20FE4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				90A7911C280D419F003367CB /* info.plist */,
+				90A79119280D34ED003367CB /* RefBook.entitlements */,
 				902DAE5B27C7CBC200926036 /* Assets.xcassets */,
 				900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */,
 			);
@@ -178,6 +185,7 @@
 		900EBCEE27D3844600E20FE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				90A7911A280D34F0003367CB /* CloudKit.framework */,
 				16C0011C27E44BE800AB6446 /* XCTest.framework */,
 			);
 			name = Frameworks;
@@ -561,6 +569,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Handbook/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 166;
@@ -569,6 +578,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Handbook/Resources/info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -595,6 +605,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Handbook/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 166;
@@ -603,6 +614,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Handbook/Resources/info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

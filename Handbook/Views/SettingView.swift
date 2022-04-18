@@ -14,6 +14,9 @@ struct SettingView: View {
 
     @AppStorage("defaultSearchHistoryType")
     private var searchHistoryType = SearchHistoryType.standalone
+    
+    @AppStorage("iCloudSyncToggle")
+    private var enableCloudSync = false
 
     @State
     private var showSafari: Bool = false
@@ -53,6 +56,9 @@ struct SettingView: View {
                         .navigationBarTitle("字体设置")
                 } label: {
                     Text("字体设置")
+                }
+                HStack {
+                    Toggle("iCloud Sync", isOn: $enableCloudSync)
                 }
             }
             Section(header: Text("开发者")){
