@@ -9,8 +9,13 @@ extension SearchHistory {
     static func add(moc: NSManagedObjectContext, _ text: String, _ lawID: UUID?) {
         DispatchQueue.main.async(group: .none, qos: .background) {
             let req = SearchHistory.fetchRequest()
-            req.predicate = NSPredicate(format: "text == %@", text)
-
+            
+            if let lawID = lawID {
+                req.predicate = NSPredicate(format: "text == %@ and lawId == %@", text, lawID.uuidString)
+            } else {
+                req.predicate = NSPredicate(format: "text == %@ and lawId == nil", text)
+            }
+            
             do {
                 let results = try moc.fetch(req)
                 if let result = results.first {
