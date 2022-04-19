@@ -279,6 +279,9 @@ struct LawContentView: View {
         .onAppear {
             vm.onAppear()
         }
+        .onDisappear {
+            vm.clearSearchState()
+        }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "当前法律内搜索")
         .onSubmit(of: .search) {
             SearchHistory.add(moc: self.moc, searchText, vm.lawID)

@@ -87,6 +87,7 @@ extension LawContentView {
 
         func clearSearchState() {
             isSearchSubmit = false
+            searchText = ""
             self.body = self.content.Body
         }
 
