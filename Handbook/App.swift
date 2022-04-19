@@ -2,8 +2,25 @@ import SwiftUI
 import CoreSpotlight
 import CoreData
 
+class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        
+        application.registerForRemoteNotifications()
+        print("registerForRemoteNotifications")
+        
+        return true
+    }
+    
+}
+
 @main
 struct MainApp: App {
+    
+    @UIApplicationDelegateAdaptor
+    private var appDelegate: AppDelegate
+
 
     @State
     var showNewPage = false
@@ -14,7 +31,7 @@ struct MainApp: App {
     @AppStorage("launchTimes")
     var launchTime: Int = 0
     
-    private(set) var moc = LawProvider.shared.container.viewContext
+    private(set) var moc = Persistence.shared.container.viewContext
 
     var body: some Scene {
         WindowGroup {

@@ -47,6 +47,7 @@ struct ContentView: View {
                         .navigationBarTitle("收藏", displayMode: .inline)
                 }
             }
+            .environment(\.managedObjectContext, moc)
         }
     }
 }

@@ -19,7 +19,8 @@ private struct FavLine: View {
     
     var content: String
     
-    @Environment(\.managedObjectContext) var moc
+    @Environment(\.managedObjectContext)
+    private var moc
     
     private var removeFav: some View {
         Button {
@@ -34,7 +35,7 @@ private struct FavLine: View {
 
     @State
     private var selectFolderView = false
-    
+
     var body: some View {
         Text(content)
             .swipeActions {
@@ -69,7 +70,7 @@ private struct FavLine: View {
                         }
                     })
                     .navigationBarTitle("选择位置", displayMode: .inline)
-                    .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
+                    .environment(\.managedObjectContext, moc)
                 }
             }
     }

@@ -27,6 +27,9 @@
         <memberEntity name="FavLaw"/>
         <memberEntity name="FavFolder"/>
     </configuration>
+    <configuration name="Local">
+        <memberEntity name="SearchHistory"/>
+    </configuration>
     <elements>
         <element name="FavContent" positionX="-63" positionY="-18" width="128" height="89"/>
         <element name="FavFolder" positionX="-54" positionY="18" width="128" height="89"/>

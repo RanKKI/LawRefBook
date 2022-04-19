@@ -12,6 +12,7 @@ extension Text {
         self
             .center()
             .font(.title2)
+            .padding([.bottom], 8)
     }
 
     // 子标题
@@ -20,7 +21,7 @@ extension Text {
         self
             .center()
             .font(indent == 1 ? .headline : .subheadline)
-            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+            .padding([.bottom], 8)
     }
 }
 
@@ -101,9 +102,14 @@ private struct LawLineView: View {
     @State var line: Int64
     @State var showActions = false
     
-    @Binding var searchText: String
+    @Binding
+    var searchText: String
     
-    @State var selectFolderView = false
+    @State
+    private var selectFolderView = false
+    
+    @Environment(\.managedObjectContext)
+    private var moc
     
     var body: some View {
         Group {
@@ -139,11 +145,11 @@ private struct LawLineView: View {
             NavigationView {
                 FavoriteFolderView(action: { folder in
                     if let folder = folder {
-                        LawProvider.shared.favoriteContent(lawID, line: line, folder: folder)
+                        FavContent.new(moc: moc, lawID, line: line, folder: folder)
                     }
                 })
                 .navigationBarTitle("选择位置", displayMode: .inline)
-                .environment(\.managedObjectContext, LawProvider.shared.container.viewContext)
+                .environment(\.managedObjectContext, moc)
             }
         }
     }
@@ -213,6 +219,7 @@ private struct LawContentList: View {
                 Spacer()
             } else {
                 contentView
+                    .padding([.leading, .trailing], 8)
             }
         }
         .onChange(of: isSearching) { isSearching in

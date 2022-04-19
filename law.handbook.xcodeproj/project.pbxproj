@@ -39,6 +39,7 @@
 		9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983B27C9F96400C8D9E7 /* SettingView.swift */; };
 		903A8902280C145300EECBC7 /* SearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903A8901280C145300EECBC7 /* SearchHistoryView.swift */; };
 		903A8904280C2D7C00EECBC7 /* LawContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903A8903280C2D7C00EECBC7 /* LawContentViewModel.swift */; };
+		903F5326280E555200D4523D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F5325280E555200D4523D /* Persistence.swift */; };
 		905B83D627F83BFD00F951E9 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905B83D527F83BFD00F951E9 /* FileUtil.swift */; };
 		906E36A428053BF400A5CC39 /* SFSafariViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906E36A328053BF400A5CC39 /* SFSafariViewWrapper.swift */; };
 		90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */; };
@@ -92,6 +93,7 @@
 		9035983B27C9F96400C8D9E7 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		903A8901280C145300EECBC7 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
 		903A8903280C2D7C00EECBC7 /* LawContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentViewModel.swift; sourceTree = "<group>"; };
+		903F5325280E555200D4523D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		905B83D527F83BFD00F951E9 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		906E36A328053BF400A5CC39 /* SFSafariViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFSafariViewWrapper.swift; sourceTree = "<group>"; };
 		90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryUtil.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 		900EBCDD27D35CCB00E20FE4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				903F5325280E555200D4523D /* Persistence.swift */,
 				9035982B27C9012B00C8D9E7 /* LawContent.swift */,
 				900EBCE527D35FDE00E20FE4 /* LawProvider.swift */,
 				900EBCE727D361AE00E20FE4 /* LocalProvider.swift */,
@@ -376,6 +379,7 @@
 				16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */,
 				90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */,
+				903F5326280E555200D4523D /* Persistence.swift in Sources */,
 				90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */,
 				1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,
