@@ -23,9 +23,11 @@ class LawContent: ObservableObject {
     private var filePath: String?
     private var loaded: Bool = false
     private var forceBreak: Bool = false
-
+    private var isCases = false
+    
     init(law: Law?){
         if let law = law {
+            self.isCases = law.level == "案例"
             let folder: [String?] = ["Laws", law.cateogry?.folder].filter { $0 != nil }
             self.filePath = Bundle.main.path(forResource: law.filename ?? law.name, ofType: "md", inDirectory: folder.map{ $0! }.joined(separator: "/"))
             if filePath == nil && law.subtitle != nil {
@@ -157,6 +159,9 @@ class LawContent: ObservableObject {
     func isNewLine(text: String, isFix: Bool) -> Bool {
         if self.forceBreak {
             self.forceBreak = false
+            return true
+        }
+        if self.isCases {
             return true
         }
         return (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: lineStartRe, options: .regularExpression) != nil)
