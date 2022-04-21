@@ -20,13 +20,7 @@ struct Persistence {
         let cloudURL = baseURL!.appendingPathComponent("cloud.sqlite")
         let localURL = baseURL!.appendingPathComponent("local.sqlite")
         let containerID = "iCloud.xyz.rankki.law-handbook"
-
-        let localStoreDescription = NSPersistentStoreDescription(url: localURL)
-        localStoreDescription.configuration = "Local"
-
-        var descriptions = [
-            localStoreDescription
-        ]
+        var descriptions = [NSPersistentStoreDescription]()
 
         if enableCloudSync {
             let cloudStoreDescription = NSPersistentStoreDescription(url: cloudURL)
@@ -34,6 +28,14 @@ struct Persistence {
             cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: containerID)
 
             descriptions.append(cloudStoreDescription)
+            
+            let localStoreDescription = NSPersistentStoreDescription(url: localURL)
+            localStoreDescription.configuration = "Local"
+            descriptions = [cloudStoreDescription, localStoreDescription]
+        } else {
+            let localStoreDescription = NSPersistentStoreDescription(url: localURL)
+            localStoreDescription.configuration = "Default"
+            descriptions = [localStoreDescription]
         }
         
         container.persistentStoreDescriptions = descriptions
