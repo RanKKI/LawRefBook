@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import SPAlert
 
 extension Text {
     func center() -> some View {
@@ -110,7 +111,7 @@ private struct LawLineView: View {
     
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     var body: some View {
         Group {
             LawContentLineView(text: text, searchText: $searchText)
@@ -146,6 +147,8 @@ private struct LawLineView: View {
                 FavoriteFolderView(action: { folder in
                     if let folder = folder {
                         FavContent.new(moc: moc, lawID, line: line, folder: folder)
+                        let alertView = SPAlertView(title: "添加成功", preset: .done)
+                        alertView.present(haptic: .success)
                     }
                 })
                 .navigationBarTitle("选择位置", displayMode: .inline)

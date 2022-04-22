@@ -44,7 +44,7 @@ struct ContentView: View {
                         .navigationBarTitle("关于", displayMode: .inline)
                 } else if sheetManager.sheetState == .favorite {
                     FavoriteFolderView()
-                        .navigationBarTitle("收藏", displayMode: .inline)
+                        .navigationBarTitle("书签", displayMode: .inline)
                 }
             }
             .environment(\.managedObjectContext, moc)

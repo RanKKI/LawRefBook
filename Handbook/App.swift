@@ -53,7 +53,7 @@ struct MainApp: App {
     private func checkVersionUpdate(){
         let curVersion = UIApplication.appVersion
         if lastVersion == nil || lastVersion != curVersion {
-            showNewPage.toggle()
+//            showNewPage.toggle()
             lastVersion = curVersion
             SpotlightHelper.shared.createIndexes()
         }

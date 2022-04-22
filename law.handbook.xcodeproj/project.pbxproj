@@ -44,6 +44,7 @@
 		906E36A428053BF400A5CC39 /* SFSafariViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906E36A328053BF400A5CC39 /* SFSafariViewWrapper.swift */; };
 		90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */; };
 		90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A7911A280D34F0003367CB /* CloudKit.framework */; };
+		90AC432528124E8600AFECB8 /* SPAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 90AC432428124E8600AFECB8 /* SPAlert */; };
 		90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B74D7727E4DB1B00723535 /* Spotlight.swift */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90AC432528124E8600AFECB8 /* SPAlert in Frameworks */,
 				90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,6 +295,9 @@
 			dependencies = (
 			);
 			name = RefBook;
+			packageProductDependencies = (
+				90AC432428124E8600AFECB8 /* SPAlert */,
+			);
 			productName = law.handbook;
 			productReference = 902DAE5427C7CBC100926036 /* 中国法律.app */;
 			productType = "com.apple.product-type.application";
@@ -324,6 +329,9 @@
 				"zh-Hans",
 			);
 			mainGroup = 902DAE4B27C7CBC100926036;
+			packageReferences = (
+				90AC432328124E8600AFECB8 /* XCRemoteSwiftPackageReference "SPAlert" */,
+			);
 			productRefGroup = 902DAE5527C7CBC100926036 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -671,6 +679,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		90AC432328124E8600AFECB8 /* XCRemoteSwiftPackageReference "SPAlert" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanvorobei/SPAlert";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		90AC432428124E8600AFECB8 /* SPAlert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 90AC432328124E8600AFECB8 /* XCRemoteSwiftPackageReference "SPAlert" */;
+			productName = SPAlert;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */ = {
