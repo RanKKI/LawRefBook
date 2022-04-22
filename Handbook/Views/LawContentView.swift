@@ -260,14 +260,14 @@ struct LawContentView: View {
                 Spacer()
             } else {
                 LawContentList(vm: vm, searchText: $searchText)
-                    .onAppear {
-                        if !searchText.isEmpty {
-                            vm.doSearchText(searchText)
-                        }
-                    }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            if !searchText.isEmpty && vm.searchText != searchText {
+                vm.doSearchText(searchText)
+            }
+        }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if vm.hasToc {
