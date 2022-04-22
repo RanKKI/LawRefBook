@@ -14,9 +14,6 @@ struct SettingView: View {
 
     @AppStorage("defaultSearchHistoryType")
     private var searchHistoryType = SearchHistoryType.standalone
-    
-    @AppStorage("iCloudSyncToggle")
-    private var enableCloudSync = false
 
     @State
     private var showSafari: Bool = false
@@ -57,9 +54,6 @@ struct SettingView: View {
                 } label: {
                     Text("字体设置")
                 }
-                HStack {
-                    Toggle("iCloud Sync", isOn: $enableCloudSync)
-                }
             }
             Section(header: Text("开发者")){
                 Text("@RanKKI")
@@ -82,7 +76,6 @@ struct SettingView: View {
                 } label: {
                     Text("LICENSE")
                 }
-                CreateSpotlightIndexView()
             }
             Text(COPYRIGHT_DECLARE)
                 .listRowBackground(Color.clear)
@@ -132,26 +125,5 @@ fileprivate struct Link: View {
         .fullScreenCover(isPresented: $showSafari, content: {
             SFSafariViewWrapper(url: URL(string: url)!)
         })
-    }
-}
-
-private struct CreateSpotlightIndexView: View {
-        
-    @ObservedObject
-    private var helper: SpotlightHelper = SpotlightHelper.shared
-    
-    var body: some View {
-        Button {
-            helper.createIndexs()
-        } label: {
-            HStack {
-                Text("创建 Spotlight 索引")
-                if helper.isLoading {
-                    Spacer()
-                    ProgressView()
-                }
-            }
-        }
-        .disabled(helper.isLoading)
     }
 }

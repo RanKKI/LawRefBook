@@ -7,6 +7,7 @@ class LocalProvider: ObservableObject {
     private var laws: [Law] = []
     private var lawCategories: [LawCategory] = []
     private lazy var lawMap =  [UUID: Law]()
+    private var initLocker = NSLock()
 
     lazy var ANIT996_LICENSE: String = {
         readLocalFile(forName: "LICENSE", type: "")?.asUTF8String() ?? ""
@@ -19,6 +20,7 @@ class LocalProvider: ObservableObject {
     }
 
     func getLaws() -> [Law] {
+        self.initLawList()
         return self.laws
     }
 
@@ -27,6 +29,7 @@ class LocalProvider: ObservableObject {
     }
 
     func initLawList() {
+        initLocker.lock()
         if lawCategories.isEmpty {
             readLocalLawCategories()
             parseLaws()
@@ -34,6 +37,7 @@ class LocalProvider: ObservableObject {
             parseLinkedLaws()
             self.lawMap = Dictionary(uniqueKeysWithValues: self.laws.map { ($0.id, $0) })
         }
+        initLocker.unlock()
     }
 
     func getLawList() -> [LawCategory] {

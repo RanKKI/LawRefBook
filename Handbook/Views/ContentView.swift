@@ -271,14 +271,10 @@ struct NaviLawLink : View {
     
     @ObservedObject
     private var law  = LawProvider.shared
-    
-    private var vm: LawContentView.LawContentViewModel {
-        LawContentView.LawContentViewModel(uuid, searchText)
-    }
-    
+
     var body: some View {
         NavigationLink {
-            LawContentView(vm: vm, searchText: searchText)
+            LawContentView(vm: law.getViewModal(uuid), searchText: searchText)
         } label: {
             VStack(alignment: .leading) {
                 if let subTitle = law.getLawSubtitleByUUID(uuid) {
@@ -293,5 +289,6 @@ struct NaviLawLink : View {
                 Text(law.getLawNameByUUID(uuid))
             }
         }
+        .id(uuid)
     }
 }

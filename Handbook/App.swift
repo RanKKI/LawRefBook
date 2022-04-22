@@ -55,6 +55,7 @@ struct MainApp: App {
         if lastVersion == nil || lastVersion != curVersion {
             showNewPage.toggle()
             lastVersion = curVersion
+            SpotlightHelper.shared.createIndexes()
         }
     }
 

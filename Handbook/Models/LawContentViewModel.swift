@@ -29,21 +29,22 @@ extension LawContentView {
         fileprivate(set) var lawID: UUID
         fileprivate(set) var content: LawContent
         fileprivate var queue = DispatchQueue(label: "contentVM", qos: .background)
-        var searchText = ""
+        
+        var searchText: String = ""
 
         init(_ id: UUID) {
             lawID = id
             content = LawProvider.shared.getLawContent(id)
         }
         
-        init(_ id: UUID, _ searchText: String) {
-            lawID = id
-            content = LawProvider.shared.getLawContent(id)
-            self.searchText = searchText
-        }
-
+        private var isLoaded = false
         func onAppear() {
+            if isLoaded {
+                return
+            }
+            isLoaded =  true
             self.loadContent()
+            isFav = LawProvider.shared.getFavoriteState(self.lawID)
         }
 
         private func loadContent() {
@@ -56,20 +57,14 @@ extension LawContentView {
                         self.body = self.content.Body
                         self.hasToc = self.content.hasToc()
                         self.isLoading = false
-                        self.afterLoaded()
                     }
                 }
             }
         }
-        
-        private func afterLoaded(){
-            if !searchText.isEmpty {
-                self.doSearchText(searchText)
-            }
-        }
-        
+
         func onFavIconClicked() {
-            isFav = LawProvider.shared.favoriteLaw(lawID)
+            LawProvider.shared.favoriteLaw(lawID)
+            isFav = !isFav
         }
 
         func doSearchText(_ txt: String) {
@@ -86,8 +81,8 @@ extension LawContentView {
         }
 
         func clearSearchState() {
-            isSearchSubmit = false
             searchText = ""
+            isSearchSubmit = false
             self.body = self.content.Body
         }
 

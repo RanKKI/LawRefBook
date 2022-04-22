@@ -257,6 +257,11 @@ struct LawContentView: View {
                 Spacer()
             } else {
                 LawContentList(vm: vm, searchText: $searchText)
+                    .onAppear {
+                        if !searchText.isEmpty {
+                            vm.doSearchText(searchText)
+                        }
+                    }
             }
         }
         .navigationBarTitleDisplayMode(.inline)

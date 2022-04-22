@@ -1,30 +1,35 @@
 import CoreSpotlight
 import MobileCoreServices
 
-class SpotlightHelper: ObservableObject {
+class SpotlightHelper {
+
     static let shared = SpotlightHelper()
+
+    private var queue = DispatchQueue(label: "Spotlight", qos: .background)
     
-    @Published
-    var isLoading = false
-    
-    private var queue = DispatchQueue(label: "laws", qos: .background)
-    
-    func createIndexs() {
+    private var spotItems = [
+        "宪法",
+        "法律",
+        "司法解释",
+        "行政法规"
+    ]
+
+    func createIndexes() {
         queue.async {
-            DispatchQueue.main.async {
-                self.isLoading = true
-            }
+            let now = Date.currentTimestamp()
+            print("creating spotlight indexes")
             for law in LocalProvider.shared.getLaws() {
+                if !self.spotItems.contains(law.level) {
+                    continue
+                }
                 let content = LawProvider.shared.getLawContent(law.id)
                 content.load()
                 self.addLawContentToSpotlight(content: content, uuid: law.id)
             }
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
+            print("creating spotlight indexes end, cost: \(Date.currentTimestamp() - now)")
         }
     }
-    
+
     private func addLawContentToSpotlight(content: LawContent, uuid: UUID) {
         let serachableItems = content.Body.flatMap { $0.children }.map { (content: TextContent.Content)-> CSSearchableItem in
             let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)

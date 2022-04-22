@@ -50,7 +50,11 @@ class LawCategory: Codable, Identifiable, Equatable, Hashable {
     }
 }
 
-struct TextContent : Identifiable {
+struct TextContent : Identifiable, Equatable {
+    static func == (lhs: TextContent, rhs: TextContent) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
 
     class Content: Identifiable{
         var id: UUID = UUID()

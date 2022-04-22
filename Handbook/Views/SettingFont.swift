@@ -58,9 +58,9 @@ struct FontSettingView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 AdjustSteppter(title: "正文大小", value: $contentFontSize, step: 1)
-                AdjustSteppter(title: "左右间距", value: $tracking, step: 0.1)
-                AdjustSteppter(title: "上下间距", value: $spacing, step: 0.1)
-                AdjustSteppter(title: "行间距", value: $lineSpacing, step: 1)
+                AdjustSteppter(title: "字间距", value: $tracking, step: 0.1)
+                AdjustSteppter(title: "行间距", value: $spacing, step: 0.1)
+                AdjustSteppter(title: "法条间距", value: $lineSpacing, step: 1)
                 Group {
                     Text("中华人民共和国民法典").contentTitle()
                     Text("物权编").contentTitle()

@@ -1,15 +1,14 @@
 import CoreData
 import SwiftUI
 
-struct Persistence {
+class Persistence {
 
     static var shared = Persistence()
 
-    @AppStorage("iCloudSyncToggle")
-    private var enableCloudSync = false
+    private let containerID = "iCloud.xyz.rankki.law-handbook"
 
     lazy var container : NSPersistentContainer = {
-        
+    
         let container = NSPersistentCloudKitContainer(name: "LawData")
         
         let baseURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -19,23 +18,17 @@ struct Persistence {
         
         let cloudURL = baseURL!.appendingPathComponent("cloud.sqlite")
         let localURL = baseURL!.appendingPathComponent("local.sqlite")
-        let containerID = "iCloud.xyz.rankki.law-handbook"
-        var descriptions = [NSPersistentStoreDescription]()
-        
-        let localStoreDescription = NSPersistentStoreDescription(url: localURL)
-        localStoreDescription.configuration = "Local"
-        
-        let cloudStoreDescription = NSPersistentStoreDescription(url: cloudURL)
-        cloudStoreDescription.configuration = "Cloud"
-        descriptions = [cloudStoreDescription, localStoreDescription]
 
-        if enableCloudSync {
-            cloudStoreDescription.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: containerID)
-        } else {
-            cloudStoreDescription.cloudKitContainerOptions = nil
-        }
-        
-        container.persistentStoreDescriptions = descriptions
+        let localDesc = NSPersistentStoreDescription(url: localURL)
+        localDesc.configuration = "Local"
+
+        let cloudDesc = NSPersistentStoreDescription(url: cloudURL)
+        cloudDesc.configuration = "Cloud"
+        cloudDesc.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        cloudDesc.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: containerID)
+        cloudDesc.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+
+        container.persistentStoreDescriptions = [cloudDesc, localDesc]
         
         // Load both stores
         container.loadPersistentStores { storeDescription, error in
@@ -55,5 +48,4 @@ struct Persistence {
         return container
 
     }()
-    
 }
