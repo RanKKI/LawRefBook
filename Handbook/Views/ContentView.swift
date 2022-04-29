@@ -143,6 +143,11 @@ struct LawList: View {
     @AppStorage("defaultGroupingMethod", store: .standard)
     private var groupingMethod = LawGroupingMethod.department
     
+    @FetchRequest(entity: FavLaw.entity(), sortDescriptors: [
+        NSSortDescriptor(keyPath: \FavLaw.favAt, ascending: false),
+    ])
+    private var favLaws: FetchedResults<FavLaw>
+    
     var body: some View {
         VStack {
             if isSearching {
@@ -153,10 +158,13 @@ struct LawList: View {
                 Spacer()
             } else {
                 List {
-                    if showFav && !provider.favoriteUUID.isEmpty {
-                        LawSection(category: LawCategory("收藏", provider.favoriteUUID.map {
-                            LocalProvider.shared.getLaw($0)
-                        }.filter { $0 != nil }.map { $0! }))
+                    if showFav && !favLaws.isEmpty {
+                        LawSection(category: LawCategory("收藏", favLaws.map {
+                            if let id = $0.id {
+                                return LocalProvider.shared.getLaw(id)
+                            }
+                            return nil
+                        }.filter { $0 != nil }.map { $0! }), compress: false)
                     }
                     if viewModel.categories.count == 1 {
                         ForEach(viewModel.categories.first!.laws) {
@@ -231,14 +239,21 @@ private struct FolderSection: View {
 private struct LawSection: View {
     
     var category: LawCategory
+    var compress = true
     
     var body: some View {
         Section {
-            ForEach(category.laws[0..<min(category.laws.count, 5)]) {
-                NaviLawLink(uuid: $0.id)
-            }
-            if category.laws.count > 5 {
-                SpecificCategoryLink(category: category, name: "更多")
+            if compress {
+                ForEach(category.laws[0..<min(category.laws.count, 5)]) {
+                    NaviLawLink(uuid: $0.id)
+                }
+                if category.laws.count > 5 {
+                    SpecificCategoryLink(category: category, name: "更多")
+                }
+            } else {
+                ForEach(category.laws) {
+                    NaviLawLink(uuid: $0.id)
+                }
             }
         } header: {
             Text(category.category)

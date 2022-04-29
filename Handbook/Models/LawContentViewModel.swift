@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import CoreData
 
 extension LawContentView {
     
@@ -44,7 +45,6 @@ extension LawContentView {
             }
             isLoaded =  true
             self.loadContent()
-            isFav = LawProvider.shared.getFavoriteState(self.lawID)
         }
 
         private func loadContent() {
@@ -61,9 +61,46 @@ extension LawContentView {
                 }
             }
         }
+        
+        func checkFavState(moc: NSManagedObjectContext) {
+            LawProvider.shared.queue.async {
+                let req = FavLaw.fetchRequest()
+                req.predicate = NSPredicate(format: "id == %@", self.lawID.uuidString)
+                var flag = false
+                if let arr = try? moc.fetch(req), !arr.isEmpty {
+                    flag = true
+                }
+                DispatchQueue.main.async {
+                    self.isFav = flag
+                }
+            }
+        }
 
-        func onFavIconClicked() {
-            LawProvider.shared.favoriteLaw(lawID)
+        func onFavIconClicked(moc: NSManagedObjectContext) {
+            let flag = isFav
+            LawProvider.shared.queue.async {
+                if flag {
+                    let req = FavLaw.fetchRequest()
+                    req.predicate = NSPredicate(format: "id == %@", self.lawID.uuidString)
+                    if let arr = try? moc.fetch(req), !arr.isEmpty {
+                        arr.forEach {
+                            moc.delete($0)
+                        }
+                        try? moc.save()
+                    }
+                } else {
+                    let law = FavLaw(context: moc)
+                    law.id = self.lawID
+                    law.favAt = Date.now
+                    do {
+                        try moc.save()
+                    } catch {
+                        DispatchQueue.main.async {
+                            self.isFav = false
+                        }
+                    }
+                }
+            }
             isFav = !isFav
         }
 

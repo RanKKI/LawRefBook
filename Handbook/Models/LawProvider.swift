@@ -50,16 +50,6 @@ class LawProvider: ObservableObject{
         return favoriteUUID.contains(uuid)
     }
 
-    func favoriteLaw(_ uuid: UUID) {
-        if favoriteUUID.contains(uuid) {
-            if let idx = favoriteUUID.firstIndex(of: uuid) {
-                favoriteUUID.remove(at: idx)
-            }
-        } else {
-            favoriteUUID.append(uuid)
-        }
-    }
-    
     private var vms = [UUID: LawContentView.LawContentViewModel]()
     func getViewModal(_ uuid: UUID) -> LawContentView.LawContentViewModel {
         if vms[uuid] == nil {

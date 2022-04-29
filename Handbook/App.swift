@@ -46,6 +46,7 @@ struct MainApp: App {
             .phoneOnlyStackNavigationView()
             .task {
                 self.checkVersionUpdate()
+                self.immigrateFavLaws()
             }
         }
     }
@@ -56,6 +57,38 @@ struct MainApp: App {
 //            showNewPage.toggle()
             lastVersion = curVersion
             SpotlightHelper.shared.createIndexes()
+        }
+    }
+    
+    private func immigrateFavLaws() {
+        if LawProvider.shared.favoriteUUID.isEmpty {
+           return
+        }
+        LawProvider.shared.queue.async {
+            LawProvider.shared.favoriteUUID.enumerated().forEach { (i, val) in
+                
+                let req = FavLaw.fetchRequest()
+                req.predicate = NSPredicate(format: "id == %@", val.uuidString)
+                var flag = false
+                if let arr = try? moc.fetch(req), !arr.isEmpty {
+                    flag = true
+                }
+                if !flag {
+                    let law = FavLaw(context: moc)
+                    law.id = val
+                    law.favAt = Date.now
+                    do {
+                        try moc.save()
+                        DispatchQueue.main.async {
+                            if let idx = LawProvider.shared.favoriteUUID.firstIndex(of: val) {
+                                LawProvider.shared.favoriteUUID.remove(at: idx)
+                            }
+                        }
+                    }catch{
+                        print("\(val) 保存失败")
+                    }
+                }
+            }
         }
     }
 

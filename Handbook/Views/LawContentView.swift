@@ -277,7 +277,7 @@ struct LawContentView: View {
                     .transition(.opacity)
                 }
                 IconButton(icon: vm.isFav ? "heart.slash" : "heart") {
-                    vm.onFavIconClicked()
+                    vm.onFavIconClicked(moc: moc)
                 }
                 IconButton(icon: "info.circle") {
                     sheetManager.sheetState = .info
@@ -286,6 +286,7 @@ struct LawContentView: View {
         }
         .onAppear {
             vm.onAppear()
+            vm.checkFavState(moc: moc)
         }
         .onDisappear {
             vm.clearSearchState()
