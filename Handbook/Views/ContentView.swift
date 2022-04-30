@@ -243,7 +243,7 @@ private struct LawSection: View {
     
     var body: some View {
         Section {
-            if compress {
+            if compress && category.laws.count > 8 {
                 ForEach(category.laws[0..<min(category.laws.count, 5)]) {
                     NaviLawLink(uuid: $0.id)
                 }
