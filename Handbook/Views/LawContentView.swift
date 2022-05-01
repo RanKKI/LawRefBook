@@ -178,6 +178,15 @@ private struct LawContentList: View {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: CGFloat(lineSpacing)) {
+                    if LawProvider.shared.getLawExpired(vm.lawID) {
+                        HStack {
+                            Spacer()
+                            Image(systemName: "exclamationmark.triangle")
+                            Text("本法规已废止")
+                            Spacer()
+                        }
+                        .padding([.bottom], 8)
+                    }
                     ForEach(vm.titles, id: \.self) {
                         Text($0).contentTitle()
                     }

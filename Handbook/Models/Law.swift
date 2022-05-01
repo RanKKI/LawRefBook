@@ -12,6 +12,7 @@ class Law: Codable, Identifiable , Equatable{
     var level: String
     var filename: String?
     var links: [UUID]?
+    var expired: Bool?
 
     var cateogry: LawCategory?
     var content: LawContent?
@@ -23,6 +24,7 @@ class Law: Codable, Identifiable , Equatable{
         case filename
         case links
         case subtitle
+        case expired
     }
 }
 

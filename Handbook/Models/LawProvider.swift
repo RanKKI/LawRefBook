@@ -17,6 +17,11 @@ class LawProvider: ObservableObject{
     func getLawSubtitleByUUID(_ uuid: UUID) -> String {
         return LocalProvider.shared.getLaw(uuid)?.subtitle ?? ""
     }
+    
+    func getLawExpired(_ uuid: UUID) -> Bool {
+        let law = LocalProvider.shared.getLaw(uuid)
+        return law?.expired ?? false
+    }
 
     func getLawTitleByUUID(_ uuid: UUID) -> String {
         let content = getLawContent(uuid)

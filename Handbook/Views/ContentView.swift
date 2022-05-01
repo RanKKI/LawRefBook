@@ -301,7 +301,16 @@ struct NaviLawLink : View {
                             .padding(.top, 8)
                     }
                 }
-                Text(law.getLawNameByUUID(uuid))
+                HStack {
+                    if law.getLawExpired(uuid) {
+                        Text(law.getLawNameByUUID(uuid))
+                            .foregroundColor(.gray)
+                        Image(systemName: "exclamationmark.triangle")
+                            .foregroundColor(.gray)
+                    } else {
+                        Text(law.getLawNameByUUID(uuid))
+                    }
+                }
             }
         }
         .id(uuid)

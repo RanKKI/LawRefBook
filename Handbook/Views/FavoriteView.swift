@@ -86,11 +86,19 @@ private struct FavLineSection: View {
     var section: [FavContent]
     
     var body: some View {
-        Section(header: Text(LawProvider.shared.getLawTitleByUUID(lawID))){
+        Section {
             ForEach(section, id: \.id) { (fav: FavContent) in
                 if let content = lawContent.getLine(line: fav.line) {
                     FavLine(fav: fav, content: content)
                 }
+            }
+        } header: {
+            HStack {
+                Text(LawProvider.shared.getLawTitleByUUID(lawID))
+                if LawProvider.shared.getLawExpired(lawID) {
+                    Image(systemName: "exclamationmark.triangle")
+                }
+                Spacer()
             }
         }
     }
