@@ -169,7 +169,7 @@ extension LawList {
                 return []
             }
             let arr: [LawCategory] = super.refreshLaws(method: method)
-            return arr.filter { $0.category == self.cateogry}
+            return arr.filter { $0.category == self.cateogry }
         }
         
         override func doRefresh(method: LawGroupingMethod) {
