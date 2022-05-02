@@ -34,8 +34,8 @@ class LawProvider: ObservableObject{
     func getLawContent(_ uuid: UUID) -> LawContent {
         writeLocker.lock()
         if contents[uuid] == nil {
-            if let law = LocalProvider.shared.getLaw(uuid) {
-                contents[uuid] = LawContent(law: law)
+            if let law = LawDatabase.shared.getLaw(uuid: uuid) {
+                contents[uuid] = LawContent(filePath: law.filepath(), isCases: law.level == "案例")
             } else {
                 fatalError("unexpected law uuid: \(uuid)")
             }

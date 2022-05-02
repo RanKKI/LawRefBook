@@ -47,6 +47,7 @@ struct MainApp: App {
             .task {
                 self.checkVersionUpdate()
                 self.immigrateFavLaws()
+                LawDatabase.shared.connect()
             }
         }
     }

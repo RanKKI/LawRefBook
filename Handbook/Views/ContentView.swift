@@ -103,9 +103,9 @@ private struct SearchListView: View {
             } else {
                 List(vm.searchResults) {
                     if vm.searchType == .fullText {
-                        NaviLawLink(uuid: $0.id, searchText: searchText)
+                        NaviLawLink(law: $0, searchText: searchText)
                     } else {
-                        NaviLawLink(uuid: $0.id)
+                        NaviLawLink(law: $0)
                     }
                 }
             }
@@ -146,7 +146,24 @@ struct LawList: View {
     @FetchRequest(entity: FavLaw.entity(), sortDescriptors: [
         NSSortDescriptor(keyPath: \FavLaw.favAt, ascending: false),
     ])
-    private var favLaws: FetchedResults<FavLaw>
+    private var favLawsResult: FetchedResults<FavLaw>
+    
+    private var favLaws: [TLaw] {
+        favLawsResult.map {
+            if let id = $0.id {
+                if let law = LawDatabase.shared.getLaw(uuid: id){
+                    return law
+                }
+            }
+            return nil
+        }
+        .filter {
+            $0 != nil
+        }
+        .map {
+            $0!
+        }
+    }
     
     var body: some View {
         VStack {
@@ -159,16 +176,11 @@ struct LawList: View {
             } else {
                 List {
                     if showFav && !favLaws.isEmpty {
-                        LawSection(category: LawCategory("收藏", favLaws.map {
-                            if let id = $0.id {
-                                return LocalProvider.shared.getLaw(id)
-                            }
-                            return nil
-                        }.filter { $0 != nil }.map { $0! }), compress: false)
+                        LawSection(category: .create(level: "收藏", laws: favLaws), compress: false)
                     }
                     if viewModel.categories.count == 1 {
                         ForEach(viewModel.categories.first!.laws) {
-                            NaviLawLink(uuid: $0.id)
+                            NaviLawLink(law: $0)
                         }
                     } else {
                         ForEach(viewModel.categories) {
@@ -198,7 +210,7 @@ struct LawList: View {
 
 private struct SpecificCategoryLink: View {
     
-    var category: LawCategory
+    var category: TCategory
     var name: String? = nil
     
     @State
@@ -207,14 +219,14 @@ private struct SpecificCategoryLink: View {
     var body: some View {
         NavigationLink {
             LawList(searchText: $searchText,
-                    viewModel: LawList.SpecificCategoryViewModal(category: category.category),
+                    viewModel: LawList.SpecificCategoryViewModal(category: category.name),
                     showFav: false)
             .searchable(text: $searchText)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(category.category)
+            .navigationTitle(category.name)
             .listStyle(.plain)
         } label: {
-            Text(name ?? category.category)
+            Text(name ?? category.name)
         }
     }
 }
@@ -222,7 +234,7 @@ private struct SpecificCategoryLink: View {
 private struct FolderSection: View {
     
     var name: String
-    var folders: [LawCategory]
+    var folders: [TCategory]
 
     var body: some View {
         Section {
@@ -238,25 +250,25 @@ private struct FolderSection: View {
 
 private struct LawSection: View {
     
-    var category: LawCategory
+    var category: TCategory
     var compress = true
     
     var body: some View {
         Section {
             if compress && category.laws.count > 8 {
                 ForEach(category.laws[0..<min(category.laws.count, 5)]) {
-                    NaviLawLink(uuid: $0.id)
+                    NaviLawLink(law: $0)
                 }
                 if category.laws.count > 5 {
                     SpecificCategoryLink(category: category, name: "更多")
                 }
             } else {
                 ForEach(category.laws) {
-                    NaviLawLink(uuid: $0.id)
+                    NaviLawLink(law: $0)
                 }
             }
         } header: {
-            Text(category.category)
+            Text(category.name)
         }
     }
 }
@@ -281,38 +293,35 @@ private struct SearchTypePicker: View {
 
 struct NaviLawLink : View {
     
-    var uuid: UUID
+    var law: TLaw
     var searchText: String = ""
-    
-    @ObservedObject
-    private var law  = LawProvider.shared
 
     var body: some View {
         NavigationLink {
-            LawContentView(vm: law.getViewModal(uuid), searchText: searchText)
+            LawContentView(vm: LawProvider.shared.getViewModal(law.id), searchText: searchText)
         } label: {
             VStack(alignment: .leading) {
-                if let subTitle = law.getLawSubtitleByUUID(uuid) {
-                    if !subTitle.isEmpty {
-                        Text(subTitle)
-                            .font(.footnote)
-                            .foregroundColor(.gray)
-                            .lineLimit(1)
-                            .padding(.top, 8)
-                    }
-                }
+//                if let subTitle = law.getLawSubtitleByUUID(uuid) {
+//                    if !subTitle.isEmpty {
+//                        Text(subTitle)
+//                            .font(.footnote)
+//                            .foregroundColor(.gray)
+//                            .lineLimit(1)
+//                            .padding(.top, 8)
+//                    }
+//                }
                 HStack {
-                    if law.getLawExpired(uuid) {
-                        Text(law.getLawNameByUUID(uuid))
+                    if law.expired {
+                        Text(law.name)
                             .foregroundColor(.gray)
                         Image(systemName: "exclamationmark.triangle")
                             .foregroundColor(.gray)
                     } else {
-                        Text(law.getLawNameByUUID(uuid))
+                        Text(law.name)
                     }
                 }
             }
         }
-        .id(uuid)
+        .id(law.id)
     }
 }
