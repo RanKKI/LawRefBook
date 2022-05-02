@@ -1,57 +1,6 @@
 import Foundation
 import SwiftUI
 
-class Law: Codable, Identifiable , Equatable{
-    static func == (lhs: Law, rhs: Law) -> Bool {
-        return lhs.id == rhs.id
-    }
-
-    var name: String
-    var subtitle: String?
-    var id: UUID
-    var level: String
-    var filename: String?
-    var links: [UUID]?
-    var expired: Bool?
-
-    var cateogry: LawCategory?
-    var content: LawContent?
-
-    private enum CodingKeys: String, CodingKey {
-        case name
-        case id
-        case level
-        case filename
-        case links
-        case subtitle
-        case expired
-    }
-}
-
-class LawCategory: Codable, Identifiable, Equatable, Hashable {
-    static func == (lhs: LawCategory, rhs: LawCategory) -> Bool {
-        return lhs.id == rhs.id
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    var category: String
-    var laws: [Law]
-    var id: UUID
-    var folder: String?
-    var isSubFolder: Bool?
-    var group: String? // 当类型是 sub foldre 时， 会按照这个变量分组，没赋值的分成一组
-    var links: [UUID]? // 该目录下所有法律都会继承这个
-
-    init(_ name: String, _ laws: [Law]) {
-        self.category = name
-        self.laws = laws
-        self.id = UUID()
-    }
-}
-
 struct TextContent : Identifiable, Equatable {
     static func == (lhs: TextContent, rhs: TextContent) -> Bool {
         return lhs.id == rhs.id
@@ -101,4 +50,5 @@ extension FavFolder {
     public var contents: [FavContent] {
         return content?.allObjects as! [FavContent]
     }
+
 }

@@ -1,11 +1,11 @@
 import SwiftUI
 
 extension LawList {
-    
+
     class ViewModel: ObservableObject, Identifiable {
-        
+
         var id = UUID()
-        
+
         @Published
         fileprivate(set) var categories: [TCategory] = []
 
@@ -17,10 +17,10 @@ extension LawList {
 
         @Published
         fileprivate(set) var isLoading = false
-        
+
         @Published
         var isSearching = false
-        
+
         @Published
         var isSubmitSearch = false
 
@@ -28,7 +28,7 @@ extension LawList {
         fileprivate var searchOpQueue: OperationQueue = OperationQueue()
         fileprivate var listWorkItem: DispatchWorkItem?
         fileprivate var cateogry: String?
-        
+
         fileprivate var searchText: String = ""
         var searchType = SearchType.catalogue
         fileprivate var groupMethod: LawGroupingMethod? = nil
@@ -36,7 +36,7 @@ extension LawList {
         init() {
 
         }
-        
+
         init(category: String) {
             self.cateogry = category
         }
@@ -60,7 +60,7 @@ extension LawList {
                     self?.searchOpQueue.addOperation {
                         var add = false
                         if type == .fullText {
-                            let content = LawProvider.shared.getLawContent(law.id)
+                            let content = LocalProvider.shared.getLawContent(law.id)
                             content.load()
                             add = !content.filterText(text: text).isEmpty
                         } else if type == .catalogue {
@@ -91,7 +91,7 @@ extension LawList {
             isSubmitSearch = true
             searchTextInLaws(text: text, type: searchType, arr: LawDatabase.shared.getLaws())
         }
-        
+
         func clearSearchState() {
             isSubmitSearch = false
         }
@@ -105,8 +105,9 @@ extension LawList {
                 .sorted {
                     return LawLevel.firstIndex(of: $0.key)! < LawLevel.firstIndex(of: $1.key)!
                 }
+                .enumerated()
                 .map {
-                    TCategory.create(level: $0.key, laws: $0.value)
+                    return TCategory.create(id: $0, level: $1.key, laws: $1.value)
                 }
         }
 
@@ -117,13 +118,9 @@ extension LawList {
                 let cateogires = arr.filter { $0.isSubFolder == false }
                 let folders = Dictionary(grouping: arr.filter { $0.isSubFolder }, by: \.group)
                     .sorted {
-                        if $0.key == nil {
-                            return false
-                        } else if $1.key == nil {
-                            return true
-                        } else {
-                            return $0.key! < $1.key!
-                        }
+                        let k1 = $0.value.first?.order ?? -1
+                        let k2 = $1.value.first?.order ?? -1
+                        return k1 < k2
                     }
                     .map {
                         $0.value
@@ -146,9 +143,9 @@ extension LawList {
             self.doRefresh(method: method)
         }
     }
-    
+
     class SpecificCategoryViewModal: ViewModel {
-        
+
         override init(category: String) {
             super.init(category: category)
         }
@@ -169,7 +166,7 @@ extension LawList {
             let arr: [TCategory] = super.refreshLaws(method: method)
             return arr.filter { $0.name == self.cateogry }
         }
-        
+
         override func doRefresh(method: LawGroupingMethod) {
             self.isLoading = true
             queue.async {
@@ -182,5 +179,5 @@ extension LawList {
         }
 
     }
-    
+
 }

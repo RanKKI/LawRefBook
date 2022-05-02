@@ -2,33 +2,24 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class LawProvider: ObservableObject{
+class LocalProvider: ObservableObject{
 
-    static let shared = LawProvider()
+    static let shared = LocalProvider()
+
+    lazy var ANIT996_LICENSE: String = {
+        readLocalFile(forName: "LICENSE", type: "")?.asUTF8String() ?? ""
+    }()
 
     var queue: DispatchQueue = DispatchQueue(label: "laws", qos: .background)
 
     private var contents: [UUID: LawContent] = [UUID: LawContent]()
-
-    func getLawNameByUUID(_ uuid: UUID) -> String {
-        return LocalProvider.shared.getLaw(uuid)?.name ?? ""
-    }
-
-    func getLawSubtitleByUUID(_ uuid: UUID) -> String {
-        return LocalProvider.shared.getLaw(uuid)?.subtitle ?? ""
-    }
-    
-    func getLawExpired(_ uuid: UUID) -> Bool {
-        let law = LocalProvider.shared.getLaw(uuid)
-        return law?.expired ?? false
-    }
 
     func getLawTitleByUUID(_ uuid: UUID) -> String {
         let content = getLawContent(uuid)
         content.load()
         return content.Titles.joined(separator: " ")
     }
-    
+
     private var writeLocker = NSLock()
 
     func getLawContent(_ uuid: UUID) -> LawContent {
@@ -42,10 +33,6 @@ class LawProvider: ObservableObject{
         }
         writeLocker.unlock()
         return contents[uuid]!
-    }
-
-    func getLawInfo(_ uuid: UUID) -> [LawInfo]{
-        return getLawContent(uuid).Infomations
     }
 
     @AppStorage("favoriteLaws")

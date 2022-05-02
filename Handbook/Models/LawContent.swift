@@ -138,16 +138,13 @@ class LawContent: ObservableObject {
     private var isCases = false
     
     private let parser = LawParser()
+
+    init() {
+        self.filePath = nil
+        self.isCases = false
+    }
     
-    init(filePath: String?, isCases: Bool){
-//        if let law = law {
-//            self.isCases = law.level == "案例"
-//            let folder: [String?] = ["Laws", law.cateogry?.folder].filter { $0 != nil }
-//            self.filePath = Bundle.main.path(forResource: law.filename ?? law.name, ofType: "md", inDirectory: folder.map{ $0! }.joined(separator: "/"))
-//            if filePath == nil && law.subtitle != nil {
-//                self.filePath = Bundle.main.path(forResource: law.subtitle, ofType: "md", inDirectory: folder.map{ $0! }.joined(separator: "/"))
-//            }
-//        }
+    init(filePath: String?, isCases: Bool) {
         self.filePath = filePath
         self.isCases = isCases
     }

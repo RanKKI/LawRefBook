@@ -2,19 +2,19 @@ import Foundation
 import SwiftUI
 
 struct ContentView: View {
-    
+
     @State
     private var searchText: String = ""
-    
+
     @ObservedObject
     private var sheetManager = SheetMananger()
-    
+
     @ObservedObject
     private var vm = LawList.ViewModel()
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     var body: some View {
         VStack {
             LawList(searchText: $searchText, viewModel: vm)
@@ -53,15 +53,15 @@ struct ContentView: View {
 }
 
 extension ContentView {
-    
+
     class SheetMananger: ObservableObject{
-        
+
         enum SheetState {
             case none
             case favorite
             case setting
         }
-        
+
         @Published var isShowingSheet = false
         @Published var sheetState: SheetState = .none {
             didSet {
@@ -69,17 +69,17 @@ extension ContentView {
             }
         }
     }
-    
+
 }
 
 private struct SearchListView: View {
-    
+
     @ObservedObject
     var vm: LawList.ViewModel
 
     @Binding
     var searchText: String
-    
+
     @State
     var searchType: SearchType
 
@@ -125,29 +125,29 @@ private struct SearchListView: View {
 }
 
 struct LawList: View {
-    
+
     @Binding
     var searchText: String
-    
+
     @ObservedObject
     var viewModel: ViewModel
-    
+
     var showFav = true
-    
+
     @ObservedObject
-    private var provider = LawProvider.shared
-    
+    private var provider = LocalProvider.shared
+
     @Environment(\.isSearching)
     private var isSearching
-    
+
     @AppStorage("defaultGroupingMethod", store: .standard)
     private var groupingMethod = LawGroupingMethod.department
-    
+
     @FetchRequest(entity: FavLaw.entity(), sortDescriptors: [
         NSSortDescriptor(keyPath: \FavLaw.favAt, ascending: false),
     ])
     private var favLawsResult: FetchedResults<FavLaw>
-    
+
     private var favLaws: [TLaw] {
         favLawsResult.map {
             if let id = $0.id {
@@ -164,7 +164,7 @@ struct LawList: View {
             $0!
         }
     }
-    
+
     var body: some View {
         VStack {
             if isSearching {
@@ -176,7 +176,7 @@ struct LawList: View {
             } else {
                 List {
                     if showFav && !favLaws.isEmpty {
-                        LawSection(category: .create(level: "收藏", laws: favLaws), compress: false)
+                        LawSection(category: .create(id: -1, level: "收藏", laws: favLaws), compress: false)
                     }
                     if viewModel.categories.count == 1 {
                         ForEach(viewModel.categories.first!.laws) {
@@ -209,13 +209,13 @@ struct LawList: View {
 }
 
 private struct SpecificCategoryLink: View {
-    
+
     var category: TCategory
     var name: String? = nil
-    
+
     @State
     private var searchText = ""
-    
+
     var body: some View {
         NavigationLink {
             LawList(searchText: $searchText,
@@ -232,7 +232,7 @@ private struct SpecificCategoryLink: View {
 }
 
 private struct FolderSection: View {
-    
+
     var name: String
     var folders: [TCategory]
 
@@ -245,14 +245,14 @@ private struct FolderSection: View {
             Text(name)
         }
     }
-    
+
 }
 
 private struct LawSection: View {
-    
+
     var category: TCategory
     var compress = true
-    
+
     var body: some View {
         Section {
             if compress && category.laws.count > 8 {
@@ -274,10 +274,10 @@ private struct LawSection: View {
 }
 
 private struct SearchTypePicker: View {
-    
+
     @Binding
     var searchType: SearchType
-    
+
     var body: some View {
         Picker("搜索方式", selection: $searchType) {
             ForEach(SearchType.allCases, id: \.self) {
@@ -288,17 +288,17 @@ private struct SearchTypePicker: View {
         .padding([.leading, .trailing], 16)
         .padding(.top, 8)
     }
-    
+
 }
 
 struct NaviLawLink : View {
-    
+
     var law: TLaw
     var searchText: String = ""
 
     var body: some View {
         NavigationLink {
-            LawContentView(vm: LawProvider.shared.getViewModal(law.id), searchText: searchText)
+            LawContentView(vm: LocalProvider.shared.getViewModal(law.id), searchText: searchText)
         } label: {
             VStack(alignment: .leading) {
 //                if let subTitle = law.getLawSubtitleByUUID(uuid) {

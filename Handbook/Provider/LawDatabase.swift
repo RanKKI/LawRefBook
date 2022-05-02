@@ -1,114 +1,6 @@
 import SQLite
 import Foundation
 
-
-let dateFormatter:DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"
-    return formatter
-}()
-
-
-struct TLaw: Identifiable {
-    static let table = Table("law")
-    
-    static let id = Expression<String>("id")
-    static let name = Expression<String>("name")
-    static let categoryID = Expression<Int>("category_id")
-    static let expired = Expression<Bool>("expired")
-    static let level = Expression<String>("level")
-    
-    static let filename = Expression<String?>("filename")
-    static let publish = Expression<String?>("publish")
-    
-    let id: UUID
-    let name: String
-    let category: TCategory
-    let expired: Bool
-    let level: String
-    
-    let filename: String?
-    let publish: Date?
-    
-    static func create(row: Row, category: TCategory) -> TLaw {
-        
-        var pub_at: Date? = nil
-        if let pub = row[publish] {
-            pub_at = dateFormatter.date(from: pub)
-        }
-        
-        return TLaw(
-            id: UUID.create(str: row[id]),
-            name: row[name],
-            category: category,
-            expired: row[expired],
-            level: row[level],
-            filename: row[filename],
-            publish: pub_at
-        )
-    }
-    
-    func filepath() -> String? {
-        var filename = self.name
-        if let name = self.filename {
-            filename = name
-        } else if let pub_at = self.publish {
-            filename = String(format: "%@($@)", self.name, dateFormatter.string(from: pub_at))
-        }
-        return Bundle.main.path(forResource: filename, ofType: "md", inDirectory: self.category.folder)
-    }
-}
-
-struct TCategory: Identifiable, Hashable {
-    
-    static func == (lhs: TCategory, rhs: TCategory) -> Bool {
-        return lhs.id == rhs.id && lhs.name == rhs.name
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(name)
-    }
-    
-    static let table = Table("category")
-    
-    static let id = Expression<Int>("id")
-    static let name = Expression<String>("name")
-    static let folder = Expression<String>("folder")
-    static let isSubFolder = Expression<Bool>("isSubFolder")
-    
-    static let group = Expression<String?>("group")
-    
-    let id: Int
-    let name: String
-    let folder: String
-    let isSubFolder: Bool
-    let group: String?
-    let laws: [TLaw]
-    
-    static func create(level: String, laws: [TLaw]) -> TCategory {
-        return TCategory(
-            id: -1,
-            name: level,
-            folder: "",
-            isSubFolder: false,
-            group: nil,
-            laws: laws
-        )
-    }
-    
-    static func create(row: Row, laws: [TLaw]) -> TCategory {
-        return TCategory(
-            id: row[id],
-            name: row[name],
-            folder: row[folder],
-            isSubFolder: row[isSubFolder],
-            group: row[group],
-            laws: laws
-        )
-    }
-}
-
 enum DatabaseError: Error {
     case DoesNotExists
 }
@@ -139,7 +31,7 @@ class LawDatabase {
     func getCategories(withLaws: Bool = false) -> [TCategory] {
         var ret = [TCategory]()
         do {
-            let rows = try db!.prepare(TCategory.table)
+            let rows = try db!.prepare(TCategory.table.order(TCategory.order))
             for row in rows {
                 let cateID = row[TCategory.id]
                 if withLaws {
@@ -200,6 +92,15 @@ class LawDatabase {
         return self.getLawsBy(predicate: TLaw.categoryID == categoryID)
     }
     
+    func getLaws(uuids: [UUID]) -> [TLaw] {
+        return self.getLawsBy(predicate: uuids.map { $0.asDBString() }.contains(TLaw.id))
+            .sorted {
+                let idx1 = uuids.firstIndex(of: $0.id) ?? -1
+                let idx2 = uuids.firstIndex(of: $1.id) ?? -1
+                return idx1 < idx2
+            }
+    }
+    
     func getLaw(uuid: UUID) -> TLaw? {
         return self.getLawsBy(predicate: TLaw.id == uuid.asDBString()).first
     }
@@ -210,7 +111,7 @@ class LawDatabase {
             if let predicate = predicate {
                 query = query.filter(predicate)
             }
-            print("query: \(query)")
+            query = query.order(TLaw.name)
             let rows = try db!.prepare(query)
             var categories = [Int: TCategory]()
             var ret = [TLaw]()
@@ -224,7 +125,6 @@ class LawDatabase {
             }
             
             return ret
-            
         } catch {
             print("\(error.localizedDescription)")
         }

@@ -6,7 +6,7 @@ class SpotlightHelper {
     static let shared = SpotlightHelper()
 
     private var queue = DispatchQueue(label: "Spotlight", qos: .background)
-    
+
     private var spotItems = [
         "宪法",
         "法律",
@@ -22,7 +22,7 @@ class SpotlightHelper {
                 if !self.spotItems.contains(law.level) {
                     continue
                 }
-                let content = LawProvider.shared.getLawContent(law.id)
+                let content = LocalProvider.shared.getLawContent(law.id)
                 content.load()
                 self.addLawContentToSpotlight(content: content, law: law)
             }
@@ -42,7 +42,7 @@ class SpotlightHelper {
                 print("Indexing error: \(error.localizedDescription)")
             }
         }
-        
+
     }
 
     private func removeLawFromSpotlight(lawUUID: UUID, line: Int) {
@@ -53,5 +53,5 @@ class SpotlightHelper {
         }
     }
 
-    
+
 }

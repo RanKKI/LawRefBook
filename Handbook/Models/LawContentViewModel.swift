@@ -3,7 +3,7 @@ import SwiftUI
 import CoreData
 
 extension LawContentView {
-    
+
     class LawContentViewModel: ObservableObject {
 
         @Published
@@ -14,7 +14,7 @@ extension LawContentView {
 
         @Published
         fileprivate(set) var hasToc = false
-        
+
         @Published
         fileprivate(set) var isFav = false
 
@@ -26,18 +26,23 @@ extension LawContentView {
 
         @Published
         fileprivate(set) var body = [TextContent]()
-        
+
         fileprivate(set) var lawID: UUID
         fileprivate(set) var content: LawContent
+
+        @Published
+        fileprivate(set) var law: TLaw
+
         fileprivate var queue = DispatchQueue(label: "contentVM", qos: .background)
-        
+
         var searchText: String = ""
 
         init(_ id: UUID) {
             lawID = id
-            content = LawProvider.shared.getLawContent(id)
+            content = LocalProvider.shared.getLawContent(id)
+            law = LawDatabase.shared.getLaw(uuid: id)!
         }
-        
+
         private var isLoaded = false
         func onAppear() {
             if isLoaded {
@@ -61,9 +66,9 @@ extension LawContentView {
                 }
             }
         }
-        
+
         func checkFavState(moc: NSManagedObjectContext) {
-            LawProvider.shared.queue.async {
+            LocalProvider.shared.queue.async {
                 let req = FavLaw.fetchRequest()
                 req.predicate = NSPredicate(format: "id == %@", self.lawID.uuidString)
                 var flag = false
@@ -78,7 +83,7 @@ extension LawContentView {
 
         func onFavIconClicked(moc: NSManagedObjectContext) {
             let flag = isFav
-            LawProvider.shared.queue.async {
+            LocalProvider.shared.queue.async {
                 if flag {
                     let req = FavLaw.fetchRequest()
                     req.predicate = NSPredicate(format: "id == %@", self.lawID.uuidString)
@@ -124,5 +129,5 @@ extension LawContentView {
         }
 
     }
-    
+
 }

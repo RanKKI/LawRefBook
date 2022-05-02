@@ -5,23 +5,24 @@ import SwiftUI
 private func convert<S>(_ result: S) -> [[FavContent]] where S: Sequence, S.Element == FavContent {
     return Dictionary(grouping: result) { $0.lawId! }
         .sorted {
-            let name1 = LawProvider.shared.getLawNameByUUID($0.value.first!.lawId!)
-            let name2 = LawProvider.shared.getLawNameByUUID($1.value.first!.lawId!)
-            return name1 < name2
+            let id1 = $0.value.first!.lawId!
+            let id2 = $1.value.first!.lawId!
+            let laws: [TLaw] = LawDatabase.shared.getLaws(uuids: [id1, id2])
+            return laws[0].name < laws[1].name
         }
         .map { $0.value }
         .map { $0.filter{ $0.line > 0 }.sorted { $0.line < $1.line } }
 }
 
 private struct FavLine: View {
-    
+
     var fav: FavContent
-    
+
     var content: String
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     private var removeFav: some View {
         Button {
             withAnimation {
@@ -46,7 +47,7 @@ private struct FavLine: View {
                 removeFav
                 Button {
                     if let lawID = fav.lawId {
-                        let title = LawProvider.shared.getLawTitleByUUID(lawID)
+                        let title = LocalProvider.shared.getLawTitleByUUID(lawID)
                         let message = String(format: "%@\n\n%@", title, content)
                         UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
                     }
@@ -77,14 +78,14 @@ private struct FavLine: View {
 }
 
 private struct FavLineSection: View {
-    
+
     var lawID: UUID
 
     @ObservedObject
     var lawContent: LawContent
-    
+
     var section: [FavContent]
-    
+
     var body: some View {
         Section {
             ForEach(section, id: \.id) { (fav: FavContent) in
@@ -94,10 +95,10 @@ private struct FavLineSection: View {
             }
         } header: {
             HStack {
-                Text(LawProvider.shared.getLawTitleByUUID(lawID))
-                if LawProvider.shared.getLawExpired(lawID) {
-                    Image(systemName: "exclamationmark.triangle")
-                }
+                Text(LocalProvider.shared.getLawTitleByUUID(lawID))
+//                if LocalProvider.shared.getLawExpired(lawID) {
+//                    Image(systemName: "exclamationmark.triangle")
+//                }
                 Spacer()
             }
         }
@@ -105,12 +106,12 @@ private struct FavLineSection: View {
 }
 
 private struct FavFolderView: View {
-    
+
     @StateObject var folder: FavFolder
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     private func editFolderName() {
         self.alert(config: AlertConfig(title: "修改文件夹名", placeholder: folder.name ?? "", action: { name in
             if let txt = name, !txt.isEmpty{
@@ -127,7 +128,7 @@ private struct FavFolderView: View {
             } else {
                 List(convert(folder.contents), id: \.self) { (section: [FavContent]) in
                     if let lawID = section.first?.lawId {
-                        if let content = LawProvider.shared.getLawContent(lawID) {
+                        if let content = LocalProvider.shared.getLawContent(lawID) {
                             FavLineSection(lawID: lawID, lawContent: content, section: section)
                         }
                     }
@@ -145,16 +146,16 @@ private struct FavFolderView: View {
 }
 
 struct FolderItemView: View {
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     @StateObject
     var folder: FavFolder
-    
+
     @State
     private var deleteAlert = false
-    
+
     func delete() {
         folder.content?.forEach {
             moc.delete($0 as! NSManagedObject)
@@ -191,19 +192,19 @@ struct FolderItemView: View {
             Text("文件夹里有 \(folder.content?.count ?? 0) 条收藏。")
         }
     }
-    
+
 }
 
 private struct FavoriteContentView: View {
 
     var folders: [FavFolder]
-        
+
     // 兼容之前没有分组的收藏
     var items: [[FavContent]]
-    
+
     @Environment(\.editMode)
     private var editMode
-    
+
     @Environment(\.managedObjectContext)
     private var moc
 
@@ -226,7 +227,7 @@ private struct FavoriteContentView: View {
             if editMode?.wrappedValue == .inactive {
                 ForEach(items, id: \.self) { (section: [FavContent]) in
                     if let lawID = section.first?.lawId {
-                        if let content = LawProvider.shared.getLawContent(lawID) {
+                        if let content = LocalProvider.shared.getLawContent(lawID) {
                             FavLineSection(lawID: lawID, lawContent: content, section: section)
                         }
                     }
@@ -238,7 +239,7 @@ private struct FavoriteContentView: View {
 }
 
 private struct SelectFolderView: View {
-        
+
     var folders: [FavFolder]
     var onSelect: (FavFolder) -> Void
 
@@ -259,23 +260,23 @@ private struct SelectFolderView: View {
 }
 
 struct FavoriteFolderView: View {
-    
+
     var action: ((FavFolder?) -> Void)?
 
     @FetchRequest(sortDescriptors: [], predicate: nil)
     private var favorites: FetchedResults<FavContent>
-    
+
     @FetchRequest(sortDescriptors: [
         SortDescriptor(\.order)
     ], predicate: nil)
     private var folders: FetchedResults<FavFolder>
-    
+
     private var favoriteItems: [[FavContent]] {
         convert(favorites).map {
             $0.filter { $0.folder == nil }
         }.filter { !$0.isEmpty }
     }
-    
+
     @Environment(\.dismiss)
     private var dismiss
 
@@ -296,11 +297,11 @@ struct FavoriteFolderView: View {
             }
         }))
     }
-    
+
     private var isSelecting: Bool {
         return action != nil
     }
-    
+
     private var isEmpty: Bool {
         return favorites.isEmpty && folders.isEmpty
     }
@@ -335,5 +336,5 @@ struct FavoriteFolderView: View {
             }
         }
     }
-    
+
 }
