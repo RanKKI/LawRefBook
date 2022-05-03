@@ -10,7 +10,7 @@ class LawDatabase: ObservableObject {
     static var shared = LawDatabase()
     
     private var db: Connection? = nil
-    private let DB_PATH = Bundle.main.path(forResource: "laws", ofType: "db", inDirectory: "Laws")
+    private let DB_PATH = Bundle.main.path(forResource: "db", ofType: "sqlite3", inDirectory: "Laws")
     
     var queue = DispatchQueue(label: "database", qos: .background)
     

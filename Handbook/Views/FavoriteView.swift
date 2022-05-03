@@ -17,8 +17,8 @@ private func convert<S>(_ result: S) -> [[FavContent]] where S: Sequence, S.Elem
 private struct FavLine: View {
 
     var fav: FavContent
-
     var content: String
+    var law: TLaw
 
     @Environment(\.managedObjectContext)
     private var moc
@@ -46,11 +46,8 @@ private struct FavLine: View {
             .contextMenu {
                 removeFav
                 Button {
-                    if let lawID = fav.lawId {
-                        let title = LocalProvider.shared.getLawTitleByUUID(lawID)
-                        let message = String(format: "%@\n\n%@", title, content)
-                        UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
-                    }
+                    let message = String(format: "%@\n\n%@", law.name, content)
+                    UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
                 } label: {
                     Label("复制", systemImage: "doc")
                 }
@@ -80,6 +77,7 @@ private struct FavLine: View {
 private struct FavLineSection: View {
 
     var lawID: UUID
+    var law: TLaw
 
     @ObservedObject
     var lawContent: LawContent
@@ -88,21 +86,48 @@ private struct FavLineSection: View {
 
     var body: some View {
         Section {
-            ForEach(section, id: \.id) { (fav: FavContent) in
-                if let content = lawContent.getLine(line: fav.line) {
-                    FavLine(fav: fav, content: content)
+            if lawContent.isLoading {
+                ProgressView()
+            } else {
+                ForEach(section, id: \.id) { (fav: FavContent) in
+                    if let content = lawContent.getLine(line: fav.line) {
+                        FavLine(fav: fav, content: content, law: law)
+                    }
                 }
             }
         } header: {
             HStack {
-                Text(LocalProvider.shared.getLawTitleByUUID(lawID))
-//                if LocalProvider.shared.getLawExpired(lawID) {
-//                    Image(systemName: "exclamationmark.triangle")
-//                }
+                Text(law.name)
+                if law.expired {
+                    Image(systemName: "exclamationmark.triangle")
+                }
                 Spacer()
             }
         }
     }
+}
+
+private struct Sections : View {
+    
+    var items: [[FavContent]]
+    
+    var body: some View {
+        ForEach(items, id: \.self) { (section: [FavContent]) in
+            if let lawID = section.first?.lawId,
+               let content = LocalProvider.shared.getLawContent(lawID),
+               let law = LawDatabase.shared.getLaw(uuid: lawID) {
+                FavLineSection(lawID: lawID,
+                               law: law,
+                               lawContent: content,
+                               section: section)
+                .onAppear {
+                    content.loadAsync()
+                }
+            }
+        }
+        .transition(.slide)
+    }
+    
 }
 
 private struct FavFolderView: View {
@@ -126,12 +151,8 @@ private struct FavFolderView: View {
             if folder.contents.isEmpty {
                 Text("空空如也")
             } else {
-                List(convert(folder.contents), id: \.self) { (section: [FavContent]) in
-                    if let lawID = section.first?.lawId {
-                        if let content = LocalProvider.shared.getLawContent(lawID) {
-                            FavLineSection(lawID: lawID, lawContent: content, section: section)
-                        }
-                    }
+                List {
+                    Sections(items: convert(folder.contents))
                 }
             }
         }
@@ -225,14 +246,7 @@ private struct FavoriteContentView: View {
             }
             .onDelete { idx in }
             if editMode?.wrappedValue == .inactive {
-                ForEach(items, id: \.self) { (section: [FavContent]) in
-                    if let lawID = section.first?.lawId {
-                        if let content = LocalProvider.shared.getLawContent(lawID) {
-                            FavLineSection(lawID: lawID, lawContent: content, section: section)
-                        }
-                    }
-                }
-                .transition(.slide)
+                Sections(items: items)
             }
         }
     }

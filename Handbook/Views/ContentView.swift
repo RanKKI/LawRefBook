@@ -305,15 +305,15 @@ struct NaviLawLink : View {
             LawContentView(vm: LocalProvider.shared.getViewModal(law.id), searchText: searchText)
         } label: {
             VStack(alignment: .leading) {
-//                if let subTitle = law.getLawSubtitleByUUID(uuid) {
-//                    if !subTitle.isEmpty {
-//                        Text(subTitle)
-//                            .font(.footnote)
-//                            .foregroundColor(.gray)
-//                            .lineLimit(1)
-//                            .padding(.top, 8)
-//                    }
-//                }
+                if let subTitle = law.subtitle {
+                    if !subTitle.isEmpty {
+                        Text(subTitle)
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                            .lineLimit(1)
+                            .padding(.top, 8)
+                    }
+                }
                 HStack {
                     if law.expired {
                         Text(law.name)

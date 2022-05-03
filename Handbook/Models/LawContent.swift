@@ -138,6 +138,9 @@ class LawContent: ObservableObject {
     private var isCases = false
     
     private let parser = LawParser()
+    
+    @Published
+    var isLoading = false
 
     init() {
         self.filePath = nil
@@ -183,8 +186,10 @@ class LawContent: ObservableObject {
         if loaded {
             return
         }
+        self.isLoading = true
         if let content = self.fileData() {
             self.loadFromString(content:content)
+            self.isLoading = false
         }
     }
 
@@ -192,10 +197,8 @@ class LawContent: ObservableObject {
         if loaded {
             return
         }
-        if let content = self.fileData() {
-            DispatchQueue.main.async {
-                self.loadFromString(content: content)
-            }
+        DispatchQueue.main.async {
+            self.load()
         }
     }
 

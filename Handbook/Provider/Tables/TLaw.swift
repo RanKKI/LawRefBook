@@ -13,6 +13,7 @@ struct TLaw: Identifiable {
     static let filename = Expression<String?>("filename")
     static let publish = Expression<String?>("publish")
     static let order = Expression<Int?>("order")
+    static let subtitle = Expression<String?>("subtitle")
     
     let id: UUID
     let name: String
@@ -23,6 +24,7 @@ struct TLaw: Identifiable {
     let filename: String?
     let publish: Date?
     let order: Int?
+    let subtitle: String?
     
     static func create(row: Row, category: TCategory) -> TLaw {
         
@@ -39,7 +41,8 @@ struct TLaw: Identifiable {
             level: row[level],
             filename: row[filename],
             publish: pub_at,
-            order: row[order]
+            order: row[order],
+            subtitle: row[subtitle]
         )
     }
     
@@ -50,7 +53,13 @@ struct TLaw: Identifiable {
         } else if let pub_at = self.publish {
             filename = String(format: "%@(%@)", self.name, dateFormatter.string(from: pub_at))
         }
-        let ret = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: String(format: "%@/%@", "Laws", self.category.folder))
+        let directory = String(format: "%@/%@", "Laws", self.category.folder)
+        var ret = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: directory)
+        
+        if ret == nil && subtitle != nil {
+            ret = Bundle.main.path(forResource: subtitle, ofType: "md", inDirectory: directory)
+        }
+        
         if ret == nil {
             print("file is nil \(self.name) \(filename)")
         }

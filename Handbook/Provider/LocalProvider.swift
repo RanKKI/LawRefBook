@@ -14,12 +14,6 @@ class LocalProvider: ObservableObject{
 
     private var contents: [UUID: LawContent] = [UUID: LawContent]()
 
-    func getLawTitleByUUID(_ uuid: UUID) -> String {
-        let content = getLawContent(uuid)
-        content.load()
-        return content.Titles.joined(separator: " ")
-    }
-
     private var writeLocker = NSLock()
 
     func getLawContent(_ uuid: UUID) -> LawContent {
