@@ -13,7 +13,7 @@ struct SettingView: View {
     private var groupingMethod = LawGroupingMethod.department
 
     @AppStorage("defaultSearchHistoryType")
-    private var searchHistoryType = SearchHistoryType.standalone
+    private var searchHistoryType = SearchHistoryType.share
 
     @State
     private var showSafari: Bool = false

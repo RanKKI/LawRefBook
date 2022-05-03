@@ -18,7 +18,7 @@ struct SearchHistoryView: View {
     private var histories: [SearchHistory] = []
     
     @AppStorage("defaultSearchHistoryType")
-    private var searchHistoryType = SearchHistoryType.standalone
+    private var searchHistoryType = SearchHistoryType.share
 
     private func buildRequest(limit: Int?) -> NSFetchRequest<SearchHistory> {
         let fetchRequest = SearchHistory.fetchRequest()
