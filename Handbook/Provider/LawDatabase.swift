@@ -22,12 +22,19 @@ class LawDatabase: ObservableObject {
     }
     
     func connect() {
-        if let path = DB_PATH {
+        if let path = DB_PATH, db == nil {
             db = try? Connection(path)
-            isLoading = false
-        } else {
-            print("DB_PATH is nil")
         }
+        if db == nil {
+            fatalError("DB is not connected")
+        }
+        DispatchQueue.main.async {
+            self.isLoading = false
+        }
+    }
+    
+    func getConnection() -> Connection {
+        return db!
     }
     
     func getCategories(withLaws: Bool = false) -> [TCategory] {
@@ -113,7 +120,7 @@ class LawDatabase: ObservableObject {
             if let predicate = predicate {
                 query = query.filter(predicate)
             }
-            query = query.order(TLaw.name)
+            query = query.order(TLaw.order.asc, TLaw.name)
             let rows = try db!.prepare(query)
             var categories = [Int: TCategory]()
             var ret = [TLaw]()
@@ -133,11 +140,4 @@ class LawDatabase: ObservableObject {
         return []
     }
 
-    func getLawFilePath(uuid: UUID) -> String? {
-        if let law = self.getLaw(uuid: uuid) {
-            return law.filepath()
-        }
-        return nil
-        
-    }
 }

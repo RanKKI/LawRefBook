@@ -12,6 +12,7 @@ struct TLaw: Identifiable {
     
     static let filename = Expression<String?>("filename")
     static let publish = Expression<String?>("publish")
+    static let order = Expression<Int?>("order")
     
     let id: UUID
     let name: String
@@ -21,6 +22,7 @@ struct TLaw: Identifiable {
     
     let filename: String?
     let publish: Date?
+    let order: Int?
     
     static func create(row: Row, category: TCategory) -> TLaw {
         
@@ -36,7 +38,8 @@ struct TLaw: Identifiable {
             expired: row[expired],
             level: row[level],
             filename: row[filename],
-            publish: pub_at
+            publish: pub_at,
+            order: row[order]
         )
     }
     
