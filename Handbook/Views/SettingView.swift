@@ -87,6 +87,12 @@ struct SettingView: View {
                 .multilineTextAlignment(.leading)
                 .font(.footnote)
                 .padding(.top, 16)
+            
+            Section {
+                InAppPurchaseView(vm: InAppPurchaseView.ViewModel())
+            } header: {
+                Text("请开发者喝点什么")
+            }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){

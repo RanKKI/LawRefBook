@@ -39,6 +39,10 @@
 		903A8902280C145300EECBC7 /* SearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903A8901280C145300EECBC7 /* SearchHistoryView.swift */; };
 		903A8904280C2D7C00EECBC7 /* LawContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903A8903280C2D7C00EECBC7 /* LawContentViewModel.swift */; };
 		903F5326280E555200D4523D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F5325280E555200D4523D /* Persistence.swift */; };
+		903F5328280E5C6D00D4523D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903F5327280E5C6D00D4523D /* StoreKit.framework */; };
+		903F532B280E5CA100D4523D /* InAppPurchaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532A280E5CA100D4523D /* InAppPurchaseHandler.swift */; };
+		903F532D280E5D4600D4523D /* InAppPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532C280E5D4600D4523D /* InAppPurchaseView.swift */; };
+		903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532E280E5DC000D4523D /* InAppPurchaseViewModel.swift */; };
 		905B83D627F83BFD00F951E9 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905B83D527F83BFD00F951E9 /* FileUtil.swift */; };
 		906E36A428053BF400A5CC39 /* Safari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906E36A328053BF400A5CC39 /* Safari.swift */; };
 		909AE292281F6B3A008679C4 /* LawDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909AE291281F6B3A008679C4 /* LawDatabase.swift */; };
@@ -98,6 +102,10 @@
 		903A8901280C145300EECBC7 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
 		903A8903280C2D7C00EECBC7 /* LawContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentViewModel.swift; sourceTree = "<group>"; };
 		903F5325280E555200D4523D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		903F5327280E5C6D00D4523D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		903F532A280E5CA100D4523D /* InAppPurchaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseHandler.swift; sourceTree = "<group>"; };
+		903F532C280E5D4600D4523D /* InAppPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseView.swift; sourceTree = "<group>"; };
+		903F532E280E5DC000D4523D /* InAppPurchaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseViewModel.swift; sourceTree = "<group>"; };
 		905B83D527F83BFD00F951E9 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		906E36A328053BF400A5CC39 /* Safari.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Safari.swift; sourceTree = "<group>"; };
 		909AE291281F6B3A008679C4 /* LawDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawDatabase.swift; sourceTree = "<group>"; };
@@ -126,6 +134,7 @@
 				909AE295281F6B84008679C4 /* SQLite in Frameworks */,
 				90AC432528124E8600AFECB8 /* SPAlert in Frameworks */,
 				90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */,
+				903F5328280E5C6D00D4523D /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +205,7 @@
 		900EBCEE27D3844600E20FE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				903F5327280E5C6D00D4523D /* StoreKit.framework */,
 				90A7911A280D34F0003367CB /* CloudKit.framework */,
 				16C0011C27E44BE800AB6446 /* XCTest.framework */,
 			);
@@ -211,6 +221,7 @@
 				909AE28E281F6B1F008679C4 /* Provider */,
 				905B83D427F83BEF00F951E9 /* Utils */,
 				900EBCDE27D35CEF00E20FE4 /* Toolbar Items */,
+				903F5329280E5C7D00D4523D /* IAP */,
 				900EBCDD27D35CCB00E20FE4 /* Models */,
 				900EBCDC27D35CB800E20FE4 /* Views */,
 				900EBCDB27D35C9D00E20FE4 /* Resources */,
@@ -256,6 +267,16 @@
 				902DAE5E27C7CBC200926036 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		903F5329280E5C7D00D4523D /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				903F532A280E5CA100D4523D /* InAppPurchaseHandler.swift */,
+				903F532C280E5D4600D4523D /* InAppPurchaseView.swift */,
+				903F532E280E5DC000D4523D /* InAppPurchaseViewModel.swift */,
+			);
+			path = IAP;
 			sourceTree = "<group>";
 		};
 		905B83D427F83BEF00F951E9 /* Utils */ = {
@@ -408,6 +429,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				903F532D280E5D4600D4523D /* InAppPurchaseView.swift in Sources */,
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
 				90193F0027F5A376008CF0A6 /* Consts.swift in Sources */,
 				900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */,
@@ -419,9 +441,11 @@
 				9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */,
 				90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */,
 				90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */,
+				903F532B280E5CA100D4523D /* InAppPurchaseHandler.swift in Sources */,
 				903F5326280E555200D4523D /* Persistence.swift in Sources */,
 				90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */,
 				1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */,
+				903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
 				90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */,
