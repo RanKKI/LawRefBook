@@ -3,24 +3,23 @@ import CoreSpotlight
 import CoreData
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+
         application.registerForRemoteNotifications()
         print("registerForRemoteNotifications")
-        
+
         return true
     }
-    
+
 }
 
 @main
 struct MainApp: App {
-    
+
     @UIApplicationDelegateAdaptor
     private var appDelegate: AppDelegate
-
 
     @State
     var showNewPage = false
@@ -30,14 +29,29 @@ struct MainApp: App {
 
     @AppStorage("launchTimes")
     var launchTime: Int = 0
-    
+
     private(set) var moc = Persistence.shared.container.viewContext
+    
+    @ObservedObject
+    private var db = LawDatabase.shared
+    
+    init() {
+        db.connect()
+    }
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
-                WelcomeView()
+                if !db.isLoading {
+                    ContentView()
+                    WelcomeView()
+                } else {
+                    VStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                }
             }
             .sheet(isPresented: $showNewPage) {
                 WhatNewView()
@@ -59,14 +73,13 @@ struct MainApp: App {
             SpotlightHelper.shared.createIndexes()
         }
     }
-    
+
     private func immigrateFavLaws() {
-        if LawProvider.shared.favoriteUUID.isEmpty {
+        if LocalProvider.shared.favoriteUUID.isEmpty {
            return
         }
-        LawProvider.shared.queue.async {
-            LawProvider.shared.favoriteUUID.enumerated().forEach { (i, val) in
-                
+        LocalProvider.shared.queue.async {
+            LocalProvider.shared.favoriteUUID.enumerated().forEach { (i, val) in
                 let req = FavLaw.fetchRequest()
                 req.predicate = NSPredicate(format: "id == %@", val.uuidString)
                 var flag = false
@@ -80,8 +93,8 @@ struct MainApp: App {
                     do {
                         try moc.save()
                         DispatchQueue.main.async {
-                            if let idx = LawProvider.shared.favoriteUUID.firstIndex(of: val) {
-                                LawProvider.shared.favoriteUUID.remove(at: idx)
+                            if let idx = LocalProvider.shared.favoriteUUID.firstIndex(of: val) {
+                                LocalProvider.shared.favoriteUUID.remove(at: idx)
                             }
                         }
                     }catch{

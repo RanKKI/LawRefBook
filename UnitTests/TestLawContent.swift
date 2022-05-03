@@ -3,9 +3,9 @@ import XCTest
 @testable import 中国法律
 
 class TestLaws: XCTestCase {
-    
+
     override func setUp() async throws {
-        LocalProvider.shared.initLawList()
+        LawDatabase.shared.connect()
     }
 
     func testContentPaser() throws {
@@ -28,7 +28,7 @@ class TestLaws: XCTestCase {
             第三条 内容
         """
 
-        let content = LawContent(law: nil)
+        let content = LawContent()
         content.loadFromString(content: str)
 
         XCTAssertTrue(!content.Titles.isEmpty)
@@ -59,7 +59,7 @@ class TestLaws: XCTestCase {
             第三条 内容
         """
 
-        let content = LawContent(law: nil)
+        let content = LawContent()
         content.loadFromString(content: str)
 
         XCTAssertEqual(content.TOC.count, 2)
@@ -71,40 +71,35 @@ class TestLaws: XCTestCase {
     }
 
     func testAllFileExist() throws {
-        let laws = LocalProvider.shared.getLaws()
+        let laws = LawDatabase.shared.getLaws()
         for law in laws {
-            let content = LawProvider.shared.getLawContent(law.id)
+            let content = LocalProvider.shared.getLawContent(law.id)
             XCTAssertTrue(content.isExists())
         }
     }
 
     func testAllFileHasContent() throws {
-        let laws = LocalProvider.shared.getLaws()
+        let laws = LawDatabase.shared.getLaws()
         for law in laws {
-            let content = LawProvider.shared.getLawContent(law.id)
+            let content = LocalProvider.shared.getLawContent(law.id)
             content.load()
             XCTAssertTrue(!content.Body.isEmpty, "\(law.name) has no content")
         }
     }
 
     func testAllFileHasTitlte() throws {
-        let laws = LocalProvider.shared.getLaws()
+        let laws = LawDatabase.shared.getLaws()
         for law in laws {
-            let content = LawProvider.shared.getLawContent(law.id)
+            let content = LocalProvider.shared.getLawContent(law.id)
             content.load()
             XCTAssertTrue(!content.Titles.isEmpty, "\(law.name) has no title")
         }
     }
 
-    func testJSONFileExists() throws {
-        XCTAssertNotNil(LocalProvider.shared.DATA_FILE_PATH, "没有找到法律法规数据")
-        XCTAssertGreaterThan(LocalProvider.shared.getLawList().count, 0, "没有法律法规数据")
-    }
-    
     func testTocTitleHasExactlyOne() throws {
-        let laws = LocalProvider.shared.getLaws()
+        let laws = LawDatabase.shared.getLaws()
         for law in laws {
-            let content = LawProvider.shared.getLawContent(law.id)
+            let content = LocalProvider.shared.getLawContent(law.id)
             content.load()
 
             let titles = content.TOC

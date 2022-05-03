@@ -1,26 +1,26 @@
 import SwiftUI
 
 extension LawList {
-    
+
     class ViewModel: ObservableObject, Identifiable {
-        
+
         var id = UUID()
-        
-        @Published
-        fileprivate(set) var categories: [LawCategory] = []
 
         @Published
-        fileprivate(set) var folders: [[LawCategory]] = []
+        fileprivate(set) var categories: [TCategory] = []
 
         @Published
-        fileprivate(set) var searchResults: [Law] = [Law]()
+        fileprivate(set) var folders: [[TCategory]] = []
+
+        @Published
+        fileprivate(set) var searchResults: [TLaw] = [TLaw]()
 
         @Published
         fileprivate(set) var isLoading = false
-        
+
         @Published
         var isSearching = false
-        
+
         @Published
         var isSubmitSearch = false
 
@@ -28,7 +28,7 @@ extension LawList {
         fileprivate var searchOpQueue: OperationQueue = OperationQueue()
         fileprivate var listWorkItem: DispatchWorkItem?
         fileprivate var cateogry: String?
-        
+
         fileprivate var searchText: String = ""
         var searchType = SearchType.catalogue
         fileprivate var groupMethod: LawGroupingMethod? = nil
@@ -36,12 +36,12 @@ extension LawList {
         init() {
 
         }
-        
+
         init(category: String) {
             self.cateogry = category
         }
 
-        fileprivate func searchTextInLaws(text: String, type: SearchType, arr: [Law]) {
+        fileprivate func searchTextInLaws(text: String, type: SearchType, arr: [TLaw]) {
             self.searchText = text
             self.searchType = type
             searchOpQueue.cancelAllOperations()
@@ -55,12 +55,12 @@ extension LawList {
             let locker = NSLock()
             isLoading = true
             queue.async { [weak self] in
-                var results = [Law]()
+                var results = [TLaw]()
                 for law in arr {
                     self?.searchOpQueue.addOperation {
                         var add = false
                         if type == .fullText {
-                            let content = LawProvider.shared.getLawContent(law.id)
+                            let content = LocalProvider.shared.getLawContent(law.id)
                             content.load()
                             add = !content.filterText(text: text).isEmpty
                         } else if type == .catalogue {
@@ -89,43 +89,38 @@ extension LawList {
                 return
             }
             isSubmitSearch = true
-            searchTextInLaws(text: text, type: searchType, arr: LocalProvider.shared.getLaws())
+            searchTextInLaws(text: text, type: searchType, arr: LawDatabase.shared.getLaws())
         }
-        
+
         func clearSearchState() {
             isSubmitSearch = false
         }
 
-        fileprivate func refreshLaws(method: LawGroupingMethod) -> [LawCategory]{
-            var arr: [LawCategory] = []
+        fileprivate func refreshLaws(method: LawGroupingMethod) -> [TCategory]{
+            let db = LawDatabase.shared
             if method == .department {
-                arr = LocalProvider.shared.getLawList()
-            } else if method == .level {
-                arr = Dictionary(grouping: LocalProvider.shared.getLaws(), by: \.level)
-                    .sorted {
-                        return LawLevel.firstIndex(of: $0.key)! < LawLevel.firstIndex(of: $1.key)!
-                    }
-                    .map {
-                        LawCategory($0.key, $0.value)
-                    }
+                return db.getCategories(withLaws: true)
             }
-            return arr
+            return Dictionary(grouping: db.getLaws(), by: \.level)
+                .sorted {
+                    return LawLevel.firstIndex(of: $0.key)! < LawLevel.firstIndex(of: $1.key)!
+                }
+                .enumerated()
+                .map {
+                    return TCategory.create(id: $0, level: $1.key, laws: $1.value)
+                }
         }
 
         fileprivate func doRefresh(method: LawGroupingMethod) {
             self.isLoading = true
             queue.async {
                 let arr = self.refreshLaws(method: method)
-                let cateogires = arr.filter { $0.isSubFolder == nil || $0.isSubFolder == false }
-                let folders = Dictionary(grouping: arr.filter { $0.isSubFolder ?? false }, by: \.group)
+                let cateogires = arr.filter { $0.isSubFolder == false }
+                let folders = Dictionary(grouping: arr.filter { $0.isSubFolder }, by: \.group)
                     .sorted {
-                        if $0.key == nil {
-                            return false
-                        } else if $1.key == nil {
-                            return true
-                        } else {
-                            return $0.key! < $1.key!
-                        }
+                        let k1 = $0.value.first?.order ?? -1
+                        let k2 = $1.value.first?.order ?? -1
+                        return k1 < k2
                     }
                     .map {
                         $0.value
@@ -148,9 +143,9 @@ extension LawList {
             self.doRefresh(method: method)
         }
     }
-    
+
     class SpecificCategoryViewModal: ViewModel {
-        
+
         override init(category: String) {
             super.init(category: category)
         }
@@ -160,29 +155,29 @@ extension LawList {
                 return
             }
             isSubmitSearch = true
-            searchTextInLaws(text: text, type: searchType, arr: LocalProvider.shared.getLaws())
+            searchTextInLaws(text: text, type: searchType, arr: LawDatabase.shared.getLaws())
             self.searchTextInLaws(text: text, type: searchType, arr: self.categories.flatMap { $0.laws })
         }
 
-        fileprivate override func refreshLaws(method: LawGroupingMethod) -> [LawCategory]{
+        fileprivate override func refreshLaws(method: LawGroupingMethod) -> [TCategory]{
             guard self.cateogry != nil else {
                 return []
             }
-            let arr: [LawCategory] = super.refreshLaws(method: method)
-            return arr.filter { $0.category == self.cateogry }
+            let arr: [TCategory] = super.refreshLaws(method: method)
+            return arr.filter { $0.name == self.cateogry }
         }
-        
+
         override func doRefresh(method: LawGroupingMethod) {
             self.isLoading = true
             queue.async {
                 let arr = self.refreshLaws(method: method)
                 DispatchQueue.main.async {
-                    self.isLoading = false
                     self.categories = arr
+                    self.isLoading = false
                 }
             }
         }
 
     }
-    
+
 }

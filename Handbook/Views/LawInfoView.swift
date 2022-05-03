@@ -4,12 +4,13 @@ import SwiftUI
 struct LawInfoPage: View {
 
     var lawID: UUID
+    var toc: [LawInfo]
 
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
         List{
-            ForEach(LawProvider.shared.getLawInfo(lawID), id: \.id) { info in
+            ForEach(toc, id: \.id) { info in
                 if !info.header.isEmpty {
                     Section(header: Text(info.header)){
                         Text(info.content)
@@ -23,15 +24,15 @@ struct LawInfoPage: View {
                         .textSelection(.enabled)
                 }
             }
-            if let law = LocalProvider.shared.getLaw(lawID) {
-                if let arr = law.links {
-                    Section(header: Text("相关法律法规")) {
-                        ForEach(arr, id: \.self) { uid in
-                            NaviLawLink(uuid: uid)
-                        }
-                    }
-                }
-            }
+//            if let law = LocalProvider.shared.getLaw(lawID) {
+//                if let arr = law.links {
+//                    Section(header: Text("相关法律法规")) {
+//                        ForEach(arr, id: \.self) { uid in
+//                            NaviLawLink(uuid: uid)
+//                        }
+//                    }
+//                }
+//            }
 
         }
         .listStyle(.plain)

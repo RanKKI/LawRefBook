@@ -1,3 +1,5 @@
+import Foundation
+
 let LawLevel = [
     "宪法",
     "法律",
@@ -52,3 +54,9 @@ let FontSizeDefault = 17
 let FontTrackingDefault = 0.6
 let FontSpacingDefault = 4.5
 let FontLineSpacingDefault = 4
+
+let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter
+}()

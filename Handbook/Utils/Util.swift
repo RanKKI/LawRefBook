@@ -23,14 +23,9 @@ func OpenMail(subject: String, body: String) {
     }
 }
 
-func Report(lawID: UUID, line: String){
-    Report(law: LawProvider.shared.getLawContent(lawID), line: line)
-}
-
-func Report(law: LawContent, line: String){
-    let subject = String(format: "反馈问题:%@", law.Titles.joined(separator: "-"))
-    let body = line
-    OpenMail(subject: subject, body: body)
+func Report(law: TLaw, content: String){
+    let subject = String(format: "反馈问题:%@", law.name)
+    OpenMail(subject: subject, body: content)
 }
 
 extension String {
@@ -79,11 +74,11 @@ extension String {
         let locale = CFLocaleCopyCurrent()
         let range = CFRangeMake(0, CFStringGetLength(self as CFString))
         let tokenizer = CFStringTokenizerCreate(kCFAllocatorDefault, self as CFString, range, UInt(kCFStringTokenizerUnitWordBoundary), locale)
-        
+
         var tokens = [String]()
         var tokenType = CFStringTokenizerAdvanceToNextToken(tokenizer)
-        
-        
+
+
         while (tokenType != []) {
             let range = CFStringTokenizerGetCurrentTokenRange(tokenizer)
             let token = CFStringCreateWithSubstring(kCFAllocatorDefault, self as CFString, range)
@@ -92,7 +87,7 @@ extension String {
             }
             tokenType = CFStringTokenizerAdvanceToNextToken(tokenizer)
         }
-        
+
         return tokens
     }
 
@@ -124,18 +119,18 @@ extension Substring {
 }
 
 extension View {
-    
+
     func shareText(_ shareString: String) {
         if let controller = topMostViewController() {
             let activityViewController = UIActivityViewController(activityItems: [shareString], applicationActivities: nil);
             controller.present(activityViewController, animated: true)
         }
     }
-    
+
 }
 
 extension FavContent {
-    
+
     static func new(moc: NSManagedObjectContext, _ uuid: UUID, line: Int64, folder: FavFolder) {
         let fav = FavContent(context: moc)
         fav.id = UUID()
@@ -144,5 +139,25 @@ extension FavContent {
         fav.folder = folder
         try? moc.save()
     }
-    
+
+}
+
+extension UUID {
+
+    /* 将 08f1c0c5de2048c38eb96667f1adad12 转换成 UUID */
+    static func create(str: String) -> UUID {
+        var arr = [""]
+        let size = [8,4,4,4,12]
+        for char in str {
+            if arr.last!.count == size[arr.count - 1] {
+                arr.append("")
+            }
+            arr[arr.count - 1] = arr[arr.count - 1] + String(char)
+        }
+        return UUID(uuidString: arr.joined(separator: "-"))!
+    }
+
+    func asDBString() -> String {
+        return self.uuidString.replacingOccurrences(of: "-", with: "").lowercased()
+    }
 }

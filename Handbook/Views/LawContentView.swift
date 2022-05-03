@@ -33,13 +33,13 @@ fileprivate extension Text {
 }
 
 struct LawContentLineView: View {
-    
+
     @AppStorage("font_content")
     var contentFontSize: Int = FontSizeDefault
 
     @AppStorage("font_tracking")
     var tracking: Double = FontTrackingDefault
-    
+
     @AppStorage("font_spacing")
     var spacing: Double = FontSpacingDefault
 
@@ -47,7 +47,7 @@ struct LawContentLineView: View {
 
     @Binding
     var searchText: String
-    
+
     @Environment(\.colorScheme)
     private var colorScheme
 
@@ -71,7 +71,7 @@ struct LawContentLineView: View {
         }
         return result ?? Text(str)
     }
-    
+
     var body: some View {
         VStack {
             let arr = text.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
@@ -96,19 +96,19 @@ struct LawContentLineView: View {
 
 
 private struct LawLineView: View {
-    
-    var lawID: UUID
+
+    var law: TLaw
 
     @State var text: String
     @State var line: Int64
     @State var showActions = false
-    
+
     @Binding
     var searchText: String
-    
+
     @State
     private var selectFolderView = false
-    
+
     @Environment(\.managedObjectContext)
     private var moc
 
@@ -122,19 +122,19 @@ private struct LawLineView: View {
                         Label("收藏", systemImage: "suit.heart")
                     }
                     Button {
-                        Report(lawID: lawID, line: text)
+                        Report(law: law, content: text)
                     } label: {
                         Label("反馈", systemImage: "flag")
                     }
                     Button {
-                        let title = LawProvider.shared.getLawTitleByUUID(lawID)
+                        let title = law.name
                         let message = String(format: "%@\n\n%@", title, text)
                         UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
                     } label: {
                         Label("复制", systemImage: "doc")
                     }
                     Button {
-                        let title = LawProvider.shared.getLawTitleByUUID(lawID)
+                        let title = law.name
                         let message = String(format: "%@\n\n%@", title, text)
                         self.shareText(message)
                     } label: {
@@ -146,7 +146,7 @@ private struct LawLineView: View {
             NavigationView {
                 FavoriteFolderView(action: { folder in
                     if let folder = folder {
-                        FavContent.new(moc: moc, lawID, line: line, folder: folder)
+                        FavContent.new(moc: moc, law.id, line: line, folder: folder)
                         let alertView = SPAlertView(title: "添加成功", preset: .done)
                         alertView.present(haptic: .success)
                     }
@@ -169,7 +169,7 @@ private struct LawContentList: View {
 
     @Environment(\.isSearching)
     private var isSearching
-    
+
     @AppStorage("font_line_spacing")
     private var lineSpacing: Int = FontLineSpacingDefault
 
@@ -178,7 +178,7 @@ private struct LawContentList: View {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: CGFloat(lineSpacing)) {
-                    if LawProvider.shared.getLawExpired(vm.lawID) {
+                    if vm.law.expired {
                         HStack {
                             Spacer()
                             Image(systemName: "exclamationmark.triangle")
@@ -199,7 +199,7 @@ private struct LawContentList: View {
                         if !paragraph.children.isEmpty {
                             Divider()
                             ForEach(paragraph.children, id: \.id) { line in
-                                LawLineView(lawID: vm.lawID, text: line.text, line: line.line, searchText: $searchText)
+                                LawLineView(law: vm.law, text: line.text, line: line.line, searchText: $searchText)
                                     .id(line.line)
                                 Divider()
                             }
@@ -257,7 +257,7 @@ struct LawContentView: View {
 
     @StateObject
     private var sheetManager = SheetMananger()
-    
+
     @Environment(\.managedObjectContext)
     private var moc
 
@@ -315,7 +315,7 @@ struct LawContentView: View {
         }) {
             NavigationView {
                 if sheetManager.sheetState == .info {
-                    LawInfoPage(lawID: vm.lawID)
+                    LawInfoPage(lawID: vm.lawID, toc: vm.content.Infomations)
                         .navigationBarTitle("关于", displayMode: .inline)
                 } else if sheetManager.sheetState == .toc {
                     TableOfContentView(vm: vm, sheetState: $sheetManager.sheetState)
@@ -328,15 +328,15 @@ struct LawContentView: View {
 }
 
 extension LawContentView {
-    
+
     class SheetMananger: ObservableObject{
-        
+
         enum SheetState {
             case none
             case info
             case toc
         }
-        
+
         @Published
         var isShowingSheet = false
 
@@ -349,5 +349,5 @@ extension LawContentView {
             }
         }
     }
-    
+
 }
