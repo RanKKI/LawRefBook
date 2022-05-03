@@ -148,23 +148,6 @@ struct LawList: View {
     ])
     private var favLawsResult: FetchedResults<FavLaw>
 
-    private var favLaws: [TLaw] {
-        favLawsResult.map {
-            if let id = $0.id {
-                if let law = LawDatabase.shared.getLaw(uuid: id){
-                    return law
-                }
-            }
-            return nil
-        }
-        .filter {
-            $0 != nil
-        }
-        .map {
-            $0!
-        }
-    }
-
     var body: some View {
         VStack {
             if isSearching {
@@ -175,8 +158,8 @@ struct LawList: View {
                 Spacer()
             } else {
                 List {
-                    if showFav && !favLaws.isEmpty {
-                        LawSection(category: .create(id: -1, level: "收藏", laws: favLaws), compress: false)
+                    if showFav && !favLawsResult.isEmpty {
+                        FavLawSection(result: favLawsResult.map { $0 })
                     }
                     if viewModel.categories.count == 1 {
                         ForEach(viewModel.categories.first!.laws) {
@@ -246,6 +229,27 @@ private struct FolderSection: View {
         }
     }
 
+}
+
+private struct FavLawSection: View {
+
+    var result: [FavLaw]
+
+    var body: some View {
+        Section {
+            ForEach(result.map {
+                if let id = $0.id, let law = LawDatabase.shared.getLaw(uuid: id) {
+                    return law
+                }
+                return nil
+            }.filter { $0 != nil }.map { $0! }) { (law: TLaw) in
+                NaviLawLink(law: law)
+            }
+        } header: {
+            Text("收藏")
+        }
+    }
+    
 }
 
 private struct LawSection: View {

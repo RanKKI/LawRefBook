@@ -91,16 +91,18 @@ extension LawContentView {
                         arr.forEach {
                             moc.delete($0)
                         }
-                        try? moc.save()
+                        DispatchQueue.main.async {
+                            try? moc.save()
+                        }
                     }
                 } else {
                     let law = FavLaw(context: moc)
                     law.id = self.lawID
                     law.favAt = Date.now
-                    do {
-                        try moc.save()
-                    } catch {
-                        DispatchQueue.main.async {
+                    DispatchQueue.main.async {
+                        do {
+                            try moc.save()
+                        } catch {
                             self.isFav = false
                         }
                     }

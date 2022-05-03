@@ -31,12 +31,27 @@ struct MainApp: App {
     var launchTime: Int = 0
 
     private(set) var moc = Persistence.shared.container.viewContext
+    
+    @ObservedObject
+    private var db = LawDatabase.shared
+    
+    init() {
+        db.connect()
+    }
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
-                WelcomeView()
+                if !db.isLoading {
+                    ContentView()
+                    WelcomeView()
+                } else {
+                    VStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                }
             }
             .sheet(isPresented: $showNewPage) {
                 WhatNewView()
@@ -46,7 +61,6 @@ struct MainApp: App {
             .task {
                 self.checkVersionUpdate()
                 self.immigrateFavLaws()
-                LawDatabase.shared.connect()
             }
         }
     }

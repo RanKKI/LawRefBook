@@ -172,8 +172,8 @@ extension LawList {
             queue.async {
                 let arr = self.refreshLaws(method: method)
                 DispatchQueue.main.async {
-                    self.isLoading = false
                     self.categories = arr
+                    self.isLoading = false
                 }
             }
         }

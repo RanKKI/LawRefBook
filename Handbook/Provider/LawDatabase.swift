@@ -5,7 +5,7 @@ enum DatabaseError: Error {
     case DoesNotExists
 }
 
-class LawDatabase {
+class LawDatabase: ObservableObject {
     
     static var shared = LawDatabase()
     
@@ -14,6 +14,9 @@ class LawDatabase {
     
     var queue = DispatchQueue(label: "database", qos: .background)
     
+    @Published
+    var isLoading = true
+    
     init() {
         
     }
@@ -21,11 +24,10 @@ class LawDatabase {
     func connect() {
         if let path = DB_PATH {
             db = try? Connection(path)
+            isLoading = false
+        } else {
+            print("DB_PATH is nil")
         }
-    }
-    
-    func isConnected() -> Bool {
-        return db != nil
     }
     
     func getCategories(withLaws: Bool = false) -> [TCategory] {
