@@ -135,7 +135,6 @@ class LawContent: ObservableObject {
     private var filePath: String?
     private var loaded: Bool = false
     private var forceBreak: Bool = false
-    private var isCases = false
     
     private let parser = LawParser()
     
@@ -144,12 +143,11 @@ class LawContent: ObservableObject {
 
     init() {
         self.filePath = nil
-        self.isCases = false
     }
     
     init(filePath: String?, isCases: Bool) {
         self.filePath = filePath
-        self.isCases = isCases
+        self.parser.isCases = isCases
     }
 
     func isExists() -> Bool {
