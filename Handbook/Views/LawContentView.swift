@@ -248,6 +248,12 @@ private struct LawContentList: View {
 }
 
 struct LawContentView: View {
+    
+    enum SheetState {
+        case none
+        case info
+        case toc
+    }
 
     @ObservedObject
     var vm: LawContentViewModel
@@ -256,7 +262,7 @@ struct LawContentView: View {
     var searchText: String = ""
 
     @StateObject
-    private var sheetManager = SheetMananger()
+    private var sheetManager = SheetMananger<SheetState>()
 
     @Environment(\.managedObjectContext)
     private var moc
@@ -281,7 +287,7 @@ struct LawContentView: View {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if vm.hasToc {
                     IconButton(icon: "list.bullet.rectangle") {
-                        sheetManager.sheetState = .toc
+                        sheetManager.state = .toc
                     }
                     .transition(.opacity)
                 }
@@ -289,7 +295,7 @@ struct LawContentView: View {
                     vm.onFavIconClicked(moc: moc)
                 }
                 IconButton(icon: "info.circle") {
-                    sheetManager.sheetState = .info
+                    sheetManager.state = .info
                 }
             }
         }
@@ -311,43 +317,18 @@ struct LawContentView: View {
             }
         }
         .sheet(isPresented: $sheetManager.isShowingSheet, onDismiss: {
-            sheetManager.sheetState = .none
+            sheetManager.close()
         }) {
             NavigationView {
-                if sheetManager.sheetState == .info {
+                if sheetManager.state == .info {
                     LawInfoPage(lawID: vm.lawID, toc: vm.content.Infomations)
                         .navigationBarTitle("关于", displayMode: .inline)
-                } else if sheetManager.sheetState == .toc {
-                    TableOfContentView(vm: vm, sheetState: $sheetManager.sheetState)
+                } else if sheetManager.state == .toc {
+                    TableOfContentView(vm: vm, sheet: sheetManager)
                         .navigationBarTitle("目录", displayMode: .inline)
                 }
             }
             .phoneOnlyStackNavigationView()
         }
     }
-}
-
-extension LawContentView {
-
-    class SheetMananger: ObservableObject{
-
-        enum SheetState {
-            case none
-            case info
-            case toc
-        }
-
-        @Published
-        var isShowingSheet = false
-
-        @Published
-        var sheetState: SheetState = .none {
-            didSet {
-                withAnimation {
-                    isShowingSheet = sheetState != .none
-                }
-            }
-        }
-    }
-
 }

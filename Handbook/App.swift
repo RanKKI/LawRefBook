@@ -60,8 +60,8 @@ struct MainApp: App {
             .phoneOnlyStackNavigationView()
             .task {
                 self.checkVersionUpdate()
-                self.immigrateFavLaws()
-                IAPManager.shared.loadProducts()
+//                self.immigrateFavLaws()
+//                IAPManager.shared.loadProducts()
             }
         }
     }

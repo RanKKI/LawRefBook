@@ -32,13 +32,13 @@ struct TableOfContentView: View {
     @ObservedObject
     var vm: LawContentView.LawContentViewModel
 
-    @Binding
-    var sheetState: LawContentView.SheetMananger.SheetState
+    @ObservedObject
+    var sheet: SheetMananger<LawContentView.SheetState>
 
     var body: some View {
         List(vm.content.TOC, id: \.id) { content in
             TOCList(content: content) { line in
-                sheetState = .none
+                sheet.close()
                 vm.scrollPos = line
             }
         }
@@ -46,7 +46,7 @@ struct TableOfContentView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){
                 CloseSheetItem() {
-                    sheetState = .none
+                    sheet.close()
                 }
             }
         }

@@ -50,6 +50,7 @@
 		90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C26281FCFB300B5DC24 /* TLaw.swift */; };
 		90A22C2A281FCFEC00B5DC24 /* TCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C29281FCFEC00B5DC24 /* TCategory.swift */; };
 		90A22C2C2820DDBD00B5DC24 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C2B2820DDBD00B5DC24 /* TestData.swift */; };
+		90A22C32282239FA00B5DC24 /* SheetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C31282239FA00B5DC24 /* SheetManager.swift */; };
 		90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */; };
 		90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A7911A280D34F0003367CB /* CloudKit.framework */; };
 		90AC432528124E8600AFECB8 /* SPAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 90AC432428124E8600AFECB8 /* SPAlert */; };
@@ -112,6 +113,7 @@
 		90A22C26281FCFB300B5DC24 /* TLaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLaw.swift; sourceTree = "<group>"; };
 		90A22C29281FCFEC00B5DC24 /* TCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCategory.swift; sourceTree = "<group>"; };
 		90A22C2B2820DDBD00B5DC24 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		90A22C31282239FA00B5DC24 /* SheetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetManager.swift; sourceTree = "<group>"; };
 		90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryUtil.swift; sourceTree = "<group>"; };
 		90A79119280D34ED003367CB /* RefBook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RefBook.entitlements; sourceTree = "<group>"; };
 		90A7911A280D34F0003367CB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -282,6 +284,7 @@
 		905B83D427F83BEF00F951E9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				90A22C31282239FA00B5DC24 /* SheetManager.swift */,
 				16BA35C627CDDE8700694880 /* Util.swift */,
 				905B83D527F83BFD00F951E9 /* FileUtil.swift */,
 				90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */,
@@ -430,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				903F532D280E5D4600D4523D /* InAppPurchaseView.swift in Sources */,
+				90A22C32282239FA00B5DC24 /* SheetManager.swift in Sources */,
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
 				90193F0027F5A376008CF0A6 /* Consts.swift in Sources */,
 				900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */,
