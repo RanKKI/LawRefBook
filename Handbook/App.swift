@@ -61,6 +61,7 @@ struct MainApp: App {
             .task {
                 self.checkVersionUpdate()
                 self.immigrateFavLaws()
+                IAPManager.shared.loadProducts()
             }
         }
     }
