@@ -315,11 +315,11 @@ struct NaviLawLink : View {
                     }
                 }
                 HStack {
-                    if law.expired {
+                    if law.expired || !law.is_valid {
                         Text(law.name)
                             .foregroundColor(.gray)
                         Image(systemName: "exclamationmark.triangle")
-                            .foregroundColor(.gray)
+                            .foregroundColor(law.expired ? .gray : .orange)
                     } else {
                         Text(law.name)
                     }

@@ -178,11 +178,12 @@ private struct LawContentList: View {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: CGFloat(lineSpacing)) {
-                    if vm.law.expired {
+                    if vm.law.expired || !vm.law.is_valid {
                         HStack {
                             Spacer()
                             Image(systemName: "exclamationmark.triangle")
-                            Text("本法规已废止")
+                                .foregroundColor(vm.law.expired ? .gray : .orange)
+                            Text(vm.law.expired ? "本法规已废止" : "本法规暂未施行")
                             Spacer()
                         }
                         .padding([.bottom], 8)
