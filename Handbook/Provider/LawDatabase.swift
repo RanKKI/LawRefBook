@@ -114,6 +114,15 @@ class LawDatabase: ObservableObject {
         return self.getLawsBy(predicate: TLaw.id == uuid.asDBString()).first
     }
     
+    func getRelvantLaws(uuid: UUID) -> [TLaw] {
+        let law = self.getLaw(uuid: uuid)
+        guard law != nil else {
+            return []
+        }
+        let pattern = "%" + law!.name + "%"
+        return getLawsBy(predicate: TLaw.name.like(pattern)).filter { $0.id != uuid }
+    }
+    
     private func getLawsBy(predicate: Expression<Bool>?) -> [TLaw] {
         do {
             var query = TLaw.table

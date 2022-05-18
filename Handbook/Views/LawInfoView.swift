@@ -2,12 +2,16 @@ import Foundation
 import SwiftUI
 
 struct LawInfoPage: View {
-
+    
     var lawID: UUID
     var toc: [LawInfo]
-
+    
+    
+    @State
+    private var laws: [TLaw] = []
+    
     @Environment(\.dismiss) var dismiss
-
+    
     var body: some View {
         List{
             ForEach(toc, id: \.id) { info in
@@ -24,22 +28,27 @@ struct LawInfoPage: View {
                         .textSelection(.enabled)
                 }
             }
-//            if let law = LocalProvider.shared.getLaw(lawID) {
-//                if let arr = law.links {
-//                    Section(header: Text("相关法律法规")) {
-//                        ForEach(arr, id: \.self) { uid in
-//                            NaviLawLink(uuid: uid)
-//                        }
-//                    }
-//                }
-//            }
-
+            if !laws.isEmpty {
+                Section(header: Text("相关法律法规")) {
+                    ForEach(laws) { law in
+                        NaviLawLink(law: law)
+                    }
+                }
+            }
         }
         .listStyle(.plain)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){
                 CloseSheetItem() {
                     dismiss()
+                }
+            }
+        }
+        .task {
+            LawDatabase.shared.queue.async {
+                let laws = LawDatabase.shared.getRelvantLaws(uuid: self.lawID)
+                DispatchQueue.main.async {
+                    self.laws =  laws
                 }
             }
         }

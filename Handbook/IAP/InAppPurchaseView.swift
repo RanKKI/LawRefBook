@@ -64,7 +64,7 @@ struct InAppPurchaseView: View {
             }
         }
         .padding([.top, .bottom], 8)
-//        .padding([.leading, .trailing], 16)
+        .padding([.leading, .trailing], 16)
         .task {
             vm.loadProducts()
         }

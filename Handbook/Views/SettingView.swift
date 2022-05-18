@@ -66,7 +66,9 @@ struct SettingView: View {
             }
             Section(footer: Text("自豪地采用 SwiftUI")){
                 Button("给 App 评分！") {
-                    AppStoreReviewManager.requestReviewIfAppropriate()
+                    if let url = URL(string: "itms-apps://apple.com/app/id1612953870") {
+                        UIApplication.shared.open(url)
+                    }
                 }
                 Text("[在 GitHub 上贡献](https://github.com/RanKKI/LawRefBook)")
             }
@@ -88,11 +90,11 @@ struct SettingView: View {
                 .font(.footnote)
                 .padding(.top, 16)
 
-//            Section {
-//                InAppPurchaseView()
-//            } header: {
-//                Text("请开发者喝点什么")
-//            }
+            Section {
+                InAppPurchaseView()
+            } header: {
+                Text("请开发者喝点什么")
+            }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){
