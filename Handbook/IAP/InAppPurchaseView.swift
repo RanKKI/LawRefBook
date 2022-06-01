@@ -28,7 +28,7 @@ fileprivate struct IAPItemView: View {
                 Image(item.icon)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 64, height: 66)
+                    .frame(width: 55, height: 55)
                 if vm.isLoading {
                     ProgressView()
                 }

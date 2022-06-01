@@ -60,8 +60,8 @@ struct MainApp: App {
             .phoneOnlyStackNavigationView()
             .task {
                 self.checkVersionUpdate()
-//                self.immigrateFavLaws()
-//                IAPManager.shared.loadProducts()
+                self.immigrateFavLaws()
+                IAPManager.shared.loadProducts()
             }
         }
     }
@@ -71,7 +71,7 @@ struct MainApp: App {
         if lastVersion == nil || lastVersion != curVersion {
 //            showNewPage.toggle()
             lastVersion = curVersion
-            SpotlightHelper.shared.createIndexes()
+//            SpotlightHelper.shared.createIndexes()
         }
     }
 
