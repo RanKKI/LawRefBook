@@ -108,6 +108,9 @@ private struct LawLineView: View {
 
     @State
     private var selectFolderView = false
+    
+    @State
+    private var shareT = false
 
     @Environment(\.managedObjectContext)
     private var moc
@@ -133,12 +136,15 @@ private struct LawLineView: View {
                     } label: {
                         Label("复制", systemImage: "doc")
                     }
+//                    Button {
+
+//                    } label: {
+//                        Label("发送至", systemImage: "square.and.arrow.up")
+//                    }
                     Button {
-                        let title = law.name
-                        let message = String(format: "%@\n\n%@", title, text)
-                        self.shareText(message)
+                        shareT.toggle()
                     } label: {
-                        Label("发送至", systemImage: "square.and.arrow.up")
+                        Label("分享", systemImage: "square.and.arrow.up")
                     }
                 }
         }
@@ -151,9 +157,18 @@ private struct LawLineView: View {
                         alertView.present(haptic: .success)
                     }
                 })
+                .navigationViewStyle(.stack)
                 .navigationBarTitle("选择位置", displayMode: .inline)
                 .environment(\.managedObjectContext, moc)
             }
+        }
+        .sheet(isPresented: $shareT) {
+            NavigationView {
+                ShareByPhotoView(law: law, text: text)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationTitle("分享")
+            }
+            .navigationViewStyle(.stack)
         }
     }
 }
