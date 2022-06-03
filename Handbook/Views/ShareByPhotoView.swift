@@ -21,31 +21,36 @@ struct SharingViewController: UIViewControllerRepresentable {
     }
 }
 
+struct ShareContent: Hashable {
+    var name: String
+    var contents: [String]
+}
+
 struct ShareByPhotoView: View {
     
-    var law: TLaw
-    var text: String
-    
-    var cleanText: String {
-        return String(format: "%@\n\n%@", law.name, text)
-    }
-    
+    var shareContents: [ShareContent]
+
     @Environment(\.dismiss)
     var dismiss
-    
+
     @State
     private var shareing = false
-    
+
     var shareView: some View {
-        VStack {
-            Text(law.name)
-                .font(.title)
-                .padding([.bottom, .top], 8)
-                .multilineTextAlignment(.center)
-            Text(text)
-                .padding([.bottom], 8)
-                .padding([.trailing, .leading], 4)
-                .multilineTextAlignment(.leading)
+        VStack(alignment: .center, spacing: 8) {
+            ForEach(shareContents, id: \.self) { law in
+                Text(law.name)
+                    .font(.title2)
+                    .padding([.bottom, .top], 8)
+                    .multilineTextAlignment(.center)
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(law.contents, id: \.self) {
+                        Text($0)
+                            .padding([.trailing, .leading], 4)
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+            }
             HStack {
                 Spacer()
                 Image(uiImage: generateQRCode(from: "https://apps.apple.com/app/apple-store/id1612953870"))
@@ -99,6 +104,7 @@ struct ShareByPhotoView_Previews: PreviewProvider {
     static var previews: some View {
         let cate = TCategory(id: 1, name: "123", folder: "123", isSubFolder: false, order: 1, group: nil, laws: [])
         let law = TLaw(id: UUID(), name: "民法典合同编很长很差很功能很差很难过", category: cate, expired: false, level: "", filename: nil, publish: nil, order: 1, subtitle: nil, is_valid: true)
-        ShareByPhotoView(law: law, text: "第四百一十条 一二打卡减肥看来大家快点放假啊快点放假啊看了计分卡家乐福看见啊离开家");
+        let content = ShareContent(name: law.name, contents: ["点放假啊看了计分卡家乐福看见啊离开家","第四百一十条 一二打卡减肥看来大家快点放假啊快点放假啊看了计分卡家乐福看见啊离开家"])
+        ShareByPhotoView(shareContents: [content]);
     }
 }

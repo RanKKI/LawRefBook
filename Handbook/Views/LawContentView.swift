@@ -164,7 +164,7 @@ private struct LawLineView: View {
         }
         .sheet(isPresented: $shareT) {
             NavigationView {
-                ShareByPhotoView(law: law, text: text)
+                ShareByPhotoView(shareContents: [.init(name: law.name, contents: [text])])
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationTitle("分享")
             }

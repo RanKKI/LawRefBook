@@ -36,6 +36,9 @@ private struct FavLine: View {
 
     @State
     private var selectFolderView = false
+    
+    @State
+    private var shareT = false
 
     var body: some View {
         Text(content)
@@ -50,6 +53,11 @@ private struct FavLine: View {
                     UIPasteboard.general.setValue(message, forPasteboardType: "public.plain-text")
                 } label: {
                     Label("复制", systemImage: "doc")
+                }
+                Button {
+                    shareT.toggle()
+                } label: {
+                    Label("分享", systemImage: "square.and.arrow.up")
                 }
                 if fav.folder == nil {
                     Button {
@@ -70,6 +78,14 @@ private struct FavLine: View {
                     .navigationBarTitle("选择位置", displayMode: .inline)
                     .environment(\.managedObjectContext, moc)
                 }
+            }
+            .sheet(isPresented: $shareT) {
+                NavigationView {
+                    ShareByPhotoView(shareContents: [.init(name: law.name, contents: [content])])
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationTitle("分享")
+                }
+                .navigationViewStyle(.stack)
             }
     }
 }
@@ -136,6 +152,9 @@ private struct FavFolderView: View {
 
     @Environment(\.managedObjectContext)
     private var moc
+    
+    @State
+    private var shareT =  false
 
     private func editFolderName() {
         self.alert(config: AlertConfig(title: "修改文件夹名", placeholder: folder.name ?? "", action: { name in
@@ -145,6 +164,10 @@ private struct FavFolderView: View {
             }
         }))
     }
+    
+    private var folderItems: [[FavContent]]  {
+        convert(folder.contents)
+    }
 
     var body: some View {
         ZStack {
@@ -152,16 +175,34 @@ private struct FavFolderView: View {
                 Text("空空如也")
             } else {
                 List {
-                    Sections(items: convert(folder.contents))
+                    Sections(items: folderItems)
                 }
             }
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing){
+                IconButton(icon: "square.and.arrow.up") {
+                    shareT.toggle()
+                }
                 IconButton(icon: "square.and.pencil") {
                     editFolderName()
                 }
             }
+        }
+        .sheet(isPresented: $shareT) {
+            NavigationView {
+                ShareByPhotoView(shareContents: folderItems.map {
+                    let uuid = $0.first?.lawId ?? UUID()
+                    let law = LawDatabase.shared.getLaw(uuid: uuid)
+                    let content = LocalProvider.shared.getLawContent(uuid)
+                    return .init(name: law?.name ?? "unknown", contents: $0.map { item in
+                        return content.getLine(line: item.line)
+                    })
+                })
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationTitle("分享")
+            }
+            .navigationViewStyle(.stack)
         }
     }
 }
