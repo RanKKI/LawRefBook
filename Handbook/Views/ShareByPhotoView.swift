@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import SPAlert
 
 struct SharingViewController: UIViewControllerRepresentable {
     
@@ -61,28 +62,51 @@ struct ShareByPhotoView: View {
             }
         }
         .padding()
+        .snapView()
     }
     
     var body: some View {
         ScrollView {
             VStack {
                 shareView
-                    .snapView()
-                Button {
-                    shareing.toggle()
-                } label: {
-                    Text("分享")
-                        .frame(maxWidth: .infinity)
+                HStack(alignment: .center, spacing: 8) {
+                    Button {
+//                        UIImageWriteToSavedPhotosAlbum(shareView.asImage(), nil, nil, nil)
+                        ImageUtils.shared.save(image: shareView.asImage()) {
+                            let alertView = SPAlertView(title: "保存成功", preset: .done)
+                            alertView.present(haptic: .success)
+                        }
+                    } label: {
+                        VStack(alignment: .center, spacing: 4) {
+                            Image(systemName: "square.and.arrow.down")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                            Text("保存")
+                                .font(.caption2)
+                        }
+                    }
+                    .padding(.leading, 8)
+                    Spacer()
+                    Button {
+                        shareing.toggle()
+                    } label: {
+                        HStack {
+                            Image(systemName: "square.and.arrow.up")
+                            Text("分享")
+                        }
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
-                .padding([.leading, .trailing], 8)
+                .padding([.leading, .trailing], 16)
             }
             .padding()
         }
         .background(SharingViewController(isPresenting: $shareing, completion: {
             shareing = false
         }, content: {
-            let av = UIActivityViewController(activityItems: [shareView.snapView().asImage()], applicationActivities: nil)
+            let av = UIActivityViewController(activityItems: [shareView.asImage()], applicationActivities: nil)
             av.completionWithItemsHandler = { _, _, _, _ in
 //                dismiss()
             }
