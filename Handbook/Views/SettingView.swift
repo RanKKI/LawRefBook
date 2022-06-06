@@ -94,6 +94,8 @@ struct SettingView: View {
                 InAppPurchaseView()
             } header: {
                 Text("请开发者喝点什么")
+            } footer: {
+                Text("如果你觉得这个 App 做得还不错，对你有所帮助的话，请开发者喝点什么吧。你并不会以此失去什么，也不会获得什么")
             }
         }
         .toolbar {
