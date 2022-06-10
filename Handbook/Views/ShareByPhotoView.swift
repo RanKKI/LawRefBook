@@ -126,9 +126,7 @@ struct ShareByPhotoView: View {
 
 struct ShareByPhotoView_Previews: PreviewProvider {
     static var previews: some View {
-        let cate = TCategory(id: 1, name: "123", folder: "123", isSubFolder: false, order: 1, group: nil, laws: [])
-        let law = TLaw(id: UUID(), name: "民法典合同编很长很差很功能很差很难过", category: cate, expired: false, level: "", filename: nil, publish: nil, order: 1, subtitle: nil, is_valid: true)
-        let content = ShareContent(name: law.name, contents: ["点放假啊看了计分卡家乐福看见啊离开家","第四百一十条 一二打卡减肥看来大家快点放假啊快点放假啊看了计分卡家乐福看见啊离开家"])
+        let content = ShareContent(name: "民法典合同编很长很差很功能很差很难过", contents: ["点放假啊看了计分卡家乐福看见啊离开家","第四百一十条 一二打卡减肥看来大家快点放假啊快点放假啊看了计分卡家乐福看见啊离开家"])
         ShareByPhotoView(shareContents: [content]);
     }
 }

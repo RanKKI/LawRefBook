@@ -16,6 +16,8 @@ struct TLaw: Identifiable {
     static let subtitle = Expression<String?>("subtitle")
     static let valid_from = Expression<String?>("valid_from")
     
+    static let ver = Expression<Int>("ver")
+    
     let id: UUID
     let name: String
     let category: TCategory
@@ -27,6 +29,8 @@ struct TLaw: Identifiable {
     let order: Int?
     let subtitle: String?
     let is_valid: Bool
+    
+    let ver: Int
     
     static func create(row: Row, category: TCategory) -> TLaw {
         
@@ -52,7 +56,8 @@ struct TLaw: Identifiable {
             publish: pub_at,
             order: row[order],
             subtitle: row[subtitle],
-            is_valid: is_valid
+            is_valid: is_valid,
+            ver: row[ver]
         )
     }
     

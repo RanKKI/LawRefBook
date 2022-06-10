@@ -324,6 +324,11 @@ struct NaviLawLink : View {
                         Text(law.name)
                     }
                 }
+                if let pub = law.publish, law.ver > 1 {
+                    Text(dateFormatter.string(from: pub))
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
             }
         }
         .id(law.id)
