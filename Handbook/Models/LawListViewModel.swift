@@ -155,7 +155,6 @@ extension LawList {
                 return
             }
             isSubmitSearch = true
-            searchTextInLaws(text: text, type: searchType, arr: LawDatabase.shared.getLaws())
             self.searchTextInLaws(text: text, type: searchType, arr: self.categories.flatMap { $0.laws })
         }
 
