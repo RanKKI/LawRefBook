@@ -61,6 +61,9 @@ struct ShareByPhotoView: View {
     
     @AppStorage("rememberlightconfirm")
     private var alwaysConfirm = false
+    
+    @AppStorage("ShareByPhotoViewReviewReq")
+    private var reviewReq = false
 
     
     var shareView: some View {
@@ -134,6 +137,10 @@ struct ShareByPhotoView: View {
         }, content: {
             let av = UIActivityViewController(activityItems: [shareView.asImage()], applicationActivities: nil)
             av.completionWithItemsHandler = { _, _, _, _ in
+                if !reviewReq {
+                    reviewReq = true
+                    AppStoreReviewManager.requestReviewIfAppropriate()
+                }
                 //                dismiss()
             }
             return av

@@ -27,7 +27,7 @@ struct MainApp: App {
     @AppStorage("lastVersion")
     var lastVersion: String?
 
-    @AppStorage("launchTimes")
+    @AppStorage("launchTimes2")
     var launchTime: Int = 0
 
     private(set) var moc = Persistence.shared.container.viewContext
@@ -62,6 +62,7 @@ struct MainApp: App {
                 self.checkVersionUpdate()
                 self.immigrateFavLaws()
                 IAPManager.shared.loadProducts()
+                checkRunTimes()
             }
         }
     }
@@ -107,7 +108,7 @@ struct MainApp: App {
     }
 
     private func checkRunTimes(){
-        if launchTime == 4 {
+        if launchTime == 4 || launchTime == 30 {
             AppStoreReviewManager.requestReviewIfAppropriate()
         }
         launchTime += 1;

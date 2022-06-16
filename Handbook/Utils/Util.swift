@@ -36,6 +36,7 @@ extension String {
 enum AppStoreReviewManager {
     static func requestReviewIfAppropriate() {
         if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+            print("requestReviewIfAppropriate")
             SKStoreReviewController.requestReview(in: scene)
         }
     }
