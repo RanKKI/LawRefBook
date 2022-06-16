@@ -22,6 +22,22 @@ struct SharingViewController: UIViewControllerRepresentable {
     }
 }
 
+
+private struct BackgroundColorModifier: ViewModifier {
+    
+    @Environment(\.colorScheme)
+    var colorScheme
+    
+    func body(content: Content) -> some View {
+        if colorScheme == .dark {
+            content.background(.gray)
+        } else {
+            content
+        }
+    }
+    
+}
+
 struct ShareContent: Hashable {
     var name: String
     var contents: [String]
@@ -30,13 +46,23 @@ struct ShareContent: Hashable {
 struct ShareByPhotoView: View {
     
     var shareContents: [ShareContent]
-
+    
     @Environment(\.dismiss)
     var dismiss
-
+    
+    @Environment(\.colorScheme)
+    var colorScheme
+    
+    @State
+    private var isConfirmedLight = false
+    
     @State
     private var shareing = false
+    
+    @AppStorage("rememberlightconfirm")
+    private var alwaysConfirm = false
 
+    
     var shareView: some View {
         VStack(alignment: .center, spacing: 8) {
             ForEach(shareContents, id: \.self) { law in
@@ -62,16 +88,16 @@ struct ShareByPhotoView: View {
             }
         }
         .padding()
+        .foregroundColor(.black)
         .snapView()
     }
     
-    var body: some View {
+    var contentView: some View {
         ScrollView {
             VStack {
                 shareView
                 HStack(alignment: .center, spacing: 8) {
                     Button {
-//                        UIImageWriteToSavedPhotosAlbum(shareView.asImage(), nil, nil, nil)
                         ImageUtils.shared.save(image: shareView.asImage()) {
                             let alertView = SPAlertView(title: "保存成功", preset: .done)
                             alertView.present(haptic: .success)
@@ -95,7 +121,7 @@ struct ShareByPhotoView: View {
                             Image(systemName: "square.and.arrow.up")
                             Text("分享")
                         }
-                            .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
                 }
@@ -108,10 +134,52 @@ struct ShareByPhotoView: View {
         }, content: {
             let av = UIActivityViewController(activityItems: [shareView.asImage()], applicationActivities: nil)
             av.completionWithItemsHandler = { _, _, _, _ in
-//                dismiss()
+                //                dismiss()
             }
             return av
         }))
+    }
+    
+    var body: some View {
+        Group {
+            if colorScheme == .dark && !isConfirmedLight && !alwaysConfirm {
+                VStack(spacing: 16) {
+                    Spacer()
+                    Text("您目前使用的是*深色模式*，分享图因为设计原因没法做适配，因此该界面将强制使用亮色模式。注意保护您的眼睛")
+                    HStack {
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                isConfirmedLight.toggle()
+                            }
+                        } label: {
+                            Text("确认")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        Spacer()
+                    }
+                    HStack {
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                alwaysConfirm.toggle()
+                            }
+                        } label: {
+                            Text("不用再问了")
+                                .underline()
+                        }
+                        Spacer()
+                    }
+                    Spacer()
+                }
+                .multilineTextAlignment(.center)
+                .padding(32)
+            } else {
+                contentView
+                    .preferredColorScheme(.light)
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 CloseSheetItem {
@@ -127,6 +195,7 @@ struct ShareByPhotoView: View {
 struct ShareByPhotoView_Previews: PreviewProvider {
     static var previews: some View {
         let content = ShareContent(name: "民法典合同编很长很差很功能很差很难过", contents: ["点放假啊看了计分卡家乐福看见啊离开家","第四百一十条 一二打卡减肥看来大家快点放假啊快点放假啊看了计分卡家乐福看见啊离开家"])
-        ShareByPhotoView(shareContents: [content]);
+        ShareByPhotoView(shareContents: [content])
+            .preferredColorScheme(.dark)
     }
 }
