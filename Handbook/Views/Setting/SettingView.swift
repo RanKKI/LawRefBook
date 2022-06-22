@@ -49,7 +49,7 @@ struct SettingView: View {
                     .pickerStyle(.menu)
                 }
                 NavigationLink {
-                    FontSettingView()
+                    SettingFontView()
                         .navigationBarTitle("字体设置")
                 } label: {
                     Text("字体设置")

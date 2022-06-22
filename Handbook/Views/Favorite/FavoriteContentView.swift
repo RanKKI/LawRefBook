@@ -2,18 +2,6 @@ import Foundation
 import CoreData
 import SwiftUI
 
-private func convert<S>(_ result: S) -> [[FavContent]] where S: Sequence, S.Element == FavContent {
-    return Dictionary(grouping: result) { $0.lawId! }
-        .sorted {
-            let id1 = $0.value.first!.lawId!
-            let id2 = $1.value.first!.lawId!
-            let laws: [TLaw] = LawDatabase.shared.getLaws(uuids: [id1, id2])
-            return laws[0].name < laws[1].name
-        }
-        .map { $0.value }
-        .map { $0.filter{ $0.line > 0 }.sorted { $0.line < $1.line } }
-}
-
 private struct FavLine: View {
 
     var fav: FavContent
@@ -167,7 +155,7 @@ private struct FavFolderView: View {
     }
     
     private var folderItems: [[FavContent]]  {
-        convert(folder.contents)
+        Favorite.convert(folder.contents)
     }
     
     private var shareContents: [ShareLawView.ShareContent] {
@@ -263,7 +251,7 @@ struct FolderItemView: View {
 
 }
 
-private struct FavoriteContentView: View {
+struct FavoriteContentView: View {
 
     var folders: [FavFolder]
 
@@ -297,105 +285,4 @@ private struct FavoriteContentView: View {
             }
         }
     }
-}
-
-private struct SelectFolderView: View {
-
-    var folders: [FavFolder]
-    var onSelect: (FavFolder) -> Void
-
-    var body: some View {
-        List {
-            ForEach(folders, id: \.self) { (folder: FavFolder) in
-                HStack {
-                    Text(folder.name ?? "")
-                    Spacer()
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    onSelect(folder)
-                }
-            }
-        }
-    }
-}
-
-struct FavoriteFolderView: View {
-
-    var action: ((FavFolder?) -> Void)?
-
-    @FetchRequest(sortDescriptors: [], predicate: nil)
-    private var favorites: FetchedResults<FavContent>
-
-    @FetchRequest(sortDescriptors: [
-        SortDescriptor(\.order)
-    ], predicate: nil)
-    private var folders: FetchedResults<FavFolder>
-
-    private var favoriteItems: [[FavContent]] {
-        convert(favorites).map {
-            $0.filter { $0.folder == nil }
-        }.filter { !$0.isEmpty }
-    }
-
-    @Environment(\.dismiss)
-    private var dismiss
-
-    @Environment(\.managedObjectContext)
-    private var moc
-
-    private func createFolder() {
-        self.alert(config: AlertConfig(title: "新建文件夹", action: { name in
-            if let txt = name {
-                if txt.isEmpty {
-                    return
-                }
-                let folder = FavFolder(context: moc)
-                folder.id = UUID()
-                folder.name = txt
-                folder.order = Int64(folders.count)
-                try? moc.save()
-            }
-        }))
-    }
-
-    private var isSelecting: Bool {
-        return action != nil
-    }
-
-    private var isEmpty: Bool {
-        return favorites.isEmpty && folders.isEmpty
-    }
-
-    var body: some View {
-        ZStack {
-            if isEmpty {
-                Text("空空如也")
-            } else if isSelecting {
-                SelectFolderView(folders: folders.map { $0 }, onSelect: { folder in
-                    action?(folder)
-                    dismiss()
-                })
-            } else {
-                FavoriteContentView(folders: folders.map { $0 }, items: favoriteItems)
-            }
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing){
-                IconButton(icon: "folder.badge.plus") {
-                    createFolder()
-                }
-                CloseSheetItem() {
-                    dismiss()
-                    action?(nil)
-                }
-            }
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                if !isSelecting && !isEmpty {
-                    EditButton()
-                }
-            }
-        }
-    }
-
 }

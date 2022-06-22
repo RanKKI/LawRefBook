@@ -237,7 +237,7 @@ private struct LawContentList: View {
     var body: some View {
         Group {
             if isSearching && !vm.isSearchSubmit {
-                SearchHistoryView(lawId: vm.lawID, searchText: $searchText) { txt in
+                SearchHistoryView(vm: .init(vm.lawID), searchText: $searchText) { txt in
                     vm.doSearchText(txt)
                     searchText = txt
                 }

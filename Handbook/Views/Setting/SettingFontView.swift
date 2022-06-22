@@ -37,7 +37,7 @@ private struct AdjustSteppter<Value: Numeric>: View {
     }
 }
 
-struct FontSettingView: View {
+struct SettingFontView: View {
 
     @AppStorage("font_content")
     var contentFontSize: Int = FontSizeDefault

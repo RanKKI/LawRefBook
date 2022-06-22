@@ -10,12 +10,12 @@
 		16151CAE27E842E500E09E0C /* Laws in Resources */ = {isa = PBXBuildFile; fileRef = 16151CAD27E842E500E09E0C /* Laws */; };
 		1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3427D5CAD200B42167 /* TOCView.swift */; };
 		1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3627D6277F00B42167 /* WhatNewView.swift */; };
-		1632AD3F27D8719600B42167 /* SettingFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* SettingFont.swift */; };
+		1632AD3F27D8719600B42167 /* SettingFontView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* SettingFontView.swift */; };
 		16BA35C727CDDE8700694880 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C627CDDE8700694880 /* Util.swift */; };
 		16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0011227E43AA100AB6446 /* TestLawContent.swift */; };
 		16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C3362B27DB182500D3F1F0 /* LicenseView.swift */; };
 		16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 16C3362D27DB18D700D3F1F0 /* LICENSE */; };
-		16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */; };
+		16D28E9C27CF829A001FB6B8 /* FavoriteContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* FavoriteContentView.swift */; };
 		900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */; };
 		900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE127D35E3500E20FE4 /* LawInfoView.swift */; };
 		900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE327D35EAE00E20FE4 /* IconButton.swift */; };
@@ -63,6 +63,10 @@
 		90D4CD9D2862BA1B006DB8AC /* ShareLawLightConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */; };
 		90D4CD9F2862BAE0006DB8AC /* ShareLawEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */; };
 		90D4CDA12862C8DE006DB8AC /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */; };
+		90D4CDA52862D781006DB8AC /* FavoriteFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA42862D781006DB8AC /* FavoriteFolderView.swift */; };
+		90D4CDA72862D7AB006DB8AC /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA62862D7AB006DB8AC /* Favorite.swift */; };
+		90D4CDA92862D7F3006DB8AC /* SelectFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA82862D7F3006DB8AC /* SelectFolderView.swift */; };
+		90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,14 +83,14 @@
 		16151CAD27E842E500E09E0C /* Laws */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Laws; sourceTree = "<group>"; };
 		1632AD3427D5CAD200B42167 /* TOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCView.swift; sourceTree = "<group>"; };
 		1632AD3627D6277F00B42167 /* WhatNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatNewView.swift; sourceTree = "<group>"; };
-		1632AD3E27D8719600B42167 /* SettingFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFont.swift; sourceTree = "<group>"; };
+		1632AD3E27D8719600B42167 /* SettingFontView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFontView.swift; sourceTree = "<group>"; };
 		16BA35C627CDDE8700694880 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		16C0011027E43AA100AB6446 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C0011227E43AA100AB6446 /* TestLawContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLawContent.swift; sourceTree = "<group>"; };
 		16C0011C27E44BE800AB6446 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16C3362B27DB182500D3F1F0 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		16C3362D27DB18D700D3F1F0 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
+		16D28E9B27CF829A001FB6B8 /* FavoriteContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteContentView.swift; sourceTree = "<group>"; };
 		900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseSheetItem.swift; sourceTree = "<group>"; };
 		900EBCE127D35E3500E20FE4 /* LawInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawInfoView.swift; sourceTree = "<group>"; };
 		900EBCE327D35EAE00E20FE4 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
@@ -135,6 +139,10 @@
 		90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawLightConfirmView.swift; sourceTree = "<group>"; };
 		90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawEditView.swift; sourceTree = "<group>"; };
 		90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
+		90D4CDA42862D781006DB8AC /* FavoriteFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderView.swift; sourceTree = "<group>"; };
+		90D4CDA62862D7AB006DB8AC /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		90D4CDA82862D7F3006DB8AC /* SelectFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFolderView.swift; sourceTree = "<group>"; };
+		90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,19 +192,17 @@
 		900EBCDC27D35CB800E20FE4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				90D4CD962862B761006DB8AC /* ShareLaw */,
 				9016D22227E61BBF0027D69D /* Ext */,
-				16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */,
+				90D4CD962862B761006DB8AC /* ShareLaw */,
+				90D4CDA22862D6ED006DB8AC /* Setting */,
+				90D4CDA32862D770006DB8AC /* Favorite */,
+				90D4CDAA2862F603006DB8AC /* SearchHistory */,
 				90193EF727F57E78008CF0A6 /* ContentView.swift */,
 				9035983927C9F57D00C8D9E7 /* LawContentView.swift */,
 				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
 				1632AD3627D6277F00B42167 /* WhatNewView.swift */,
-				1632AD3E27D8719600B42167 /* SettingFont.swift */,
-				9035983B27C9F96400C8D9E7 /* SettingView.swift */,
-				16C3362B27DB182500D3F1F0 /* LicenseView.swift */,
 				90193EFD27F599A5008CF0A6 /* WelcomeView.swift */,
-				903A8901280C145300EECBC7 /* SearchHistoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -344,6 +350,36 @@
 			path = ShareLaw;
 			sourceTree = "<group>";
 		};
+		90D4CDA22862D6ED006DB8AC /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				9035983B27C9F96400C8D9E7 /* SettingView.swift */,
+				1632AD3E27D8719600B42167 /* SettingFontView.swift */,
+				16C3362B27DB182500D3F1F0 /* LicenseView.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		90D4CDA32862D770006DB8AC /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				90D4CDA62862D7AB006DB8AC /* Favorite.swift */,
+				16D28E9B27CF829A001FB6B8 /* FavoriteContentView.swift */,
+				90D4CDA42862D781006DB8AC /* FavoriteFolderView.swift */,
+				90D4CDA82862D7F3006DB8AC /* SelectFolderView.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		90D4CDAA2862F603006DB8AC /* SearchHistory */ = {
+			isa = PBXGroup;
+			children = (
+				903A8901280C145300EECBC7 /* SearchHistoryView.swift */,
+				90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */,
+			);
+			path = SearchHistory;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -475,6 +511,7 @@
 				909AE292281F6B3A008679C4 /* LawDatabase.swift in Sources */,
 				900EBCE627D35FDE00E20FE4 /* LocalProvider.swift in Sources */,
 				901D199F2847565C00999AE6 /* QRCode.swift in Sources */,
+				90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */,
 				16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */,
 				90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */,
@@ -483,6 +520,7 @@
 				903F5326280E555200D4523D /* Persistence.swift in Sources */,
 				90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */,
 				1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */,
+				90D4CDA52862D781006DB8AC /* FavoriteFolderView.swift in Sources */,
 				903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
@@ -493,9 +531,10 @@
 				90193EFA27F57E93008CF0A6 /* LawListViewModel.swift in Sources */,
 				906E36A428053BF400A5CC39 /* Safari.swift in Sources */,
 				902DAE5827C7CBC100926036 /* App.swift in Sources */,
-				1632AD3F27D8719600B42167 /* SettingFont.swift in Sources */,
+				1632AD3F27D8719600B42167 /* SettingFontView.swift in Sources */,
 				16BA35C727CDDE8700694880 /* Util.swift in Sources */,
-				16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */,
+				16D28E9C27CF829A001FB6B8 /* FavoriteContentView.swift in Sources */,
+				90D4CDA72862D7AB006DB8AC /* Favorite.swift in Sources */,
 				1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */,
 				9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */,
 				901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */,
@@ -505,6 +544,7 @@
 				9016D22427E61BEA0027D69D /* Alert.swift in Sources */,
 				90D4CDA12862C8DE006DB8AC /* CheckBoxView.swift in Sources */,
 				90A22C2A281FCFEC00B5DC24 /* TCategory.swift in Sources */,
+				90D4CDA92862D7F3006DB8AC /* SelectFolderView.swift in Sources */,
 				900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */,
 				905B83D627F83BFD00F951E9 /* FileUtil.swift in Sources */,
 				903A8902280C145300EECBC7 /* SearchHistoryView.swift in Sources */,

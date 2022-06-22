@@ -87,7 +87,7 @@ private struct SearchListView: View {
         VStack {
             SearchTypePicker(searchType: $searchType)
             if !vm.isSubmitSearch {
-                SearchHistoryView(lawId: nil, searchText: $searchText) { txt in
+                SearchHistoryView(vm: .init(nil), searchText: $searchText) { txt in
                     searchText = txt
                     vm.submitSearch(txt)
                 }
