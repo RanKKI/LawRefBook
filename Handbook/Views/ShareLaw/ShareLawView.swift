@@ -2,51 +2,12 @@ import Foundation
 import SwiftUI
 import SPAlert
 
-struct SharingViewController: UIViewControllerRepresentable {
-    
-    @Binding
-    var isPresenting: Bool
-    
-    var completion: () -> Void
-    
-    var content: () -> UIViewController
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        UIViewController()
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        if isPresenting {
-            uiViewController.present(content(), animated: true, completion: completion)
-        }
-    }
-}
 
+struct ShareLawView: View {
 
-private struct BackgroundColorModifier: ViewModifier {
-    
-    @Environment(\.colorScheme)
-    var colorScheme
-    
-    func body(content: Content) -> some View {
-        if colorScheme == .dark {
-            content.background(.gray)
-        } else {
-            content
-        }
-    }
-    
-}
+    @ObservedObject
+    var vm: Model
 
-struct ShareContent: Hashable {
-    var name: String
-    var contents: [String]
-}
-
-struct ShareByPhotoView: View {
-    
-    var shareContents: [ShareContent]
-    
     @Environment(\.dismiss)
     var dismiss
     
@@ -64,18 +25,20 @@ struct ShareByPhotoView: View {
     
     @AppStorage("ShareByPhotoViewReviewReq")
     private var reviewReq = false
-
+    
+    @State
+    private var isEditing = false
     
     var shareView: some View {
         VStack(alignment: .center, spacing: 8) {
-            ForEach(shareContents, id: \.self) { law in
-                Text(law.name)
+            ForEach(vm.rendererContents, id: \.self) { contents in
+                Text(contents.first?.name ?? "")
                     .font(.title2)
                     .padding([.bottom, .top], 8)
                     .multilineTextAlignment(.center)
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(law.contents, id: \.self) {
-                        Text($0)
+                ForEach(contents, id: \.self) { item in
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(item.content)
                             .padding([.trailing, .leading], 4)
                             .multilineTextAlignment(.leading)
                     }
@@ -141,47 +104,28 @@ struct ShareByPhotoView: View {
                     reviewReq = true
                     AppStoreReviewManager.requestReviewIfAppropriate()
                 }
-                //                dismiss()
             }
             return av
         }))
     }
     
+    var showConfirmView: Bool {
+        colorScheme == .dark && !isConfirmedLight && !alwaysConfirm
+    }
+
     var body: some View {
-        Group {
-            if colorScheme == .dark && !isConfirmedLight && !alwaysConfirm {
-                VStack(spacing: 16) {
-                    Spacer()
-                    Text("您目前使用的是*深色模式*，分享图因为设计原因没法做适配，因此该界面将强制使用亮色模式。注意保护您的眼睛")
-                    HStack {
-                        Spacer()
-                        Button {
-                            withAnimation {
-                                isConfirmedLight.toggle()
-                            }
-                        } label: {
-                            Text("确认")
-                                .frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        Spacer()
+        VStack {
+            if showConfirmView {
+                ShareLawLightConfirmView { code in
+                    if code == .always {
+                        alwaysConfirm.toggle()
+                    } else if code == .confirm {
+                        isConfirmedLight.toggle()
                     }
-                    HStack {
-                        Spacer()
-                        Button {
-                            withAnimation {
-                                alwaysConfirm.toggle()
-                            }
-                        } label: {
-                            Text("不用再问了")
-                                .underline()
-                        }
-                        Spacer()
-                    }
-                    Spacer()
                 }
-                .multilineTextAlignment(.center)
-                .padding(32)
+            } else if isEditing {
+                ShareLawEditView(contents: $vm.selectedContents)
+                    .environment(\.editMode, .constant(.active))
             } else {
                 contentView
                     .preferredColorScheme(.light)
@@ -189,20 +133,22 @@ struct ShareByPhotoView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                CloseSheetItem {
-                    dismiss()
+                if !isEditing {
+                    CloseSheetItem {
+                        dismiss()
+                    }
+                }
+            }
+            ToolbarItem(placement: .navigationBarLeading) {
+                if !showConfirmView {
+                    Button {
+                        isEditing.toggle()
+                    } label: {
+                        Text(isEditing ? "完成" : "编辑")
+                    }
                 }
             }
         }
     }
     
-}
-
-
-struct ShareByPhotoView_Previews: PreviewProvider {
-    static var previews: some View {
-        let content = ShareContent(name: "民法典合同编很长很差很功能很差很难过", contents: ["点放假啊看了计分卡家乐福看见啊离开家","第四百一十条 一二打卡减肥看来大家快点放假啊快点放假啊看了计分卡家乐福看见啊离开家"])
-        ShareByPhotoView(shareContents: [content])
-            .preferredColorScheme(.dark)
-    }
 }

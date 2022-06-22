@@ -32,7 +32,7 @@
 		901AE3B227FFFBB100D5D275 /* TestStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901AE3B127FFFBB100D5D275 /* TestStringExtension.swift */; };
 		901D199F2847565C00999AE6 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901D199D2847565C00999AE6 /* QRCode.swift */; };
 		901D19A02847565C00999AE6 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901D199E2847565C00999AE6 /* Snapshot.swift */; };
-		901D19A2284756A200999AE6 /* ShareByPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901D19A1284756A200999AE6 /* ShareByPhotoView.swift */; };
+		901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901D19A1284756A200999AE6 /* ShareLawView.swift */; };
 		902DAE5827C7CBC100926036 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DAE5727C7CBC100926036 /* App.swift */; };
 		902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5B27C7CBC200926036 /* Assets.xcassets */; };
 		902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5E27C7CBC200926036 /* Preview Assets.xcassets */; };
@@ -58,6 +58,11 @@
 		90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A7911A280D34F0003367CB /* CloudKit.framework */; };
 		90AC432528124E8600AFECB8 /* SPAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 90AC432428124E8600AFECB8 /* SPAlert */; };
 		90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B74D7727E4DB1B00723535 /* Spotlight.swift */; };
+		90D4CD982862B7B9006DB8AC /* ShareLawViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD972862B7B9006DB8AC /* ShareLawViewModel.swift */; };
+		90D4CD9B2862B9F3006DB8AC /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9A2862B9F3006DB8AC /* SharingViewController.swift */; };
+		90D4CD9D2862BA1B006DB8AC /* ShareLawLightConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */; };
+		90D4CD9F2862BAE0006DB8AC /* ShareLawEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */; };
+		90D4CDA12862C8DE006DB8AC /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,7 +103,7 @@
 		901AE3B127FFFBB100D5D275 /* TestStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStringExtension.swift; sourceTree = "<group>"; };
 		901D199D2847565C00999AE6 /* QRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		901D199E2847565C00999AE6 /* Snapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
-		901D19A1284756A200999AE6 /* ShareByPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareByPhotoView.swift; sourceTree = "<group>"; };
+		901D19A1284756A200999AE6 /* ShareLawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawView.swift; sourceTree = "<group>"; };
 		902DAE5427C7CBC100926036 /* 中国法律.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "中国法律.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		902DAE5727C7CBC100926036 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		902DAE5B27C7CBC200926036 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -125,6 +130,11 @@
 		90A7911A280D34F0003367CB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		90A7911C280D419F003367CB /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		90B74D7727E4DB1B00723535 /* Spotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
+		90D4CD972862B7B9006DB8AC /* ShareLawViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawViewModel.swift; sourceTree = "<group>"; };
+		90D4CD9A2862B9F3006DB8AC /* SharingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
+		90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawLightConfirmView.swift; sourceTree = "<group>"; };
+		90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawEditView.swift; sourceTree = "<group>"; };
+		90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +184,7 @@
 		900EBCDC27D35CB800E20FE4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				90D4CD962862B761006DB8AC /* ShareLaw */,
 				9016D22227E61BBF0027D69D /* Ext */,
 				16D28E9B27CF829A001FB6B8 /* FavoriteView.swift */,
 				90193EF727F57E78008CF0A6 /* ContentView.swift */,
@@ -186,7 +197,6 @@
 				16C3362B27DB182500D3F1F0 /* LicenseView.swift */,
 				90193EFD27F599A5008CF0A6 /* WelcomeView.swift */,
 				903A8901280C145300EECBC7 /* SearchHistoryView.swift */,
-				901D19A1284756A200999AE6 /* ShareByPhotoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -241,11 +251,13 @@
 		9016D22227E61BBF0027D69D /* Ext */ = {
 			isa = PBXGroup;
 			children = (
+				90D4CD9A2862B9F3006DB8AC /* SharingViewController.swift */,
 				901D199D2847565C00999AE6 /* QRCode.swift */,
 				901D199E2847565C00999AE6 /* Snapshot.swift */,
 				906E36A328053BF400A5CC39 /* Safari.swift */,
 				9016D22327E61BEA0027D69D /* Alert.swift */,
 				90193EFB27F5985E008CF0A6 /* View.swift */,
+				90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -319,6 +331,17 @@
 				90A22C29281FCFEC00B5DC24 /* TCategory.swift */,
 			);
 			path = Tables;
+			sourceTree = "<group>";
+		};
+		90D4CD962862B761006DB8AC /* ShareLaw */ = {
+			isa = PBXGroup;
+			children = (
+				901D19A1284756A200999AE6 /* ShareLawView.swift */,
+				90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */,
+				90D4CD972862B7B9006DB8AC /* ShareLawViewModel.swift */,
+				90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */,
+			);
+			path = ShareLaw;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -448,6 +471,7 @@
 				900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */,
 				90193EFC27F5985E008CF0A6 /* View.swift in Sources */,
 				90193EF827F57E78008CF0A6 /* ContentView.swift in Sources */,
+				90D4CD9B2862B9F3006DB8AC /* SharingViewController.swift in Sources */,
 				909AE292281F6B3A008679C4 /* LawDatabase.swift in Sources */,
 				900EBCE627D35FDE00E20FE4 /* LocalProvider.swift in Sources */,
 				901D199F2847565C00999AE6 /* QRCode.swift in Sources */,
@@ -462,6 +486,8 @@
 				903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
+				90D4CD9F2862BAE0006DB8AC /* ShareLawEditView.swift in Sources */,
+				90D4CD982862B7B9006DB8AC /* ShareLawViewModel.swift in Sources */,
 				90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */,
 				900EBCEA27D3621700E20FE4 /* Law.swift in Sources */,
 				90193EFA27F57E93008CF0A6 /* LawListViewModel.swift in Sources */,
@@ -472,10 +498,12 @@
 				16D28E9C27CF829A001FB6B8 /* FavoriteView.swift in Sources */,
 				1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */,
 				9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */,
-				901D19A2284756A200999AE6 /* ShareByPhotoView.swift in Sources */,
+				901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */,
 				901D19A02847565C00999AE6 /* Snapshot.swift in Sources */,
+				90D4CD9D2862BA1B006DB8AC /* ShareLawLightConfirmView.swift in Sources */,
 				903A8904280C2D7C00EECBC7 /* LawContentViewModel.swift in Sources */,
 				9016D22427E61BEA0027D69D /* Alert.swift in Sources */,
+				90D4CDA12862C8DE006DB8AC /* CheckBoxView.swift in Sources */,
 				90A22C2A281FCFEC00B5DC24 /* TCategory.swift in Sources */,
 				900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */,
 				905B83D627F83BFD00F951E9 /* FileUtil.swift in Sources */,

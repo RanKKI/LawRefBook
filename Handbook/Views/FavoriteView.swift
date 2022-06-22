@@ -81,7 +81,7 @@ private struct FavLine: View {
             }
             .sheet(isPresented: $shareT) {
                 NavigationView {
-                    ShareByPhotoView(shareContents: [.init(name: law.name, contents: [content])])
+                    ShareLawView(vm: .init([.init(name: law.name, content: content)]))
                         .navigationBarTitleDisplayMode(.inline)
                         .navigationTitle("分享")
                 }
@@ -148,7 +148,8 @@ private struct Sections : View {
 
 private struct FavFolderView: View {
 
-    @StateObject var folder: FavFolder
+    @StateObject
+    var folder: FavFolder
 
     @Environment(\.managedObjectContext)
     private var moc
@@ -167,6 +168,18 @@ private struct FavFolderView: View {
     
     private var folderItems: [[FavContent]]  {
         convert(folder.contents)
+    }
+    
+    private var shareContents: [ShareLawView.ShareContent] {
+        folderItems.map {
+            let uuid = $0.first?.lawId ?? UUID()
+            let law = LawDatabase.shared.getLaw(uuid: uuid)
+            let content = LocalProvider.shared.getLawContent(uuid)
+            return $0.map { item in
+                ShareLawView.ShareContent(name: law?.name ?? "", content: content.getLine(line: item.line))
+            }
+        }
+        .reduce([], { $0 + $1 })
     }
 
     var body: some View {
@@ -191,14 +204,7 @@ private struct FavFolderView: View {
         }
         .sheet(isPresented: $shareT) {
             NavigationView {
-                ShareByPhotoView(shareContents: folderItems.map {
-                    let uuid = $0.first?.lawId ?? UUID()
-                    let law = LawDatabase.shared.getLaw(uuid: uuid)
-                    let content = LocalProvider.shared.getLawContent(uuid)
-                    return .init(name: law?.name ?? "unknown", contents: $0.map { item in
-                        return content.getLine(line: item.line)
-                    })
-                })
+                ShareLawView(vm: .init(shareContents))
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationTitle("分享")
             }
