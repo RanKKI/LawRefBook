@@ -215,8 +215,12 @@ private struct LawContentList: View {
                         if !paragraph.children.isEmpty {
                             Divider()
                             ForEach(paragraph.children, id: \.id) { line in
-                                LawLineView(law: vm.law, text: line.text, line: line.line, searchText: $searchText)
-                                    .id(line.line)
+                                if line.text.starts(with: "<!-- TABLE -->") {
+                                    TableView(data: line.text.toTableData(), width: UIScreen.screenWidth - 32)
+                                } else {
+                                    LawLineView(law: vm.law, text: line.text, line: line.line, searchText: $searchText)
+                                        .id(line.line)
+                                }
                                 Divider()
                             }
                         }

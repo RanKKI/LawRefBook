@@ -67,6 +67,7 @@
 		90D4CDA72862D7AB006DB8AC /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA62862D7AB006DB8AC /* Favorite.swift */; };
 		90D4CDA92862D7F3006DB8AC /* SelectFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA82862D7F3006DB8AC /* SelectFolderView.swift */; };
 		90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */; };
+		90F5CEFD28B21E630003752E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5CEFC28B21E630003752E /* TableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		90D4CDA62862D7AB006DB8AC /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		90D4CDA82862D7F3006DB8AC /* SelectFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFolderView.swift; sourceTree = "<group>"; };
 		90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryViewModel.swift; sourceTree = "<group>"; };
+		90F5CEFC28B21E630003752E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 		900EBCDC27D35CB800E20FE4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				90F5CEFB28B21E5A0003752E /* Table */,
 				9016D22227E61BBF0027D69D /* Ext */,
 				90D4CD962862B761006DB8AC /* ShareLaw */,
 				90D4CDA22862D6ED006DB8AC /* Setting */,
@@ -380,6 +383,14 @@
 			path = SearchHistory;
 			sourceTree = "<group>";
 		};
+		90F5CEFB28B21E5A0003752E /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				90F5CEFC28B21E630003752E /* TableView.swift */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -524,6 +535,7 @@
 				903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */,
 				9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
+				90F5CEFD28B21E630003752E /* TableView.swift in Sources */,
 				90D4CD9F2862BAE0006DB8AC /* ShareLawEditView.swift in Sources */,
 				90D4CD982862B7B9006DB8AC /* ShareLawViewModel.swift in Sources */,
 				90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */,

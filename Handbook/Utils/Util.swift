@@ -162,3 +162,24 @@ extension UUID {
         return self.uuidString.replacingOccurrences(of: "-", with: "").lowercased()
     }
 }
+
+extension String {
+    
+    func toTableData() -> TableData {
+        var ret = [[String]]()
+        for subtext in self.split(separator: "\n") {
+            if subtext.starts(with: "|-") {
+                /* Markdown 的分隔符，无意义*/
+                continue
+            }
+            if !subtext.starts(with: "|") {
+                /* 可能是注释，无意义*/
+                continue
+            }
+            ret.append(subtext.components(separatedBy: "|").filter { !$0.isEmpty }.map {$0.trimmingCharacters(in: .whitespacesAndNewlines)})
+        }
+        return ret
+    }
+    
+}
+

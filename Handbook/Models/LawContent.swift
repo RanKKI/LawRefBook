@@ -22,6 +22,7 @@ private class LawParser {
         var isDesc = true // 是否为信息部分
         var isFix = false // 是否为修正案
         var noOfLine: Int64 = 0
+        var isTable = false
         
         var titleArr = [String]()
         var bodyArr = [TextContent]()
@@ -53,6 +54,22 @@ private class LawParser {
 
             if text.starts(with: "<!-- FORCE BREAK -->") {
                 self.forceBreak = true
+                continue
+            }
+            
+            var isNewLine = self.isNewLine(text: text, isFix: isFix)
+
+            if text.starts(with: "<!-- TABLE -->") {
+                isTable = true
+                isNewLine = true
+            }
+            
+            if isTable {
+                
+            }
+            
+            if text.starts(with: "<!-- TABLE END -->") {
+                isTable = false
                 continue
             }
 
@@ -88,8 +105,8 @@ private class LawParser {
                 bodyArr.append(TextContent(text: "", line: noOfLine, indent: 1))
                 noOfLine += 1;
             }
-
-            let newLine = self.parseContent(&bodyArr[bodyArr.count - 1].children, text, isFix: isFix, no: noOfLine)
+            
+            let newLine = self.parseContent(&bodyArr[bodyArr.count - 1].children, text, isFix: isFix, no: noOfLine, newLine: isNewLine)
 
             if newLine {
                 noOfLine += 1
@@ -110,8 +127,8 @@ private class LawParser {
         return (isFix && !text.starts(with: "-")) || (!isFix && text.range(of: lineStartRe, options: .regularExpression) != nil)
     }
 
-    func parseContent(_ children: inout [TextContent.Content], _ text: String, isFix: Bool, no: Int64) -> Bool {
-        if children.isEmpty || isNewLine(text: text, isFix: isFix) {
+    func parseContent(_ children: inout [TextContent.Content], _ text: String, isFix: Bool, no: Int64, newLine: Bool) -> Bool {
+        if children.isEmpty || newLine {
             children.append(TextContent.Content(no, text))
             return true
         }
