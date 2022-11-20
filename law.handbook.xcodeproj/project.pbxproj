@@ -39,6 +39,7 @@
 		9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035982B27C9012B00C8D9E7 /* LawContent.swift */; };
 		9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983927C9F57D00C8D9E7 /* LawContentView.swift */; };
 		9035983C27C9F96400C8D9E7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983B27C9F96400C8D9E7 /* SettingView.swift */; };
+		9036BB542929D2FE00566DDD /* VMCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9036BB532929D2FE00566DDD /* VMCache.swift */; };
 		903A8902280C145300EECBC7 /* SearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903A8901280C145300EECBC7 /* SearchHistoryView.swift */; };
 		903A8904280C2D7C00EECBC7 /* LawContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903A8903280C2D7C00EECBC7 /* LawContentViewModel.swift */; };
 		903F5326280E555200D4523D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F5325280E555200D4523D /* Persistence.swift */; };
@@ -116,6 +117,7 @@
 		9035982B27C9012B00C8D9E7 /* LawContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContent.swift; sourceTree = "<group>"; };
 		9035983927C9F57D00C8D9E7 /* LawContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentView.swift; sourceTree = "<group>"; };
 		9035983B27C9F96400C8D9E7 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		9036BB532929D2FE00566DDD /* VMCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMCache.swift; sourceTree = "<group>"; };
 		903A8901280C145300EECBC7 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
 		903A8903280C2D7C00EECBC7 /* LawContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentViewModel.swift; sourceTree = "<group>"; };
 		903F5325280E555200D4523D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				903F5325280E555200D4523D /* Persistence.swift */,
 				909AE291281F6B3A008679C4 /* LawDatabase.swift */,
 				900EBCE527D35FDE00E20FE4 /* LocalProvider.swift */,
+				9036BB532929D2FE00566DDD /* VMCache.swift */,
 			);
 			path = Provider;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */,
 				9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */,
 				901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */,
+				9036BB542929D2FE00566DDD /* VMCache.swift in Sources */,
 				901D19A02847565C00999AE6 /* Snapshot.swift in Sources */,
 				90D4CD9D2862BA1B006DB8AC /* ShareLawLightConfirmView.swift in Sources */,
 				903A8904280C2D7C00EECBC7 /* LawContentViewModel.swift in Sources */,

@@ -198,16 +198,27 @@ private struct SpecificCategoryLink: View {
 
     @State
     private var searchText = ""
+    
+    private var vm: LawList.SpecificCategoryViewModal {
+        VMCache.shared.getModel(name: category.name)
+    }
+    
+    @Environment(\.managedObjectContext)
+    private var moc
 
     var body: some View {
         NavigationLink {
             LawList(searchText: $searchText,
-                    viewModel: LawList.SpecificCategoryViewModal(category: category.name),
+                    viewModel: VMCache.shared.getModel(name: category.name),
                     showFav: false)
             .searchable(text: $searchText)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(category.name)
             .listStyle(.plain)
+            .onSubmit(of: .search, {
+                SearchHistory.add(moc: self.moc, searchText)
+                vm.submitSearch(searchText)
+            })
         } label: {
             Text(name ?? category.name)
         }
