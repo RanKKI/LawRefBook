@@ -31,7 +31,7 @@ struct SettingView: View {
                 HStack {
                     Text("分组方式")
                     Spacer()
-                    Picker("分组方式", selection: $groupingMethod) {
+                    Picker("", selection: $groupingMethod) {
                         ForEach(LawGroupingMethod.allCases, id: \.self) {
                             Text($0.rawValue)
                        }
@@ -41,7 +41,7 @@ struct SettingView: View {
                 HStack {
                     Text("搜索历史")
                     Spacer()
-                    Picker("搜索历史", selection: $searchHistoryType) {
+                    Picker("", selection: $searchHistoryType) {
                         ForEach(SearchHistoryType.allCases, id: \.self) {
                             Text($0.rawValue)
                        }
