@@ -1,16 +1,20 @@
 import SwiftUI
 
 extension View {
-    @ViewBuilder func phoneOnlyStackNavigationView() -> some View {
+
+    @ViewBuilder
+    func phoneOnlyStackNavigationView() -> some View {
         if UIDevice.current.userInterfaceIdiom == .phone {
             self.navigationViewStyle(.stack)
         } else {
             self
         }
     }
+
 }
 
 struct DeviceRotationViewModifier: ViewModifier {
+
     let action: (UIDeviceOrientation) -> Void
 
     func body(content: Content) -> some View {

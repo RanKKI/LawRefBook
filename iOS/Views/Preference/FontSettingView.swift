@@ -37,39 +37,27 @@ private struct AdjustSteppter<Value: Numeric>: View {
     }
 }
 
-struct SettingFontView: View {
-
-    @AppStorage("font_content")
-    var contentFontSize: Int = FontSizeDefault
-
-    @AppStorage("font_tracking")
-    var tracking: Double = FontTrackingDefault
+struct FontSettingView: View {
     
-    @AppStorage("font_spacing")
-    var spacing: Double = FontSpacingDefault
-    
-    @AppStorage("font_line_spacing")
-    var lineSpacing: Int = FontLineSpacingDefault
-
-    @State
-    private var searchText = ""
+    @ObservedObject
+    private var preference = Preference.shared
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                AdjustSteppter(title: "正文大小", value: $contentFontSize, step: 1)
-                AdjustSteppter(title: "字间距", value: $tracking, step: 0.1)
-                AdjustSteppter(title: "行间距", value: $spacing, step: 0.1)
-                AdjustSteppter(title: "法条间距", value: $lineSpacing, step: 1)
+                AdjustSteppter(title: "正文大小", value: $preference.contentFontSize, step: 1)
+                AdjustSteppter(title: "字间距", value: $preference.tracking, step: 0.1)
+                AdjustSteppter(title: "行间距", value: $preference.spacing, step: 0.1)
+                AdjustSteppter(title: "法条间距", value: $preference.lineSpacing, step: 1)
                 Group {
                     Text("中华人民共和国民法典").contentTitle()
                     Text("物权编").contentTitle()
                     Text("第一分编  通则").contentHeader(indent: 1)
                     Text("第一章  一般规定").contentHeader(indent: 2)
                     Divider()
-                    VStack(alignment: .leading, spacing: CGFloat(lineSpacing)) {
+                    VStack(alignment: .leading, spacing: CGFloat(preference.lineSpacing)) {
                         ForEach(exampleLines, id: \.self) { text in
-                            LawContentLineView(text: text, searchText: $searchText)
+                            LawContentLineView(text: text, searchText: .constant("不动产"))
                             Divider()
                         }
                     }
@@ -81,10 +69,7 @@ struct SettingFontView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 IconButton(icon: "gobackward") {
-                    contentFontSize = FontSizeDefault
-                    tracking = FontTrackingDefault
-                    spacing = FontSpacingDefault
-                    lineSpacing = FontLineSpacingDefault
+                    preference.resetFont()
                 }
             }
         }

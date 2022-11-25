@@ -110,7 +110,8 @@ class LawDatabase: ObservableObject {
             }
     }
     
-    func getLaw(uuid: UUID) -> TLaw? {
+    func getLaw(uuid: UUID?) -> TLaw? {
+        guard let uuid = uuid else { return nil }
         return self.getLawsBy(predicate: TLaw.id == uuid.asDBString()).first
     }
     

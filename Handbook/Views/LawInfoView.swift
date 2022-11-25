@@ -31,7 +31,7 @@ struct LawInfoPage: View {
             if !laws.isEmpty {
                 Section(header: Text("相关法律法规")) {
                     ForEach(laws) { law in
-                        NaviLawLink(law: law)
+                        LawLinkView(law: law)
                     }
                 }
             }

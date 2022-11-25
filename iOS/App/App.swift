@@ -2,49 +2,31 @@ import SwiftUI
 import CoreSpotlight
 import CoreData
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-
-        application.registerForRemoteNotifications()
-        print("registerForRemoteNotifications")
-
-        return true
-    }
-
-}
-
 @main
 struct MainApp: App {
 
     @UIApplicationDelegateAdaptor
     private var appDelegate: AppDelegate
 
-    @State
-    var showNewPage = false
-
-    @AppStorage("lastVersion")
-    var lastVersion: String?
-
-    @AppStorage("launchTimes2")
-    var launchTime: Int = 0
-
     private(set) var moc = Persistence.shared.container.viewContext
     
     @ObservedObject
-    private var db = LawDatabase.shared
+    private var db = LawManager.shared
     
+    @ObservedObject
+    private var db2 = LawDatabase.shared
+
     init() {
-        db.connect()
+
     }
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                if !db.isLoading {
-                    ContentView()
-                    WelcomeView()
+                if !db.isLoading && !db2.isLoading {
+//                    ContentView()
+                    LawListView(vm: .init(showFavorite: true))
+//                    WelcomeView()
                 } else {
                     VStack {
                         Spacer()
@@ -53,29 +35,20 @@ struct MainApp: App {
                     }
                 }
             }
-            .sheet(isPresented: $showNewPage) {
-                WhatNewView()
+            .task {
+                db2.connect()
+                await db.connect()
             }
             .environment(\.managedObjectContext, moc)
             .phoneOnlyStackNavigationView()
             .task {
-                self.checkVersionUpdate()
-                self.immigrateFavLaws()
-                IAPManager.shared.loadProducts()
-                checkRunTimes()
+//                self.immigrateFavLaws()
+//                IAPManager.shared.loadProducts()
             }
         }
     }
 
-    private func checkVersionUpdate(){
-        let curVersion = UIApplication.appVersion
-        if lastVersion == nil || lastVersion != curVersion {
-//            showNewPage.toggle()
-            lastVersion = curVersion
-//            SpotlightHelper.shared.createIndexes()
-        }
-    }
-
+    // 兼容代码
     private func immigrateFavLaws() {
         if LocalProvider.shared.favoriteUUID.isEmpty {
            return
@@ -105,13 +78,6 @@ struct MainApp: App {
                 }
             }
         }
-    }
-
-    private func checkRunTimes(){
-        if launchTime == 4 || launchTime == 30 {
-            AppStoreReviewManager.requestReviewIfAppropriate()
-        }
-        launchTime += 1;
     }
 
 }
