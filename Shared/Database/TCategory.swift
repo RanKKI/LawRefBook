@@ -53,4 +53,16 @@ struct TCategory: Identifiable, Hashable {
             laws: laws
         )
     }
+    
+    static func create(old: TCategory, laws: [TLaw]) -> TCategory {
+        return TCategory(
+            id: old.id,
+            name: old.name,
+            folder: old.folder,
+            isSubFolder: old.isSubFolder,
+            order: old.order,
+            group: old.group,
+            laws: laws
+        )
+    }
 }

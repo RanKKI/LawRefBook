@@ -16,31 +16,17 @@ class LocalProvider: ObservableObject{
 
     private var writeLocker = NSLock()
 
-    func getLawContent(_ uuid: UUID) -> LawContent {
-        writeLocker.lock()
-        if contents[uuid] == nil {
-            if let law = LawDatabase.shared.getLaw(uuid: uuid) {
-                contents[uuid] = LawContent(filePath: law.filepath(), isCases: law.level == "案例")
-            } else {
-                fatalError("unexpected law uuid: \(uuid)")
-            }
-        }
-        writeLocker.unlock()
-        return contents[uuid]!
-    }
+//    func getLawContent(_ uuid: UUID) async -> LawContent {
+//        writeLocker.lock()
+//        if contents[uuid] == nil {
+//            if let law = await LawManager.shared.getLaw(id: uuid) {
+//                contents[uuid] = LawContent(filePath: law.filepath(), isCases: law.level == "案例")
+//            } else {
+//                fatalError("unexpected law uuid: \(uuid)")
+//            }
+//        }
+//        writeLocker.unlock()
+//        return contents[uuid]!
+//    }
 
-    @AppStorage("favoriteLaws")
-    var favoriteUUID: [UUID] = []
-
-    func getFavoriteState(_ uuid: UUID) -> Bool {
-        return favoriteUUID.contains(uuid)
-    }
-
-    private var vms = [UUID: LawContentView.LawContentViewModel]()
-    func getViewModal(_ uuid: UUID) -> LawContentView.LawContentViewModel {
-        if vms[uuid] == nil {
-            vms[uuid] = LawContentView.LawContentViewModel(uuid)
-        }
-        return vms[uuid]!
-    }
 }

@@ -27,28 +27,28 @@ struct TOCList: View {
     }
 }
 
-struct TableOfContentView: View {
-
-    @ObservedObject
-    var vm: LawContentView.LawContentViewModel
-
-    @ObservedObject
-    var sheet: SheetMananger<LawContentView.SheetState>
-
-    var body: some View {
-        List(vm.content.TOC, id: \.id) { content in
-            TOCList(content: content) { line in
-                sheet.close()
-                vm.scrollPos = line
-            }
-        }
-        .listStyle(.plain)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing){
-                CloseSheetItem() {
-                    sheet.close()
-                }
-            }
-        }
-    }
-}
+//struct TableOfContentView: View {
+//
+//    @ObservedObject
+//    var vm: LawContentView.LawContentViewModel
+//
+//    @ObservedObject
+//    var sheet: SheetMananger<LawContentView.SheetState>
+//
+//    var body: some View {
+//        List(vm.content.TOC, id: \.id) { content in
+//            TOCList(content: content) { line in
+//                sheet.close()
+//                vm.scrollPos = line
+//            }
+//        }
+//        .listStyle(.plain)
+//        .toolbar {
+//            ToolbarItem(placement: .navigationBarTrailing){
+//                CloseSheetItem() {
+//                    sheet.close()
+//                }
+//            }
+//        }
+//    }
+//}

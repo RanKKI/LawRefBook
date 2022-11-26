@@ -45,12 +45,12 @@ struct LawInfoPage: View {
             }
         }
         .task {
-            LawDatabase.shared.queue.async {
-                let laws = LawDatabase.shared.getRelvantLaws(uuid: self.lawID)
-                DispatchQueue.main.async {
-                    self.laws =  laws
-                }
-            }
+//            LawDatabase.shared.queue.async {
+//                let laws = LawDatabase.shared.getRelvantLaws(uuid: self.lawID)
+//                DispatchQueue.main.async {
+//                    self.laws =  laws
+//                }
+//            }
         }
     }
 }

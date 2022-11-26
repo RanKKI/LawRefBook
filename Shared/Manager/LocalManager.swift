@@ -14,7 +14,7 @@ final class LocalManager {
     
     static let shared = LocalManager()
     
-    static let defaultDatabaseName = "db.sqlite"
+    static let defaultDatabaseName = "db.sqlite3"
 
     private var root: URL? {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)

@@ -48,34 +48,22 @@ extension LawListContentView {
             }
         }
 
-        fileprivate func refreshLaws(method: LawGroupingMethod) async -> [TCategory]{
-            let db = LawDatabase.shared
-            if method == .department {
-                return db.getCategories(withLaws: true)
-            }
-            return Dictionary(grouping: db.getLaws(), by: \.level)
-                .sorted {
-                    return LawLevel.firstIndex(of: $0.key)! < LawLevel.firstIndex(of: $1.key)!
-                }
-                .enumerated()
-                .map {
-                    return TCategory.create(id: $0, level: $1.key, laws: $1.value)
-                }
-        }
-
         fileprivate func doRefresh(method: LawGroupingMethod) async {
             uiThread {
                 self.isLoading = true
             }
-            var arr = await self.refreshLaws(method: method)
+            
+            let arr = await LawManager.shared.getCategories(by: method)
+
             if let category = self.category {
-                arr = arr.filter { $0.name == category }
+                let filteredArr = arr.filter { $0.name == category }
                 uiThread {
-                    self.categories = arr
+                    self.categories = filteredArr
                     self.isLoading = false
                 }
                 return
             }
+
             let cateogires = arr.filter { $0.isSubFolder == false }
             let folders = Dictionary(grouping: arr.filter { $0.isSubFolder }, by: \.group)
                 .sorted {

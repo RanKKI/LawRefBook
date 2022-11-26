@@ -68,13 +68,13 @@ extension SearchView {
             var results = [TLaw]()
             laws.forEach { law in
                 self.searchOpQueue.addOperation {
-                    let content = LocalProvider.shared.getLawContent(law.id)
-                    content.load()
-                    if !content.filterText(text: text).isEmpty {
-                        locker.lock()
-                        results.append(law)
-                        locker.unlock()
-                    }
+//                    let content = LocalProvider.shared.getLawContent(law.id)
+//                    content.load()
+//                    if !content.filterText(text: text).isEmpty {
+//                        locker.lock()
+//                        results.append(law)
+//                        locker.unlock()
+//                    }
                 }
             }
             searchOpQueue.addBarrierBlock {

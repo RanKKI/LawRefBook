@@ -117,17 +117,17 @@ private struct Sections : View {
     
     var body: some View {
         ForEach(items, id: \.self) { (section: [FavContent]) in
-            if let lawID = section.first?.lawId,
-               let content = LocalProvider.shared.getLawContent(lawID),
-               let law = LawDatabase.shared.getLaw(uuid: lawID) {
-                FavLineSection(lawID: lawID,
-                               law: law,
-                               lawContent: content,
-                               section: section)
-                .onAppear {
-                    content.loadAsync()
-                }
-            }
+//            if let lawID = section.first?.lawId,
+//               let content = LocalProvider.shared.getLawContent(lawID),
+//               let law = LawDatabase.shared.getLaw(uuid: lawID) {
+//                FavLineSection(lawID: lawID,
+//                               law: law,
+//                               lawContent: content,
+//                               section: section)
+//                .onAppear {
+//                    content.loadAsync()
+//                }
+//            }
         }
         .transition(.slide)
     }
@@ -159,15 +159,16 @@ private struct FavFolderView: View {
     }
     
     private var shareContents: [ShareLawView.ShareContent] {
-        folderItems.map {
-            let uuid = $0.first?.lawId ?? UUID()
-            let law = LawDatabase.shared.getLaw(uuid: uuid)
-            let content = LocalProvider.shared.getLawContent(uuid)
-            return $0.map { item in
-                ShareLawView.ShareContent(name: law?.name ?? "", content: content.getLine(line: item.line))
-            }
-        }
-        .reduce([], { $0 + $1 })
+//        folderItems.map {
+//            let uuid = $0.first?.lawId ?? UUID()
+//            let law = LawDatabase.shared.getLaw(uuid: uuid)
+//            let content = LocalProvider.shared.getLawContent(uuid)
+//            return $0.map { item in
+//                ShareLawView.ShareContent(name: law?.name ?? "", content: content.getLine(line: item.line))
+//            }
+//        }
+//        .reduce([], { $0 + $1 })
+        return []
     }
 
     var body: some View {

@@ -50,14 +50,14 @@ struct FontSettingView: View {
                 AdjustSteppter(title: "行间距", value: $preference.spacing, step: 0.1)
                 AdjustSteppter(title: "法条间距", value: $preference.lineSpacing, step: 1)
                 Group {
-                    Text("中华人民共和国民法典").contentTitle()
-                    Text("物权编").contentTitle()
-                    Text("第一分编  通则").contentHeader(indent: 1)
-                    Text("第一章  一般规定").contentHeader(indent: 2)
+                    Text("中华人民共和国民法典").displayMode(.Title)
+                    Text("物权编").displayMode(.Title)
+                    Text("第一分编  通则").displayMode(.Header, indent: 1)
+                    Text("第一章  一般规定").displayMode(.Header, indent: 2)
                     Divider()
                     VStack(alignment: .leading, spacing: CGFloat(preference.lineSpacing)) {
                         ForEach(exampleLines, id: \.self) { text in
-                            LawContentLineView(text: text, searchText: .constant("不动产"))
+//                            LawContentTextView(text: text, searchText: .constant("不动产"))
                             Divider()
                         }
                     }

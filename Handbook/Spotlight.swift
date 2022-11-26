@@ -15,19 +15,19 @@ class SpotlightHelper {
     ]
 
     func createIndexes() {
-        queue.async {
-            let now = Date.currentTimestamp()
-            print("creating spotlight indexes")
-            for law in LawDatabase.shared.getLaws() {
-                if !self.spotItems.contains(law.level) {
-                    continue
-                }
-                let content = LocalProvider.shared.getLawContent(law.id)
-                content.load()
-                self.addLawContentToSpotlight(content: content, law: law)
-            }
-            print("creating spotlight indexes end, cost: \(Date.currentTimestamp() - now)")
-        }
+//        queue.async {
+//            let now = Date.currentTimestamp()
+//            print("creating spotlight indexes")
+//            for law in LawDatabase.shared.getLaws() {
+//                if !self.spotItems.contains(law.level) {
+//                    continue
+//                }
+//                let content = LocalProvider.shared.getLawContent(law.id)
+//                content.load()
+//                self.addLawContentToSpotlight(content: content, law: law)
+//            }
+//            print("creating spotlight indexes end, cost: \(Date.currentTimestamp() - now)")
+//        }
     }
 
     private func addLawContentToSpotlight(content: LawContent, law : TLaw) {

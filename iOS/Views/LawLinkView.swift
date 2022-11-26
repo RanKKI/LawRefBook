@@ -16,7 +16,7 @@ struct LawLinkView: View {
 
     var body: some View {
         NavigationLink {
-            LawContentView(vm: LocalProvider.shared.getViewModal(law.id), searchText: searchText)
+            LawContentView(vm: .init(law: law, searchText: searchText))
         } label: {
             VStack(alignment: .leading) {
                 if let subTitle = law.subtitle, !subTitle.isEmpty {
