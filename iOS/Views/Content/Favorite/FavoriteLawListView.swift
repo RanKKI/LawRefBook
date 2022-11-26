@@ -17,18 +17,16 @@ struct FavoriteLawListView: View {
 
     var body: some View {
         if !favLawsResult.isEmpty {
-            VStack {
-                Section {
-                    ForEach(favLawsResult.map { LawDatabase.shared.getLaw(uuid: $0.id) }, id: \.self?.id) { law in
-                        if let law = law {
-                            LawLinkView(law: law)
-                        } else {
-                            InvalidLawLinkView()
-                        }
+            Section {
+                ForEach(favLawsResult.map { LawDatabase.shared.getLaw(uuid: $0.id) }, id: \.self?.id) { law in
+                    if let law = law {
+                        LawLinkView(law: law)
+                    } else {
+                        InvalidLawLinkView()
                     }
-                } header: {
-                    Text("收藏")
                 }
+            } header: {
+                Text("收藏")
             }
         } else {
             Group {}

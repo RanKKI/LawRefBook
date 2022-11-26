@@ -1,6 +1,7 @@
 import SwiftUI
 import CoreSpotlight
 import CoreData
+import Combine
 
 @main
 struct MainApp: App {
@@ -15,25 +16,24 @@ struct MainApp: App {
     
     @ObservedObject
     private var db2 = LawDatabase.shared
-
-    init() {
-
+    
+    var isLoading: Binding<Bool> {
+        Binding(
+            get: { db.isLoading || db2.isLoading },
+            set: { val in
+                
+            }
+        )
     }
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                if !db.isLoading && !db2.isLoading {
-//                    ContentView()
-                    LawListView(vm: .init(showFavorite: true))
-//                    WelcomeView()
-                } else {
-                    VStack {
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
+                LoadingView(isLoading: isLoading) {
+                    LawListView(showFavorite: true)
                 }
+                .navigationTitle("中国法律")
+                .navigationBarTitleDisplayMode(.inline)
             }
             .task {
                 db2.connect()

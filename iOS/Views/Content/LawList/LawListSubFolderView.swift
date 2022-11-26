@@ -15,7 +15,7 @@ struct LawListSubFolderView: View {
 
     var body: some View {
         NavigationLink {
-            LawListView(vm: .init(category: category.name), isSubList: true)
+            LawListView(cateogry: category.name)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle(category.name)
                 .listStyle(.plain)

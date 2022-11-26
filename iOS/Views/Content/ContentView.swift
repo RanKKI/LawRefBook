@@ -18,7 +18,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            LawListView(vm: .init(showFavorite: true))
+            LawListView(showFavorite: true)
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {

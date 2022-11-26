@@ -7,11 +7,9 @@
 
 import Foundation
 
-extension LawListView {
+extension LawListContentView {
 
     final class VM: ObservableObject {
-
-        var showFavorite = false
 
         @Published
         var categories: [TCategory] = []
@@ -19,20 +17,20 @@ extension LawListView {
         @Published
         var folders: [[TCategory]] = []
         
+        @Published
+        var isLoading = true
+
+        @Published
+        var searchText = ""
+        
+        var isSignleCategory: Bool {
+            category != nil && categories.count <= 1
+        }
+
         fileprivate var category: String? = nil
         fileprivate var queue: DispatchQueue = DispatchQueue(label: "viewmodal", qos: .background)
         
-        @Published
-        var test = 0
-        
-        @Published
-        var arr = [String]()
-
-        init(showFavorite: Bool) {
-            self.showFavorite = showFavorite
-        }
-        
-        init(category: String) {
+        init(category: String?) {
             self.category = category
         }
         
@@ -57,13 +55,16 @@ extension LawListView {
         }
 
         fileprivate func doRefresh(method: LawGroupingMethod) {
-//            self.isLoading = true
+            uiThread {
+                self.isLoading = true
+            }
             queue.async {
                 var arr = self.refreshLaws(method: method)
                 if let category = self.category {
                     arr = arr.filter { $0.name == category }
                     uiThread {
                         self.categories = arr
+                        self.isLoading = false
                     }
                     return
                 }
@@ -78,6 +79,7 @@ extension LawListView {
                         $0.value
                     }
                 uiThread {
+                    self.isLoading = false
                     self.folders = folders
                     self.categories = cateogires
                 }

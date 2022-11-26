@@ -13,7 +13,7 @@ final class LawManager: ObservableObject {
     static let shared = LawManager()
     
     @Published
-    private(set) var isLoading = false
+    var isLoading = false
 
     private var connections = [Connection]()
     
