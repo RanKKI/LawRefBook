@@ -7,32 +7,33 @@ extension SearchHistoryView {
         
         @Published
         private(set) var histories: [SearchHistory] = []
-        
-        @AppStorage("defaultSearchHistoryType")
-        private var searchHistoryType = SearchHistoryType.share
-        
+
         private(set) var lawID: UUID?
         
-        private var moc: NSManagedObjectContext?
-        
+        var moc: NSManagedObjectContext?
+
         var showEmptyAll: Bool {
-            !histories.isEmpty
+            get { !histories.isEmpty }
+            set { }
         }
 
-        init(_ lawID: UUID?) {
+        init() {
+
+        }
+
+        init(lawID: UUID?) {
             self.lawID = lawID
         }
         
-        func loadHistories(moc: NSManagedObjectContext) {
-            self.moc = moc
-            self.histories = (try? moc.fetch(buildRequest(limit: 10))) ?? []
+        func loadHistories() {
+            guard let moc = moc else { return }
+            let req = buildRequest(limit: 10)
+            let result = try? moc.fetch(req)
+            self.histories = result ?? []
         }
         
         func removeAllHistories() {
-            guard moc != nil else {
-                return
-            }
-            let moc = moc!
+            guard let moc = moc else { return }
             let req = buildRequest(limit: nil)
             let arr = (try? moc.fetch(req)) ?? []
             for item in arr {
@@ -41,11 +42,11 @@ extension SearchHistoryView {
             try? moc.save()
             histories = []
         }
-        
+
         private func buildRequest(limit: Int?) -> NSFetchRequest<SearchHistory> {
             let fetchRequest = SearchHistory.fetchRequest()
-            
-            if searchHistoryType == .standalone {
+
+            if Preference.shared.searchHistoryType == .standalone {
                 if let lawId = lawID {
                     fetchRequest.predicate = NSPredicate(format: "lawId == %@", lawId.uuidString)
                 } else {

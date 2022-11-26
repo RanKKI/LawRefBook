@@ -86,6 +86,13 @@
 		90E835742931B02100519E23 /* LawListContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835732931B02100519E23 /* LawListContentView.swift */; };
 		90E835772931B29100519E23 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835762931B29100519E23 /* LoadingView.swift */; };
 		90E835792931BB8E00519E23 /* SearchPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835782931BB8E00519E23 /* SearchPayload.swift */; };
+		90E8357B2931CD6500519E23 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E8357A2931CD6500519E23 /* String.swift */; };
+		90E8357E2931CD9C00519E23 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E8357D2931CD9C00519E23 /* Review.swift */; };
+		90E835802931CDCF00519E23 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E8357F2931CDCF00519E23 /* Application.swift */; };
+		90E835822931CDF900519E23 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835812931CDF900519E23 /* UUID.swift */; };
+		90E835852931CE4500519E23 /* Mail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835842931CE4500519E23 /* Mail.swift */; };
+		90E835882931CE5700519E23 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835872931CE5700519E23 /* Array.swift */; };
+		90E8358A2931CE7100519E23 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835892931CE7100519E23 /* Date.swift */; };
 		90F5CEFD28B21E630003752E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5CEFC28B21E630003752E /* TableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -181,6 +188,13 @@
 		90E835732931B02100519E23 /* LawListContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawListContentView.swift; sourceTree = "<group>"; };
 		90E835762931B29100519E23 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		90E835782931BB8E00519E23 /* SearchPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPayload.swift; sourceTree = "<group>"; };
+		90E8357A2931CD6500519E23 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		90E8357D2931CD9C00519E23 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		90E8357F2931CDCF00519E23 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		90E835812931CDF900519E23 /* UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUID.swift; sourceTree = "<group>"; };
+		90E835842931CE4500519E23 /* Mail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mail.swift; sourceTree = "<group>"; };
+		90E835872931CE5700519E23 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		90E835892931CE7100519E23 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		90F5CEFC28B21E630003752E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -235,7 +249,6 @@
 				9016D22227E61BBF0027D69D /* Ext */,
 				90D4CD962862B761006DB8AC /* ShareLaw */,
 				90D4CDA32862D770006DB8AC /* Favorite */,
-				90D4CDAA2862F603006DB8AC /* SearchHistory */,
 				9035983927C9F57D00C8D9E7 /* LawContentView.swift */,
 				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
@@ -280,7 +293,6 @@
 				909AE28E281F6B1F008679C4 /* Provider */,
 				905B83D427F83BEF00F951E9 /* Utils */,
 				900EBCDE27D35CEF00E20FE4 /* Toolbar Items */,
-				903F5329280E5C7D00D4523D /* IAP */,
 				900EBCDD27D35CCB00E20FE4 /* Models */,
 				900EBCDC27D35CB800E20FE4 /* Views */,
 				900EBCDB27D35C9D00E20FE4 /* Resources */,
@@ -336,6 +348,7 @@
 		90399156292A1D1800CFC975 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				90E835832931CE1500519E23 /* Utils */,
 				90399164292A39FD00CFC975 /* Database */,
 				9039915C292A23FD00CFC975 /* Extensions */,
 				9039915B292A23F200CFC975 /* Manager */,
@@ -357,9 +370,13 @@
 		9039915C292A23FD00CFC975 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				90E8357A2931CD6500519E23 /* String.swift */,
+				90E835812931CDF900519E23 /* UUID.swift */,
 				901D199D2847565C00999AE6 /* QRCode.swift */,
 				9039915D292A240C00CFC975 /* Thread.swift */,
 				90399162292A352400CFC975 /* FileManager.swift */,
+				90E835872931CE5700519E23 /* Array.swift */,
+				90E835892931CE7100519E23 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -376,7 +393,8 @@
 		90399165292A3A2A00CFC975 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				90193EFF27F5A376008CF0A6 /* Consts.swift */,
+				90E8357C2931CD9300519E23 /* Utils */,
+				903F5329280E5C7D00D4523D /* IAP */,
 				90399166292A3A4300CFC975 /* App */,
 				9039916A292A3A7A00CFC975 /* Views */,
 				90399169292A3A6C00CFC975 /* Extensions */,
@@ -396,6 +414,7 @@
 		90399169292A3A6C00CFC975 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				90E8357F2931CDCF00519E23 /* Application.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -476,7 +495,6 @@
 		905B83D427F83BEF00F951E9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				90A22C31282239FA00B5DC24 /* SheetManager.swift */,
 				16BA35C627CDDE8700694880 /* Util.swift */,
 				905B83D527F83BFD00F951E9 /* FileUtil.swift */,
 				90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */,
@@ -515,18 +533,10 @@
 			path = Favorite;
 			sourceTree = "<group>";
 		};
-		90D4CDAA2862F603006DB8AC /* SearchHistory */ = {
-			isa = PBXGroup;
-			children = (
-				903A8901280C145300EECBC7 /* SearchHistoryView.swift */,
-				90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */,
-			);
-			path = SearchHistory;
-			sourceTree = "<group>";
-		};
 		90E8356C2931AEDB00519E23 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				90E8358D2931E88700519E23 /* History */,
 				90E8356D2931AEE900519E23 /* SearchView.swift */,
 				90E835712931AF5100519E23 /* SearchViewModel.swift */,
 				90E8356F2931AF0E00519E23 /* SearchTypeView.swift */,
@@ -541,6 +551,33 @@
 				90E835762931B29100519E23 /* LoadingView.swift */,
 			);
 			path = Loading;
+			sourceTree = "<group>";
+		};
+		90E8357C2931CD9300519E23 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				90193EFF27F5A376008CF0A6 /* Consts.swift */,
+				90E8357D2931CD9C00519E23 /* Review.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		90E835832931CE1500519E23 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				90A22C31282239FA00B5DC24 /* SheetManager.swift */,
+				90E835842931CE4500519E23 /* Mail.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		90E8358D2931E88700519E23 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				903A8901280C145300EECBC7 /* SearchHistoryView.swift */,
+				90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -665,6 +702,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90E835852931CE4500519E23 /* Mail.swift in Sources */,
 				903F532D280E5D4600D4523D /* InAppPurchaseView.swift in Sources */,
 				90A22C32282239FA00B5DC24 /* SheetManager.swift in Sources */,
 				9039916D292A3AD000CFC975 /* ContentView.swift in Sources */,
@@ -679,12 +717,14 @@
 				900EBCE627D35FDE00E20FE4 /* LocalProvider.swift in Sources */,
 				90E835702931AF0E00519E23 /* SearchTypeView.swift in Sources */,
 				901D199F2847565C00999AE6 /* QRCode.swift in Sources */,
+				90E8357B2931CD6500519E23 /* String.swift in Sources */,
 				90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */,
 				16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */,
 				90399158292A1D5400CFC975 /* LawManager.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* PreferenceView.swift in Sources */,
 				9039917C292A3FB600CFC975 /* FavoriteLawListView.swift in Sources */,
 				90E835792931BB8E00519E23 /* SearchPayload.swift in Sources */,
+				90E835882931CE5700519E23 /* Array.swift in Sources */,
 				90399163292A352400CFC975 /* FileManager.swift in Sources */,
 				90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */,
 				90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */,
@@ -693,6 +733,7 @@
 				90399179292A3F0C00CFC975 /* LawListContentViewModel.swift in Sources */,
 				903F5326280E555200D4523D /* Persistence.swift in Sources */,
 				90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */,
+				90E8358A2931CE7100519E23 /* Date.swift in Sources */,
 				1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */,
 				90D4CDA52862D781006DB8AC /* FavoriteFolderView.swift in Sources */,
 				903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */,
@@ -700,6 +741,7 @@
 				9039917E292A403300CFC975 /* LawLinkView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
 				90F5CEFD28B21E630003752E /* TableView.swift in Sources */,
+				90E835822931CDF900519E23 /* UUID.swift in Sources */,
 				90D4CD9F2862BAE0006DB8AC /* ShareLawEditView.swift in Sources */,
 				9039915A292A1E3F00CFC975 /* LocalManager.swift in Sources */,
 				90D4CD982862B7B9006DB8AC /* ShareLawViewModel.swift in Sources */,
@@ -714,9 +756,11 @@
 				90399180292B96D000CFC975 /* LawListFoldersView.swift in Sources */,
 				16D28E9C27CF829A001FB6B8 /* FavoriteContentView.swift in Sources */,
 				90D4CDA72862D7AB006DB8AC /* Favorite.swift in Sources */,
+				90E835802931CDCF00519E23 /* Application.swift in Sources */,
 				1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */,
 				9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */,
 				90399168292A3A4C00CFC975 /* Delegate.swift in Sources */,
+				90E8357E2931CD9C00519E23 /* Review.swift in Sources */,
 				901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */,
 				9039915E292A240C00CFC975 /* Thread.swift in Sources */,
 				901D19A02847565C00999AE6 /* Snapshot.swift in Sources */,

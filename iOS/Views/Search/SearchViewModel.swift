@@ -16,6 +16,9 @@ extension SearchView {
         
         @Published
         var isLoading = false
+        
+        @Published
+        var submitted = false
 
         @Published
         var searchResult = [TLaw]()
@@ -27,6 +30,7 @@ extension SearchView {
         }
 
         func search(text: String, laws: [TLaw], completion: @escaping () -> Void) {
+            submitted = true
             if text.isEmpty {
                 self.clearSearch()
                 return
@@ -81,6 +85,7 @@ extension SearchView {
         }
 
         func clearSearch() {
+            submitted = false
             self.searchResult = []
         }
 

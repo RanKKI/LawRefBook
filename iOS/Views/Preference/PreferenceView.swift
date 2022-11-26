@@ -52,7 +52,7 @@ struct PreferenceView: View {
                     .foregroundColor(.accentColor)
                     .underline()
                     .onTapGesture {
-                        OpenMail(subject: "问题反馈：", body: "")
+                        Mail.reportIssue()
                     }
             }
             Section(footer: Text("自豪地采用 SwiftUI")){

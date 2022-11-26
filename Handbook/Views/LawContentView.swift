@@ -125,7 +125,7 @@ private struct LawLineView: View {
                         Label("收藏", systemImage: "suit.heart")
                     }
                     Button {
-                        Report(law: law, content: text)
+                        Mail.reportIssue(law: law, content: text)
                     } label: {
                         Label("反馈", systemImage: "flag")
                     }
@@ -241,10 +241,7 @@ private struct LawContentList: View {
     var body: some View {
         Group {
             if isSearching && !vm.isSearchSubmit {
-                SearchHistoryView(vm: .init(vm.lawID), searchText: $searchText) { txt in
-                    vm.doSearchText(txt)
-                    searchText = txt
-                }
+
             } else if vm.body.isEmpty {
                 Spacer()
                 Text("没有结果").center()

@@ -11,15 +11,22 @@ final class SearchPayload: ObservableObject {
     
     @Published
     var text = ""
-    
+
     @Published
-    private(set) var submit = false
+    private(set) var isSubmit = false
     
-    func onSubmit() {
-        submit = true
+    func submit() {
+        isSubmit = true
+    }
+
+    func submit(text: String) {
+        self.text = text
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+            self.submit()
+        }
     }
     
     func afterSubmit() {
-        submit = false
+        isSubmit = false
     }
 }
