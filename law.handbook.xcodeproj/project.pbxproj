@@ -23,8 +23,6 @@
 		900EBCEA27D3621700E20FE4 /* Law.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE927D3621700E20FE4 /* Law.swift */; };
 		900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */; };
 		9016D22427E61BEA0027D69D /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9016D22327E61BEA0027D69D /* Alert.swift */; };
-		90193EF827F57E78008CF0A6 /* AContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EF727F57E78008CF0A6 /* AContentView.swift */; };
-		90193EFA27F57E93008CF0A6 /* lLawListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EF927F57E93008CF0A6 /* lLawListViewModel.swift */; };
 		90193EFC27F5985E008CF0A6 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFB27F5985E008CF0A6 /* View.swift */; };
 		90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFD27F599A5008CF0A6 /* WelcomeView.swift */; };
 		90193F0027F5A376008CF0A6 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFF27F5A376008CF0A6 /* Consts.swift */; };
@@ -39,7 +37,6 @@
 		9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035982B27C9012B00C8D9E7 /* LawContent.swift */; };
 		9035983A27C9F57D00C8D9E7 /* LawContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983927C9F57D00C8D9E7 /* LawContentView.swift */; };
 		9035983C27C9F96400C8D9E7 /* PreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035983B27C9F96400C8D9E7 /* PreferenceView.swift */; };
-		9036BB542929D2FE00566DDD /* VMCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9036BB532929D2FE00566DDD /* VMCache.swift */; };
 		90399158292A1D5400CFC975 /* LawManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90399157292A1D5400CFC975 /* LawManager.swift */; };
 		9039915A292A1E3F00CFC975 /* LocalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90399159292A1E3F00CFC975 /* LocalManager.swift */; };
 		9039915E292A240C00CFC975 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9039915D292A240C00CFC975 /* Thread.swift */; };
@@ -121,8 +118,6 @@
 		900EBCE927D3621700E20FE4 /* Law.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Law.swift; sourceTree = "<group>"; };
 		900EBCEC27D3815900E20FE4 /* LawData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LawData.xcdatamodel; sourceTree = "<group>"; };
 		9016D22327E61BEA0027D69D /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		90193EF727F57E78008CF0A6 /* AContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AContentView.swift; sourceTree = "<group>"; };
-		90193EF927F57E93008CF0A6 /* lLawListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lLawListViewModel.swift; sourceTree = "<group>"; };
 		90193EFB27F5985E008CF0A6 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		90193EFD27F599A5008CF0A6 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		90193EFF27F5A376008CF0A6 /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
@@ -138,7 +133,6 @@
 		9035982B27C9012B00C8D9E7 /* LawContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContent.swift; sourceTree = "<group>"; };
 		9035983927C9F57D00C8D9E7 /* LawContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentView.swift; sourceTree = "<group>"; };
 		9035983B27C9F96400C8D9E7 /* PreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceView.swift; sourceTree = "<group>"; };
-		9036BB532929D2FE00566DDD /* VMCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMCache.swift; sourceTree = "<group>"; };
 		90399157292A1D5400CFC975 /* LawManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawManager.swift; sourceTree = "<group>"; };
 		90399159292A1E3F00CFC975 /* LocalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalManager.swift; sourceTree = "<group>"; };
 		9039915D292A240C00CFC975 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
@@ -242,7 +236,6 @@
 				90D4CD962862B761006DB8AC /* ShareLaw */,
 				90D4CDA32862D770006DB8AC /* Favorite */,
 				90D4CDAA2862F603006DB8AC /* SearchHistory */,
-				90193EF727F57E78008CF0A6 /* AContentView.swift */,
 				9035983927C9F57D00C8D9E7 /* LawContentView.swift */,
 				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
@@ -256,7 +249,6 @@
 			children = (
 				9035982B27C9012B00C8D9E7 /* LawContent.swift */,
 				900EBCE927D3621700E20FE4 /* Law.swift */,
-				90193EF927F57E93008CF0A6 /* lLawListViewModel.swift */,
 				903A8903280C2D7C00EECBC7 /* LawContentViewModel.swift */,
 			);
 			path = Models;
@@ -497,7 +489,6 @@
 			children = (
 				909AE291281F6B3A008679C4 /* LawDatabase.swift */,
 				900EBCE527D35FDE00E20FE4 /* LocalProvider.swift */,
-				9036BB532929D2FE00566DDD /* VMCache.swift */,
 			);
 			path = Provider;
 			sourceTree = "<group>";
@@ -683,7 +674,6 @@
 				90193EFC27F5985E008CF0A6 /* View.swift in Sources */,
 				90E835722931AF5100519E23 /* SearchViewModel.swift in Sources */,
 				90399171292A3C7D00CFC975 /* Preference.swift in Sources */,
-				90193EF827F57E78008CF0A6 /* AContentView.swift in Sources */,
 				90D4CD9B2862B9F3006DB8AC /* SharingViewController.swift in Sources */,
 				909AE292281F6B3A008679C4 /* LawDatabase.swift in Sources */,
 				900EBCE627D35FDE00E20FE4 /* LocalProvider.swift in Sources */,
@@ -715,7 +705,6 @@
 				90D4CD982862B7B9006DB8AC /* ShareLawViewModel.swift in Sources */,
 				90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */,
 				900EBCEA27D3621700E20FE4 /* Law.swift in Sources */,
-				90193EFA27F57E93008CF0A6 /* lLawListViewModel.swift in Sources */,
 				90399173292A3D1B00CFC975 /* SafariLinkView.swift in Sources */,
 				906E36A428053BF400A5CC39 /* Safari.swift in Sources */,
 				902DAE5827C7CBC100926036 /* App.swift in Sources */,
@@ -729,7 +718,6 @@
 				9035982C27C9012B00C8D9E7 /* LawContent.swift in Sources */,
 				90399168292A3A4C00CFC975 /* Delegate.swift in Sources */,
 				901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */,
-				9036BB542929D2FE00566DDD /* VMCache.swift in Sources */,
 				9039915E292A240C00CFC975 /* Thread.swift in Sources */,
 				901D19A02847565C00999AE6 /* Snapshot.swift in Sources */,
 				90E835742931B02100519E23 /* LawListContentView.swift in Sources */,

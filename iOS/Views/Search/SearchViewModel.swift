@@ -19,42 +19,67 @@ extension SearchView {
 
         @Published
         var searchResult = [TLaw]()
-        
+
         private(set) var category: String? = nil
-        
-        init() {
-            print("init \(self)")
-        }
-        
+
         init(category: String?) {
             self.category = category
-            print("init \(Unmanaged.passUnretained(self).toOpaque())")
         }
 
-        func search(text: String, completion: @escaping () -> Void) {
-            print("search \(text)")
-            uiThread {
-                self.isLoading = true
+        func search(text: String, laws: [TLaw], completion: @escaping () -> Void) {
+            if text.isEmpty {
+                self.clearSearch()
+                return
             }
-            DispatchQueue.main.async(qos: .background) {
-                var laws = [TLaw]()
-                if let category = self.category {
-                    laws = LawDatabase.shared.getLaws(category: category)
-                } else {
-                    laws = LawDatabase.shared.getLaws()
-                }
-                print("laws \(laws.count)")
-                laws = laws.filter { $0.name.contains(text) }
-                print("laws \(laws.count)")
+            Task {
                 uiThread {
-                    self.searchResult = laws
+                    self.isLoading = true
+                }
+                var result = [TLaw]()
+                if searchType == .catalogue {
+                    result = await self.titleSearch(text: text, laws: laws)
+                } else {
+                    result = await self.fulltextSearch(text: text, laws: laws)
+                }
+                uiThread {
+                    self.searchResult = result
                     self.isLoading = false
-                    print("search \(Unmanaged.passUnretained(self).toOpaque())")
                     completion()
                 }
             }
         }
         
+        private func titleSearch(text: String, laws: [TLaw]) async -> [TLaw] {
+            return laws.filter { law in
+                law.name.contains(text) || text.tokenised().allSatisfy { law.name.contains($0) }
+            }
+        }
+        
+        
+        private let searchOpQueue: OperationQueue = OperationQueue()
+
+        private func fulltextSearch(text: String, laws: [TLaw]) async -> [TLaw] {
+            searchOpQueue.cancelAllOperations()
+            let locker = NSLock()
+            var results = [TLaw]()
+            laws.forEach { law in
+                self.searchOpQueue.addOperation {
+                    let content = LocalProvider.shared.getLawContent(law.id)
+                    content.load()
+                    if !content.filterText(text: text).isEmpty {
+                        locker.lock()
+                        results.append(law)
+                        locker.unlock()
+                    }
+                }
+            }
+            searchOpQueue.addBarrierBlock {
+                
+            }
+            searchOpQueue.waitUntilAllOperationsAreFinished()
+            return results
+        }
+
         func clearSearch() {
             self.searchResult = []
         }

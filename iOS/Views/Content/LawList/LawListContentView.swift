@@ -48,13 +48,18 @@ struct LawListContentView: View {
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
             if isSearching {
-                SearchView(vm: searchVM, search: search)
+                SearchView(vm: searchVM, search: search, laws: vm.laws)
             } else {
                 lawList
             }
         }
         .onAppear {
             vm.onAppear()
+        }
+        .onChange(of: isSearching) { isSearching in
+            if !isSearching {
+                searchVM.clearSearch()
+            }
         }
     }
 
