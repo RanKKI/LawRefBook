@@ -11,15 +11,25 @@ import SwiftUI
 struct LawListContentView: View {
     
     @ObservedObject
-    var vm: VM
+    private var vm: VM
     
-    var showFavorite = false
+    private var showFavorite = false
     
-    @Binding
-    var searchText: String
+    @ObservedObject
+    private var search: SearchPayload
 
     @Environment(\.isSearching)
     private var isSearching
+    
+    @State
+    private var searchVM: SearchView.VM
+
+    init(vm: VM, showFavorite: Bool, search: SearchPayload) {
+        self.vm = vm
+        self.showFavorite = showFavorite
+        self.search = search
+        self.searchVM = .init(category: vm.category)
+    }
 
     var lawList: some View {
         List {
@@ -38,7 +48,7 @@ struct LawListContentView: View {
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
             if isSearching {
-                SearchView(vm: .init())
+                SearchView(vm: searchVM, search: search)
             } else {
                 lawList
             }

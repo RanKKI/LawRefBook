@@ -30,10 +30,8 @@ struct MainApp: App {
         WindowGroup {
             NavigationView {
                 LoadingView(isLoading: isLoading) {
-                    LawListView(showFavorite: true)
+                    ContentView()
                 }
-                .navigationTitle("中国法律")
-                .navigationBarTitleDisplayMode(.inline)
             }
             .task {
                 db2.connect()

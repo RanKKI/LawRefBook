@@ -10,20 +10,30 @@ import SwiftUI
 
 struct LawListView: View {
     
-    var showFavorite = false
-    var cateogry: String?
+    private var showFavorite = false
+    private var cateogry: String?
 
     @State
-    private var searchText = ""
+    private var search = SearchPayload()
+    
+    @State
+    private var vm: LawListContentView.VM
+    
+    init(showFavorite: Bool, cateogry: String? = nil, search: SearchPayload = SearchPayload()) {
+        self.showFavorite = showFavorite
+        self.cateogry = cateogry
+        self.search = search
+        self.vm = .init(category: cateogry)
+    }
 
     var body: some View {
         Group {
-            LawListContentView(vm: .init(category: cateogry), showFavorite: showFavorite, searchText: $searchText)
+            LawListContentView(vm: vm, showFavorite: showFavorite, search: search)
         }
-        .searchable(text: $searchText)
-        .onSubmit(of: .search, {
-            
-        })
+        .searchable(text: $search.text)
+        .onSubmit(of: .search) {
+            search.onSubmit()
+        }
     }
 
 }

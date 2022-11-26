@@ -88,6 +88,7 @@
 		90E835722931AF5100519E23 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835712931AF5100519E23 /* SearchViewModel.swift */; };
 		90E835742931B02100519E23 /* LawListContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835732931B02100519E23 /* LawListContentView.swift */; };
 		90E835772931B29100519E23 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835762931B29100519E23 /* LoadingView.swift */; };
+		90E835792931BB8E00519E23 /* SearchPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835782931BB8E00519E23 /* SearchPayload.swift */; };
 		90F5CEFD28B21E630003752E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5CEFC28B21E630003752E /* TableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -185,6 +186,7 @@
 		90E835712931AF5100519E23 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		90E835732931B02100519E23 /* LawListContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawListContentView.swift; sourceTree = "<group>"; };
 		90E835762931B29100519E23 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		90E835782931BB8E00519E23 /* SearchPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPayload.swift; sourceTree = "<group>"; };
 		90F5CEFC28B21E630003752E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -537,6 +539,7 @@
 				90E8356D2931AEE900519E23 /* SearchView.swift */,
 				90E835712931AF5100519E23 /* SearchViewModel.swift */,
 				90E8356F2931AF0E00519E23 /* SearchTypeView.swift */,
+				90E835782931BB8E00519E23 /* SearchPayload.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				90399158292A1D5400CFC975 /* LawManager.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* PreferenceView.swift in Sources */,
 				9039917C292A3FB600CFC975 /* FavoriteLawListView.swift in Sources */,
+				90E835792931BB8E00519E23 /* SearchPayload.swift in Sources */,
 				90399163292A352400CFC975 /* FileManager.swift in Sources */,
 				90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */,
 				90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */,

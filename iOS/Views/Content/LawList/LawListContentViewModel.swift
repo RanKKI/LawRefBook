@@ -27,15 +27,21 @@ extension LawListContentView {
             category != nil && categories.count <= 1
         }
 
-        fileprivate var category: String? = nil
+        private(set) var category: String? = nil
         fileprivate var queue: DispatchQueue = DispatchQueue(label: "viewmodal", qos: .background)
         
+        init() {
+            
+        }
+
         init(category: String?) {
             self.category = category
         }
         
         func onAppear() {
+            print("on lawlist appear")
             guard categories.isEmpty && folders.isEmpty else { return }
+            print("on lawlist do refresh")
             self.doRefresh(method: .department)
         }
 
