@@ -83,22 +83,21 @@ private struct FavLineSection: View {
     var lawID: UUID
     var law: TLaw
 
-    @ObservedObject
     var lawContent: LawContent
 
     var section: [FavContent]
 
     var body: some View {
         Section {
-            if lawContent.isLoading {
-                ProgressView()
-            } else {
-                ForEach(section, id: \.id) { (fav: FavContent) in
-                    if let content = lawContent.getLine(line: fav.line) {
-                        FavLine(fav: fav, content: content, law: law)
-                    }
-                }
-            }
+//            if lawContent.isLoading {
+//                ProgressView()
+//            } else {
+//                ForEach(section, id: \.id) { (fav: FavContent) in
+//                    if let content = lawContent.getLine(line: fav.line) {
+//                        FavLine(fav: fav, content: content, law: law)
+//                    }
+//                }
+//            }
         } header: {
             HStack {
                 Text(law.name)

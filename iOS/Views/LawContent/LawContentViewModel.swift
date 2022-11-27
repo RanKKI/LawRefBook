@@ -32,6 +32,13 @@ extension LawContentView {
             guard content == nil else {
                 return
             }
+            Task {
+                let content = await LawContentManager.shared.read(law: law)
+                uiThread {
+                    self.content = content
+                    self.isLoading = false
+                }
+            }
         }
     }
     

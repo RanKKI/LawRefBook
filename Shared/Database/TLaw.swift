@@ -61,26 +61,24 @@ struct TLaw: Identifiable {
         )
     }
     
-    func filepath() -> String? {
-        var filename = self.name
+    func getFilename() -> String {
         if let name = self.filename {
-            filename = name
+            return name
         } else if let pub_at = self.publish {
-            filename = String(format: "%@(%@)", self.name, dateFormatter.string(from: pub_at))
+            return String(format: "%@(%@)", self.name, dateFormatter.string(from: pub_at))
         }
-        let directory = String(format: "%@/%@", "Laws", self.category.folder)
-        var ret = Bundle.main.path(forResource: filename, ofType: "md", inDirectory: directory)
-        
-        if ret == nil && subtitle != nil {
-            ret = Bundle.main.path(forResource: subtitle, ofType: "md", inDirectory: directory)
-        }
+        return self.name
+    }
 
-        if ret == nil {
-            ret = Bundle.main.path(forResource: name, ofType: "md", inDirectory: directory)
-        }
+    func getNames() -> [String] {
+        let folder = self.category.folder
+        var ret = [
+            String(format: "%@/%@", folder, getFilename()),
+            String(format: "%@/%@", folder, name),
+        ].filter { $0 != nil }.map { $0! }
         
-        if ret == nil {
-            print("file is nil \(self.name) \(filename)")
+        if let subtitle = subtitle {
+            ret.append(String(format: "%@/%@", folder, subtitle))
         }
         return ret
     }

@@ -57,7 +57,6 @@ struct FontSettingView: View {
                     Divider()
                     VStack(alignment: .leading, spacing: CGFloat(preference.lineSpacing)) {
                         ForEach(exampleLines, id: \.self) { text in
-//                            LawContentTextView(text: text, searchText: .constant("不动产"))
                             Divider()
                         }
                     }

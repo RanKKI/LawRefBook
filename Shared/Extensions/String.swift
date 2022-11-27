@@ -66,6 +66,10 @@ extension String {
         return ret
     }
 
+    func addNewLine(str: String) -> String {
+        return self + "\n" + str
+    }
+
 }
 
 extension Substring {

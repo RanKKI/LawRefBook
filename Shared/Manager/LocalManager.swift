@@ -59,4 +59,8 @@ final class LocalManager {
         try? FileManager.default.removeItem(atPath: root.path)
     }
 
+    func readLocalFile(url: URL) -> Data? {
+        return FileManager.default.contents(atPath: url.path)
+    }
+
 }

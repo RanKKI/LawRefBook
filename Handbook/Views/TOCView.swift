@@ -3,7 +3,7 @@ import SwiftUI
 
 struct TOCList: View {
 
-    var content: TocListData
+    var content: LawToc
     
     var action: (Int64) -> Void
 

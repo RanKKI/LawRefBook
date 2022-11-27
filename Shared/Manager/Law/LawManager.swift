@@ -8,58 +8,6 @@
 import Foundation
 import SQLite
 
-class LawDB {
-    
-    private var connection: Connection
-    var categories = [Int: TCategory]()
-    
-    init(path: String) throws {
-        connection = try Connection(path)
-    }
-
-    func getCategories() async -> [TCategory] {
-        var rows = AnySequence<Row>([])
-        do {
-            rows = try connection.prepare(TCategory.table.order(TCategory.order))
-        } catch {
-            print(error.localizedDescription)
-            return []
-        }
-        
-        return rows.map { TCategory.create(row: $0, laws: []) }
-    }
-
-    func getLaws(predicate: Expression<Bool>? = nil) async -> [TLaw] {
-        var rows = AnySequence<Row>([])
-        
-        var query = TLaw.table
-        if let predicate = predicate {
-            query = query.filter(predicate)
-        }
-        query = query.order(TLaw.order.asc, TLaw.name)
-
-        do {
-            rows = try connection.prepare(query)
-        } catch {
-            print(error.localizedDescription)
-            return []
-        }
-
-        var ret = [TLaw]()
-        for row in rows {
-            guard let id = try? row.get(TLaw.categoryID) else {
-                continue
-            }
-            guard let category = categories[id] else {
-                continue
-            }
-            ret.append(TLaw.create(row: row, category: category))
-        }
-        return ret
-    }
-
-}
-
 final class LawManager: ObservableObject {
     
     static let shared = LawManager()
@@ -67,10 +15,11 @@ final class LawManager: ObservableObject {
     @Published
     var isLoading = false
 
-    private var dbs = [LawDB]()
-    
+    private var dbs = [LawDatabase]()
+
     private var categories = [TCategory]()
     private var categoryMap = [Int: TCategory]()
+    private var lawMap = [UUID: LawDatabase]()
 
     func connect() async {
         uiThread {
@@ -78,10 +27,7 @@ final class LawManager: ObservableObject {
         }
         do {
             dbs = try LocalManager.shared.getDatabaseFiles()
-                .map {
-                    print("db path \($0)")
-                    return try LawDB(path: $0.absoluteString)
-                }
+                .map { try LawDatabase(path: $0) }
         } catch {
             fatalError("unable to connect all sqlite file")
         }
@@ -97,8 +43,7 @@ final class LawManager: ObservableObject {
     // 加载所有 Category
     func preflight() async {
         for db in dbs {
-            let tempArr = await db.getCategories()
-            self.categories.append(contentsOf: tempArr)
+            self.categories.append(contentsOf: await db.getCategories())
         }
         for category in categories {
             categoryMap[category.id] = category
@@ -108,12 +53,23 @@ final class LawManager: ObservableObject {
     private func getCategoryID(name: String) -> Int? {
         return self.categories.first { $0.name == name }?.id
     }
+
+    private func linkLaws(laws: [TLaw], db: LawDatabase) {
+        for law in laws {
+            if lawMap[law.id] != nil {
+                continue
+            }
+            lawMap[law.id] = db
+        }
+    }
     
     // 取所有 TLaws
     private func queryLaws(predicate: Expression<Bool>? = nil) async -> [TLaw] {
         var ret = [TLaw]()
         for db in dbs {
-            ret.append(contentsOf: await db.getLaws(predicate: predicate))
+            let laws = await db.getLaws(predicate: predicate)
+            self.linkLaws(laws: laws, db: db)
+            ret.append(contentsOf: laws)
         }
         return ret
     }
@@ -159,5 +115,8 @@ final class LawManager: ObservableObject {
                 return TCategory.create(id: $0, level: $1.key, laws: $1.value)
             }
     }
-
+    
+    func getDatabaseByLaw(law: TLaw) -> LawDatabase? {
+        return lawMap[law.id]
+    }
 }

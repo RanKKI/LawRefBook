@@ -30,28 +30,28 @@ class SpotlightHelper {
 //        }
     }
 
-    private func addLawContentToSpotlight(content: LawContent, law : TLaw) {
-        let serachableItems = content.Body.flatMap { $0.children }.map { (content: TextContent.Content)-> CSSearchableItem in
-            let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
-            attributeSet.title = law.name
-            attributeSet.contentDescription = content.text
-            return CSSearchableItem(uniqueIdentifier: "\(law.id).\(content.line)", domainIdentifier: "xyz.rankki.law-handbook", attributeSet: attributeSet)
-        }
-        CSSearchableIndex.default().indexSearchableItems(serachableItems) { error in
-            if let error = error {
-                print("Indexing error: \(error.localizedDescription)")
-            }
-        }
-
-    }
-
-    private func removeLawFromSpotlight(lawUUID: UUID, line: Int) {
-        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(lawUUID).\(line)"]) { error in
-            if let error = error {
-                print("Deindexing error: \(error.localizedDescription)")
-            }
-        }
-    }
+//    private func addLawContentToSpotlight(content: LawContent, law : TLaw) {
+//        let serachableItems = content.Body.flatMap { $0.children }.map { (content: TextContent.Content)-> CSSearchableItem in
+//            let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+//            attributeSet.title = law.name
+//            attributeSet.contentDescription = content.text
+//            return CSSearchableItem(uniqueIdentifier: "\(law.id).\(content.line)", domainIdentifier: "xyz.rankki.law-handbook", attributeSet: attributeSet)
+//        }
+//        CSSearchableIndex.default().indexSearchableItems(serachableItems) { error in
+//            if let error = error {
+//                print("Indexing error: \(error.localizedDescription)")
+//            }
+//        }
+//
+//    }
+//
+//    private func removeLawFromSpotlight(lawUUID: UUID, line: Int) {
+//        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(lawUUID).\(line)"]) { error in
+//            if let error = error {
+//                print("Deindexing error: \(error.localizedDescription)")
+//            }
+//        }
+//    }
 
 
 }

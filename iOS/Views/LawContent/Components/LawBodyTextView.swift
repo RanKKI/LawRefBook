@@ -11,36 +11,75 @@ import SwiftUI
 struct LawBodyTextView: View {
     
     var law: TLaw
-    var contents: [TextContent]
-    
+    var sections: [LawContentSection]
+
     @Binding
     var searchText: String
 
     var body: some View {
-        Text("")
-//        VStack {
-//            ForEach(body, id: \.id) { paragraph in
-//                if !paragraph.text.isEmpty && (searchText.isEmpty || !paragraph.children.isEmpty) {
-//                    Text(paragraph.text).displayMode(.Header, indent: paragraph.indent)
-//                        .id(paragraph.line)
-//                        .padding([.top, .bottom], 8)
-//                }
-//                if !paragraph.children.isEmpty {
-//                    Divider()
-//                    ForEach(paragraph.children, id: \.id) { line in
-//                        Text(line.text)
-//                        if line.text.starts(with: "<!-- TABLE -->") {
-//                            TableView(data: line.text.toTableData(), width: UIScreen.screenWidth - 32)
-//                        } else {
-//                            LawContentTextView()
-//                            LawLineView(law: vm.law, text: line.text, line: line.line, searchText: $searchText)
-//                                .id(line.line)
-//                        }
-//                        Divider()
-//                    }
-//                }
-//            }
-//        }
+        Group {
+            ForEach(sections, id: \.id) { section in
+                if !section.header.isEmpty && (searchText.isEmpty || !section.paragraphs.isEmpty) {
+                    LawSectionHeaderView(section: section)
+                }
+                if !section.paragraphs.isEmpty {
+                    LawSectionTextView(section: section, searchText: $searchText)
+                }
+            }
+        }
+    }
+    
+}
+
+struct LawSectionHeaderView: View {
+    
+    var section: LawContentSection
+    
+    var body: some View {
+        Text(section.header)
+            .displayMode(.Header, indent: section.indent)
+            .id(section.id)
+            .padding([.top, .bottom], 8)
+    }
+    
+}
+
+struct LawSectionTextView: View {
+    
+    var section: LawContentSection
+    
+    @Binding
+    var searchText: String
+    
+    var body: some View {
+        Group {
+            Divider()
+            ForEach(section.paragraphs, id: \.id) { paragraph in
+                LawParagraphTextView(paragraph: paragraph, searchText: $searchText)
+            }
+        }
+    }
+    
+}
+
+
+struct LawParagraphTextView: View {
+    
+    var paragraph: LawParagraph
+    
+    @Binding
+    var searchText: String
+    
+    var body: some View {
+        VStack {
+            if paragraph.text.starts(with: "<!-- TABLE -->") {
+                TableView(data: paragraph.text.toTableData(), width: UIScreen.screenWidth - 32)
+            } else {
+                LawContentTextView(text: paragraph.text)
+                    .id(paragraph.id)
+            }
+            Divider()
+        }
     }
     
 }
