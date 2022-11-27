@@ -442,26 +442,18 @@
 		9039916A292A3A7A00CFC975 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				90193EFD27F599A5008CF0A6 /* WelcomeView.swift */,
 				9039917D292A403300CFC975 /* LawLinkView.swift */,
+				9039916C292A3AD000CFC975 /* ContentView.swift */,
 				90E835752931B28700519E23 /* Loading */,
 				90E8356C2931AEDB00519E23 /* Search */,
 				90399174292A3E6300CFC975 /* Table */,
 				90399175292A3EE900CFC975 /* LawList */,
 				90E8358E2931FF1D00519E23 /* LawContent */,
 				9039917A292A3F9E00CFC975 /* FavoriteLawList */,
-				9039916B292A3AC100CFC975 /* Content */,
 				9039916E292A3C3D00CFC975 /* Preference */,
-				90193EFD27F599A5008CF0A6 /* WelcomeView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		9039916B292A3AC100CFC975 /* Content */ = {
-			isa = PBXGroup;
-			children = (
-				9039916C292A3AD000CFC975 /* ContentView.swift */,
-			);
-			path = Content;
 			sourceTree = "<group>";
 		};
 		9039916E292A3C3D00CFC975 /* Preference */ = {

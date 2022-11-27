@@ -71,7 +71,7 @@ struct LawParagraphTextView: View {
     var searchText: String
     
     var body: some View {
-        VStack {
+        Group {
             if paragraph.text.starts(with: "<!-- TABLE -->") {
                 TableView(data: paragraph.text.toTableData(), width: UIScreen.screenWidth - 32)
             } else {
