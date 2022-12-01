@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct FavoriteLawListView: View {
-    
+struct LawListFavoriteView: View {
+
     @FetchRequest(entity: FavLaw.entity(), sortDescriptors: [
         NSSortDescriptor(keyPath: \FavLaw.favAt, ascending: false),
     ])
@@ -17,7 +17,7 @@ struct FavoriteLawListView: View {
 
     @State
     private var laws = [TLaw]()
-    
+
     @State
     private var isLoading = false
 
@@ -37,10 +37,10 @@ struct FavoriteLawListView: View {
             self.isLoading = false
         }
     }
-    
+
     var body: some View {
         Group {
-            if results.count > 0 {
+            if !laws.isEmpty {
                 Section {
                     ForEach(laws) { law in
                         if let law = law {
@@ -53,9 +53,6 @@ struct FavoriteLawListView: View {
                     Text("收藏")
                 }
             }
-        }
-        .onChange(of: results) { results in
-            reload()
         }
     }
 

@@ -13,7 +13,7 @@ final class LawManager: ObservableObject {
     static let shared = LawManager()
 
     @Published
-    var isLoading = false
+    var isLoading = true
 
     private var dbs = [LawDatabase]()
 
@@ -22,9 +22,6 @@ final class LawManager: ObservableObject {
     private var lawMap = [UUID: LawDatabase]()
 
     func connect() async {
-        uiThread {
-            self.isLoading = true
-        }
         do {
             dbs = try LocalManager.shared.getDatabaseFiles()
                 .map { try LawDatabase(path: $0) }
@@ -76,6 +73,10 @@ final class LawManager: ObservableObject {
     
     func getLaw(id: UUID) async -> TLaw? {
         return await queryLaws(predicate: TLaw.id == id.asDBString()).first
+    }
+    
+    func getLaws(ids: [UUID]) async -> [TLaw] {
+        return await queryLaws(predicate: ids.map { $0.asDBString() }.contains(TLaw.id))
     }
 
     // 根据 Category 获取 Laws

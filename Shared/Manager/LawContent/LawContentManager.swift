@@ -15,7 +15,12 @@ final class LawContentManager {
     private let manager = LawManager.shared
     private let parser = LawContentParser.shared
 
+    private var cache = [UUID: LawContent]()
+
     func read(law: TLaw) async -> LawContent? {
+        if let content = cache[law.id] {
+            return content
+        }
         guard let db = manager.getDatabaseByLaw(law: law) else {
             return nil
         }
@@ -25,7 +30,9 @@ final class LawContentManager {
         guard let data = local.readLocalFile(url: url) else {
             return nil
         }
-        return parser.parse(data: data)
+        let content = parser.parse(data: data)
+        cache[law.id] = content
+        return content
     }
 
 }

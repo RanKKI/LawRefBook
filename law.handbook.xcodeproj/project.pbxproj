@@ -8,27 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3427D5CAD200B42167 /* TOCView.swift */; };
-		1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3627D6277F00B42167 /* WhatNewView.swift */; };
 		1632AD3F27D8719600B42167 /* FontSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* FontSettingView.swift */; };
 		16BA35C727CDDE8700694880 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C627CDDE8700694880 /* Util.swift */; };
 		16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0011227E43AA100AB6446 /* TestLawContent.swift */; };
 		16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C3362B27DB182500D3F1F0 /* LicenseView.swift */; };
 		16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 16C3362D27DB18D700D3F1F0 /* LICENSE */; };
-		16D28E9C27CF829A001FB6B8 /* FavoriteContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* FavoriteContentView.swift */; };
+		16D28E9C27CF829A001FB6B8 /* AFavoriteContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* AFavoriteContentView.swift */; };
 		900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */; };
 		900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE127D35E3500E20FE4 /* LawInfoView.swift */; };
 		900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE327D35EAE00E20FE4 /* IconButton.swift */; };
-		900EBCE627D35FDE00E20FE4 /* LocalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE527D35FDE00E20FE4 /* LocalProvider.swift */; };
 		900EBCEA27D3621700E20FE4 /* Law.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE927D3621700E20FE4 /* Law.swift */; };
 		900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */; };
 		9016D22427E61BEA0027D69D /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9016D22327E61BEA0027D69D /* Alert.swift */; };
-		90193EFC27F5985E008CF0A6 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFB27F5985E008CF0A6 /* View.swift */; };
 		90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFD27F599A5008CF0A6 /* WelcomeView.swift */; };
 		90193F0027F5A376008CF0A6 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFF27F5A376008CF0A6 /* Consts.swift */; };
 		90193F0227F6B066008CF0A6 /* TestRegularExp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193F0127F6B066008CF0A6 /* TestRegularExp.swift */; };
 		901AE3B227FFFBB100D5D275 /* TestStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901AE3B127FFFBB100D5D275 /* TestStringExtension.swift */; };
 		901D199F2847565C00999AE6 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901D199D2847565C00999AE6 /* QRCode.swift */; };
-		901D19A02847565C00999AE6 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901D199E2847565C00999AE6 /* Snapshot.swift */; };
 		901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901D19A1284756A200999AE6 /* ShareLawView.swift */; };
 		902DAE5827C7CBC100926036 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DAE5727C7CBC100926036 /* App.swift */; };
 		902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902DAE5B27C7CBC200926036 /* Assets.xcassets */; };
@@ -45,7 +41,7 @@
 		90399173292A3D1B00CFC975 /* SafariLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90399172292A3D1B00CFC975 /* SafariLinkView.swift */; };
 		90399177292A3EF300CFC975 /* LawListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90399176292A3EF300CFC975 /* LawListView.swift */; };
 		90399179292A3F0C00CFC975 /* LawListContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90399178292A3F0C00CFC975 /* LawListContentViewModel.swift */; };
-		9039917C292A3FB600CFC975 /* FavoriteLawListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9039917B292A3FB600CFC975 /* FavoriteLawListView.swift */; };
+		9039917C292A3FB600CFC975 /* LawListFavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9039917B292A3FB600CFC975 /* LawListFavoriteView.swift */; };
 		9039917E292A403300CFC975 /* LawLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9039917D292A403300CFC975 /* LawLinkView.swift */; };
 		90399180292B96D000CFC975 /* LawListFoldersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9039917F292B96D000CFC975 /* LawListFoldersView.swift */; };
 		90399182292B97A100CFC975 /* LawListSubFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90399181292B97A100CFC975 /* LawListSubFolderView.swift */; };
@@ -65,15 +61,14 @@
 		90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */; };
 		90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A7911A280D34F0003367CB /* CloudKit.framework */; };
 		90AC432528124E8600AFECB8 /* SPAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 90AC432428124E8600AFECB8 /* SPAlert */; };
-		90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B74D7727E4DB1B00723535 /* Spotlight.swift */; };
 		90D4CD982862B7B9006DB8AC /* ShareLawViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD972862B7B9006DB8AC /* ShareLawViewModel.swift */; };
 		90D4CD9B2862B9F3006DB8AC /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9A2862B9F3006DB8AC /* SharingViewController.swift */; };
 		90D4CD9D2862BA1B006DB8AC /* ShareLawLightConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */; };
 		90D4CD9F2862BAE0006DB8AC /* ShareLawEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */; };
 		90D4CDA12862C8DE006DB8AC /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */; };
-		90D4CDA52862D781006DB8AC /* FavoriteFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA42862D781006DB8AC /* FavoriteFolderView.swift */; };
-		90D4CDA72862D7AB006DB8AC /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA62862D7AB006DB8AC /* Favorite.swift */; };
-		90D4CDA92862D7F3006DB8AC /* SelectFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA82862D7F3006DB8AC /* SelectFolderView.swift */; };
+		90D4CDA52862D781006DB8AC /* AFavoriteFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA42862D781006DB8AC /* AFavoriteFolderView.swift */; };
+		90D4CDA72862D7AB006DB8AC /* AFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA62862D7AB006DB8AC /* AFavorite.swift */; };
+		90D4CDA92862D7F3006DB8AC /* ASelectFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA82862D7F3006DB8AC /* ASelectFolderView.swift */; };
 		90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */; };
 		90E8356E2931AEE900519E23 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E8356D2931AEE900519E23 /* SearchView.swift */; };
 		90E835702931AF0E00519E23 /* SearchTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E8356F2931AF0E00519E23 /* SearchTypeView.swift */; };
@@ -104,6 +99,12 @@
 		90E835B2293308DB00519E23 /* LawContentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835B1293308DB00519E23 /* LawContentTextView.swift */; };
 		90E835B429334D0C00519E23 /* default.zip in Resources */ = {isa = PBXBuildFile; fileRef = 90E835B329334D0C00519E23 /* default.zip */; };
 		90E835BF2938315C00519E23 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835BE2938315C00519E23 /* Data.swift */; };
+		90E835C22938328600519E23 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835C12938328600519E23 /* View.swift */; };
+		90E835C42938334700519E23 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835C32938334700519E23 /* UIScreen.swift */; };
+		90E835C62938336300519E23 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835C52938336300519E23 /* UIImage.swift */; };
+		90E835C9293834B400519E23 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835C8293834B400519E23 /* FavoriteView.swift */; };
+		90E835CB293834FB00519E23 /* FavoriteFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835CA293834FB00519E23 /* FavoriteFolderView.swift */; };
+		90E835CD2938368D00519E23 /* FavoriteContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835CC2938368D00519E23 /* FavoriteContentView.swift */; };
 		90F5CEFD28B21E630003752E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5CEFC28B21E630003752E /* TableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -119,7 +120,6 @@
 
 /* Begin PBXFileReference section */
 		1632AD3427D5CAD200B42167 /* TOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCView.swift; sourceTree = "<group>"; };
-		1632AD3627D6277F00B42167 /* WhatNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatNewView.swift; sourceTree = "<group>"; };
 		1632AD3E27D8719600B42167 /* FontSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSettingView.swift; sourceTree = "<group>"; };
 		16BA35C627CDDE8700694880 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		16C0011027E43AA100AB6446 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,21 +127,18 @@
 		16C0011C27E44BE800AB6446 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16C3362B27DB182500D3F1F0 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		16C3362D27DB18D700D3F1F0 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		16D28E9B27CF829A001FB6B8 /* FavoriteContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteContentView.swift; sourceTree = "<group>"; };
+		16D28E9B27CF829A001FB6B8 /* AFavoriteContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFavoriteContentView.swift; sourceTree = "<group>"; };
 		900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseSheetItem.swift; sourceTree = "<group>"; };
 		900EBCE127D35E3500E20FE4 /* LawInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawInfoView.swift; sourceTree = "<group>"; };
 		900EBCE327D35EAE00E20FE4 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
-		900EBCE527D35FDE00E20FE4 /* LocalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalProvider.swift; sourceTree = "<group>"; };
 		900EBCE927D3621700E20FE4 /* Law.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Law.swift; sourceTree = "<group>"; };
 		900EBCEC27D3815900E20FE4 /* LawData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LawData.xcdatamodel; sourceTree = "<group>"; };
 		9016D22327E61BEA0027D69D /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		90193EFB27F5985E008CF0A6 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		90193EFD27F599A5008CF0A6 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		90193EFF27F5A376008CF0A6 /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		90193F0127F6B066008CF0A6 /* TestRegularExp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRegularExp.swift; sourceTree = "<group>"; };
 		901AE3B127FFFBB100D5D275 /* TestStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStringExtension.swift; sourceTree = "<group>"; };
 		901D199D2847565C00999AE6 /* QRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
-		901D199E2847565C00999AE6 /* Snapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
 		901D19A1284756A200999AE6 /* ShareLawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawView.swift; sourceTree = "<group>"; };
 		902DAE5427C7CBC100926036 /* 中国法律.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "中国法律.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		902DAE5727C7CBC100926036 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -158,7 +155,7 @@
 		90399172292A3D1B00CFC975 /* SafariLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariLinkView.swift; sourceTree = "<group>"; };
 		90399176292A3EF300CFC975 /* LawListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawListView.swift; sourceTree = "<group>"; };
 		90399178292A3F0C00CFC975 /* LawListContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawListContentViewModel.swift; sourceTree = "<group>"; };
-		9039917B292A3FB600CFC975 /* FavoriteLawListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLawListView.swift; sourceTree = "<group>"; };
+		9039917B292A3FB600CFC975 /* LawListFavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawListFavoriteView.swift; sourceTree = "<group>"; };
 		9039917D292A403300CFC975 /* LawLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawLinkView.swift; sourceTree = "<group>"; };
 		9039917F292B96D000CFC975 /* LawListFoldersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawListFoldersView.swift; sourceTree = "<group>"; };
 		90399181292B97A100CFC975 /* LawListSubFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawListSubFolderView.swift; sourceTree = "<group>"; };
@@ -178,15 +175,14 @@
 		90A79119280D34ED003367CB /* RefBook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RefBook.entitlements; sourceTree = "<group>"; };
 		90A7911A280D34F0003367CB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		90A7911C280D419F003367CB /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
-		90B74D7727E4DB1B00723535 /* Spotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
 		90D4CD972862B7B9006DB8AC /* ShareLawViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawViewModel.swift; sourceTree = "<group>"; };
 		90D4CD9A2862B9F3006DB8AC /* SharingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
 		90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawLightConfirmView.swift; sourceTree = "<group>"; };
 		90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawEditView.swift; sourceTree = "<group>"; };
 		90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
-		90D4CDA42862D781006DB8AC /* FavoriteFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderView.swift; sourceTree = "<group>"; };
-		90D4CDA62862D7AB006DB8AC /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
-		90D4CDA82862D7F3006DB8AC /* SelectFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFolderView.swift; sourceTree = "<group>"; };
+		90D4CDA42862D781006DB8AC /* AFavoriteFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFavoriteFolderView.swift; sourceTree = "<group>"; };
+		90D4CDA62862D7AB006DB8AC /* AFavorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFavorite.swift; sourceTree = "<group>"; };
+		90D4CDA82862D7F3006DB8AC /* ASelectFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASelectFolderView.swift; sourceTree = "<group>"; };
 		90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryViewModel.swift; sourceTree = "<group>"; };
 		90E8356D2931AEE900519E23 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		90E8356F2931AF0E00519E23 /* SearchTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTypeView.swift; sourceTree = "<group>"; };
@@ -217,6 +213,12 @@
 		90E835B1293308DB00519E23 /* LawContentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentTextView.swift; sourceTree = "<group>"; };
 		90E835B329334D0C00519E23 /* default.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = default.zip; sourceTree = "<group>"; };
 		90E835BE2938315C00519E23 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		90E835C12938328600519E23 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		90E835C32938334700519E23 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
+		90E835C52938336300519E23 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		90E835C8293834B400519E23 /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
+		90E835CA293834FB00519E23 /* FavoriteFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderView.swift; sourceTree = "<group>"; };
+		90E835CC2938368D00519E23 /* FavoriteContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteContentView.swift; sourceTree = "<group>"; };
 		90F5CEFC28B21E630003752E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -260,7 +262,6 @@
 				90A7911C280D419F003367CB /* info.plist */,
 				90A79119280D34ED003367CB /* RefBook.entitlements */,
 				902DAE5B27C7CBC200926036 /* Assets.xcassets */,
-				900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -273,7 +274,6 @@
 				90D4CDA32862D770006DB8AC /* Favorite */,
 				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
-				1632AD3627D6277F00B42167 /* WhatNewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -284,15 +284,6 @@
 				900EBCE927D3621700E20FE4 /* Law.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		900EBCDE27D35CEF00E20FE4 /* Toolbar Items */ = {
-			isa = PBXGroup;
-			children = (
-				900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */,
-				900EBCE327D35EAE00E20FE4 /* IconButton.swift */,
-			);
-			path = "Toolbar Items";
 			sourceTree = "<group>";
 		};
 		900EBCEE27D3844600E20FE4 /* Frameworks */ = {
@@ -308,13 +299,9 @@
 		900EBCF127D38AFF00E20FE4 /* Handbook */ = {
 			isa = PBXGroup;
 			children = (
-				90B74D7727E4DB1B00723535 /* Spotlight.swift */,
-				909AE28E281F6B1F008679C4 /* Provider */,
 				905B83D427F83BEF00F951E9 /* Utils */,
-				900EBCDE27D35CEF00E20FE4 /* Toolbar Items */,
 				900EBCDD27D35CCB00E20FE4 /* Models */,
 				900EBCDC27D35CB800E20FE4 /* Views */,
-				900EBCDB27D35C9D00E20FE4 /* Resources */,
 			);
 			path = Handbook;
 			sourceTree = "<group>";
@@ -323,11 +310,8 @@
 			isa = PBXGroup;
 			children = (
 				90D4CD9A2862B9F3006DB8AC /* SharingViewController.swift */,
-				901D199E2847565C00999AE6 /* Snapshot.swift */,
 				906E36A328053BF400A5CC39 /* Safari.swift */,
 				9016D22327E61BEA0027D69D /* Alert.swift */,
-				90193EFB27F5985E008CF0A6 /* View.swift */,
-				90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -367,6 +351,7 @@
 		90399156292A1D1800CFC975 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */,
 				90E835A72932FBE600519E23 /* Models */,
 				90E835832931CE1500519E23 /* Utils */,
 				90399164292A39FD00CFC975 /* Database */,
@@ -415,6 +400,7 @@
 		90399165292A3A2A00CFC975 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				900EBCDB27D35C9D00E20FE4 /* Resources */,
 				90E8357C2931CD9300519E23 /* Utils */,
 				903F5329280E5C7D00D4523D /* IAP */,
 				90399166292A3A4300CFC975 /* App */,
@@ -438,6 +424,9 @@
 			children = (
 				90E8357F2931CDCF00519E23 /* Application.swift */,
 				90E8359A2932017100519E23 /* Text.swift */,
+				90E835C12938328600519E23 /* View.swift */,
+				90E835C32938334700519E23 /* UIScreen.swift */,
+				90E835C52938336300519E23 /* UIImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -446,15 +435,15 @@
 			isa = PBXGroup;
 			children = (
 				90193EFD27F599A5008CF0A6 /* WelcomeView.swift */,
-				9039917D292A403300CFC975 /* LawLinkView.swift */,
 				9039916C292A3AD000CFC975 /* ContentView.swift */,
 				90E835752931B28700519E23 /* Loading */,
 				90E8356C2931AEDB00519E23 /* Search */,
 				90399174292A3E6300CFC975 /* Table */,
+				90E835C72938349F00519E23 /* Favorite */,
 				90399175292A3EE900CFC975 /* LawList */,
 				90E8358E2931FF1D00519E23 /* LawContent */,
-				9039917A292A3F9E00CFC975 /* FavoriteLawList */,
 				9039916E292A3C3D00CFC975 /* Preference */,
+				90E835C02938324E00519E23 /* Components */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -486,16 +475,9 @@
 				90399178292A3F0C00CFC975 /* LawListContentViewModel.swift */,
 				9039917F292B96D000CFC975 /* LawListFoldersView.swift */,
 				90399181292B97A100CFC975 /* LawListSubFolderView.swift */,
+				9039917B292A3FB600CFC975 /* LawListFavoriteView.swift */,
 			);
 			path = LawList;
-			sourceTree = "<group>";
-		};
-		9039917A292A3F9E00CFC975 /* FavoriteLawList */ = {
-			isa = PBXGroup;
-			children = (
-				9039917B292A3FB600CFC975 /* FavoriteLawListView.swift */,
-			);
-			path = FavoriteLawList;
 			sourceTree = "<group>";
 		};
 		903F5329280E5C7D00D4523D /* IAP */ = {
@@ -518,14 +500,6 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		909AE28E281F6B1F008679C4 /* Provider */ = {
-			isa = PBXGroup;
-			children = (
-				900EBCE527D35FDE00E20FE4 /* LocalProvider.swift */,
-			);
-			path = Provider;
-			sourceTree = "<group>";
-		};
 		90D4CD962862B761006DB8AC /* ShareLaw */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,10 +514,10 @@
 		90D4CDA32862D770006DB8AC /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				90D4CDA62862D7AB006DB8AC /* Favorite.swift */,
-				16D28E9B27CF829A001FB6B8 /* FavoriteContentView.swift */,
-				90D4CDA42862D781006DB8AC /* FavoriteFolderView.swift */,
-				90D4CDA82862D7F3006DB8AC /* SelectFolderView.swift */,
+				90D4CDA62862D7AB006DB8AC /* AFavorite.swift */,
+				16D28E9B27CF829A001FB6B8 /* AFavoriteContentView.swift */,
+				90D4CDA42862D781006DB8AC /* AFavoriteFolderView.swift */,
+				90D4CDA82862D7F3006DB8AC /* ASelectFolderView.swift */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -643,6 +617,27 @@
 				90E835AE2932FF5F00519E23 /* LawDatabase.swift */,
 			);
 			path = Law;
+			sourceTree = "<group>";
+		};
+		90E835C02938324E00519E23 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */,
+				9039917D292A403300CFC975 /* LawLinkView.swift */,
+				900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */,
+				900EBCE327D35EAE00E20FE4 /* IconButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		90E835C72938349F00519E23 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				90E835C8293834B400519E23 /* FavoriteView.swift */,
+				90E835CA293834FB00519E23 /* FavoriteFolderView.swift */,
+				90E835CC2938368D00519E23 /* FavoriteContentView.swift */,
+			);
+			path = Favorite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -773,24 +768,24 @@
 				90A22C32282239FA00B5DC24 /* SheetManager.swift in Sources */,
 				9039916D292A3AD000CFC975 /* ContentView.swift in Sources */,
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
+				90E835C62938336300519E23 /* UIImage.swift in Sources */,
 				90E835A32932FB5A00519E23 /* LawContentManager.swift in Sources */,
 				90193F0027F5A376008CF0A6 /* Consts.swift in Sources */,
 				900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */,
 				90E8359D2932022600519E23 /* LawBodyTextView.swift in Sources */,
-				90193EFC27F5985E008CF0A6 /* View.swift in Sources */,
 				90E835722931AF5100519E23 /* SearchViewModel.swift in Sources */,
 				90399171292A3C7D00CFC975 /* Preference.swift in Sources */,
 				90D4CD9B2862B9F3006DB8AC /* SharingViewController.swift in Sources */,
-				900EBCE627D35FDE00E20FE4 /* LocalProvider.swift in Sources */,
 				90E835AD2932FD6B00519E23 /* LawTOC.swift in Sources */,
 				90E835702931AF0E00519E23 /* SearchTypeView.swift in Sources */,
 				901D199F2847565C00999AE6 /* QRCode.swift in Sources */,
 				90E8357B2931CD6500519E23 /* String.swift in Sources */,
 				90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */,
 				16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */,
+				90E835C42938334700519E23 /* UIScreen.swift in Sources */,
 				90399158292A1D5400CFC975 /* LawManager.swift in Sources */,
 				9035983C27C9F96400C8D9E7 /* PreferenceView.swift in Sources */,
-				9039917C292A3FB600CFC975 /* FavoriteLawListView.swift in Sources */,
+				9039917C292A3FB600CFC975 /* LawListFavoriteView.swift in Sources */,
 				90E835792931BB8E00519E23 /* SearchPayload.swift in Sources */,
 				90E835882931CE5700519E23 /* Array.swift in Sources */,
 				90399163292A352400CFC975 /* FileManager.swift in Sources */,
@@ -803,11 +798,10 @@
 				90399179292A3F0C00CFC975 /* LawListContentViewModel.swift in Sources */,
 				90E835AF2932FF5F00519E23 /* LawDatabase.swift in Sources */,
 				903F5326280E555200D4523D /* Persistence.swift in Sources */,
+				90E835CD2938368D00519E23 /* FavoriteContentView.swift in Sources */,
 				90E83597293200C000519E23 /* LawStatusView.swift in Sources */,
-				90B74D7827E4DB1B00723535 /* Spotlight.swift in Sources */,
 				90E8358A2931CE7100519E23 /* Date.swift in Sources */,
-				1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */,
-				90D4CDA52862D781006DB8AC /* FavoriteFolderView.swift in Sources */,
+				90D4CDA52862D781006DB8AC /* AFavoriteFolderView.swift in Sources */,
 				903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */,
 				90E835922931FF7700519E23 /* LawContentViewModel.swift in Sources */,
 				9039917E292A403300CFC975 /* LawLinkView.swift in Sources */,
@@ -826,17 +820,18 @@
 				16BA35C727CDDE8700694880 /* Util.swift in Sources */,
 				90399177292A3EF300CFC975 /* LawListView.swift in Sources */,
 				90399180292B96D000CFC975 /* LawListFoldersView.swift in Sources */,
-				16D28E9C27CF829A001FB6B8 /* FavoriteContentView.swift in Sources */,
-				90D4CDA72862D7AB006DB8AC /* Favorite.swift in Sources */,
+				16D28E9C27CF829A001FB6B8 /* AFavoriteContentView.swift in Sources */,
+				90D4CDA72862D7AB006DB8AC /* AFavorite.swift in Sources */,
 				90E835802931CDCF00519E23 /* Application.swift in Sources */,
+				90E835C9293834B400519E23 /* FavoriteView.swift in Sources */,
 				1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */,
 				90399168292A3A4C00CFC975 /* Delegate.swift in Sources */,
 				90E8357E2931CD9C00519E23 /* Review.swift in Sources */,
 				901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */,
 				90E835992932013D00519E23 /* LawTitleTextView.swift in Sources */,
 				9039915E292A240C00CFC975 /* Thread.swift in Sources */,
-				901D19A02847565C00999AE6 /* Snapshot.swift in Sources */,
 				90E835742931B02100519E23 /* LawListContentView.swift in Sources */,
+				90E835C22938328600519E23 /* View.swift in Sources */,
 				90D4CD9D2862BA1B006DB8AC /* ShareLawLightConfirmView.swift in Sources */,
 				9016D22427E61BEA0027D69D /* Alert.swift in Sources */,
 				90D4CDA12862C8DE006DB8AC /* CheckBoxView.swift in Sources */,
@@ -844,9 +839,10 @@
 				90E835A92932FBED00519E23 /* LawContent.swift in Sources */,
 				90A22C2A281FCFEC00B5DC24 /* TCategory.swift in Sources */,
 				90E8356E2931AEE900519E23 /* SearchView.swift in Sources */,
-				90D4CDA92862D7F3006DB8AC /* SelectFolderView.swift in Sources */,
+				90D4CDA92862D7F3006DB8AC /* ASelectFolderView.swift in Sources */,
 				900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */,
 				905B83D627F83BFD00F951E9 /* FileUtil.swift in Sources */,
+				90E835CB293834FB00519E23 /* FavoriteFolderView.swift in Sources */,
 				90E835AB2932FD2900519E23 /* LawInfo.swift in Sources */,
 				90E835BF2938315C00519E23 /* Data.swift in Sources */,
 				903A8902280C145300EECBC7 /* SearchHistoryView.swift in Sources */,
@@ -1025,7 +1021,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Handbook/Resources/RefBook.entitlements;
+				CODE_SIGN_ENTITLEMENTS = iOS/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 166;
@@ -1034,13 +1030,14 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Handbook/Resources/info.plist;
+				INFOPLIST_FILE = iOS/Resources/info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要您的同意，方可储存截图到本地。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1064,7 +1061,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Handbook/Resources/RefBook.entitlements;
+				CODE_SIGN_ENTITLEMENTS = iOS/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 166;
@@ -1073,13 +1070,14 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Handbook/Resources/info.plist;
+				INFOPLIST_FILE = iOS/Resources/info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要您的同意，方可储存截图到本地。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

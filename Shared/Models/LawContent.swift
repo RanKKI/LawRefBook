@@ -28,5 +28,17 @@ struct LawContent {
     var sections: [LawContentSection]
     var info: [LawInfo]
     var toc: [LawToc]
+    
+    func getLine(line: Int64) -> String? {
+        for section in sections {
+            if let text = section.paragraphs.first(where: { $0.line == line })?.text {
+                return text
+            }
+            if section.line > line {
+                break
+            }
+        }
+        return nil
+    }
 
 }

@@ -17,6 +17,7 @@ struct LawLinkView: View {
     var body: some View {
         NavigationLink {
             LawContentView(vm: .init(law: law, searchText: searchText))
+                .navigationBarTitleDisplayMode(.inline)
         } label: {
             VStack(alignment: .leading) {
                 if let subTitle = law.subtitle, !subTitle.isEmpty {

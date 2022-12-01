@@ -37,7 +37,7 @@ struct ContentView: View {
                     PreferenceView()
                         .navigationBarTitle("关于", displayMode: .inline)
                 } else if sheetManager.state == .favorite {
-                    FavoriteFolderView()
+                    FavoriteView()
                         .navigationBarTitle("书签", displayMode: .inline)
                 }
             }

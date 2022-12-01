@@ -1,14 +1,29 @@
+//
+//  View.swift
+//  RefBook
+//
+//  Created by Hugh Liu on 1/12/2022.
+//
+
+import Foundation
 import SwiftUI
 
-extension UIScreen{
-   static let screenWidth = UIScreen.main.bounds.size.width
-   static let screenHeight = UIScreen.main.bounds.size.height
-   static let screenSize = UIScreen.main.bounds.size
+extension View {
+
+    @ViewBuilder
+    func phoneOnlyStackNavigationView() -> some View {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            self.navigationViewStyle(.stack)
+        } else {
+            self
+        }
+    }
+
 }
 
-
+// 生成图片
 extension View {
-    
+
     func snapView() -> some View {
         self
             .ignoresSafeArea()
@@ -19,7 +34,7 @@ extension View {
             .frame(width: UIScreen.screenWidth)
             .fixedSize(horizontal: true, vertical: true)
     }
-    
+
     func asImage() -> UIImage {
         let controller = UIHostingController(rootView: self)
 
@@ -37,15 +52,5 @@ extension View {
         let image = UIImage(view: controller.view)
         controller.view.removeFromSuperview()
         return image
-    }
-}
-
-extension UIImage {
-    convenience init(view: UIView) {
-        UIGraphicsBeginImageContextWithOptions((view.frame.size), false, 0.0)
-        view.layer.render(in:UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        self.init(cgImage: image!.cgImage!)
     }
 }

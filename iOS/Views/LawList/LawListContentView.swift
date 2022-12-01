@@ -34,7 +34,7 @@ struct LawListContentView: View {
     var lawList: some View {
         List {
             if showFavorite {
-                FavoriteLawListView()
+                LawListFavoriteView()
             }
             ForEach(vm.categories, id: \.self) { cateogry in
                 LawListCategorySectionView(label: vm.isSignleCategory ? "" : cateogry.name) {

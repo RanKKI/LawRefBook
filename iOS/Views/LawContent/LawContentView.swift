@@ -15,10 +15,7 @@ struct LawContentView: View {
     
     @ObservedObject
     private var sheets = SheetMananger<Sheets>()
-    
-    @State
-    private var searchText  = ""
-    
+
     init(vm: VM) {
         self.vm = vm
     }
@@ -26,7 +23,7 @@ struct LawContentView: View {
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
             if let law = vm.law, let content = vm.content {
-                LawContentDetailsView(law: law, content: content, searchText: $searchText)
+                LawContentDetailsView(law: law, content: content, searchText: $vm.searchText)
             }
         }
         .toolbar {
@@ -58,6 +55,7 @@ struct LawContentView: View {
         .onAppear {
             vm.onAppear()
         }
+        .searchable(text: $vm.searchText, placement: .navigationBarDrawer(displayMode: .always))
     }
 
 }

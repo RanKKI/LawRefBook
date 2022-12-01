@@ -26,3 +26,19 @@ extension Array: RawRepresentable where Element: Codable {
         return result
     }
 }
+
+extension Array where Element == FavContent {
+
+    func groupByLaw() -> [[Element]] {
+        return Dictionary(grouping: self) { $0.lawId! }
+//            .sorted {
+//                let id1 = $0.value.first!.lawId!
+//                let id2 = $1.value.first!.lawId!
+//                let laws: [TLaw] = LawDatabase.shared.getLaws(uuids: [id1, id2])
+//                return laws[0].name < laws[1].name
+//            }
+            .map { $0.value }
+            .map { $0.filter{ $0.line > 0 }.sorted { $0.line < $1.line } }
+    }
+    
+}
