@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		16151CAE27E842E500E09E0C /* Laws in Resources */ = {isa = PBXBuildFile; fileRef = 16151CAD27E842E500E09E0C /* Laws */; };
 		1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3427D5CAD200B42167 /* TOCView.swift */; };
 		1632AD3727D6277F00B42167 /* WhatNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3627D6277F00B42167 /* WhatNewView.swift */; };
 		1632AD3F27D8719600B42167 /* FontSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* FontSettingView.swift */; };
@@ -103,6 +102,8 @@
 		90E835AD2932FD6B00519E23 /* LawTOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835AC2932FD6B00519E23 /* LawTOC.swift */; };
 		90E835AF2932FF5F00519E23 /* LawDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835AE2932FF5F00519E23 /* LawDatabase.swift */; };
 		90E835B2293308DB00519E23 /* LawContentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835B1293308DB00519E23 /* LawContentTextView.swift */; };
+		90E835B429334D0C00519E23 /* default.zip in Resources */ = {isa = PBXBuildFile; fileRef = 90E835B329334D0C00519E23 /* default.zip */; };
+		90E835BF2938315C00519E23 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835BE2938315C00519E23 /* Data.swift */; };
 		90F5CEFD28B21E630003752E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5CEFC28B21E630003752E /* TableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -117,7 +118,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		16151CAD27E842E500E09E0C /* Laws */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Laws; sourceTree = "<group>"; };
 		1632AD3427D5CAD200B42167 /* TOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCView.swift; sourceTree = "<group>"; };
 		1632AD3627D6277F00B42167 /* WhatNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatNewView.swift; sourceTree = "<group>"; };
 		1632AD3E27D8719600B42167 /* FontSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSettingView.swift; sourceTree = "<group>"; };
@@ -215,6 +215,8 @@
 		90E835AC2932FD6B00519E23 /* LawTOC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawTOC.swift; sourceTree = "<group>"; };
 		90E835AE2932FF5F00519E23 /* LawDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawDatabase.swift; sourceTree = "<group>"; };
 		90E835B1293308DB00519E23 /* LawContentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawContentTextView.swift; sourceTree = "<group>"; };
+		90E835B329334D0C00519E23 /* default.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = default.zip; sourceTree = "<group>"; };
+		90E835BE2938315C00519E23 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		90F5CEFC28B21E630003752E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -333,7 +335,7 @@
 		902DAE4B27C7CBC100926036 = {
 			isa = PBXGroup;
 			children = (
-				16151CAD27E842E500E09E0C /* Laws */,
+				90E835B329334D0C00519E23 /* default.zip */,
 				16C3362D27DB18D700D3F1F0 /* LICENSE */,
 				90399156292A1D1800CFC975 /* Shared */,
 				90399165292A3A2A00CFC975 /* iOS */,
@@ -396,6 +398,7 @@
 				90399162292A352400CFC975 /* FileManager.swift */,
 				90E835872931CE5700519E23 /* Array.swift */,
 				90E835892931CE7100519E23 /* Date.swift */,
+				90E835BE2938315C00519E23 /* Data.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -740,9 +743,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */,
+				90E835B429334D0C00519E23 /* default.zip in Resources */,
 				902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */,
 				16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */,
-				16151CAE27E842E500E09E0C /* Laws in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,6 +848,7 @@
 				900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */,
 				905B83D627F83BFD00F951E9 /* FileUtil.swift in Sources */,
 				90E835AB2932FD2900519E23 /* LawInfo.swift in Sources */,
+				90E835BF2938315C00519E23 /* Data.swift in Sources */,
 				903A8902280C145300EECBC7 /* SearchHistoryView.swift in Sources */,
 				90E835902931FF2C00519E23 /* LawContentView.swift in Sources */,
 				90E835772931B29100519E23 /* LoadingView.swift in Sources */,

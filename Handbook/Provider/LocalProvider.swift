@@ -6,10 +6,6 @@ class LocalProvider: ObservableObject{
 
     static let shared = LocalProvider()
 
-    lazy var ANIT996_LICENSE: String = {
-        readLocalFile(forName: "LICENSE", type: "")?.asUTF8String() ?? ""
-    }()
-
     var queue: DispatchQueue = DispatchQueue(label: "laws", qos: .background)
 
     private var contents: [UUID: LawContent] = [UUID: LawContent]()

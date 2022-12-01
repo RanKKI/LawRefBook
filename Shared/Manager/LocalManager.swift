@@ -16,19 +16,28 @@ final class LocalManager {
     
     static let defaultDatabaseName = "db.sqlite3"
 
-    private var root: URL? {
+    private var baseFolder: URL? {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                 .first?
-                .appendingPathComponent("db", conformingTo: .directory)
+                .appendingPathComponent("laws", conformingTo: .directory)
     }
-    
-    private var builtInZipPath = Bundle.main.url(forResource: "default", withExtension: "zip", subdirectory: "Laws")
+
+    private let builtInZipPath = Bundle.main.url(forResource: "default", withExtension: "zip")
+
+    lazy var ANIT996_LICENSE: String? = {
+        InBundle.readFile(path: Bundle.main.path(forResource: "LICENSE", ofType: nil))?.asUTF8String()
+    }()
 
     // 第一次打开 App
     // 创建目录 & 解压内置包体
     private func firstRun() throws {
+        #if DEBUG
+        if let baseFolder = baseFolder {
+            print("local path \(baseFolder)")
+        }
+        #endif
         guard let path = builtInZipPath else { return }
-        guard let root = root else { return }
+        guard let root = baseFolder else { return }
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         let unzipDirectory = try Zip.quickUnzipFile(path)
         let targetDirectory = root.appendingPathComponent(unzipDirectory.lastPathComponent)
@@ -37,7 +46,7 @@ final class LocalManager {
 
     // 获取本地所有数据库位置
     func getDatabaseFiles() -> [URL] {
-        guard let root = root else { return [] }
+        guard let root = baseFolder else { return [] }
         if !root.isExists() {
             do {
                 try self.firstRun()
@@ -55,12 +64,28 @@ final class LocalManager {
 
     // 删除本地所有数据
     func removeAllLocalFiles() {
-        guard let root = root else { return }
+        guard let root = baseFolder else { return }
         try? FileManager.default.removeItem(atPath: root.path)
     }
 
     func readLocalFile(url: URL) -> Data? {
         return FileManager.default.contents(atPath: url.path)
+    }
+
+}
+
+
+extension LocalManager {
+
+    enum InBundle {
+        
+        static func readFile(path: String?) -> Data? {
+            guard let path = path else {
+                return nil
+            }
+            return try? String(contentsOfFile: path).data(using: .utf8)
+        }
+        
     }
 
 }
