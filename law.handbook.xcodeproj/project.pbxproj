@@ -13,7 +13,6 @@
 		16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0011227E43AA100AB6446 /* TestLawContent.swift */; };
 		16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C3362B27DB182500D3F1F0 /* LicenseView.swift */; };
 		16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 16C3362D27DB18D700D3F1F0 /* LICENSE */; };
-		16D28E9C27CF829A001FB6B8 /* AFavoriteContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D28E9B27CF829A001FB6B8 /* AFavoriteContentView.swift */; };
 		900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */; };
 		900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE127D35E3500E20FE4 /* LawInfoView.swift */; };
 		900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE327D35EAE00E20FE4 /* IconButton.swift */; };
@@ -66,9 +65,6 @@
 		90D4CD9D2862BA1B006DB8AC /* ShareLawLightConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */; };
 		90D4CD9F2862BAE0006DB8AC /* ShareLawEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */; };
 		90D4CDA12862C8DE006DB8AC /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */; };
-		90D4CDA52862D781006DB8AC /* AFavoriteFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA42862D781006DB8AC /* AFavoriteFolderView.swift */; };
-		90D4CDA72862D7AB006DB8AC /* AFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA62862D7AB006DB8AC /* AFavorite.swift */; };
-		90D4CDA92862D7F3006DB8AC /* ASelectFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDA82862D7F3006DB8AC /* ASelectFolderView.swift */; };
 		90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */; };
 		90E8356E2931AEE900519E23 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E8356D2931AEE900519E23 /* SearchView.swift */; };
 		90E835702931AF0E00519E23 /* SearchTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E8356F2931AF0E00519E23 /* SearchTypeView.swift */; };
@@ -105,6 +101,11 @@
 		90E835C9293834B400519E23 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835C8293834B400519E23 /* FavoriteView.swift */; };
 		90E835CB293834FB00519E23 /* FavoriteFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835CA293834FB00519E23 /* FavoriteFolderView.swift */; };
 		90E835CD2938368D00519E23 /* FavoriteContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835CC2938368D00519E23 /* FavoriteContentView.swift */; };
+		90E835D62938A64F00519E23 /* FavoriteFolderCreateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835D52938A64F00519E23 /* FavoriteFolderCreateButton.swift */; };
+		90E835D82938CCF200519E23 /* FavoriteFolderSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835D72938CCF200519E23 /* FavoriteFolderSelectionView.swift */; };
+		90E835DA2938CDA200519E23 /* FavoriteContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835D92938CDA200519E23 /* FavoriteContentViewModel.swift */; };
+		90E835DC2938D2BE00519E23 /* CopyLawTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835DB2938D2BE00519E23 /* CopyLawTextButton.swift */; };
+		90E835DE2938D30A00519E23 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835DD2938D30A00519E23 /* ShareButton.swift */; };
 		90F5CEFD28B21E630003752E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5CEFC28B21E630003752E /* TableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -127,7 +128,6 @@
 		16C0011C27E44BE800AB6446 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16C3362B27DB182500D3F1F0 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		16C3362D27DB18D700D3F1F0 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		16D28E9B27CF829A001FB6B8 /* AFavoriteContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFavoriteContentView.swift; sourceTree = "<group>"; };
 		900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseSheetItem.swift; sourceTree = "<group>"; };
 		900EBCE127D35E3500E20FE4 /* LawInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawInfoView.swift; sourceTree = "<group>"; };
 		900EBCE327D35EAE00E20FE4 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
@@ -180,9 +180,6 @@
 		90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawLightConfirmView.swift; sourceTree = "<group>"; };
 		90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLawEditView.swift; sourceTree = "<group>"; };
 		90D4CDA02862C8DE006DB8AC /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
-		90D4CDA42862D781006DB8AC /* AFavoriteFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFavoriteFolderView.swift; sourceTree = "<group>"; };
-		90D4CDA62862D7AB006DB8AC /* AFavorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFavorite.swift; sourceTree = "<group>"; };
-		90D4CDA82862D7F3006DB8AC /* ASelectFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASelectFolderView.swift; sourceTree = "<group>"; };
 		90D4CDAB2862F627006DB8AC /* SearchHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryViewModel.swift; sourceTree = "<group>"; };
 		90E8356D2931AEE900519E23 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		90E8356F2931AF0E00519E23 /* SearchTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTypeView.swift; sourceTree = "<group>"; };
@@ -219,6 +216,11 @@
 		90E835C8293834B400519E23 /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		90E835CA293834FB00519E23 /* FavoriteFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderView.swift; sourceTree = "<group>"; };
 		90E835CC2938368D00519E23 /* FavoriteContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteContentView.swift; sourceTree = "<group>"; };
+		90E835D52938A64F00519E23 /* FavoriteFolderCreateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderCreateButton.swift; sourceTree = "<group>"; };
+		90E835D72938CCF200519E23 /* FavoriteFolderSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderSelectionView.swift; sourceTree = "<group>"; };
+		90E835D92938CDA200519E23 /* FavoriteContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteContentViewModel.swift; sourceTree = "<group>"; };
+		90E835DB2938D2BE00519E23 /* CopyLawTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyLawTextButton.swift; sourceTree = "<group>"; };
+		90E835DD2938D30A00519E23 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		90F5CEFC28B21E630003752E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -270,8 +272,6 @@
 			isa = PBXGroup;
 			children = (
 				9016D22227E61BBF0027D69D /* Ext */,
-				90D4CD962862B761006DB8AC /* ShareLaw */,
-				90D4CDA32862D770006DB8AC /* Favorite */,
 				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
 				1632AD3427D5CAD200B42167 /* TOCView.swift */,
 			);
@@ -443,6 +443,7 @@
 				90399175292A3EE900CFC975 /* LawList */,
 				90E8358E2931FF1D00519E23 /* LawContent */,
 				9039916E292A3C3D00CFC975 /* Preference */,
+				90E835DF2938D36600519E23 /* Sharing */,
 				90E835C02938324E00519E23 /* Components */,
 			);
 			path = Views;
@@ -498,28 +499,6 @@
 				90A79117280D0AD3003367CB /* SearchHistoryUtil.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		90D4CD962862B761006DB8AC /* ShareLaw */ = {
-			isa = PBXGroup;
-			children = (
-				901D19A1284756A200999AE6 /* ShareLawView.swift */,
-				90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */,
-				90D4CD972862B7B9006DB8AC /* ShareLawViewModel.swift */,
-				90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */,
-			);
-			path = ShareLaw;
-			sourceTree = "<group>";
-		};
-		90D4CDA32862D770006DB8AC /* Favorite */ = {
-			isa = PBXGroup;
-			children = (
-				90D4CDA62862D7AB006DB8AC /* AFavorite.swift */,
-				16D28E9B27CF829A001FB6B8 /* AFavoriteContentView.swift */,
-				90D4CDA42862D781006DB8AC /* AFavoriteFolderView.swift */,
-				90D4CDA82862D7F3006DB8AC /* ASelectFolderView.swift */,
-			);
-			path = Favorite;
 			sourceTree = "<group>";
 		};
 		90E8356C2931AEDB00519E23 /* Search */ = {
@@ -626,6 +605,8 @@
 				9039917D292A403300CFC975 /* LawLinkView.swift */,
 				900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */,
 				900EBCE327D35EAE00E20FE4 /* IconButton.swift */,
+				90E835DB2938D2BE00519E23 /* CopyLawTextButton.swift */,
+				90E835DD2938D30A00519E23 /* ShareButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -634,10 +615,24 @@
 			isa = PBXGroup;
 			children = (
 				90E835C8293834B400519E23 /* FavoriteView.swift */,
+				90E835D72938CCF200519E23 /* FavoriteFolderSelectionView.swift */,
 				90E835CA293834FB00519E23 /* FavoriteFolderView.swift */,
 				90E835CC2938368D00519E23 /* FavoriteContentView.swift */,
+				90E835D92938CDA200519E23 /* FavoriteContentViewModel.swift */,
+				90E835D52938A64F00519E23 /* FavoriteFolderCreateButton.swift */,
 			);
 			path = Favorite;
+			sourceTree = "<group>";
+		};
+		90E835DF2938D36600519E23 /* Sharing */ = {
+			isa = PBXGroup;
+			children = (
+				901D19A1284756A200999AE6 /* ShareLawView.swift */,
+				90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */,
+				90D4CD972862B7B9006DB8AC /* ShareLawViewModel.swift */,
+				90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */,
+			);
+			path = Sharing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -769,6 +764,7 @@
 				9039916D292A3AD000CFC975 /* ContentView.swift in Sources */,
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
 				90E835C62938336300519E23 /* UIImage.swift in Sources */,
+				90E835DA2938CDA200519E23 /* FavoriteContentViewModel.swift in Sources */,
 				90E835A32932FB5A00519E23 /* LawContentManager.swift in Sources */,
 				90193F0027F5A376008CF0A6 /* Consts.swift in Sources */,
 				900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */,
@@ -779,6 +775,7 @@
 				90E835AD2932FD6B00519E23 /* LawTOC.swift in Sources */,
 				90E835702931AF0E00519E23 /* SearchTypeView.swift in Sources */,
 				901D199F2847565C00999AE6 /* QRCode.swift in Sources */,
+				90E835DE2938D30A00519E23 /* ShareButton.swift in Sources */,
 				90E8357B2931CD6500519E23 /* String.swift in Sources */,
 				90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */,
 				16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */,
@@ -787,21 +784,23 @@
 				9035983C27C9F96400C8D9E7 /* PreferenceView.swift in Sources */,
 				9039917C292A3FB600CFC975 /* LawListFavoriteView.swift in Sources */,
 				90E835792931BB8E00519E23 /* SearchPayload.swift in Sources */,
+				90E835DC2938D2BE00519E23 /* CopyLawTextButton.swift in Sources */,
 				90E835882931CE5700519E23 /* Array.swift in Sources */,
 				90399163292A352400CFC975 /* FileManager.swift in Sources */,
+				90E835D82938CCF200519E23 /* FavoriteFolderSelectionView.swift in Sources */,
 				90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */,
 				90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */,
 				90E8359B2932017100519E23 /* Text.swift in Sources */,
 				903F532B280E5CA100D4523D /* InAppPurchaseHandler.swift in Sources */,
 				90399182292B97A100CFC975 /* LawListSubFolderView.swift in Sources */,
 				90E835952932006800519E23 /* LawContentDetailsView.swift in Sources */,
+				90E835D62938A64F00519E23 /* FavoriteFolderCreateButton.swift in Sources */,
 				90399179292A3F0C00CFC975 /* LawListContentViewModel.swift in Sources */,
 				90E835AF2932FF5F00519E23 /* LawDatabase.swift in Sources */,
 				903F5326280E555200D4523D /* Persistence.swift in Sources */,
 				90E835CD2938368D00519E23 /* FavoriteContentView.swift in Sources */,
 				90E83597293200C000519E23 /* LawStatusView.swift in Sources */,
 				90E8358A2931CE7100519E23 /* Date.swift in Sources */,
-				90D4CDA52862D781006DB8AC /* AFavoriteFolderView.swift in Sources */,
 				903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */,
 				90E835922931FF7700519E23 /* LawContentViewModel.swift in Sources */,
 				9039917E292A403300CFC975 /* LawLinkView.swift in Sources */,
@@ -820,8 +819,6 @@
 				16BA35C727CDDE8700694880 /* Util.swift in Sources */,
 				90399177292A3EF300CFC975 /* LawListView.swift in Sources */,
 				90399180292B96D000CFC975 /* LawListFoldersView.swift in Sources */,
-				16D28E9C27CF829A001FB6B8 /* AFavoriteContentView.swift in Sources */,
-				90D4CDA72862D7AB006DB8AC /* AFavorite.swift in Sources */,
 				90E835802931CDCF00519E23 /* Application.swift in Sources */,
 				90E835C9293834B400519E23 /* FavoriteView.swift in Sources */,
 				1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */,
@@ -839,7 +836,6 @@
 				90E835A92932FBED00519E23 /* LawContent.swift in Sources */,
 				90A22C2A281FCFEC00B5DC24 /* TCategory.swift in Sources */,
 				90E8356E2931AEE900519E23 /* SearchView.swift in Sources */,
-				90D4CDA92862D7F3006DB8AC /* ASelectFolderView.swift in Sources */,
 				900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */,
 				905B83D627F83BFD00F951E9 /* FileUtil.swift in Sources */,
 				90E835CB293834FB00519E23 /* FavoriteFolderView.swift in Sources */,

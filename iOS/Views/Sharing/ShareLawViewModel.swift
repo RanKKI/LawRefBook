@@ -15,7 +15,7 @@ extension ShareLawView {
         var isSelected = true
     }
 
-    class Model: ObservableObject {
+    class VM: ObservableObject {
 
         @Published
         var selectedContents = [ShareContent]()
@@ -26,7 +26,16 @@ extension ShareLawView {
                 .map { $0.value }
         }
 
+        var canEdit: Bool { selectedContents.count > 1 }
+            
+        @Published
+        var isEditing = false
+        
         init(_ contents: [ShareContent]){
+            self.updateContents(contents)
+        }
+        
+        func updateContents(_ contents: [ShareContent]) {
             self.selectedContents = contents.sorted { $0.name < $1.name }
         }
     }

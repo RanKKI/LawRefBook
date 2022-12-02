@@ -23,7 +23,7 @@ struct LawBodyTextView: View {
                     LawSectionHeaderView(section: section)
                 }
                 if !section.paragraphs.isEmpty {
-                    LawSectionTextView(section: section, searchText: $searchText)
+                    LawSectionTextView(law: law, section: section, searchText: $searchText)
                 }
             }
         }
@@ -46,6 +46,7 @@ struct LawSectionHeaderView: View {
 
 struct LawSectionTextView: View {
     
+    var law: TLaw
     var section: LawContentSection
     
     @Binding
@@ -55,7 +56,7 @@ struct LawSectionTextView: View {
         Group {
             Divider()
             ForEach(section.paragraphs, id: \.id) { paragraph in
-                LawParagraphTextView(paragraph: paragraph, searchText: $searchText)
+                LawParagraphTextView(law: law, paragraph: paragraph, searchText: $searchText)
             }
         }
     }
@@ -65,10 +66,20 @@ struct LawSectionTextView: View {
 
 struct LawParagraphTextView: View {
     
+    var law: TLaw
     var paragraph: LawParagraph
     
     @Binding
     var searchText: String
+    
+    @State
+    private var saveToFavorite = false
+    
+    @State
+    private var sharing = false
+    
+    @Environment(\.managedObjectContext)
+    private var moc
     
     var body: some View {
         Group {
@@ -79,6 +90,31 @@ struct LawParagraphTextView: View {
                     .id(paragraph.id)
             }
             Divider()
+        }
+        .contextMenu {
+            Button {
+                saveToFavorite.toggle()
+            } label: {
+                Label("收藏", systemImage: "heart.text.square")
+            }
+            CopyLawTextButton(law: law, text: paragraph.text)
+            ShareButton(sharing: $sharing)
+        }
+        .sheet(isPresented: $saveToFavorite) {
+            FavoriteFolderSelectionView { folder in
+                guard let folder = folder else {
+                    return
+                }
+                let item = FavContent(context: moc)
+                item.id = UUID()
+                item.lawId = law.id
+                item.line = paragraph.line
+                item.folder = folder
+                try? moc.save()
+            }
+        }
+        .sheet(isPresented: $sharing) {
+            ShareLawView(vm: .init([.init(name: law.name, content: paragraph.text)]))
         }
     }
     

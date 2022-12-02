@@ -12,17 +12,35 @@ struct FavoriteContentView: View {
     
     @ObservedObject
     var vm: VM
-
+    
+    @State
+    private var sharing = false
+    
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
-            List {
-                ForEach(vm.groupedContents, id: \.self) { group in
-                    Section {
-                        ForEach(group.contents) { item in
-                            Text(item.content)
+            if vm.isEmpty {
+                Text("空空如也")
+            } else {
+                List {
+                    ForEach(vm.groupedContents) { group in
+                        Section {
+                            ForEach(group.contents) { item in
+                                FavoriteTextView(law: group.law, item: item)
+                            }
+                        } header: {
+                            HStack {
+                                Text(group.law.name)
+                                if group.law.expired {
+                                    Image(systemName: "exclamationmark.triangle")
+                                }
+                                Spacer()
+                            }
                         }
-                    } header: {
-                        Text(group.title)
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        ShareButton(sharing: $sharing)
                     }
                 }
             }
@@ -30,81 +48,48 @@ struct FavoriteContentView: View {
         .onAppear {
             vm.onAppear()
         }
+        .sheet(isPresented: $sharing) {
+            ShareLawView(vm: vm.shareVM)
+        }
     }
 
 }
 
-extension FavoriteContentView {
+struct FavoriteTextView: View {
+
+    var law: TLaw
+    var item: FavoriteContentView.ContentItem
     
-    struct ContentItem: Identifiable, Hashable {
-        var id: UUID
-        var content: String
+    @Environment(\.managedObjectContext)
+    private var moc
+    
+    @State
+    private var sharing = false
+    
+    private var delete: some View {
+        Button {
+            withAnimation {
+                moc.delete(item.data)
+                try? moc.save()
+            }
+        } label: {
+            Label("取消收藏", systemImage: "heart.slash")
+        }
     }
 
-    struct GroupItem: Hashable {
-        var title: String
-        var contents: [ContentItem]
-    }
-
-    class VM: ObservableObject {
-        
-        private var contents: [FavContent]
-        
-        @Published
-        private(set) var groupedContents: [GroupItem] = []
-        
-        @Published
-        var isLoading = false
-        
-        init(contents: [FavContent]) {
-            self.contents = contents
-        }
-
-        func onAppear() {
-            guard groupedContents.isEmpty else {
-                return
+    var body: some View {
+        Text(item.content)
+            .swipeActions {
+                delete.tint(.red)
             }
-            self.loadLaws()
-        }
-
-        private func loadLaws() {
-            uiThread {
-                self.isLoading = true
+            .contextMenu {
+                delete
+                CopyLawTextButton(law: law, text: item.content)
+                ShareButton(sharing: $sharing)
             }
-            Task {
-                let laws = await LawManager.shared.getLaws(ids: contents.map { $0.lawId! })
-                var result = [GroupItem]()
-                
-                for arr in contents.groupByLaw() {
-                    guard let favLaw = arr.first else {
-                        continue
-                    }
-                    guard let law = laws.first(where: { $0.id == favLaw.lawId }) else {
-                        continue
-                    }
-                    guard let content = await LawContentManager.shared.read(law: law) else {
-                        continue
-                    }
-                    var items = [ContentItem]()
-                    for item in arr {
-                        guard let text = content.getLine(line: item.line) else {
-                            continue
-                        }
-                        guard let id = item.id else {
-                            continue
-                        }
-                        items.append(.init(id: id, content: text))
-                    }
-                    result.append(GroupItem(title: law.name, contents: items))
-                }
-
-                uiThread {
-                    self.groupedContents = result
-                    self.isLoading = false
-                }
+            .sheet(isPresented: $sharing) {
+                ShareLawView(vm: .init([.init(name: law.name, content: item.content)]))
             }
-        }
-
     }
     
 }

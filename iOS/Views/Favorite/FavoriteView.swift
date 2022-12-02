@@ -18,9 +18,16 @@ struct FavoriteView: View {
     ], predicate: nil)
     private var folders: FetchedResults<FavFolder>
     
-    private var isEmpty: Bool {
-        favorites.isEmpty && folders.isEmpty
-    }
+    @Environment(\.managedObjectContext)
+    private var moc
+    
+    private var isEmpty: Bool { favorites.isEmpty && folders.isEmpty }
+    
+    @Environment(\.editMode)
+    private var editMode
+    
+    @Environment(\.dismiss)
+    private var dismiss
 
     var body: some View {
         ZStack {
@@ -31,7 +38,26 @@ struct FavoriteView: View {
                     ForEach(folders) { folder in
                         FavoriteFolderView(folder: folder)
                     }
-    //                FavoriteContentView(contents: favorites.map { $0 })
+                    .onMove { from, to in
+                        var arr = folders.map { $0 }
+                        arr.move(fromOffsets: from, toOffset: to)
+                        arr.enumerated().forEach { $1.order = Int64($0) }
+                        try? moc.save()
+                    }
+                    if editMode?.wrappedValue != .active {
+//                        FavoriteContentView(contents: favorites.map { $0 })
+                    }
+                }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                EditButton()
+            }
+            ToolbarItemGroup(placement: .navigationBarTrailing){
+                FavoriteFolderCreateButton()
+                CloseSheetItem() {
+                    dismiss()
                 }
             }
         }

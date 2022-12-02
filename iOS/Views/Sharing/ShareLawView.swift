@@ -6,29 +6,17 @@ import SPAlert
 struct ShareLawView: View {
 
     @ObservedObject
-    var vm: Model
+    var vm: VM
 
     @Environment(\.dismiss)
     var dismiss
     
-    @Environment(\.colorScheme)
-    var colorScheme
-    
-    @State
-    private var isConfirmedLight = false
-    
     @State
     private var shareing = false
     
-    @AppStorage("rememberlightconfirm")
-    private var alwaysConfirm = false
-    
     @AppStorage("ShareByPhotoViewReviewReq")
     private var reviewReq = false
-    
-    @State
-    private var isEditing = false
-    
+
     var shareView: some View {
         VStack(alignment: .center, spacing: 8) {
             ForEach(vm.rendererContents, id: \.self) { contents in
@@ -108,46 +96,38 @@ struct ShareLawView: View {
             return av
         }))
     }
-    
-    var showConfirmView: Bool {
-        colorScheme == .dark && !isConfirmedLight && !alwaysConfirm
-    }
 
     var body: some View {
-        VStack {
-            if showConfirmView {
-                ShareLawLightConfirmView { code in
-                    if code == .always {
-                        alwaysConfirm.toggle()
-                    } else if code == .confirm {
-                        isConfirmedLight.toggle()
+        NavigationView {
+            ShareLawLightConfirmView {
+                Group {
+                    if vm.isEditing {
+                        ShareLawEditView(contents: $vm.selectedContents)
+                            .environment(\.editMode, .constant(.active))
+                    } else {
+                        contentView
+                            .preferredColorScheme(.light)
                     }
                 }
-            } else if isEditing {
-                ShareLawEditView(contents: $vm.selectedContents)
-                    .environment(\.editMode, .constant(.active))
-            } else {
-                contentView
-                    .preferredColorScheme(.light)
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if !isEditing {
-                    CloseSheetItem {
-                        dismiss()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        CloseSheetItem {
+                            dismiss()
+                        }
                     }
-                }
-            }
-            ToolbarItem(placement: .navigationBarLeading) {
-                if !showConfirmView {
-                    Button {
-                        isEditing.toggle()
-                    } label: {
-                        Text(isEditing ? "完成" : "编辑")
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        if vm.canEdit {
+                            Button {
+                                vm.isEditing.toggle()
+                            } label: {
+                                Text(vm.isEditing ? "完成" : "编辑")
+                            }
+                        }
                     }
                 }
             }
+            .navigationTitle("分享")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
     
