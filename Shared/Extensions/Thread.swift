@@ -7,7 +7,7 @@
 
 import Foundation
 
-func uiThread(action: @escaping () -> Void){
+func uiThread(action: @escaping () -> Void) {
     DispatchQueue.main.async {
         action()
     }

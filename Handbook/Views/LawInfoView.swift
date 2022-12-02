@@ -2,21 +2,20 @@ import Foundation
 import SwiftUI
 
 struct LawInfoPage: View {
-    
+
     var lawID: UUID
     var toc: [LawInfo]
-    
-    
+
     @State
     private var laws: [TLaw] = []
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
-        List{
+        List {
             ForEach(toc, id: \.id) { info in
                 if !info.header.isEmpty {
-                    Section(header: Text(info.header)){
+                    Section(header: Text(info.header)) {
                         Text(info.content)
                             .textSelection(.enabled)
                     }
@@ -38,8 +37,8 @@ struct LawInfoPage: View {
         }
         .listStyle(.plain)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing){
-                CloseSheetItem() {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                CloseSheetItem {
                     dismiss()
                 }
             }

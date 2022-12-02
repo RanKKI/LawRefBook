@@ -8,14 +8,13 @@
 import Foundation
 import SwiftUI
 
-
 struct CheckBoxView: View {
-    
+
     @State
     var isOn = false
-    
+
     var action: (Bool) -> Void
-    
+
     var body: some View {
         ZStack(alignment: .center) {
             Image(systemName: "square")
@@ -31,5 +30,5 @@ struct CheckBoxView: View {
             action(isOn)
         }
     }
-    
+
 }

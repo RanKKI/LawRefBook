@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 struct SafariLinkView: View {
-    
+
     var title: String?
     var url: String
-    
+
     @State
     private var showSafari = false
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -39,5 +39,5 @@ struct SafariLinkView: View {
             SFSafariViewWrapper(url: URL(string: url)!)
         })
     }
-    
+
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 extension FavoriteContentView {
-    
+
     struct ContentItem: Identifiable, Hashable {
         var id: UUID
         var content: String
@@ -24,22 +24,22 @@ extension FavoriteContentView {
     }
 
     class VM: ObservableObject {
-        
+
         private var contents: [FavContent]
-        
+
         @Published
         private(set) var groupedContents: [GroupItem] = []
-        
+
         @Published
         var isLoading = false
-        
+
         @Published
         var shareVM = ShareLawView.VM([])
 
         var isEmpty: Bool {
             contents.isEmpty
         }
-        
+
         init(contents: [FavContent]) {
             self.contents = contents
         }
@@ -92,5 +92,5 @@ extension FavoriteContentView {
         }
 
     }
-    
+
 }

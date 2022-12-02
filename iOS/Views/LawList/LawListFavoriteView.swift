@@ -11,7 +11,7 @@ import SwiftUI
 struct LawListFavoriteView: View {
 
     @FetchRequest(entity: FavLaw.entity(), sortDescriptors: [
-        NSSortDescriptor(keyPath: \FavLaw.favAt, ascending: false),
+        NSSortDescriptor(keyPath: \FavLaw.favAt, ascending: false)
     ])
     private var results: FetchedResults<FavLaw>
 
@@ -57,7 +57,6 @@ struct LawListFavoriteView: View {
     }
 
 }
-
 
 extension FetchedResults: Equatable where Element == FavLaw {
     public static func == (lhs: FetchedResults, rhs: FetchedResults) -> Bool {

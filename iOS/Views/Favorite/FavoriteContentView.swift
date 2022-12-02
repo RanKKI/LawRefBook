@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 struct FavoriteContentView: View {
-    
+
     @ObservedObject
     var vm: VM
-    
+
     @State
     private var sharing = false
-    
+
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
             if vm.isEmpty {
@@ -59,13 +59,13 @@ struct FavoriteTextView: View {
 
     var law: TLaw
     var item: FavoriteContentView.ContentItem
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     @State
     private var sharing = false
-    
+
     private var delete: some View {
         Button {
             withAnimation {
@@ -91,5 +91,5 @@ struct FavoriteTextView: View {
                 ShareLawView(vm: .init([.init(name: law.name, content: item.content)]))
             }
     }
-    
+
 }

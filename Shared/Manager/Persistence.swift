@@ -7,15 +7,15 @@ class Persistence {
 
     private let containerID = "iCloud.xyz.rankki.law-handbook"
 
-    lazy var container : NSPersistentContainer = {
-    
+    lazy var container: NSPersistentContainer = {
+
         let container = NSPersistentCloudKitContainer(name: "LawData")
-        
+
         let baseURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         guard baseURL != nil else {
             fatalError("Persistence base URL is nil")
         }
-        
+
         let cloudURL = baseURL!.appendingPathComponent("cloud.sqlite")
         let localURL = baseURL!.appendingPathComponent("local.sqlite")
 
@@ -29,9 +29,9 @@ class Persistence {
         cloudDesc.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
 
         container.persistentStoreDescriptions = [cloudDesc, localDesc]
-        
+
         // Load both stores
-        container.loadPersistentStores { storeDescription, error in
+        container.loadPersistentStores { _, error in
             guard error == nil else {
                 fatalError("Could not load persistent stores. \(error!)")
             }
@@ -44,7 +44,7 @@ class Persistence {
         } catch {
              fatalError("Failed to pin viewContext to the current generation:\(error)")
         }
-        
+
         return container
 
     }()

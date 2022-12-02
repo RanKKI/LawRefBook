@@ -8,15 +8,14 @@
 import Foundation
 import SwiftUI
 
-
 struct LoadingView<Content: View>: View {
-    
+
     @Binding
     var isLoading: Bool
-    
+
     @ViewBuilder
     var content: () -> Content
-    
+
     var body: some View {
         if isLoading {
             VStack {
@@ -32,5 +31,5 @@ struct LoadingView<Content: View>: View {
             content()
         }
     }
-    
+
 }

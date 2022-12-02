@@ -9,9 +9,9 @@ import Foundation
 import SwiftUI
 
 struct LawListSubFolderView: View {
-    
+
     let category: TCategory
-    var name: String? = nil
+    var name: String?
 
     var body: some View {
         NavigationLink {

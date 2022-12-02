@@ -9,18 +9,18 @@ import Foundation
 import SwiftUI
 
 struct LawListContentView: View {
-    
+
     @ObservedObject
     private var vm: VM
-    
+
     private var showFavorite = false
-    
+
     @ObservedObject
     private var search: SearchPayload
 
     @Environment(\.isSearching)
     private var isSearching
-    
+
     @State
     private var searchVM: SearchView.VM
 
@@ -86,7 +86,7 @@ struct LawListCategorySectionView<Content: View>: View {
 }
 
 struct LawListCategoryView: View {
-    
+
     let category: TCategory
     let showAll: Bool
 

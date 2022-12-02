@@ -9,16 +9,16 @@ import Foundation
 import SwiftUI
 
 struct SearchView: View {
-    
+
     @ObservedObject
     private var vm: VM
-    
+
     @State
     private var historyVM: SearchHistoryView.VM
 
     @ObservedObject
     private var search: SearchPayload
-    
+
     private var laws: [TLaw]
 
     init(vm: VM, search: SearchPayload, laws: [TLaw]) {
@@ -47,28 +47,27 @@ struct SearchView: View {
                 search.afterSubmit()
             }
         }
-        .onChange(of: search.text) { text in
+        .onChange(of: search.text) { _ in
             vm.clearSearch()
         }
-        .onChange(of: vm.searchType) { newValue in
+        .onChange(of: vm.searchType) { _ in
             vm.clearSearch()
         }
     }
-    
+
 }
 
-
 private struct SearchResultView: View {
-    
+
     @Binding
     var laws: [TLaw]
-    
+
     @Binding
     var searchType: SearchType
-    
+
     @Binding
     var searchText: String
-    
+
     var body: some View {
         List {
             ForEach(laws, id: \.self.id) { law in
@@ -77,5 +76,5 @@ private struct SearchResultView: View {
         }
         .listStyle(.plain)
     }
-    
+
 }

@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 enum Mail {
 
     static func new(to: String, subject: String, body: String = "") {
@@ -19,15 +18,15 @@ enum Mail {
             UIApplication.shared.open(mailtoUrl, options: [:])
         }
     }
-    
+
     static func new(subject: String, body: String = "") {
         new(to: DeveloperMail, subject: subject, body: body)
     }
-    
+
     static func reportIssue(body: String = "") {
         new(subject: "反馈问题", body: String(format: "%@\n\nVersion:%@", body, UIApplication.appVersion ?? ""))
     }
-    
+
     static func reportIssue(law: TLaw, content: String) {
         let subject = String(format: "反馈问题:%@", law.name)
         new(subject: subject, body: content)

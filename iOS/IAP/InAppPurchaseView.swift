@@ -3,7 +3,7 @@ import SwiftUI
 
 private struct Product: Identifiable {
     var id = UUID()
-    
+
     var product: PurchaseProduct
     var icon: String
     var price: String
@@ -15,10 +15,10 @@ private let products = [
     Product(product: .Cup_of_Coffee, icon: "coffee", price: "18.00 CNY")
 ]
 
-fileprivate struct IAPItemView: View {
-    
+private struct IAPItemView: View {
+
     var item: Product
-    
+
     @ObservedObject
     var vm = IAPManager.shared
 
@@ -50,13 +50,13 @@ fileprivate struct IAPItemView: View {
 }
 
 struct InAppPurchaseView: View {
-    
+
     @ObservedObject
     var vm = IAPManager.shared
-    
+
     @State
     private var showSafari = false
-    
+
     var body: some View {
         Section {
             HStack {
@@ -88,5 +88,5 @@ struct InAppPurchaseView: View {
             SFSafariViewWrapper(url: URL(string: "https://www.flaticon.com/free-icons/bubble-tea")!)
         })
     }
-    
+
 }

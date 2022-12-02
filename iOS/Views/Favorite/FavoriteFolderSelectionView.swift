@@ -17,7 +17,7 @@ struct FavoriteFolderSelectionView: View {
 
     @Environment(\.dismiss)
     private var dismiss
-    
+
     var action: (FavFolder?) -> Void
 
     var body: some View {
@@ -33,9 +33,9 @@ struct FavoriteFolderSelectionView: View {
                 }
             }
             .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing){
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
                     FavoriteFolderCreateButton()
-                    CloseSheetItem() {
+                    CloseSheetItem {
                         dismiss()
                         action(nil)
                     }
@@ -46,5 +46,5 @@ struct FavoriteFolderSelectionView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-    
+
 }

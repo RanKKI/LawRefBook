@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 struct FavoriteFolderCreateButton: View {
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     @FetchRequest(sortDescriptors: [], predicate: nil)
     private var folders: FetchedResults<FavFolder>
-    
+
     private func createFolder() {
         self.alert(config: AlertConfig(title: "新建文件夹", action: { name in
             guard let name = name, !name.isEmpty else {

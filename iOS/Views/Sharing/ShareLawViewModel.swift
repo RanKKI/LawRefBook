@@ -8,7 +8,7 @@
 import Foundation
 
 extension ShareLawView {
-    
+
     struct ShareContent: Hashable {
         var name: String
         var content: String
@@ -19,7 +19,7 @@ extension ShareLawView {
 
         @Published
         var selectedContents = [ShareContent]()
-        
+
         var rendererContents: [[ShareContent]] {
             Dictionary(grouping: selectedContents.filter { $0.isSelected }, by: \.name)
                 .sorted { $0.key < $1.key }
@@ -27,17 +27,17 @@ extension ShareLawView {
         }
 
         var canEdit: Bool { selectedContents.count > 1 }
-            
+
         @Published
         var isEditing = false
-        
-        init(_ contents: [ShareContent]){
+
+        init(_ contents: [ShareContent]) {
             self.updateContents(contents)
         }
-        
+
         func updateContents(_ contents: [ShareContent]) {
             self.selectedContents = contents.sorted { $0.name < $1.name }
         }
     }
-    
+
 }

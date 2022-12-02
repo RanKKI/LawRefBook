@@ -9,7 +9,7 @@ import Foundation
 import SQLite
 
 final class LawManager: ObservableObject {
-    
+
     static let shared = LawManager()
 
     @Published
@@ -46,7 +46,7 @@ final class LawManager: ObservableObject {
             categoryMap[category.id] = category
         }
     }
-    
+
     private func getCategoryID(name: String) -> Int? {
         return self.categories.first { $0.name == name }?.id
     }
@@ -59,7 +59,7 @@ final class LawManager: ObservableObject {
             lawMap[law.id] = db
         }
     }
-    
+
     // 取所有 TLaws
     private func queryLaws(predicate: Expression<Bool>? = nil) async -> [TLaw] {
         var ret = [TLaw]()
@@ -70,11 +70,11 @@ final class LawManager: ObservableObject {
         }
         return ret
     }
-    
+
     func getLaw(id: UUID) async -> TLaw? {
         return await queryLaws(predicate: TLaw.id == id.asDBString()).first
     }
-    
+
     func getLaws(ids: [UUID]) async -> [TLaw] {
         return await queryLaws(predicate: ids.map { $0.asDBString() }.contains(TLaw.id))
     }
@@ -84,14 +84,14 @@ final class LawManager: ObservableObject {
         guard let cateID = self.getCategoryID(name: category) else {
             return []
         }
-        
+
         return await getLaws(categoryID: cateID)
     }
-    
+
     func getLaws(categoryID: Int) async -> [TLaw] {
         return await queryLaws(predicate: TLaw.categoryID == categoryID)
     }
-    
+
     // 获取所有 Category 和所含的 Laws
     func getCategories(by: LawGroupingMethod) async -> [TCategory] {
         if by == .level {
@@ -104,7 +104,7 @@ final class LawManager: ObservableObject {
         }
         return ret
     }
-    
+
     private func getCategoriesByLevels() async -> [TCategory] {
         let laws = await self.queryLaws()
         return Dictionary(grouping: laws, by: \.level)
@@ -116,7 +116,7 @@ final class LawManager: ObservableObject {
                 return TCategory.create(id: $0, level: $1.key, laws: $1.value)
             }
     }
-    
+
     func getDatabaseByLaw(law: TLaw) -> LawDatabase? {
         return lawMap[law.id]
     }

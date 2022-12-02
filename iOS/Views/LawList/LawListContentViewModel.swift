@@ -22,25 +22,25 @@ extension LawListContentView {
 
         @Published
         var searchText = ""
-        
+
         var isSignleCategory: Bool {
             category != nil && categories.count <= 1
         }
-        
+
         var laws: [TLaw] {
             self.categories.flatMap { $0.laws } + folders.flatMap { $0.flatMap { $0.laws } }
         }
 
-        private(set) var category: String? = nil
+        private(set) var category: String?
 
         init() {
-            
+
         }
 
         init(category: String?) {
             self.category = category
         }
-        
+
         func onAppear() {
             guard categories.isEmpty && folders.isEmpty else { return }
             Task {
@@ -52,7 +52,7 @@ extension LawListContentView {
             uiThread {
                 self.isLoading = true
             }
-            
+
             let arr = await LawManager.shared.getCategories(by: method)
 
             if let category = self.category {
@@ -82,5 +82,5 @@ extension LawListContentView {
         }
 
     }
-    
+
 }

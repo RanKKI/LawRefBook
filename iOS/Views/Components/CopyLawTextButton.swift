@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 struct CopyLawTextButton: View {
-    
+
     var law: TLaw
     var text: String
-    
+
     var body: some View {
         Button {
             let message = String(format: "%@\n\n%@", law.name, text)
@@ -21,5 +21,5 @@ struct CopyLawTextButton: View {
             Label("复制", systemImage: "doc")
         }
     }
-    
+
 }

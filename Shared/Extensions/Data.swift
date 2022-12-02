@@ -13,7 +13,7 @@ extension Data {
         return String(decoding: self, as: UTF8.self)
     }
 
-    func decodeJSON<T>(_ type: T.Type) -> T? where T : Decodable {
+    func decodeJSON<T>(_ type: T.Type) -> T? where T: Decodable {
         do {
             return try JSONDecoder().decode(type, from: self)
         } catch {

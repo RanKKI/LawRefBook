@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct FavoriteView: View {
-    
+
     @FetchRequest(sortDescriptors: [], predicate: nil)
     private var favorites: FetchedResults<FavContent>
 
@@ -17,15 +17,15 @@ struct FavoriteView: View {
         SortDescriptor(\.order)
     ], predicate: nil)
     private var folders: FetchedResults<FavFolder>
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     private var isEmpty: Bool { favorites.isEmpty && folders.isEmpty }
-    
+
     @Environment(\.editMode)
     private var editMode
-    
+
     @Environment(\.dismiss)
     private var dismiss
 
@@ -54,13 +54,13 @@ struct FavoriteView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 EditButton()
             }
-            ToolbarItemGroup(placement: .navigationBarTrailing){
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
                 FavoriteFolderCreateButton()
-                CloseSheetItem() {
+                CloseSheetItem {
                     dismiss()
                 }
             }
         }
     }
-    
+
 }

@@ -3,7 +3,7 @@ import XCTest
 @testable import 中国法律
 
 class TestRegularExp: XCTestCase {
-    
+
     func testLineStartReg() throws {
         XCTAssertNotNil("第一条 测试，123".range(of: lineStartRe, options: .regularExpression))
         XCTAssertNotNil("第一二条 测试，123".range(of: lineStartRe, options: .regularExpression))
@@ -30,5 +30,5 @@ class TestRegularExp: XCTestCase {
         XCTAssertNil("测试在中间的第三条".range(of: lineStartRe, options: .regularExpression))
         XCTAssertNil("测试在中间的三、".range(of: lineStartRe, options: .regularExpression))
     }
-    
+
 }

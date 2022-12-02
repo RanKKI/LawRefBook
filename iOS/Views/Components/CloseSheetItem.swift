@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct CloseSheetItem : View {
+struct CloseSheetItem: View {
 
     var action: () -> Void = {}
 

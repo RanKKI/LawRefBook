@@ -38,7 +38,7 @@ extension Array where Element == FavContent {
 //                return laws[0].name < laws[1].name
 //            }
             .map { $0.value }
-            .map { $0.filter{ $0.line > 0 }.sorted { $0.line < $1.line } }
+            .map { $0.filter { $0.line > 0 }.sorted { $0.line < $1.line } }
     }
-    
+
 }

@@ -12,10 +12,10 @@ struct ShareLawLightConfirmView<Content: View>: View {
 
     @AppStorage("rememberlightconfirm")
     private var alwaysConfirm = false
-    
+
     @State
     private var isConfirmedLight = false
-    
+
     @Environment(\.colorScheme)
     private var colorScheme
 
@@ -63,5 +63,5 @@ struct ShareLawLightConfirmView<Content: View>: View {
             }
         }
     }
-    
+
 }

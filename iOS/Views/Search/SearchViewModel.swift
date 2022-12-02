@@ -8,22 +8,22 @@
 import Foundation
 
 extension SearchView {
-    
+
     final class VM: ObservableObject {
-        
+
         @Published
         var searchType: SearchType = .catalogue
-        
+
         @Published
         var isLoading = false
-        
+
         @Published
         var submitted = false
 
         @Published
         var searchResult = [TLaw]()
 
-        private(set) var category: String? = nil
+        private(set) var category: String?
 
         init(category: String?) {
             self.category = category
@@ -52,21 +52,20 @@ extension SearchView {
                 }
             }
         }
-        
+
         private func titleSearch(text: String, laws: [TLaw]) async -> [TLaw] {
             return laws.filter { law in
                 law.name.contains(text) || text.tokenised().allSatisfy { law.name.contains($0) }
             }
         }
-        
-        
+
         private let searchOpQueue: OperationQueue = OperationQueue()
 
         private func fulltextSearch(text: String, laws: [TLaw]) async -> [TLaw] {
             searchOpQueue.cancelAllOperations()
             let locker = NSLock()
             var results = [TLaw]()
-            laws.forEach { law in
+            laws.forEach { _ in
                 self.searchOpQueue.addOperation {
 //                    let content = LocalProvider.shared.getLawContent(law.id)
 //                    content.load()
@@ -78,7 +77,7 @@ extension SearchView {
                 }
             }
             searchOpQueue.addBarrierBlock {
-                
+
             }
             searchOpQueue.waitUntilAllOperationsAreFinished()
             return results
@@ -90,5 +89,5 @@ extension SearchView {
         }
 
     }
-    
+
 }

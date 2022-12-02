@@ -3,38 +3,38 @@ import Foundation
 
 struct TLaw: Identifiable {
     static let table = Table("law")
-    
+
     static let id = Expression<String>("id")
     static let name = Expression<String>("name")
     static let categoryID = Expression<Int>("category_id")
     static let expired = Expression<Bool>("expired")
     static let level = Expression<String>("level")
-    
+
     static let filename = Expression<String?>("filename")
     static let publish = Expression<String?>("publish")
     static let order = Expression<Int?>("order")
     static let subtitle = Expression<String?>("subtitle")
     static let valid_from = Expression<String?>("valid_from")
-    
+
     static let ver = Expression<Int>("ver")
-    
+
     let id: UUID
     let name: String
     let category: TCategory
     let expired: Bool
     let level: String
-    
+
     let filename: String?
     let publish: Date?
     let order: Int?
     let subtitle: String?
     let is_valid: Bool
-    
+
     let ver: Int
-    
+
     static func create(row: Row, category: TCategory) -> TLaw {
-        
-        var pub_at: Date? = nil
+
+        var pub_at: Date?
         if let pub = row[publish] {
             pub_at = dateFormatter.date(from: pub)
         }
@@ -45,7 +45,7 @@ struct TLaw: Identifiable {
             let now = Date.now
             is_valid = dt == nil || dt! < now
         }
-        
+
         return TLaw(
             id: UUID.create(str: row[id]),
             name: row[name],
@@ -60,7 +60,7 @@ struct TLaw: Identifiable {
             ver: row[ver]
         )
     }
-    
+
     func getFilename() -> String {
         if let name = self.filename {
             return name
@@ -74,9 +74,9 @@ struct TLaw: Identifiable {
         let folder = self.category.folder
         var ret = [
             String(format: "%@/%@", folder, getFilename()),
-            String(format: "%@/%@", folder, name),
+            String(format: "%@/%@", folder, name)
         ].filter { $0 != nil }.map { $0! }
-        
+
         if let subtitle = subtitle {
             ret.append(String(format: "%@/%@", folder, subtitle))
         }

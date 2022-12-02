@@ -8,18 +8,18 @@
 import Foundation
 
 extension LawContentView {
-    
+
     class VM: ObservableObject {
-        
+
         @Published
         var isLoading = true
-        
+
         @Published
         var searchText: String = ""
 
         @Published
         var law: TLaw
-        
+
         @Published
         var content: LawContent?
 
@@ -41,5 +41,5 @@ extension LawContentView {
             }
         }
     }
-    
+
 }

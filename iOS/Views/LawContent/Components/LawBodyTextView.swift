@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct LawBodyTextView: View {
-    
+
     var law: TLaw
     var sections: [LawContentSection]
 
@@ -28,30 +28,30 @@ struct LawBodyTextView: View {
             }
         }
     }
-    
+
 }
 
 struct LawSectionHeaderView: View {
-    
+
     var section: LawContentSection
-    
+
     var body: some View {
         Text(section.header)
             .displayMode(.Header, indent: section.indent)
             .id(section.id)
             .padding([.top, .bottom], 8)
     }
-    
+
 }
 
 struct LawSectionTextView: View {
-    
+
     var law: TLaw
     var section: LawContentSection
-    
+
     @Binding
     var searchText: String
-    
+
     var body: some View {
         Group {
             Divider()
@@ -60,27 +60,26 @@ struct LawSectionTextView: View {
             }
         }
     }
-    
+
 }
 
-
 struct LawParagraphTextView: View {
-    
+
     var law: TLaw
     var paragraph: LawParagraph
-    
+
     @Binding
     var searchText: String
-    
+
     @State
     private var saveToFavorite = false
-    
+
     @State
     private var sharing = false
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     var body: some View {
         Group {
             if paragraph.text.starts(with: "<!-- TABLE -->") {
@@ -117,5 +116,5 @@ struct LawParagraphTextView: View {
             ShareLawView(vm: .init([.init(name: law.name, content: paragraph.text)]))
         }
     }
-    
+
 }

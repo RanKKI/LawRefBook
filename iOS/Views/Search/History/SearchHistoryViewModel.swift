@@ -2,14 +2,14 @@ import SwiftUI
 import CoreData
 
 extension SearchHistoryView {
-    
+
     class VM: ObservableObject {
-        
+
         @Published
         private(set) var histories: [SearchHistory] = []
 
         private(set) var lawID: UUID?
-        
+
         var moc: NSManagedObjectContext?
 
         var showEmptyAll: Bool {
@@ -24,14 +24,14 @@ extension SearchHistoryView {
         init(lawID: UUID?) {
             self.lawID = lawID
         }
-        
+
         func loadHistories() {
             guard let moc = moc else { return }
             let req = buildRequest(limit: 10)
             let result = try? moc.fetch(req)
             self.histories = result ?? []
         }
-        
+
         func removeAllHistories() {
             guard let moc = moc else { return }
             let req = buildRequest(limit: nil)
@@ -61,5 +61,5 @@ extension SearchHistoryView {
             return fetchRequest
         }
     }
-    
+
 }

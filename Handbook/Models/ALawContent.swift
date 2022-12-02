@@ -5,20 +5,20 @@
 ////  Created by Hugh Liu on 25/2/2022.
 ////
 //
-//import Foundation
+// import Foundation
 //
 
 //
-//private class LawParser {
+// private class LawParser {
 //    
 //    private var forceBreak = false
 //    var isCases = false
 //    
 
 //    
-//}
+// }
 //
-//class ALawContent: ObservableObject {
+// class ALawContent: ObservableObject {
 //
 //    var Titles: [String] = []
 //    var Infomations: [LawInfo] = []
@@ -134,4 +134,4 @@
 //        return true
 //    }
 //
-//}
+// }

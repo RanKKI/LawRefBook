@@ -4,7 +4,7 @@ import SwiftUI
 struct TOCList: View {
 
     var content: LawToc
-    
+
     var action: (Int64) -> Void
 
     @State
@@ -18,7 +18,7 @@ struct TOCList: View {
                 }
         } else {
             DisclosureGroup(content.title, isExpanded: $isExpand) {
-                ForEach(content.children, id: \.id){ sub in
+                ForEach(content.children, id: \.id) { sub in
                     TOCList(content: sub, action: action)
                 }
             }
@@ -27,7 +27,7 @@ struct TOCList: View {
     }
 }
 
-//struct TableOfContentView: View {
+// struct TableOfContentView: View {
 //
 //    @ObservedObject
 //    var vm: LawContentView.LawContentViewModel
@@ -51,4 +51,4 @@ struct TOCList: View {
 //            }
 //        }
 //    }
-//}
+// }

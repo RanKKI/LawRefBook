@@ -1,32 +1,32 @@
 import StoreKit
 
 class IAPManager: ObservableObject {
-    
+
     static var shared = IAPManager()
-    
+
     @Published
     var products = [SKProduct]()
-    
+
     @Published
     var isLoading = false
-    
+
     var lastPurchaseTime: Int64 = 0
-    
+
     fileprivate var queue = DispatchQueue(label: "IAP", qos: .background)
-    
+
     func getProduct(product: PurchaseProduct) -> SKProduct? {
         return products.first(where: {
             $0.productIdentifier == product.rawValue
         })
     }
-    
+
     func getProductPrice(product: PurchaseProduct) -> String? {
         if let skproduct = getProduct(product: product) {
             return "\(skproduct.priceLocale.currencySymbol ?? "")\(skproduct.price) \(skproduct.priceLocale.currencyCode ?? "")"
         }
         return nil
     }
-    
+
     func loadProducts() {
         guard !isLoading else { return }
         guard products.isEmpty else { return }
@@ -48,7 +48,7 @@ class IAPManager: ObservableObject {
         }
         lastPurchaseTime = now
         self.isLoading = true
-        InAppPurchaseHandler.shared.purchase(product: product) { log, product, transition in
+        InAppPurchaseHandler.shared.purchase(product: product) { log, _, _ in
             print("InAppPurchaseHandler purchase \(log)")
             self.isLoading = false
         }

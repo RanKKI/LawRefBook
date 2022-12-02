@@ -49,10 +49,10 @@ struct LawLinkView: View {
 }
 
 struct InvalidLawLinkView: View {
-    
+
     var body: some View {
         Text("该法律条文似乎消失了")
             .foregroundColor(.gray)
     }
-    
+
 }

@@ -8,7 +8,7 @@ extension View {
 
     func shareText(_ shareString: String) {
         if let controller = topMostViewController() {
-            let activityViewController = UIActivityViewController(activityItems: [shareString], applicationActivities: nil);
+            let activityViewController = UIActivityViewController(activityItems: [shareString], applicationActivities: nil)
             controller.present(activityViewController, animated: true)
         }
     }

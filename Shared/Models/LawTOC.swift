@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct LawToc: Identifiable {
     var id: Int64 { line }
 

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct LawListView: View {
-    
+
     private var showFavorite = false
     private var cateogry: String?
 
@@ -18,7 +18,7 @@ struct LawListView: View {
 
     @State
     private var vm: LawListContentView.VM
-    
+
     init(showFavorite: Bool, cateogry: String? = nil) {
         self.showFavorite = showFavorite
         self.cateogry = cateogry

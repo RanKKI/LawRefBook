@@ -10,7 +10,7 @@ struct MainApp: App {
     private var appDelegate: AppDelegate
 
     private(set) var moc = Persistence.shared.container.viewContext
-    
+
     @ObservedObject
     private var db = LawManager.shared
 

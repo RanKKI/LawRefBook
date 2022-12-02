@@ -3,15 +3,15 @@ import SwiftUI
 import CoreData
 
 struct SearchHistoryView: View {
-    
+
     @ObservedObject
     var vm: VM
 
     var action: ((String) -> Void)?
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     var body: some View {
         List {
             Section {
@@ -35,16 +35,16 @@ struct SearchHistoryView: View {
             vm.loadHistories()
         }
     }
-    
+
 }
 
 private struct HistoryHeader: View {
-    
+
     @Binding
     var showEmptyALL: Bool
-    
+
     var action: () -> Void
-    
+
     var body: some View {
         HStack(spacing: 0) {
             Text("搜索历史")
@@ -61,18 +61,18 @@ private struct HistoryHeader: View {
         }
         .font(.caption)
     }
-    
+
 }
 
 private struct HistoryItem: View {
-    
+
     var item: SearchHistory
     var action: (String) -> Void
     var onRemove: () -> Void
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     var body: some View {
         HStack {
             Text(item.text ?? "")
@@ -95,5 +95,5 @@ private struct HistoryItem: View {
             .tint(.red)
         }
     }
-    
+
 }

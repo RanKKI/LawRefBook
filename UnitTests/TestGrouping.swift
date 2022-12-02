@@ -5,7 +5,6 @@ import SwiftUI
 
 class TestGrouping: XCTestCase {
 
-
     @AppStorage("defaultGroupingMethod", store: .standard)
     private var groupingMethod = LawGroupingMethod.department
 
@@ -15,7 +14,6 @@ class TestGrouping: XCTestCase {
             XCTAssertTrue(ArrayLevelSort.firstIndex(of: law.level) != nil, "\(law.level) is not exists")
         }
     }
-
 
     func testGroupingCount() throws {
         groupingMethod = .department

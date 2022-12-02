@@ -9,17 +9,17 @@ import Foundation
 import SwiftUI
 
 struct LawContentView: View {
-    
+
     @ObservedObject
     private var vm: VM
-    
+
     @ObservedObject
     private var sheets = SheetMananger<Sheets>()
 
     init(vm: VM) {
         self.vm = vm
     }
-    
+
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
             if let law = vm.law, let content = vm.content {
@@ -60,12 +60,11 @@ struct LawContentView: View {
 
 }
 
-
 extension LawContentView {
-    
+
     enum Sheets {
         case toc
         case info
     }
-    
+
 }

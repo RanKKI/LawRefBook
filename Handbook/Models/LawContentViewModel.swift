@@ -1,8 +1,8 @@
-//import Foundation
-//import SwiftUI
-//import CoreData
+// import Foundation
+// import SwiftUI
+// import CoreData
 //
-//extension ALawContentView {
+// extension ALawContentView {
 //
 //    class LawContentViewModel: ObservableObject {
 //
@@ -133,4 +133,4 @@
 //
 //    }
 //
-//}
+// }

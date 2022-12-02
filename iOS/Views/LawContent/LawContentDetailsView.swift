@@ -9,12 +9,12 @@ import Foundation
 import SwiftUI
 
 struct LawContentDetailsView: View {
-    
+
     var law: TLaw
     var content: LawContent
-    
+
     var searchText: Binding<String>
-    
+
     private var preference = Preference.shared
 
     init(law: TLaw, content: LawContent, searchText: Binding<String>) {
@@ -24,7 +24,7 @@ struct LawContentDetailsView: View {
     }
 
     var body: some View {
-        ScrollViewReader { scrollProxy in
+        ScrollViewReader { _ in
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: CGFloat(preference.lineSpacing)) {
                     LawStatusView(law: law)

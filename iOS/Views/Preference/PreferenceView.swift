@@ -8,13 +8,13 @@ struct PreferenceView: View {
 
     @Environment(\.dismiss)
     private var dismiss
-    
+
     @ObservedObject
     private var preference = Preference.shared
 
     var body: some View {
-        List{
-            Section(header: Text("内容来源"), footer: Text("如果您发现了任何错误，包括但不限于排版、错字、缺失内容，请使用以下联系方式告知开发者，以便修复")){
+        List {
+            Section(header: Text("内容来源"), footer: Text("如果您发现了任何错误，包括但不限于排版、错字、缺失内容，请使用以下联系方式告知开发者，以便修复")) {
                 SafariLinkView(title: "国家法律法规数据库", url: "https://flk.npc.gov.cn")
                 SafariLinkView(title: "最高人民法院", url: "https://www.court.gov.cn")
             }
@@ -46,7 +46,7 @@ struct PreferenceView: View {
                     Text("字体设置")
                 }
             }
-            Section(header: Text("开发者")){
+            Section(header: Text("开发者")) {
                 Text("@RanKKI")
                 Text(DeveloperMail)
                     .foregroundColor(.accentColor)
@@ -56,7 +56,7 @@ struct PreferenceView: View {
                     }
             }
 
-            Section(footer: Text("自豪地采用 SwiftUI")){
+            Section(footer: Text("自豪地采用 SwiftUI")) {
                 Button("给 App 评分！") {
                     if let url = URL(string: "itms-apps://apple.com/app/id1612953870") {
                         UIApplication.shared.open(url)
@@ -76,19 +76,19 @@ struct PreferenceView: View {
             Text(COPYRIGHT_DECLARE)
                 .listRowBackground(Color.clear)
                 .font(.footnote)
-            
+
             Text(ContributorsText)
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
                 .multilineTextAlignment(.leading)
                 .font(.footnote)
                 .padding(.top, 16)
-            
+
             InAppPurchaseView()
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing){
-                CloseSheetItem() {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                CloseSheetItem {
                     dismiss()
                 }
             }

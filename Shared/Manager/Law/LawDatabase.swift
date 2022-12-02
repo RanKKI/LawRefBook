@@ -9,7 +9,7 @@ import Foundation
 import SQLite
 
 class LawDatabase {
-    
+
     private var connection: Connection
     private var path: URL
     var categories = [Int: TCategory]()
@@ -27,13 +27,13 @@ class LawDatabase {
             print(error.localizedDescription)
             return []
         }
-        
+
         return rows.map { TCategory.create(row: $0, laws: []) }
     }
 
     func getLaws(predicate: Expression<Bool>? = nil) async -> [TLaw] {
         var rows = AnySequence<Row>([])
-        
+
         var query = TLaw.table
         if let predicate = predicate {
             query = query.filter(predicate)
@@ -71,4 +71,3 @@ class LawDatabase {
         return nil
     }
 }
-

@@ -11,7 +11,7 @@ let LawLevel = [
     "自治条例",
     "单行条例",
     "案例",
-    "其他",
+    "其他"
 ]
 
 enum LawGroupingMethod: String, CaseIterable {
@@ -24,7 +24,7 @@ enum SearchHistoryType: String, CaseIterable {
     case share = "共享记录"
 }
 
-enum SearchType : String, CaseIterable {
+enum SearchType: String, CaseIterable {
     case catalogue = "目录"
     case fullText = "全文"
 }
@@ -43,7 +43,7 @@ let Contributors: [String] = [
     "@nuomi1",
     "@allinprogram",
     "@andmeics",
-    "@JalinWang",
+    "@JalinWang"
 ]
 
 let DeveloperMail = "rankki.dev@icloud.com"

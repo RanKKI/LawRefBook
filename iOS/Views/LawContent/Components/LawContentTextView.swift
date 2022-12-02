@@ -8,22 +8,21 @@
 import Foundation
 import SwiftUI
 
-
 struct LawContentTextView: View {
-    
+
     var text: String
     var searchText: String
-    
+
     @Environment(\.colorScheme)
     private var colorScheme
-    
+
     private var preference = Preference.shared
-    
+
     init(text: String) {
         self.text = text
         self.searchText = ""
     }
-    
+
     func highlightText(_ str: Substring) -> Text {
         guard !str.isEmpty && !searchText.isEmpty else { return Text(str) }
 
@@ -60,5 +59,5 @@ struct LawContentTextView: View {
         .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
         .background(colorScheme == .dark ? Color.clear : Color.white)
     }
-    
+
 }

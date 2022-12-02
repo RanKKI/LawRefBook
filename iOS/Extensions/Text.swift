@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 extension Text {
-    
+
     enum DisplayMode {
         case Title // 内容标题
 
@@ -23,9 +23,8 @@ extension Text {
             .multilineTextAlignment(.center)
     }
 
-    
     func displayMode(_ mode: DisplayMode, indent: Int = 1) -> some View {
-        switch(mode){
+        switch mode {
         case .Title:
             return self
                 .center()

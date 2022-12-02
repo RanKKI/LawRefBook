@@ -11,16 +11,16 @@ import SwiftUI
 typealias TableData = [[String]]
 
 struct TableView: View {
-    
+
     /* 每行的数据应该一样长 */
     var data: TableData
 
     var width: CGFloat = UIScreen.screenWidth
-    
+
     private var padWidth: CGFloat {
         width - 32
     }
-    
+
     var body: some View {
         VStack {
             ForEach(data, id: \.self) { row in
@@ -45,9 +45,8 @@ struct TableView: View {
         }
         .background(Rectangle().foregroundColor(.clear).border(.black))
     }
-    
-}
 
+}
 
 struct TableView_Previews: PreviewProvider {
     static var previews: some View {

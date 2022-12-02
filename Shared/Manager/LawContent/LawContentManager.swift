@@ -8,9 +8,9 @@
 import Foundation
 
 final class LawContentManager {
-    
+
     static let shared = LawContentManager()
-    
+
     private let local = LocalManager.shared
     private let manager = LawManager.shared
     private let parser = LawContentParser.shared

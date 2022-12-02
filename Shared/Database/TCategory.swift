@@ -2,26 +2,26 @@ import SQLite
 import Foundation
 
 struct TCategory: Identifiable, Hashable {
-    
+
     static func == (lhs: TCategory, rhs: TCategory) -> Bool {
         return lhs.id == rhs.id && lhs.name == rhs.name
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(name)
     }
-    
+
     static let table = Table("category")
-    
+
     static let id = Expression<Int>("id")
     static let name = Expression<String>("name")
     static let folder = Expression<String>("folder")
     static let isSubFolder = Expression<Bool>("isSubFolder")
     static let order = Expression<Int>("order")
-    
+
     static let group = Expression<String?>("group")
-    
+
     let id: Int
     let name: String
     let folder: String
@@ -29,7 +29,7 @@ struct TCategory: Identifiable, Hashable {
     let order: Int
     let group: String?
     let laws: [TLaw]
-    
+
     static func create(id: Int, level: String, laws: [TLaw]) -> TCategory {
         return TCategory(
             id: id,
@@ -41,7 +41,7 @@ struct TCategory: Identifiable, Hashable {
             laws: laws
         )
     }
-    
+
     static func create(row: Row, laws: [TLaw]) -> TCategory {
         return TCategory(
             id: row[id],
@@ -53,7 +53,7 @@ struct TCategory: Identifiable, Hashable {
             laws: laws
         )
     }
-    
+
     static func create(old: TCategory, laws: [TLaw]) -> TCategory {
         return TCategory(
             id: old.id,

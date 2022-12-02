@@ -8,9 +8,9 @@
 import Foundation
 
 class LawContentParser {
-    
+
     static let shared = LawContentParser()
-        
+
     private var forceBreak = false
     private var isCases = false
 
@@ -21,13 +21,13 @@ class LawContentParser {
         let (titles, infos, sections, toc) = self.parse(contents: contents)
         return LawContent(titles: titles, sections: sections, info: infos, toc: toc)
     }
-    
+
     func parse(contents: String) -> ([String], [LawInfo], [LawContentSection], [LawToc]) {
         var isDesc = true // 是否为信息部分
         var isFix = false // 是否为修正案
         var noOfLine: Int64 = 0
         var isTable = false
-        
+
         var titleArr = [String]()
         var bodyArr = [LawContentSection]()
         var info = [LawInfo]()
@@ -60,18 +60,18 @@ class LawContentParser {
                 self.forceBreak = true
                 continue
             }
-            
+
             var isNewLine = self.isNewLine(text: text, isFix: isFix)
 
             if text.starts(with: "<!-- TABLE -->") {
                 isTable = true
                 isNewLine = true
             }
-            
+
             if isTable {
-                
+
             }
-            
+
             if text.starts(with: "<!-- TABLE END -->") {
                 isTable = false
                 continue
@@ -100,24 +100,24 @@ class LawContentParser {
                     }
                     targetToc.children.append(LawToc(title: title, indent: indent, line: noOfLine))
                 }
-                
+
                 bodyArr.append(LawContentSection(header: title, line: noOfLine, indent: indent))
-                noOfLine += 1;
+                noOfLine += 1
                 continue
             }
 
             if bodyArr.isEmpty {
                 bodyArr.append(LawContentSection(header: "", line: noOfLine, indent: 1))
-                noOfLine += 1;
+                noOfLine += 1
             }
-            
+
             let newLine = self.parseContent(&bodyArr[bodyArr.count - 1].paragraphs, text, isFix: isFix, no: noOfLine, newLine: isNewLine)
 
             if newLine {
                 noOfLine += 1
             }
         }
-        
+
         return (titleArr, info, bodyArr, toc)
     }
 
@@ -137,7 +137,7 @@ class LawContentParser {
             children.append(LawParagraph(line: no, text: text))
             return true
         }
-        let newLine = text.trimmingCharacters(in: ["-"," "])
+        let newLine = text.trimmingCharacters(in: ["-", " "])
         if newLine.count > 100 {
             children[children.count - 1].text = children[children.count - 1].text.addNewLine(str: "")
         }

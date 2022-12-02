@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct LawStatusView: View {
-    
+
     var law: TLaw
 
     var body: some View {

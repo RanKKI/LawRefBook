@@ -8,12 +8,11 @@
 import Foundation
 import Zip
 
-
 // 维护本地文件
 final class LocalManager {
-    
+
     static let shared = LocalManager()
-    
+
     static let defaultDatabaseName = "db.sqlite3"
 
     private var baseFolder: URL? {
@@ -74,18 +73,17 @@ final class LocalManager {
 
 }
 
-
 extension LocalManager {
 
     enum InBundle {
-        
+
         static func readFile(path: String?) -> Data? {
             guard let path = path else {
                 return nil
             }
             return try? String(contentsOfFile: path).data(using: .utf8)
         }
-        
+
     }
 
 }

@@ -2,7 +2,6 @@ import Foundation
 import SwiftUI
 import SPAlert
 
-
 struct ShareLawView: View {
 
     @ObservedObject
@@ -10,10 +9,10 @@ struct ShareLawView: View {
 
     @Environment(\.dismiss)
     var dismiss
-    
+
     @State
     private var shareing = false
-    
+
     @AppStorage("ShareByPhotoViewReviewReq")
     private var reviewReq = false
 
@@ -45,7 +44,7 @@ struct ShareLawView: View {
         .foregroundColor(.black)
         .snapView()
     }
-    
+
     var contentView: some View {
         ScrollView {
             VStack {
@@ -130,5 +129,5 @@ struct ShareLawView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-    
+
 }

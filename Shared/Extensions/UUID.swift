@@ -12,7 +12,7 @@ extension UUID {
     /* 将 08f1c0c5de2048c38eb96667f1adad12 转换成 UUID */
     static func create(str: String) -> UUID {
         var arr = [""]
-        let size = [8,4,4,4,12]
+        let size = [8, 4, 4, 4, 12]
         for char in str {
             if arr.last!.count == size[arr.count - 1] {
                 arr.append("")
