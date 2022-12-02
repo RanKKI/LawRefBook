@@ -15,6 +15,12 @@ struct LawContentView: View {
 
     @ObservedObject
     private var sheets = SheetMananger<Sheets>()
+    
+    @Environment(\.managedObjectContext)
+    private var moc
+    
+    @State
+    private var scroll: Int64?
 
     init(vm: VM) {
         self.vm = vm
@@ -23,7 +29,7 @@ struct LawContentView: View {
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
             if let law = vm.law, let content = vm.content {
-                LawContentDetailsView(law: law, content: content, searchText: $vm.searchText)
+                LawContentDetailsView(law: law, content: content, searchText: $vm.searchText, scroll: $scroll)
             }
         }
         .toolbar {
@@ -31,9 +37,8 @@ struct LawContentView: View {
                 IconButton(icon: "list.bullet.rectangle") {
                     sheets.state = .toc
                 }
-                .transition(.opacity)
-                IconButton(icon: true ? "heart.slash" : "heart") {
-//                    vm.onFavIconClicked(moc: moc)
+                IconButton(icon: vm.isFlagged ? "heart.slash" : "heart") {
+                    vm.flag(moc)
                 }
                 IconButton(icon: "info.circle") {
                     sheets.state = .info
@@ -42,18 +47,20 @@ struct LawContentView: View {
         }
         .sheet(isPresented: $sheets.isShowingSheet) {
             NavigationView {
-                if sheets.state == .info {
-//                    LawInfoPage(lawID: vm.lawID, toc: vm.content.Infomations)
-//                        .navigationBarTitle("关于", displayMode: .inline)
-                } else if sheets.state == .toc {
-//                    TableOfContentView(vm: vm, sheet: sheetManager)
-//                        .navigationBarTitle("目录", displayMode: .inline)
+                if let content = vm.content, sheets.state == .info {
+                    LawInfoPage(lawID: vm.law.id, toc: content.info)
+                        .navigationBarTitle("关于", displayMode: .inline)
+                } else if let content = vm.content, sheets.state == .toc {
+                    LawTableOfContentView(toc: content.toc) { line in
+                        scroll = line
+                    }
+                    .navigationBarTitle("目录", displayMode: .inline)
                 }
             }
             .phoneOnlyStackNavigationView()
         }
         .onAppear {
-            vm.onAppear()
+            vm.onAppear(moc: moc)
         }
         .searchable(text: $vm.searchText, placement: .navigationBarDrawer(displayMode: .always))
     }

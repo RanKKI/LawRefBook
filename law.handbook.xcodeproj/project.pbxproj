@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3427D5CAD200B42167 /* TOCView.swift */; };
+		1632AD3527D5CAD200B42167 /* LawTableOfContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3427D5CAD200B42167 /* LawTableOfContentView.swift */; };
 		1632AD3F27D8719600B42167 /* FontSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1632AD3E27D8719600B42167 /* FontSettingView.swift */; };
 		16BA35C727CDDE8700694880 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BA35C627CDDE8700694880 /* Util.swift */; };
 		16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0011227E43AA100AB6446 /* TestLawContent.swift */; };
@@ -120,7 +120,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1632AD3427D5CAD200B42167 /* TOCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCView.swift; sourceTree = "<group>"; };
+		1632AD3427D5CAD200B42167 /* LawTableOfContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawTableOfContentView.swift; sourceTree = "<group>"; };
 		1632AD3E27D8719600B42167 /* FontSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSettingView.swift; sourceTree = "<group>"; };
 		16BA35C627CDDE8700694880 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		16C0011027E43AA100AB6446 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -271,8 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				9016D22227E61BBF0027D69D /* Ext */,
-				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
-				1632AD3427D5CAD200B42167 /* TOCView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -555,6 +553,8 @@
 				90E8358F2931FF2C00519E23 /* LawContentView.swift */,
 				90E835912931FF7700519E23 /* LawContentViewModel.swift */,
 				90E835942932006800519E23 /* LawContentDetailsView.swift */,
+				900EBCE127D35E3500E20FE4 /* LawInfoView.swift */,
+				1632AD3427D5CAD200B42167 /* LawTableOfContentView.swift */,
 			);
 			path = LawContent;
 			sourceTree = "<group>";
@@ -821,7 +821,7 @@
 				90399180292B96D000CFC975 /* LawListFoldersView.swift in Sources */,
 				90E835802931CDCF00519E23 /* Application.swift in Sources */,
 				90E835C9293834B400519E23 /* FavoriteView.swift in Sources */,
-				1632AD3527D5CAD200B42167 /* TOCView.swift in Sources */,
+				1632AD3527D5CAD200B42167 /* LawTableOfContentView.swift in Sources */,
 				90399168292A3A4C00CFC975 /* Delegate.swift in Sources */,
 				90E8357E2931CD9C00519E23 /* Review.swift in Sources */,
 				901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */,

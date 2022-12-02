@@ -9,15 +9,18 @@ struct LawInfoPage: View {
     @State
     private var laws: [TLaw] = []
 
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss)
+    var dismiss
 
     var body: some View {
         List {
             ForEach(toc, id: \.id) { info in
                 if !info.header.isEmpty {
-                    Section(header: Text(info.header)) {
+                    Section {
                         Text(info.content)
                             .textSelection(.enabled)
+                    } header: {
+                        Text(info.header)
                     }
                 } else if let text = try? AttributedString(markdown: info.content) {
                     Text(text)

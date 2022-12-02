@@ -13,32 +13,28 @@ struct LawContentDetailsView: View {
     var law: TLaw
     var content: LawContent
 
-    var searchText: Binding<String>
-
-    private var preference = Preference.shared
-
-    init(law: TLaw, content: LawContent, searchText: Binding<String>) {
-        self.law = law
-        self.content = content
-        self.searchText = searchText
-    }
-
+    @Binding
+    var searchText: String
+    
+    @Binding
+    var scroll: Int64?
+    
     var body: some View {
-        ScrollViewReader { _ in
+        ScrollViewReader { proxy in
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: CGFloat(preference.lineSpacing)) {
+                LazyVStack(alignment: .leading, spacing: CGFloat(Preference.shared.lineSpacing)) {
                     LawStatusView(law: law)
                     LawTitleTextView(titles: content.titles)
-                    LawBodyTextView(law: law, sections: content.sections, searchText: searchText)
+                    LawBodyTextView(law: law, sections: content.sections, searchText: $searchText)
                 }
-//                .onChange(of: vm.scrollPos) { target in
-//                    if let target = target {
-//                        vm.scrollPos = nil
-//                        withAnimation(.easeOut(duration: 1)){
-//                            scrollProxy.scrollTo(target, anchor: .top)
-//                        }
-//                    }
-//                }
+                .onChange(of: scroll) { target in
+                    if let target = target {
+                        scroll = nil
+                        withAnimation(.easeOut(duration: 1)){
+                            proxy.scrollTo(target, anchor: .top)
+                        }
+                    }
+                }
             }
         }
     }
