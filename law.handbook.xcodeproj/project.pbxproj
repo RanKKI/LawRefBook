@@ -263,7 +263,6 @@
 			children = (
 				90A7911C280D419F003367CB /* info.plist */,
 				90A79119280D34ED003367CB /* RefBook.entitlements */,
-				902DAE5B27C7CBC200926036 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -352,6 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */,
+				902DAE5B27C7CBC200926036 /* Assets.xcassets */,
 				90E835A72932FBE600519E23 /* Models */,
 				90E835832931CE1500519E23 /* Utils */,
 				90399164292A39FD00CFC975 /* Database */,

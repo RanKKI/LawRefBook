@@ -83,14 +83,8 @@ struct PreferenceView: View {
                 .multilineTextAlignment(.leading)
                 .font(.footnote)
                 .padding(.top, 16)
-
-            Section {
-                InAppPurchaseView()
-            } header: {
-                Text("请开发者喝点什么")
-            } footer: {
-                Text("如果你觉得这个 App 做得还不错，对你有所帮助的话，请开发者喝点什么吧。")
-            }
+            
+            InAppPurchaseView()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){

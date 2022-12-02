@@ -54,20 +54,39 @@ struct InAppPurchaseView: View {
     @ObservedObject
     var vm = IAPManager.shared
     
+    @State
+    private var showSafari = false
+    
     var body: some View {
-        HStack {
-            ForEach(Array(products.enumerated()), id: \.offset) { (idx, product) in
-                IAPItemView(item: product)
-                if idx < products.count - 1 {
-                    Spacer()
+        Section {
+            HStack {
+                ForEach(Array(products.enumerated()), id: \.offset) { (idx, product) in
+                    IAPItemView(item: product)
+                    if idx < products.count - 1 {
+                        Spacer()
+                    }
                 }
             }
+            .padding([.top, .bottom], 8)
+            .padding([.leading, .trailing], 16)
+        } header: {
+            Text("请开发者喝点什么")
+        } footer: {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("如果你觉得这个 App 做得还不错，对你有所帮助的话，请开发者喝点什么吧。")
+                Text("Bubble tea icons created by Freepik - Flaticon")
+                    .underline()
+                    .onTapGesture {
+                        showSafari.toggle()
+                    }
+            }
         }
-        .padding([.top, .bottom], 8)
-        .padding([.leading, .trailing], 16)
         .task {
             vm.loadProducts()
         }
+        .fullScreenCover(isPresented: $showSafari, content: {
+            SFSafariViewWrapper(url: URL(string: "https://www.flaticon.com/free-icons/bubble-tea")!)
+        })
     }
     
 }
