@@ -30,12 +30,12 @@ struct TOCList: View {
 struct LawTableOfContentView: View {
 
     var toc: [LawToc]
-    
+
     var action: (Int64) -> Void
-     
+
     @Environment(\.dismiss)
     private var dismiss
-    
+
     var body: some View {
         List(toc, id: \.id) { content in
             TOCList(content: content) { line in
@@ -45,8 +45,8 @@ struct LawTableOfContentView: View {
         }
         .listStyle(.plain)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing){
-                CloseSheetItem() {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                CloseSheetItem {
                     dismiss()
                 }
             }

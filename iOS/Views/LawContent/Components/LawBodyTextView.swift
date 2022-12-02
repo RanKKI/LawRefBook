@@ -104,12 +104,7 @@ struct LawParagraphTextView: View {
                 guard let folder = folder else {
                     return
                 }
-                let item = FavContent(context: moc)
-                item.id = UUID()
-                item.lawId = law.id
-                item.line = paragraph.line
-                item.folder = folder
-                try? moc.save()
+                FavContent.new(moc: moc, law.id, line: paragraph.line, folder: folder)
             }
         }
         .sheet(isPresented: $sharing) {

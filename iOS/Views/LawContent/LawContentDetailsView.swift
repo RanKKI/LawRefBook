@@ -15,10 +15,10 @@ struct LawContentDetailsView: View {
 
     @Binding
     var searchText: String
-    
+
     @Binding
     var scroll: Int64?
-    
+
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -30,7 +30,7 @@ struct LawContentDetailsView: View {
                 .onChange(of: scroll) { target in
                     if let target = target {
                         scroll = nil
-                        withAnimation(.easeOut(duration: 1)){
+                        withAnimation(.easeOut(duration: 1)) {
                             proxy.scrollTo(target, anchor: .top)
                         }
                     }

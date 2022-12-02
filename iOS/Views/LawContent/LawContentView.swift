@@ -15,10 +15,10 @@ struct LawContentView: View {
 
     @ObservedObject
     private var sheets = SheetMananger<Sheets>()
-    
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     @State
     private var scroll: Int64?
 

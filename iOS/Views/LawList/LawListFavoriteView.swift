@@ -22,21 +22,21 @@ struct LawListFavoriteView: View {
     private var isLoading = true
 
     func reload() {
+        guard laws.count != results.count else { return }
+        uiThread {
+            self.isLoading = true
+        }
         Task {
-            uiThread {
-                self.isLoading = true
-            }
-            self.laws = []
+            var result = [TLaw]()
             for item in results {
-                guard let id = item.id else {
-                    continue
-                }
+                guard let id = item.id else { continue }
                 guard let law = await LawManager.shared.getLaw(id: id) else {
                     continue
                 }
-                self.laws.append(law)
+                result.append(law)
             }
             uiThread {
+                self.laws = result
                 withAnimation {
                     self.isLoading = false
                 }
@@ -44,11 +44,16 @@ struct LawListFavoriteView: View {
         }
     }
 
+    func reloadOnce() {
+        guard laws.isEmpty else { return }
+        reload()
+    }
+
     var body: some View {
         LoadingView(isLoading: $isLoading) {
             if !laws.isEmpty {
                 Section {
-                    ForEach(laws) { law in
+                    ForEach(laws, id: \.id) { law in
                         if let law = law {
                             LawLinkView(law: law)
                         } else {
@@ -68,7 +73,7 @@ struct LawListFavoriteView: View {
             reload()
         }
         .task {
-            reload()
+            reloadOnce()
         }
     }
 

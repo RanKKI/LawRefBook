@@ -38,11 +38,11 @@ struct FavoriteContentView: View {
                         }
                     }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        ShareButton(sharing: $sharing)
-                    }
-                }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ShareButton(sharing: $sharing)
             }
         }
         .onAppear {

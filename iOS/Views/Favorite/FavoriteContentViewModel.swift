@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension FavoriteContentView {
 
@@ -84,9 +85,11 @@ extension FavoriteContentView {
                 }
 
                 uiThread {
-                    self.groupedContents = result
-                    self.isLoading = false
-                    self.shareVM.updateContents(shareItems)
+                    withAnimation {
+                        self.groupedContents = result
+                        self.isLoading = false
+                        self.shareVM.updateContents(shareItems)
+                    }
                 }
             }
         }

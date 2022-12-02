@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 extension LawContentView {
 
@@ -23,7 +24,7 @@ extension LawContentView {
 
         @Published
         var content: LawContent?
-        
+
         @Published
         var isFlagged = false
 
@@ -40,9 +41,11 @@ extension LawContentView {
                 let content = await LawContentManager.shared.read(law: law)
                 let flag = await getFlagState(moc: moc)
                 uiThread {
-                    self.isFlagged = flag
-                    self.content = content
-                    self.isLoading = false
+                    withAnimation {
+                        self.isFlagged = flag
+                        self.content = content
+                        self.isLoading = false
+                    }
                 }
             }
         }
@@ -50,7 +53,7 @@ extension LawContentView {
         func flag(_ moc: NSManagedObjectContext) {
             guard content != nil else { return }
             guard !self.isLoading else { return }
-            
+
             if self.isFlagged {
                 let request = FavLaw.fetchRequest()
                 request.predicate = NSPredicate(format: "id == %@", law.id.uuidString)
@@ -67,10 +70,10 @@ extension LawContentView {
                 try moc.save()
                 isFlagged.toggle()
             } catch {
-                
+
             }
         }
-        
+
         private func getFlagState(moc: NSManagedObjectContext) async -> Bool {
             let request = FavLaw.fetchRequest()
             request.predicate = NSPredicate(format: "id == %@", law.id.uuidString)
