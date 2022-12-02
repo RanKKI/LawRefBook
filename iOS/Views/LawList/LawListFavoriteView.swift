@@ -19,11 +19,13 @@ struct LawListFavoriteView: View {
     private var laws = [TLaw]()
 
     @State
-    private var isLoading = false
+    private var isLoading = true
 
     func reload() {
         Task {
-            self.isLoading = true
+            uiThread {
+                self.isLoading = true
+            }
             self.laws = []
             for item in results {
                 guard let id = item.id else {
@@ -34,12 +36,16 @@ struct LawListFavoriteView: View {
                 }
                 self.laws.append(law)
             }
-            self.isLoading = false
+            uiThread {
+                withAnimation {
+                    self.isLoading = false
+                }
+            }
         }
     }
 
     var body: some View {
-        Group {
+        LoadingView(isLoading: $isLoading) {
             if !laws.isEmpty {
                 Section {
                     ForEach(laws) { law in
@@ -53,6 +59,16 @@ struct LawListFavoriteView: View {
                     Text("收藏")
                 }
             }
+        }
+        .transition(.slide)
+        .onChange(of: isLoading) { _ in
+
+        }
+        .onChange(of: results) { _ in
+            reload()
+        }
+        .task {
+            reload()
         }
     }
 
