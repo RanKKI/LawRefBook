@@ -27,7 +27,7 @@ struct MainApp: App {
             .environment(\.managedObjectContext, moc)
             .phoneOnlyStackNavigationView()
             .task {
-//                IAPManager.shared.loadProducts()
+                IAPManager.shared.loadProducts()
             }
         }
     }

@@ -28,6 +28,8 @@ class IAPManager: ObservableObject {
     }
     
     func loadProducts() {
+        guard !isLoading else { return }
+        guard products.isEmpty else { return }
         isLoading = true
         queue.async {
             InAppPurchaseHandler.shared.fetchAvailableProducts { products in
