@@ -30,6 +30,9 @@ struct LawContent {
 
     func getLine(line: Int64) -> String? {
         for section in sections {
+            if section.line == line {
+                return section.header
+            }
             if let text = section.paragraphs.first(where: { $0.line == line })?.text {
                 return text
             }
