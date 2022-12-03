@@ -34,8 +34,10 @@ struct LawContentView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                IconButton(icon: "list.bullet.rectangle") {
-                    sheets.state = .toc
+                if let content = vm.content, !content.toc.isEmpty {
+                    IconButton(icon: "list.bullet.rectangle") {
+                        sheets.state = .toc
+                    }
                 }
                 IconButton(icon: vm.isFlagged ? "heart.slash" : "heart") {
                     vm.flag(moc)

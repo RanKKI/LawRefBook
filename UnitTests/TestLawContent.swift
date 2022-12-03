@@ -84,4 +84,54 @@ class TestLaws: XCTestCase {
         XCTAssertEqual(content.toc.last?.children.last?.title, "副副标题3")
     }
 
+    func testNoTOC() async {
+        let parser = LawContentParser.shared
+        let data = """
+            # 这是一条测试
+            <!-- INFO END -->
+
+            第一条 内容
+
+            第二条 内容
+        """.data(using: .utf8)
+
+        XCTAssertNotNil(data)
+        guard let data = data else { return }
+
+        let content = parser.parse(data: data)
+        XCTAssertNotNil(content)
+        guard let content = content else { return }
+        
+        XCTAssertTrue(content.toc.isEmpty)
+    }
+    
+    func testInfos() async {
+        let parser = LawContentParser.shared
+        let data = """
+            # 这是一条测试
+            第一条 内容123
+
+            中间这个没有header
+
+            第二条 内容
+            <!-- INFO END -->
+            第十条 内容
+
+            第十一条 内容
+        """.data(using: .utf8)
+
+        XCTAssertNotNil(data)
+        guard let data = data else { return }
+
+        let content = parser.parse(data: data)
+        XCTAssertNotNil(content)
+        guard let content = content else { return }
+        
+        XCTAssertEqual(content.info.count, 3)
+        XCTAssertEqual(content.info.first?.header, "第一条")
+        XCTAssertEqual(content.info.first?.content, "内容123")
+        XCTAssertEqual(content.info[1].header, "")
+        XCTAssertEqual(content.info[1].content, "中间这个没有header")
+        XCTAssertEqual(content.info.last?.content, "内容")
+    }
 }
