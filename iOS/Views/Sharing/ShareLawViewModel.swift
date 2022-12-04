@@ -31,7 +31,7 @@ extension ShareLawView {
 
         @Published
         var isEditing = false
-        
+
         @AppStorage("ShareByPhotoViewReviewReq")
         private var reviewReq = false
 
@@ -42,7 +42,7 @@ extension ShareLawView {
         func updateContents(_ contents: [ShareContent]) {
             self.selectedContents = contents.sorted { $0.name < $1.name }
         }
-        
+
         func afterSharing() {
             guard !reviewReq else { return }
             reviewReq.toggle()

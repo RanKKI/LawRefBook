@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ShareContentView: View {
-    
+
     var content: [[ShareLawView.ShareContent]]
 
     var body: some View {
@@ -40,5 +40,5 @@ struct ShareContentView: View {
         .foregroundColor(.black)
         .snapView()
     }
-    
+
 }

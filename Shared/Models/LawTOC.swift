@@ -14,7 +14,7 @@ class LawToc: Identifiable {
     var indent: Int
     var line: Int64
     var children: [LawToc] = []
-    
+
     init(title: String, indent: Int, line: Int64, children: [LawToc] = []) {
         self.title = title
         self.indent = indent

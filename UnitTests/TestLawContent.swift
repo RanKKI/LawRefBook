@@ -24,14 +24,14 @@ class TestLaws: XCTestCase {
             <!-- FORCE BREAK -->
             第三条 内容
         """.data(using: .utf8)
-        
+
         XCTAssertNotNil(data)
         guard let data = data else { return }
 
         let content = parser.parse(data: data)
         XCTAssertNotNil(content)
         guard let content = content else { return }
-        
+
         XCTAssertFalse(content.titles.isEmpty)
         XCTAssertEqual(content.titles.first, "这是一条测试")
         XCTAssertEqual(content.getLine(line: 2), "第二条 内容")
@@ -63,7 +63,7 @@ class TestLaws: XCTestCase {
             <!-- FORCE BREAK -->
             第三条 内容
         """.data(using: .utf8)
-        
+
         XCTAssertNotNil(data)
         guard let data = data else { return }
 
@@ -78,7 +78,7 @@ class TestLaws: XCTestCase {
 
         XCTAssertEqual(content.toc.last?.title, "副标题2")
         XCTAssertEqual(content.toc.last?.line, 3)
-        
+
         XCTAssertEqual(content.toc.last?.children.count, 2)
         XCTAssertEqual(content.toc.last?.children.first?.title, "副副标题")
         XCTAssertEqual(content.toc.last?.children.last?.title, "副副标题3")
@@ -101,10 +101,10 @@ class TestLaws: XCTestCase {
         let content = parser.parse(data: data)
         XCTAssertNotNil(content)
         guard let content = content else { return }
-        
+
         XCTAssertTrue(content.toc.isEmpty)
     }
-    
+
     func testInfos() async {
         let parser = LawContentParser.shared
         let data = """
@@ -126,7 +126,7 @@ class TestLaws: XCTestCase {
         let content = parser.parse(data: data)
         XCTAssertNotNil(content)
         guard let content = content else { return }
-        
+
         XCTAssertEqual(content.info.count, 3)
         XCTAssertEqual(content.info.first?.header, "第一条")
         XCTAssertEqual(content.info.first?.content, "内容123")
