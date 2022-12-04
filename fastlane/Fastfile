@@ -18,8 +18,7 @@ lane :beta do
   match(git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"])
 
   build_ios_app(
-      scheme: "law.handbook",
-      include_bitcode: true
+      scheme: "law.handbook"
     )
 
   app_store_connect_api_key(
