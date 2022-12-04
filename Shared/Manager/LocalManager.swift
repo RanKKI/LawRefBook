@@ -30,11 +30,6 @@ final class LocalManager {
     // 第一次打开 App
     // 创建目录 & 解压内置包体
     private func firstRun() throws {
-        #if DEBUG
-        if let baseFolder = baseFolder {
-            print("local path \(baseFolder)")
-        }
-        #endif
         guard let path = builtInZipPath else { return }
         guard let root = baseFolder else { return }
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
@@ -46,6 +41,9 @@ final class LocalManager {
     // 获取本地所有数据库位置
     func getDatabaseFiles() -> [URL] {
         guard let root = baseFolder else { return [] }
+        #if DEBUG
+        print("local path \(root)")
+        #endif
         if !root.isExists() {
             do {
                 try self.firstRun()

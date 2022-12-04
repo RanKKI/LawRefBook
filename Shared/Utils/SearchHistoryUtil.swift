@@ -7,14 +7,11 @@ extension SearchHistory {
     }
 
     static func add(moc: NSManagedObjectContext, _ text: String, _ lawID: UUID?) {
+        if text.isEmpty { return }
         DispatchQueue.main.async(group: .none, qos: .background) {
             let req = SearchHistory.fetchRequest()
 
-            if let lawID = lawID {
-                req.predicate = NSPredicate(format: "text == %@ and lawId == %@", text, lawID.uuidString)
-            } else {
-                req.predicate = NSPredicate(format: "text == %@ and lawId == nil", text)
-            }
+            req.predicate = NSPredicate(format: "text == %@", text)
 
             do {
                 let results = try moc.fetch(req)

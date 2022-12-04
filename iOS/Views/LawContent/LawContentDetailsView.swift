@@ -11,7 +11,7 @@ import SwiftUI
 struct LawContentDetailsView: View {
 
     var law: TLaw
-    
+
     @ObservedObject
     var content: LawContent
 
@@ -20,6 +20,9 @@ struct LawContentDetailsView: View {
 
     @Binding
     var scroll: Int64?
+
+    @Environment(\.managedObjectContext)
+    private var moc
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -44,8 +47,9 @@ struct LawContentDetailsView: View {
                 content.filter(text: searchText)
             }
         }
-        .onChange(of: searchText) { newValue in
-            content.filter(text: newValue)
+        .onChange(of: searchText) { text in
+            content.filter(text: text)
+            SearchHistory.add(moc: moc, text, law.id)
         }
     }
 

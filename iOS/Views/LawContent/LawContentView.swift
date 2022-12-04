@@ -24,7 +24,7 @@ struct LawContentView: View {
 
     @State
     private var searchText = ""
-    
+
     init(vm: VM) {
         self.vm = vm
     }
@@ -71,6 +71,11 @@ struct LawContentView: View {
         .searchable(text: $vm.searchText, placement: .navigationBarDrawer(displayMode: .always))
         .onSubmit(of: .search) {
             searchText = vm.searchText
+        }
+        .onChange(of: vm.searchText) { text in
+            if text.isEmpty {
+                searchText = ""
+            }
         }
     }
 

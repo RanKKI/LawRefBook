@@ -8,16 +8,16 @@
 import Foundation
 
 class SearchManager: ObservableObject {
-    
+
     static let shared = SearchManager()
-    
+
     func search(text: String, laws: [TLaw], type: SearchType) async -> [TLaw] {
         if type == .catalogue {
             return await searchTitle(text: text, laws: laws)
         }
         return await searchContent(text: text, laws: laws)
     }
-    
+
     func searchTitle(text: String, laws: [TLaw]) async -> [TLaw] {
         return laws.filter { law in
             law.name.contains(text) || text.tokenised().allSatisfy { law.name.contains($0) }
@@ -34,7 +34,7 @@ class SearchManager: ObservableObject {
                 }
             }
         }
-        
+
         return result
     }
 }

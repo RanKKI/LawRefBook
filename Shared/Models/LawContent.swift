@@ -19,14 +19,14 @@ class LawContentSection: Identifiable, ObservableObject {
     var line: Int64
     var indent: Int
     var paragraphs: [LawParagraph] = []
-    
+
     init(header: String, line: Int64, indent: Int, paragraphs: [LawParagraph] = []) {
         self.header = header
         self.line = line
         self.indent = indent
         self.paragraphs = paragraphs
     }
-    
+
     init(section: LawContentSection, paragraphs: [LawParagraph] = []) {
         self.header = section.header
         self.line = section.line
@@ -42,7 +42,7 @@ class LawContent: ObservableObject {
     var rawSections: [LawContentSection]
     var info: [LawInfo]
     var toc: [LawToc]
-    
+
     @Published
     var sections: [LawContentSection] = []
 

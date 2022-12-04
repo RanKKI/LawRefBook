@@ -19,6 +19,9 @@ struct LawListView: View {
     @State
     private var vm: LawListContentView.VM
 
+    @Environment(\.managedObjectContext)
+    private var moc
+
     init(showFavorite: Bool, cateogry: String? = nil) {
         self.showFavorite = showFavorite
         self.cateogry = cateogry
@@ -31,6 +34,7 @@ struct LawListView: View {
             .searchable(text: $search.text)
             .onSubmit(of: .search) {
                 search.submit()
+                SearchHistory.add(moc: moc, search.text)
             }
     }
 

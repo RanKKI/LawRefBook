@@ -28,8 +28,11 @@ extension SearchHistoryView {
         func loadHistories() {
             guard let moc = moc else { return }
             let req = buildRequest(limit: 10)
-            let result = try? moc.fetch(req)
-            self.histories = result ?? []
+            do {
+                self.histories = try moc.fetch(req)
+            } catch {
+                print("\(error.localizedDescription)")
+            }
         }
 
         func removeAllHistories() {
@@ -58,6 +61,7 @@ extension SearchHistoryView {
             if let limit = limit {
                 fetchRequest.fetchLimit = limit
             }
+
             return fetchRequest
         }
     }
