@@ -42,7 +42,9 @@ struct FavoriteContentView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                ShareButton(sharing: $sharing)
+                if !vm.isEmpty {
+                    ShareButton(sharing: $sharing)
+                }
             }
         }
         .onAppear {
