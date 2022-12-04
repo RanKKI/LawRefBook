@@ -11,6 +11,8 @@ import SwiftUI
 struct LawBodyTextView: View {
 
     var law: TLaw
+    
+    @Binding
     var sections: [LawContentSection]
 
     @Binding

@@ -106,6 +106,7 @@
 		90E835DE2938D30A00519E23 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835DD2938D30A00519E23 /* ShareButton.swift */; };
 		90E835E12939B1AF00519E23 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835E02939B1AF00519E23 /* CoreDataModel.swift */; };
 		90E835E6293C326500519E23 /* ShareContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835E5293C326500519E23 /* ShareContentView.swift */; };
+		90E835E8293C382B00519E23 /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835E7293C382B00519E23 /* SearchManager.swift */; };
 		90F5CEFD28B21E630003752E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5CEFC28B21E630003752E /* TableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -221,6 +222,7 @@
 		90E835DD2938D30A00519E23 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		90E835E02939B1AF00519E23 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		90E835E5293C326500519E23 /* ShareContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareContentView.swift; sourceTree = "<group>"; };
+		90E835E7293C382B00519E23 /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		90F5CEFC28B21E630003752E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -329,6 +331,7 @@
 				903F5325280E555200D4523D /* Persistence.swift */,
 				90399159292A1E3F00CFC975 /* LocalManager.swift */,
 				90399170292A3C7D00CFC975 /* Preference.swift */,
+				90E835E7293C382B00519E23 /* SearchManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -732,6 +735,7 @@
 				9039916D292A3AD000CFC975 /* ContentView.swift in Sources */,
 				90E835E6293C326500519E23 /* ShareContentView.swift in Sources */,
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
+				90E835E8293C382B00519E23 /* SearchManager.swift in Sources */,
 				90E835C62938336300519E23 /* UIImage.swift in Sources */,
 				90E835DA2938CDA200519E23 /* FavoriteContentViewModel.swift in Sources */,
 				90E835A32932FB5A00519E23 /* LawContentManager.swift in Sources */,

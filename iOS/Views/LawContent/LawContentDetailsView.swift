@@ -11,6 +11,8 @@ import SwiftUI
 struct LawContentDetailsView: View {
 
     var law: TLaw
+    
+    @ObservedObject
     var content: LawContent
 
     @Binding
@@ -25,7 +27,7 @@ struct LawContentDetailsView: View {
                 LazyVStack(alignment: .leading, spacing: CGFloat(Preference.shared.lineSpacing)) {
                     LawStatusView(law: law)
                     LawTitleTextView(titles: content.titles)
-                    LawBodyTextView(law: law, sections: content.sections, searchText: $searchText)
+                    LawBodyTextView(law: law, sections: $content.sections, searchText: $searchText)
                 }
                 .onChange(of: scroll) { target in
                     if let target = target {
@@ -36,6 +38,14 @@ struct LawContentDetailsView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            if !searchText.isEmpty {
+                content.filter(text: searchText)
+            }
+        }
+        .onChange(of: searchText) { newValue in
+            content.filter(text: newValue)
         }
     }
 

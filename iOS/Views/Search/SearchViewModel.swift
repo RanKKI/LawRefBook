@@ -39,48 +39,13 @@ extension SearchView {
                 uiThread {
                     self.isLoading = true
                 }
-                var result = [TLaw]()
-                if searchType == .catalogue {
-                    result = await self.titleSearch(text: text, laws: laws)
-                } else {
-                    result = await self.fulltextSearch(text: text, laws: laws)
-                }
+                let result = await SearchManager.shared.search(text: text, laws: laws, type: searchType)
                 uiThread {
                     self.searchResult = result
                     self.isLoading = false
                     completion()
                 }
             }
-        }
-
-        private func titleSearch(text: String, laws: [TLaw]) async -> [TLaw] {
-            return laws.filter { law in
-                law.name.contains(text) || text.tokenised().allSatisfy { law.name.contains($0) }
-            }
-        }
-
-        private let searchOpQueue: OperationQueue = OperationQueue()
-
-        private func fulltextSearch(text: String, laws: [TLaw]) async -> [TLaw] {
-            searchOpQueue.cancelAllOperations()
-            let locker = NSLock()
-            var results = [TLaw]()
-            laws.forEach { _ in
-                self.searchOpQueue.addOperation {
-//                    let content = LocalProvider.shared.getLawContent(law.id)
-//                    content.load()
-//                    if !content.filterText(text: text).isEmpty {
-//                        locker.lock()
-//                        results.append(law)
-//                        locker.unlock()
-//                    }
-                }
-            }
-            searchOpQueue.addBarrierBlock {
-
-            }
-            searchOpQueue.waitUntilAllOperationsAreFinished()
-            return results
         }
 
         func clearSearch() {

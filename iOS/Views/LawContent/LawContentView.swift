@@ -22,6 +22,9 @@ struct LawContentView: View {
     @State
     private var scroll: Int64?
 
+    @State
+    private var searchText = ""
+    
     init(vm: VM) {
         self.vm = vm
     }
@@ -29,7 +32,7 @@ struct LawContentView: View {
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
             if let law = vm.law, let content = vm.content {
-                LawContentDetailsView(law: law, content: content, searchText: $vm.searchText, scroll: $scroll)
+                LawContentDetailsView(law: law, content: content, searchText: $searchText, scroll: $scroll)
             }
         }
         .toolbar {
@@ -63,8 +66,12 @@ struct LawContentView: View {
         }
         .onAppear {
             vm.onAppear(moc: moc)
+            searchText = vm.searchText
         }
         .searchable(text: $vm.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            searchText = vm.searchText
+        }
     }
 
 }
