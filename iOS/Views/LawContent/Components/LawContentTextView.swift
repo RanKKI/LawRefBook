@@ -16,6 +16,7 @@ struct LawContentTextView: View {
     @Environment(\.colorScheme)
     private var colorScheme
 
+    @ObservedObject
     private var preference = Preference.shared
 
     init(text: String) {
@@ -49,12 +50,13 @@ struct LawContentTextView: View {
             if arr.count == 1 || arr[0].range(of: lineStartRe, options: .regularExpression) == nil {
                 let range = text.startIndex..<text.endIndex
                 highlightText(text[range])
+                    .tracking(preference.tracking)
             } else {
                 (Text(arr[0]).bold() + Text(" ") + highlightText(arr[1]))
+                    .tracking(preference.tracking)
             }
         }
         .font(.system(size: CGFloat(preference.contentFontSize)))
-//        .tracking(preference.tracking)
         .lineSpacing(preference.spacing)
         .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
         .background(colorScheme == .dark ? Color.clear : Color.white)

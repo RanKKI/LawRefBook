@@ -56,7 +56,8 @@ struct FontSettingView: View {
                     Text("第一章  一般规定").displayMode(.Header, indent: 2)
                     Divider()
                     VStack(alignment: .leading, spacing: CGFloat(preference.lineSpacing)) {
-                        ForEach(exampleLines, id: \.self) { _ in
+                        ForEach(exampleLines, id: \.self) { text in
+                            LawContentTextView(text: text)
                             Divider()
                         }
                     }
