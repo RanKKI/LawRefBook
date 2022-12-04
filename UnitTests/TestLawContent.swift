@@ -4,12 +4,9 @@ import XCTest
 
 class TestLaws: XCTestCase {
 
-    override func setUp() async throws {
-        LawDatabase.shared.connect()
-    }
-
-    func testContentPaser() throws {
-        let str = """
+    func testParser() async {
+        let parser = LawContentParser.shared
+        let data = """
             # 这是一条测试
 
             标题1 内容1
@@ -26,20 +23,26 @@ class TestLaws: XCTestCase {
             ## 副标题2
             <!-- FORCE BREAK -->
             第三条 内容
-        """
+        """.data(using: .utf8)
 
-        let content = LawContent()
-        content.loadFromString(content: str)
+        XCTAssertNotNil(data)
+        guard let data = data else { return }
 
-        XCTAssertTrue(!content.Titles.isEmpty)
-        XCTAssertEqual(content.Titles.first!, "这是一条测试")
+        let content = parser.parse(data: data)
+        XCTAssertNotNil(content)
+        guard let content = content else { return }
+
+        XCTAssertFalse(content.titles.isEmpty)
+        XCTAssertEqual(content.titles.first, "这是一条测试")
         XCTAssertEqual(content.getLine(line: 2), "第二条 内容")
         XCTAssertEqual(content.getLine(line: 3), "副标题2")
         XCTAssertEqual(content.getLine(line: 4), "第三条 内容")
+
     }
 
     func testContentTOC() throws {
-        let str = """
+        let parser = LawContentParser.shared
+        let data = """
             # 这是一条测试
 
             标题1 内容1
@@ -54,59 +57,81 @@ class TestLaws: XCTestCase {
             第二条 内容
 
             ## 副标题2
-            ### 节点123
+
+            ### 副副标题
+            ### 副副标题3
             <!-- FORCE BREAK -->
             第三条 内容
-        """
+        """.data(using: .utf8)
 
-        let content = LawContent()
-        content.loadFromString(content: str)
+        XCTAssertNotNil(data)
+        guard let data = data else { return }
 
-        XCTAssertEqual(content.TOC.count, 2)
-        XCTAssertEqual(content.TOC.first!.title, "副标题")
-        XCTAssertEqual(content.TOC.first!.line, 0)
-        XCTAssertEqual(content.TOC.last!.line, 3)
-        XCTAssertEqual(content.TOC.last!.children.count, 1)
-        XCTAssertEqual(content.TOC.last!.children.first?.title, "节点123")
+        let content = parser.parse(data: data)
+        XCTAssertNotNil(content)
+        guard let content = content else { return }
+
+        XCTAssertEqual(content.toc.count, 2)
+        XCTAssertEqual(content.toc.first?.title, "副标题")
+        XCTAssertEqual(content.toc.first?.line, 0)
+        XCTAssertEqual(content.toc.first?.children.count, 0)
+
+        XCTAssertEqual(content.toc.last?.title, "副标题2")
+        XCTAssertEqual(content.toc.last?.line, 3)
+
+        XCTAssertEqual(content.toc.last?.children.count, 2)
+        XCTAssertEqual(content.toc.last?.children.first?.title, "副副标题")
+        XCTAssertEqual(content.toc.last?.children.last?.title, "副副标题3")
     }
 
-    func testAllFileExist() throws {
-        let laws = LawDatabase.shared.getLaws()
-        for law in laws {
-            let content = LocalProvider.shared.getLawContent(law.id)
-            XCTAssertTrue(content.isExists())
-        }
+    func testNoTOC() async {
+        let parser = LawContentParser.shared
+        let data = """
+            # 这是一条测试
+            <!-- INFO END -->
+
+            第一条 内容
+
+            第二条 内容
+        """.data(using: .utf8)
+
+        XCTAssertNotNil(data)
+        guard let data = data else { return }
+
+        let content = parser.parse(data: data)
+        XCTAssertNotNil(content)
+        guard let content = content else { return }
+
+        XCTAssertTrue(content.toc.isEmpty)
     }
 
-    func testAllFileHasContent() throws {
-        let laws = LawDatabase.shared.getLaws()
-        for law in laws {
-            let content = LocalProvider.shared.getLawContent(law.id)
-            content.load()
-            XCTAssertTrue(!content.Body.isEmpty, "\(law.name) has no content")
-        }
-    }
+    func testInfos() async {
+        let parser = LawContentParser.shared
+        let data = """
+            # 这是一条测试
+            第一条 内容123
 
-    func testAllFileHasTitlte() throws {
-        let laws = LawDatabase.shared.getLaws()
-        for law in laws {
-            let content = LocalProvider.shared.getLawContent(law.id)
-            content.load()
-            XCTAssertTrue(!content.Titles.isEmpty, "\(law.name) has no title")
-        }
-    }
+            中间这个没有header
 
-    func testTocTitleHasExactlyOne() throws {
-        let laws = LawDatabase.shared.getLaws()
-        for law in laws {
-            let content = LocalProvider.shared.getLawContent(law.id)
-            content.load()
+            第二条 内容
+            <!-- INFO END -->
+            第十条 内容
 
-            let titles = content.TOC
-            let dict = Dictionary(grouping: titles, by: \.title)
-            dict.forEach { (key, val) in
-                XCTAssertEqual(val.count, 1, "\(law.name) 多个一样的标题 \(key)")
-            }
-        }
+            第十一条 内容
+        """.data(using: .utf8)
+
+        XCTAssertNotNil(data)
+        guard let data = data else { return }
+
+        let content = parser.parse(data: data)
+        XCTAssertNotNil(content)
+        guard let content = content else { return }
+
+        XCTAssertEqual(content.info.count, 3)
+        XCTAssertEqual(content.info.first?.header, "第一条")
+        XCTAssertEqual(content.info.first?.content, "内容123")
+        XCTAssertEqual(content.info[1].header, "")
+        XCTAssertEqual(content.info[1].content, "中间这个没有header")
+        XCTAssertEqual(content.info.last?.content, "内容")
     }
 }
