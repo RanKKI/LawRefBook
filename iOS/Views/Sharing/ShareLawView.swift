@@ -8,41 +8,13 @@ struct ShareLawView: View {
     var vm: VM
 
     @Environment(\.dismiss)
-    var dismiss
+    private var dismiss
 
     @State
     private var shareing = false
 
-    @AppStorage("ShareByPhotoViewReviewReq")
-    private var reviewReq = false
-
     var shareView: some View {
-        VStack(alignment: .center, spacing: 8) {
-            ForEach(vm.rendererContents, id: \.self) { contents in
-                Text(contents.first?.name ?? "")
-                    .font(.title2)
-                    .padding([.bottom, .top], 8)
-                    .multilineTextAlignment(.center)
-                ForEach(contents, id: \.self) { item in
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(item.content)
-                            .padding([.trailing, .leading], 4)
-                            .multilineTextAlignment(.leading)
-                    }
-                }
-            }
-            HStack {
-                Spacer()
-                Image(uiImage: generateQRCode(from: "https://apps.apple.com/app/apple-store/id1612953870"))
-                    .interpolation(.none)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 64, height: 64)
-            }
-        }
-        .padding()
-        .foregroundColor(.black)
-        .snapView()
+        ShareContentView(content: vm.rendererContents)
     }
 
     var contentView: some View {
@@ -87,10 +59,7 @@ struct ShareLawView: View {
         }, content: {
             let av = UIActivityViewController(activityItems: [shareView.asImage()], applicationActivities: nil)
             av.completionWithItemsHandler = { _, _, _, _ in
-                if !reviewReq {
-                    reviewReq = true
-                    AppStoreReviewManager.requestReviewIfAppropriate()
-                }
+                vm.afterSharing()
             }
             return av
         }))

@@ -17,13 +17,10 @@ struct CheckBoxView: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            Image(systemName: "square")
+            Image(systemName: isOn ? "checkmark.square" : "square")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
-            if isOn {
-                Image(systemName: "checkmark")
-            }
         }
         .onTapGesture {
             isOn.toggle()

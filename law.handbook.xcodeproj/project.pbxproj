@@ -105,6 +105,7 @@
 		90E835DC2938D2BE00519E23 /* CopyLawTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835DB2938D2BE00519E23 /* CopyLawTextButton.swift */; };
 		90E835DE2938D30A00519E23 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835DD2938D30A00519E23 /* ShareButton.swift */; };
 		90E835E12939B1AF00519E23 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835E02939B1AF00519E23 /* CoreDataModel.swift */; };
+		90E835E6293C326500519E23 /* ShareContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E835E5293C326500519E23 /* ShareContentView.swift */; };
 		90F5CEFD28B21E630003752E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F5CEFC28B21E630003752E /* TableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -219,6 +220,7 @@
 		90E835DB2938D2BE00519E23 /* CopyLawTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyLawTextButton.swift; sourceTree = "<group>"; };
 		90E835DD2938D30A00519E23 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		90E835E02939B1AF00519E23 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
+		90E835E5293C326500519E23 /* ShareContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareContentView.swift; sourceTree = "<group>"; };
 		90F5CEFC28B21E630003752E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -584,9 +586,10 @@
 			isa = PBXGroup;
 			children = (
 				901D19A1284756A200999AE6 /* ShareLawView.swift */,
-				90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */,
 				90D4CD972862B7B9006DB8AC /* ShareLawViewModel.swift */,
+				90D4CD9E2862BAE0006DB8AC /* ShareLawEditView.swift */,
 				90D4CD9C2862BA1B006DB8AC /* ShareLawLightConfirmView.swift */,
+				90E835E5293C326500519E23 /* ShareContentView.swift */,
 			);
 			path = Sharing;
 			sourceTree = "<group>";
@@ -727,6 +730,7 @@
 				90E835B2293308DB00519E23 /* LawContentTextView.swift in Sources */,
 				90A22C32282239FA00B5DC24 /* SheetManager.swift in Sources */,
 				9039916D292A3AD000CFC975 /* ContentView.swift in Sources */,
+				90E835E6293C326500519E23 /* ShareContentView.swift in Sources */,
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
 				90E835C62938336300519E23 /* UIImage.swift in Sources */,
 				90E835DA2938CDA200519E23 /* FavoriteContentViewModel.swift in Sources */,

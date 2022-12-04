@@ -14,7 +14,7 @@ struct ShareLawEditView: View {
                         contents[i].isSelected = isOn
                     }
                     Text(item.content)
-                        .lineLimit(2)
+                        .lineLimit(3)
                 }
             }
         }
