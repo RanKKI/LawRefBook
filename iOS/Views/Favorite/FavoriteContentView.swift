@@ -25,7 +25,9 @@ struct FavoriteContentView: View {
                     ForEach(vm.groupedContents) { group in
                         Section {
                             ForEach(group.contents) { item in
-                                FavoriteTextView(law: group.law, item: item)
+                                FavoriteTextView(law: group.law, item: item) {
+                                    vm.remove(item: item)
+                                }
                             }
                         } header: {
                             HStack {
@@ -61,6 +63,8 @@ struct FavoriteTextView: View {
 
     var law: TLaw
     var item: FavoriteContentView.ContentItem
+    
+    var onRemove: () -> Void
 
     @Environment(\.managedObjectContext)
     private var moc
@@ -73,6 +77,7 @@ struct FavoriteTextView: View {
             withAnimation {
                 moc.delete(item.data)
                 try? moc.save()
+                onRemove()
             }
         } label: {
             Label("取消收藏", systemImage: "heart.slash")

@@ -11,7 +11,7 @@ import SwiftUI
 extension FavoriteContentView {
 
     struct ContentItem: Identifiable, Hashable {
-        var id: UUID
+        var id: UUID { data.id! }
         var content: String
         var data: FavContent
     }
@@ -51,6 +51,11 @@ extension FavoriteContentView {
             }
             self.loadLaws()
         }
+        
+        func remove(item: ContentItem) {
+            self.contents.removeAll(where: { $0.id == item.data.id })
+            self.loadLaws()
+        }
 
         private func loadLaws() {
             uiThread {
@@ -75,10 +80,7 @@ extension FavoriteContentView {
                         guard let text = content.getLine(line: item.line) else {
                             continue
                         }
-                        guard let id = item.id else {
-                            continue
-                        }
-                        items.append(.init(id: id, content: text, data: item))
+                        items.append(.init(content: text, data: item))
                         shareItems.append(.init(name: law.name, content: text))
                     }
                     result.append(GroupItem(law: law, contents: items))
