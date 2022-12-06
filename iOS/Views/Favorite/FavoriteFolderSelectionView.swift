@@ -24,12 +24,15 @@ struct FavoriteFolderSelectionView: View {
         NavigationView {
             List {
                 ForEach(folders) { folder in
-                    Text(folder.name ?? "")
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            dismiss()
-                            action(folder)
-                        }
+                    HStack {
+                        Text(folder.name ?? "")
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        dismiss()
+                        action(folder)
+                    }
                 }
             }
             .toolbar {
