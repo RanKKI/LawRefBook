@@ -14,9 +14,15 @@ struct CasesView: View {
     var vm: VM
 
     var body: some View {
-        VStack(spacing: 8) {
+        LazyVStack(spacing: 8) {
             ForEach(vm.laws) { law in
-                HomeCaseView(law: law)
+                NavigationLink {
+                    LawContentView(vm: .init(law: law, searchText: ""))
+                        .navigationBarTitleDisplayMode(.inline)
+                } label: {
+                    HomeCaseView(law: law)
+                }
+                .buttonStyle(.plain)
             }
         }
         .onAppear {
@@ -33,16 +39,9 @@ extension CasesView {
         var vm: VM
         
         var body: some View {
-            List {
-                ForEach(vm.laws) { law in
-                    HomeCaseView(law: law)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8))
-                }
-            }
-            .listStyle(.plain)
-            .onAppear {
-                vm.load()
+            ScrollView {
+                CasesView(vm: vm)
+                    .padding([.leading, .trailing], 16)
             }
         }
         
