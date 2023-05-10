@@ -12,6 +12,8 @@ struct LoadingView<Content: View>: View {
 
     @Binding
     var isLoading: Bool
+    
+    var message: String? = nil
 
     @ViewBuilder
     var content: () -> Content
@@ -22,7 +24,12 @@ struct LoadingView<Content: View>: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    ProgressView()
+                    VStack {
+                        ProgressView()
+                        if let message = message {
+                            Text(message)
+                        }
+                    }
                     Spacer()
                 }
                 Spacer()

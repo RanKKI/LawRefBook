@@ -51,14 +51,9 @@ struct FavoriteView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                EditButton()
-            }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 FavoriteFolderCreateButton()
-                CloseSheetItem {
-                    dismiss()
-                }
+                EditButton()
             }
         }
     }

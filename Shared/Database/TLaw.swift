@@ -17,6 +17,7 @@ struct TLaw: Identifiable {
     static let valid_from = Expression<String?>("valid_from")
 
     static let ver = Expression<Int>("ver")
+    static let tags = Expression<String?>("tags")
 
     let id: UUID
     let name: String
@@ -31,6 +32,13 @@ struct TLaw: Identifiable {
     let is_valid: Bool
 
     let ver: Int
+    let tags: String?
+    
+    var tagArray: [String] {
+        (tags?.split(separator: ",").map {s in
+            String(s)
+        }) ?? [String]()
+    }
 
     static func create(row: Row, category: TCategory) -> TLaw {
 
@@ -57,7 +65,8 @@ struct TLaw: Identifiable {
             order: row[order],
             subtitle: row[subtitle],
             is_valid: is_valid,
-            ver: row[ver]
+            ver: row[ver],
+            tags: row[tags]
         )
     }
 

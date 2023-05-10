@@ -95,6 +95,10 @@ final class LawManager: ObservableObject {
     func getLaws(categoryID: Int) async -> [TLaw] {
         return await queryLaws(predicate: TLaw.categoryID == categoryID)
     }
+    
+    func getCases() async -> [TLaw] {
+        return await queryLaws(predicate: TLaw.level == "案例")
+    }
 
     // 获取所有 Category 和所含的 Laws
     func getCategories(by: LawGroupingMethod) async -> [TCategory] {

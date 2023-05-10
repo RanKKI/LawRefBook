@@ -22,7 +22,14 @@ struct LawListFavoriteView: View {
     private var isLoading = true
 
     func reload() {
-        guard laws.count != results.count else { return }
+        guard laws.count != results.count else {
+            if self.isLoading {
+                withAnimation {
+                    self.isLoading = false
+                }
+            }
+            return
+        }
         uiThread {
             self.isLoading = true
         }
@@ -54,11 +61,8 @@ struct LawListFavoriteView: View {
             if !laws.isEmpty {
                 Section {
                     ForEach(laws, id: \.id) { law in
-                        if let law = law {
-                            LawLinkView(law: law)
-                        } else {
-                            InvalidLawLinkView()
-                        }
+                        //                            InvalidLawLinkView()
+                        LawLinkView(law: law)
                     }
                 } header: {
                     Text("收藏")

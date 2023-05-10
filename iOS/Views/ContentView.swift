@@ -18,13 +18,13 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            LawListView(showFavorite: true)
+            HomeView()
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                IconButton(icon: "heart.text.square") {
-                    sheetManager.state = .favorite
-                }
+//                IconButton(icon: "heart.text.square") {
+//                    sheetManager.state = .favorite
+//                }
                 IconButton(icon: "gear") {
                     sheetManager.state = .setting
                 }
@@ -37,8 +37,7 @@ struct ContentView: View {
                     PreferenceView()
                         .navigationBarTitle("关于", displayMode: .inline)
                 } else if sheetManager.state == .favorite {
-                    FavoriteView()
-                        .navigationBarTitle("书签", displayMode: .inline)
+
                 }
             }
             .environment(\.managedObjectContext, moc)

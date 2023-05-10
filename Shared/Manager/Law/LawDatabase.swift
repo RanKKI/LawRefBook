@@ -44,6 +44,7 @@ class LawDatabase {
             rows = try connection.prepare(query)
         } catch {
             print(error.localizedDescription)
+            print(error)
             return []
         }
 

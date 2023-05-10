@@ -20,8 +20,21 @@ final class LocalManager {
                 .first?
                 .appendingPathComponent("laws", conformingTo: .directory)
     }
+    
+    private var cacheFolder: URL? {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                .first?
+                .appendingPathComponent(".cache", conformingTo: .directory)
+    }
 
-    private let builtInZipPath = Bundle.main.url(forResource: "default", withExtension: "zip")
+    private let builtInZipPath = Bundle.main.url(forResource: "laws", withExtension: "zip")
+    private let zipHash = Bundle.main.url(forResource: "laws.zip", withExtension: "sha1")
+    
+    private var localHash: URL? {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                .first?
+                .appendingPathComponent("laws.sha1", conformingTo: .fileURL)
+    }
 
     lazy var ANIT996_LICENSE: String? = {
         InBundle.readFile(path: Bundle.main.path(forResource: "LICENSE", ofType: nil))?.asUTF8String()
@@ -29,13 +42,55 @@ final class LocalManager {
 
     // 第一次打开 App
     // 创建目录 & 解压内置包体
-    private func firstRun() throws {
-        guard let path = builtInZipPath else { return }
-        guard let root = baseFolder else { return }
-        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-        let unzipDirectory = try Zip.quickUnzipFile(path)
-        let targetDirectory = root.appendingPathComponent(unzipDirectory.lastPathComponent)
-        try FileManager.default.moveItem(at: unzipDirectory, to: targetDirectory)
+    private func unzipLaws() throws {
+        guard let zipPath = builtInZipPath else { return }
+        guard let targetPath = baseFolder else { return }
+        guard let cachePath = cacheFolder else { return }
+        try Zip.unzipFile(zipPath, destination: cachePath, overwrite: true, password: nil)
+        try FileManager.default.moveItem(at: cachePath, to: targetPath)
+    }
+    
+    private func readSHA1() -> String? {
+        guard let hashFile = zipHash else { return nil }
+        // get sha1 from package
+        if let data = FileManager.default.contents(atPath: hashFile.relativePath) {
+            let sha1 = data.asUTF8String()
+            return sha1
+        }
+        return nil
+    }
+    
+    private func checkNeedsUpgrade() -> Bool {
+        guard let sha1 = readSHA1() else {
+            #if DEBUG
+            print("sha1 not exists")
+            #endif
+            return false
+        }
+        guard let localHash = localHash else {
+            fatalError("invalid local path")
+        }
+        let local = FileManager.default.contents(atPath: localHash.relativePath)
+        if local == nil || local?.asUTF8String() != sha1 {
+            #if DEBUG
+            print("needs upgrade")
+            #endif
+            return true;
+        }
+        return false;
+    }
+    
+    private func afterUpgrade(){
+        guard let sha1 = readSHA1() else { return }
+        guard let localHash = localHash else {
+            fatalError("invalid local path")
+        }
+        print(localHash.absoluteString)
+        do {
+            try sha1.data(using: .utf8)?.write(to: localHash)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
     // 获取本地所有数据库位置
@@ -44,9 +99,14 @@ final class LocalManager {
         #if DEBUG
         print("local path \(root)")
         #endif
-        if !root.isExists() {
+        if !root.isExists() || checkNeedsUpgrade() {
             do {
-                try self.firstRun()
+                self.removeAllLocalFiles();
+                try self.unzipLaws()
+                self.afterUpgrade()
+                if let cachePath = cacheFolder {
+                    try? self.removeFile(url: cachePath)
+                }
             } catch {
                 fatalError("\(error)")
             }
@@ -58,11 +118,29 @@ final class LocalManager {
             fatalError("\(error)")
         }
     }
+        
+
+    private func removeFile(url: URL) throws {
+        if !url.isExists() {
+            return
+        }
+        if url.isDirectory {
+            let files = try FileManager.default.contentsOfDirectory(atPath: url.path)
+            for file in files {
+                try removeFile(url: url.appendingPathComponent(file))
+            }
+        }
+        try FileManager.default.removeItem(atPath: url.path)
+    }
 
     // 删除本地所有数据
     func removeAllLocalFiles() {
         guard let root = baseFolder else { return }
-        try? FileManager.default.removeItem(atPath: root.path)
+        do {
+            try removeFile(url: root)
+        } catch {
+            print("failed to removeAllLocalFiles \(error)")
+        }
     }
 
     func readLocalFile(url: URL) -> Data? {
@@ -84,4 +162,10 @@ extension LocalManager {
 
     }
 
+}
+
+extension URL {
+    var isDirectory: Bool {
+       (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
+    }
 }

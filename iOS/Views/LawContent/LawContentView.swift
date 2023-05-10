@@ -31,8 +31,8 @@ struct LawContentView: View {
 
     var body: some View {
         LoadingView(isLoading: $vm.isLoading) {
-            if let law = vm.law, let content = vm.content {
-                LawContentDetailsView(law: law, content: content, searchText: $searchText, scroll: $scroll)
+            if let content = vm.content {
+                LawContentDetailsView(law: vm.law, content: content, searchText: $searchText, scroll: $scroll)
             }
         }
         .toolbar {
