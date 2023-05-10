@@ -74,6 +74,10 @@ final class LawManager: ObservableObject {
     func getLaw(id: UUID) async -> TLaw? {
         return await queryLaws(predicate: TLaw.id == id.asDBString()).first
     }
+    
+    func getLaws(nameContains: String) async -> [TLaw] {
+        return await queryLaws(predicate: TLaw.name.like("%\(nameContains)%"))
+    }
 
     func getLaws() async -> [TLaw] {
         return await queryLaws(predicate: nil)

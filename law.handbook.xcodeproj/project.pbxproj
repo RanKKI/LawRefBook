@@ -19,6 +19,8 @@
 		9013C3732A0B26C00066E801 /* laws.zip.sha1 in Resources */ = {isa = PBXBuildFile; fileRef = 9013C3722A0B26C00066E801 /* laws.zip.sha1 */; };
 		9013C3752A0B2E5D0066E801 /* laws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 9013C3742A0B2E5D0066E801 /* laws.zip */; };
 		9013C3772A0B30F10066E801 /* FlexibleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9013C3762A0B30F10066E801 /* FlexibleLayout.swift */; };
+		9013C37A2A0B47780066E801 /* WorkerLawListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9013C3792A0B47780066E801 /* WorkerLawListView.swift */; };
+		9013C37C2A0B478D0066E801 /* WorkerLawListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9013C37B2A0B478D0066E801 /* WorkerLawListViewModel.swift */; };
 		9016D22427E61BEA0027D69D /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9016D22327E61BEA0027D69D /* Alert.swift */; };
 		90193EFE27F599A5008CF0A6 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFD27F599A5008CF0A6 /* WelcomeView.swift */; };
 		90193F0027F5A376008CF0A6 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90193EFF27F5A376008CF0A6 /* Consts.swift */; };
@@ -143,6 +145,8 @@
 		9013C3722A0B26C00066E801 /* laws.zip.sha1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laws.zip.sha1; sourceTree = "<group>"; };
 		9013C3742A0B2E5D0066E801 /* laws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = laws.zip; sourceTree = "<group>"; };
 		9013C3762A0B30F10066E801 /* FlexibleLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleLayout.swift; sourceTree = "<group>"; };
+		9013C3792A0B47780066E801 /* WorkerLawListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerLawListView.swift; sourceTree = "<group>"; };
+		9013C37B2A0B478D0066E801 /* WorkerLawListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerLawListViewModel.swift; sourceTree = "<group>"; };
 		9016D22327E61BEA0027D69D /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		90193EFD27F599A5008CF0A6 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		90193EFF27F5A376008CF0A6 /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
@@ -293,6 +297,15 @@
 				16C0011C27E44BE800AB6446 /* XCTest.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9013C3782A0B47670066E801 /* WorkerList */ = {
+			isa = PBXGroup;
+			children = (
+				9013C3792A0B47780066E801 /* WorkerLawListView.swift */,
+				9013C37B2A0B478D0066E801 /* WorkerLawListViewModel.swift */,
+			);
+			path = WorkerList;
 			sourceTree = "<group>";
 		};
 		902DAE4B27C7CBC100926036 = {
@@ -457,6 +470,7 @@
 		90399175292A3EE900CFC975 /* LawList */ = {
 			isa = PBXGroup;
 			children = (
+				9013C3782A0B47670066E801 /* WorkerList */,
 				90399176292A3EF300CFC975 /* LawListView.swift */,
 				90E835732931B02100519E23 /* LawListContentView.swift */,
 				90399178292A3F0C00CFC975 /* LawListContentViewModel.swift */,
@@ -776,6 +790,7 @@
 				9039916D292A3AD000CFC975 /* ContentView.swift in Sources */,
 				90F7F99B29C6F1C700F9FEC2 /* HomeCardView.swift in Sources */,
 				90E835E6293C326500519E23 /* ShareContentView.swift in Sources */,
+				9013C37A2A0B47780066E801 /* WorkerLawListView.swift in Sources */,
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
 				90E835E8293C382B00519E23 /* SearchManager.swift in Sources */,
 				90E835C62938336300519E23 /* UIImage.swift in Sources */,
@@ -844,6 +859,7 @@
 				90E835E12939B1AF00519E23 /* CoreDataModel.swift in Sources */,
 				90E8357E2931CD9C00519E23 /* Review.swift in Sources */,
 				901D19A2284756A200999AE6 /* ShareLawView.swift in Sources */,
+				9013C37C2A0B478D0066E801 /* WorkerLawListViewModel.swift in Sources */,
 				90E835992932013D00519E23 /* LawTitleTextView.swift in Sources */,
 				9039915E292A240C00CFC975 /* Thread.swift in Sources */,
 				90E835742931B02100519E23 /* LawListContentView.swift in Sources */,

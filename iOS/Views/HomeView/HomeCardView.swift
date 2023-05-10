@@ -17,9 +17,9 @@ struct HomeCardView: View {
     var body: some View {
         HStack(spacing: 16) {
             NavigationLink {
-                LawListView(showFavorite: false, cateogry: "劳动人事")
+                WorkerLawListView()
             } label: {
-                HomeCardFullView(title: "打工人须知", subtitle: "勤劳的社畜保护法", icon: "icon_2")
+                HomeCardFullView(title: "劳动人事", subtitle: "职场法律知识普及", icon: "icon_2")
             }
             .buttonStyle(PlainButtonStyle())
             VStack(spacing: 8) {
@@ -33,7 +33,7 @@ struct HomeCardView: View {
                     FavoriteView()
                         .navigationBarTitle("书签", displayMode: .inline)
                 } label: {
-                    HomeHalfCardView(title: "收藏夹", subtitle: "某些内容", icon: "icon_1")
+                    HomeHalfCardView(title: "收藏夹", subtitle: "常用法规", icon: "icon_3")
                 }
                 .buttonStyle(PlainButtonStyle())
             }
@@ -44,7 +44,7 @@ struct HomeCardView: View {
 
 
 struct HomeCardFullView: View {
-    
+
     var title: String
     var subtitle: String
     var icon: String
@@ -77,7 +77,7 @@ struct HomeHalfCardView: View {
     var title: String
     var subtitle: String
     var icon: String
-    
+
     var body: some View {
         ZStack {
             HStack(spacing: 0) {
