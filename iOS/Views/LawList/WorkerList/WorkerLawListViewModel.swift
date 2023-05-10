@@ -22,7 +22,8 @@ extension WorkerLawListView {
             self.isLoading = true
             Task.init {
                 var arr = [TCategory]()
-                let laws = await LawManager.shared.getLaws(nameContains: "劳动")
+                var laws = await LawManager.shared.getLaws(nameContains: "劳动")
+                laws = laws.filter { $0.level != "案例" }
                 let cases = await LawManager.shared.getLaws(category: "劳动人事")
                 
                 arr.append(contentsOf: [
