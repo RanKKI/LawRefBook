@@ -18,6 +18,7 @@ struct HomeCardView: View {
         HStack(spacing: 16) {
             NavigationLink {
                 WorkerLawListView()
+                    .navigationTitle("劳动人事")
             } label: {
                 HomeCardFullView(title: "劳动人事", subtitle: "职场法律知识普及", icon: "icon_2")
             }
@@ -25,6 +26,7 @@ struct HomeCardView: View {
             VStack(spacing: 8) {
                 NavigationLink {
                     LawListView(showFavorite: true)
+                        .navigationTitle("法律法规")
                 } label: {
                     HomeHalfCardView(title: "法律法规", subtitle: "快查手册", icon: "icon_1")
                 }

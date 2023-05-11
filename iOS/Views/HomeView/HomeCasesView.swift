@@ -19,6 +19,7 @@ struct HomeCasesView: View {
                 Spacer()
                 NavigationLink {
                     CasesView.ListType(vm: .init())
+                        .navigationTitle("经典案例")
                 } label: {
                     ViewAllCaseButton()
                 }
