@@ -15,3 +15,17 @@ extension UIScreen {
    static let screenSize = UIScreen.main.bounds.size
 
 }
+
+extension UIDevice {
+    static var idiom: UIUserInterfaceIdiom {
+        UIDevice.current.userInterfaceIdiom
+    }
+    
+    static var isIpad: Bool {
+        idiom == .pad
+    }
+    
+    static var isiPhone: Bool {
+        idiom == .phone
+    }
+}

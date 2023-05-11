@@ -15,7 +15,7 @@ struct HomeView: View {
 
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -45,7 +45,16 @@ extension HomeView {
 #if DEBUG
 struct HomeView_Preview: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        NavigationView {
+            HomeView()
+        }
+        .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+        .previewDisplayName("iPhone 14")
+        NavigationView {
+            HomeView()
+        }
+        .previewDevice(.init(rawValue: "iPad Pro"))
+        .previewDisplayName("iPad")
     }
 }
 #endif

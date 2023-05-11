@@ -39,9 +39,7 @@ struct HomeCardView: View {
             }
         }
     }
-
 }
-
 
 struct HomeCardFullView: View {
 

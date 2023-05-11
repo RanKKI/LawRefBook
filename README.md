@@ -27,3 +27,7 @@
 
 ## 法律法规的贡献
 请来此处[LawRefBoob/Laws](https://github.com/LawRefBook/Laws)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=RanKKI/LawRefBook&type=Date)](https://star-history.com/#RanKKI/LawRefBook&Date)
