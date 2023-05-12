@@ -27,7 +27,6 @@ struct HomeView: View {
         }
         .navigationTitle("中国法律")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: .constant(""), placement: .navigationBarDrawer(displayMode: .always))
     }
     
 }
