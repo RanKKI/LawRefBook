@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 struct ContentView: View {
-    
+
     @ObservedObject
-    private var sheetManager = SheetMananger<Sheets>()
-    
+    private var sheetManager = SheetManager<Sheets>()
+
     @Environment(\.managedObjectContext)
     private var moc
-    
+
     var body: some View {
         Group {
             if UIDevice.isIpad {
@@ -54,10 +54,10 @@ struct ContentView: View {
 }
 
 extension ContentView {
-    
+
     enum Sheets {
         case favorite
         case setting
     }
-    
+
 }

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-class SheetMananger<T>: ObservableObject {
+class SheetManager<T>: ObservableObject {
 
     @Published
     var isShowingSheet = false

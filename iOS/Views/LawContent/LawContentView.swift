@@ -14,7 +14,7 @@ struct LawContentView: View {
     private var vm: VM
 
     @ObservedObject
-    private var sheets = SheetMananger<Sheets>()
+    private var sheets = SheetManager<Sheets>()
 
     @Environment(\.managedObjectContext)
     private var moc

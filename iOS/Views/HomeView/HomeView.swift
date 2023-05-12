@@ -9,9 +9,9 @@ import Foundation
 import SwiftUI
 
 struct HomeView: View {
-    
+
     @ObservedObject
-    private var sheetManager = SheetMananger<Sheets>()
+    private var sheetManager = SheetManager<Sheets>()
 
     @Environment(\.managedObjectContext)
     private var moc
@@ -28,7 +28,7 @@ struct HomeView: View {
         .navigationTitle("中国法律")
         .navigationBarTitleDisplayMode(.inline)
     }
-    
+
 }
 
 extension HomeView {
