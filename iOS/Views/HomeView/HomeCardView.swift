@@ -102,11 +102,15 @@ struct HomeHalfCardView: View {
 }
 
 struct HomeCardEffect: ViewModifier {
+    
+    @Environment(\.colorScheme)
+    var colorScheme
+    
     func body(content: Content) -> some View {
         return content
             .background {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(.white)
+                    .fill(colorScheme == .dark ? .black : .white)
                     .shadow(color: .black.opacity(0.05), radius: 1, x: 0, y: 1)
                     .shadow(color: .black.opacity(0.12), radius: 1, x: 0, y: 2)
 
