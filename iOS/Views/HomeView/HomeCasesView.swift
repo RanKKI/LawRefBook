@@ -33,14 +33,15 @@ struct HomeCasesView: View {
 private struct ViewAllCaseButton: View {
     
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 4) {
             Text("查看全部")
                 .foregroundColor(.gray)
                 .font(.caption)
-            Image("icon_go_to")
+            Image(systemName: "chevron.right")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 24, height: 24)
+                .frame(width: 14, height: 14)
+                .foregroundColor(.gray)
         }
     }
     
