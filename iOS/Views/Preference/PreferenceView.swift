@@ -17,6 +17,11 @@ struct PreferenceView: View {
             Section(header: Text("内容来源"), footer: Text("如果您发现了任何错误，包括但不限于排版、错字、缺失内容，请使用以下联系方式告知开发者，以便修复")) {
                 SafariLinkView(title: "国家法律法规数据库", url: "https://flk.npc.gov.cn")
                 SafariLinkView(title: "最高人民法院", url: "https://www.court.gov.cn")
+                NavigationLink {
+                    DLCListView(vm: .init())
+                } label: {
+                    Text("DLC")
+                }
             }
             Section(header: Text("偏好设置")) {
                 HStack {
