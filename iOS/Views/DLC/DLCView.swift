@@ -17,12 +17,7 @@ struct DLCView: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 0) {
-                Text(item.name)
-                Text(item.dlc.description)
-                    .font(.caption)
-                    .foregroundColor(.gray)
-            }
+            Text(item.name)
             Spacer()
             DLCStateView(item: item)
         }
@@ -70,19 +65,20 @@ struct DLCProgressView: View {
 
 #if DEBUG
 struct DLCView_Previews: PreviewProvider {
+    static let dlc: DLCManager.DLC = .init(name: "上海", hash: "123")
     static var previews: some View {
         List {
             Section {
-                DLCView(item: .init(dlc: DLCManager.DLCs[0], state: .downloaded)) {
+                DLCView(item: .init(dlc: dlc, state: .downloaded)) {
                     
                 }
-                DLCView(item: .init(dlc: DLCManager.DLCs[0], state: .downloading)) {
+                DLCView(item: .init(dlc: dlc, state: .downloading)) {
                     
                 }
-                DLCView(item: .init(dlc: DLCManager.DLCs[0], state: .failed)) {
+                DLCView(item: .init(dlc: dlc, state: .failed)) {
                     
                 }
-                DLCView(item: .init(dlc: DLCManager.DLCs[0], state: .ready)) {
+                DLCView(item: .init(dlc: dlc, state: .ready)) {
                     
                 }
             } header: {

@@ -7,28 +7,33 @@ struct DLCListView: View {
     @ObservedObject
     var vm: VM
     
+    @ObservedObject
+    private var manager = DLCManager.shared
+    
     @State
     private var confirmToggler = false
 
     var body: some View {
-        List {
-            Section {
-                ForEach(vm.DLCs) { item in
-                    DLCView(item: item) {
-                        vm.setDownloadItem(item: item)
-                        confirmToggler.toggle()
+        LoadingView(isLoading: $manager.isLoading) {
+            List {
+                Section {
+                    ForEach(vm.DLCs) { item in
+                        DLCView(item: item) {
+                            vm.setDownloadItem(item: item)
+                            confirmToggler.toggle()
+                        }
                     }
+                } header: {
+                    Text("补充包")
                 }
-            } header: {
-                Text("补充包")
-            }
-            
-            Section {
-                ForEach(vm.downloadedDLCs) { item in
-                    DLCView(item: item)
+
+                Section {
+                    ForEach(vm.readyDLCs) { item in
+                        DLCView(item: item)
+                    }
+                } header: {
+                    Text("已下载")
                 }
-            } header: {
-                Text("已下载")
             }
         }
         .onAppear {

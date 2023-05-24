@@ -11,6 +11,13 @@ struct PreferenceView: View {
 
     @ObservedObject
     private var preference = Preference.shared
+    
+    @ObservedObject
+    private var dlcVM: DLCListView.VM
+
+    init() {
+        self.dlcVM = .init()
+    }
 
     var body: some View {
         List {
@@ -18,7 +25,7 @@ struct PreferenceView: View {
                 SafariLinkView(title: "国家法律法规数据库", url: "https://flk.npc.gov.cn")
                 SafariLinkView(title: "最高人民法院", url: "https://www.court.gov.cn")
                 NavigationLink {
-                    DLCListView(vm: .init())
+                    DLCListView(vm: dlcVM)
                 } label: {
                     Text("DLC")
                 }

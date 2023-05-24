@@ -16,7 +16,7 @@
 		900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE127D35E3500E20FE4 /* LawInfoView.swift */; };
 		900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE327D35EAE00E20FE4 /* IconButton.swift */; };
 		900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */; };
-		9013C3732A0B26C00066E801 /* laws.zip.sha1 in Resources */ = {isa = PBXBuildFile; fileRef = 9013C3722A0B26C00066E801 /* laws.zip.sha1 */; };
+		9013C3732A0B26C00066E801 /* laws.zip.hash in Resources */ = {isa = PBXBuildFile; fileRef = 9013C3722A0B26C00066E801 /* laws.zip.hash */; };
 		9013C3752A0B2E5D0066E801 /* laws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 9013C3742A0B2E5D0066E801 /* laws.zip */; };
 		9013C3772A0B30F10066E801 /* FlexibleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9013C3762A0B30F10066E801 /* FlexibleLayout.swift */; };
 		9013C37A2A0B47780066E801 /* WorkerLawListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9013C3792A0B47780066E801 /* WorkerLawListView.swift */; };
@@ -146,7 +146,7 @@
 		900EBCE127D35E3500E20FE4 /* LawInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawInfoView.swift; sourceTree = "<group>"; };
 		900EBCE327D35EAE00E20FE4 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		900EBCEC27D3815900E20FE4 /* LawData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LawData.xcdatamodel; sourceTree = "<group>"; };
-		9013C3722A0B26C00066E801 /* laws.zip.sha1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laws.zip.sha1; sourceTree = "<group>"; };
+		9013C3722A0B26C00066E801 /* laws.zip.hash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laws.zip.hash; sourceTree = "<group>"; };
 		9013C3742A0B2E5D0066E801 /* laws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = laws.zip; sourceTree = "<group>"; };
 		9013C3762A0B30F10066E801 /* FlexibleLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleLayout.swift; sourceTree = "<group>"; };
 		9013C3792A0B47780066E801 /* WorkerLawListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerLawListView.swift; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				9013C3742A0B2E5D0066E801 /* laws.zip */,
-				9013C3722A0B26C00066E801 /* laws.zip.sha1 */,
+				9013C3722A0B26C00066E801 /* laws.zip.hash */,
 				16C3362D27DB18D700D3F1F0 /* LICENSE */,
 				90399156292A1D1800CFC975 /* Shared */,
 				90399165292A3A2A00CFC975 /* iOS */,
@@ -778,7 +778,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				902DAE5F27C7CBC200926036 /* Preview Assets.xcassets in Resources */,
-				9013C3732A0B26C00066E801 /* laws.zip.sha1 in Resources */,
+				9013C3732A0B26C00066E801 /* laws.zip.hash in Resources */,
 				902DAE5C27C7CBC200926036 /* Assets.xcassets in Resources */,
 				16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */,
 				9013C3752A0B2E5D0066E801 /* laws.zip in Resources */,

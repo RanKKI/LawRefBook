@@ -14,7 +14,7 @@ class DLCDownloadDelegate: NSObject, URLSessionDelegate, URLSessionDownloadDeleg
     
     // Delegate method to track download progress
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        // Download completed
+        print("Download completed \(location)")
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
@@ -30,22 +30,79 @@ class DLCManager: ObservableObject {
     static let shared = DLCManager()
     
     @Published
-    var loading = false
+    var isLoading = false
     
     @Published
     var isDownloading = false
     
+    private func _fetch() async -> [DLC] {
+        guard let url = URL(string: "https://raw.githubusercontent.com/LawRefBook/Laws/release/dlc.txt") else {
+            return []
+        }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            guard let str = String(data: data, encoding: .utf8) else {
+                return []
+            }
+            let arr = str.split(separator: "\n")
+            var ret = [DLC]()
+            for item in arr {
+                let components = item.split(separator: " ")
+                if components.count != 2 {
+                    print("Failed to parse DLC \(item)")
+                    continue
+                }
+                ret.append(.init(name: String(components.first!), hash: String(components.last!)))
+            }
+            return ret
+        } catch {
+
+        }
+        return []
+    }
+    
+    func fetch() async -> [DLC] {
+        uiThread {
+            self.isLoading = true
+        }
+        let ret = await self._fetch()
+        uiThread {
+            self.isLoading = false
+        }
+        return ret
+    }
+    
     func _download(item: DLC, progressHandler: @escaping ((Double) -> Void)) async -> Bool{
         guard let url = item.url else {
+            print("Invalid url \(item.url)")
             return false
         }
         let delegate = DLCDownloadDelegate()
         delegate.progressHandler = progressHandler
-        do {
-            try await URLSession.shared.data(from: url, delegate: delegate)
-        } catch {
+        
+        guard let localPath = LocalManager.shared.cacheFolder?.appendingPathComponent(item.hashZipFilename) else {
+            print("Invalid localPath")
             return false
         }
+
+        print("Downloading \(item.url) to \(localPath)")
+        var data: Data?
+        do {
+            (data, _ ) = try await URLSession.shared.data(from: url, delegate: delegate)
+        } catch {
+            print("Download Failed")
+            print(error)
+        }
+        guard let data = data else { return false }
+        do {
+            try data.write(to: localPath)
+            try LocalManager.shared.unzipLaw(at: localPath, name: item.name, hash: item.hash)
+        } catch {
+            print(error)
+            return false
+        }
+        
+        print("Downloaded")
         return true
     }
 
@@ -59,14 +116,18 @@ class DLCManager: ObservableObject {
         }
         return ret
     }
-
-}
-
-extension DLCManager {
     
-    static let DLCs: [DLC] = [
-        .init(name: "测试", hash: "123", description: "啊姥姥啊")
-    ]
+    func queryDLCState(dlc: DLC) -> DownloadState {
+        if let hash = LocalManager.shared.getLawHash(name: dlc.name) {
+            if hash.elementsEqual(dlc.hash) {
+                return .ready
+            } else {
+                return .upgradeable
+            }
+        }
+        return .none
+    }
+
 }
 
 extension DLCManager {
@@ -74,10 +135,17 @@ extension DLCManager {
     struct DLC {
         let name: String
         let hash: String
-        let description: String
         
+        var filename: String { "\(name).zip" }
+        var hashZipFilename: String { "\(hash).zip" }
+
+        var urlFilename: String? { filename.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) }
+
         var url: URL? {
-            return URL(string: "")
+            guard let urlFilename = urlFilename else {
+                return nil
+            }
+            return URL(string: "https://raw.githubusercontent.com/LawRefBook/Laws/release/DLC/\(urlFilename)")
         }
 
     }
@@ -88,6 +156,7 @@ extension DLCManager {
         case downloading = "正在下载"
         case downloaded = "已下载"
         case failed = "下载失败"
+        case upgradeable = "有更新"
 
         var icon: String? {
             switch(self) {
