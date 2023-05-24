@@ -18,7 +18,7 @@ struct TCategory: Identifiable, Hashable {
     static let name = Expression<String>("name")
     static let folder = Expression<String>("folder")
     static let isSubFolder = Expression<Bool>("isSubFolder")
-    static let order = Expression<Int>("order")
+    static let order = Expression<Int?>("order")
 
     static let group = Expression<String?>("group")
 
@@ -26,7 +26,7 @@ struct TCategory: Identifiable, Hashable {
     let name: String
     let folder: String
     let isSubFolder: Bool
-    let order: Int
+    let order: Int?
     let group: String?
     let laws: [TLaw]
 
