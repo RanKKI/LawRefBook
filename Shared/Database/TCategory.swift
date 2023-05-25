@@ -14,15 +14,16 @@ struct TCategory: Identifiable, Hashable {
 
     static let table = Table("category")
 
-    static let id = Expression<Int>("id")
+    static let tid = Expression<Int>("id")
     static let name = Expression<String>("name")
     static let folder = Expression<String>("folder")
     static let isSubFolder = Expression<Bool>("isSubFolder")
     static let order = Expression<Int?>("order")
 
     static let group = Expression<String?>("group")
-
-    let id: Int
+    
+    let id = UUID()
+    let tid: Int
     let name: String
     let folder: String
     let isSubFolder: Bool
@@ -30,9 +31,9 @@ struct TCategory: Identifiable, Hashable {
     let group: String?
     let laws: [TLaw]
 
-    static func create(id: Int, level: String, laws: [TLaw]) -> TCategory {
+    static func create(tid: Int, level: String, laws: [TLaw]) -> TCategory {
         return TCategory(
-            id: id,
+            tid: tid,
             name: level,
             folder: "",
             isSubFolder: false,
@@ -44,7 +45,7 @@ struct TCategory: Identifiable, Hashable {
 
     static func create(row: Row, laws: [TLaw]) -> TCategory {
         return TCategory(
-            id: row[id],
+            tid: row[tid],
             name: row[name],
             folder: row[folder],
             isSubFolder: row[isSubFolder],
@@ -56,7 +57,7 @@ struct TCategory: Identifiable, Hashable {
 
     static func create(old: TCategory, laws: [TLaw]) -> TCategory {
         return TCategory(
-            id: old.id,
+            tid: old.tid,
             name: old.name,
             folder: old.folder,
             isSubFolder: old.isSubFolder,

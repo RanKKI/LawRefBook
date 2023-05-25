@@ -7,16 +7,21 @@
 
 import Foundation
 import SQLite
+import SQLite3
 
 class LawDatabase {
 
     private var connection: Connection
-    private var path: URL
+    var path: URL
     var categories = [Int: TCategory]()
 
     init(path: URL) throws {
         self.path = path
         self.connection = try Connection(path.absoluteString)
+    }
+    
+    func disconnect() {
+        sqlite3_close(self.connection.handle)
     }
 
     func getCategories() async -> [TCategory] {

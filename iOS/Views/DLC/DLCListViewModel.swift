@@ -73,7 +73,7 @@ extension DLCListView {
         }
 
         func delete(item: DLCItem) {
-            guard item.state == .ready || item.state == .delete else { return }
+            guard item.state == .ready || item.state == .delete || item.state == .upgradeable else { return }
             Task.init {
                 DLCManager.shared.delete(dlc: item.dlc, revert: item.state == .delete)
                 self.refresh()

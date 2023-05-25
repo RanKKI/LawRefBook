@@ -17,7 +17,7 @@ struct MainApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                LoadingView(isLoading: $db.isLoading, message: "解压文件中...") {
+                LoadingView(isLoading: $db.isLoading, message: "加载中...") {
                     ContentView()
                 }
             }

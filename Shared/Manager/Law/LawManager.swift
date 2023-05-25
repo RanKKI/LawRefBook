@@ -21,6 +21,20 @@ final class LawManager: ObservableObject {
     private var categoryMap = [Int: TCategory]()
     private var lawMap = [UUID: LawDatabase]()
 
+    func reconnect() async {
+        uiThread {
+            self.isLoading = true
+        }
+        self.categories.removeAll()
+        self.lawMap.removeAll()
+        self.categories.removeAll()
+        self.dbs.forEach { $0.disconnect() }
+        await self.connect()
+        uiThread {
+            self.isLoading = false
+        }
+    }
+    
     func connect() async {
         do {
             dbs = try LocalManager.shared.getDatabaseFiles()
@@ -36,6 +50,13 @@ final class LawManager: ObservableObject {
             self.isLoading = false
         }
     }
+    
+    func closeDB(path: URL) {
+        guard let idx = self.dbs.firstIndex(where: { $0.path == path }) else { return }
+        guard self.dbs[idx].path == path else { return }
+        let db = self.dbs.remove(at: idx)
+        db.disconnect()
+    }
 
     // 加载所有 Category
     func preflight() async {
@@ -43,12 +64,12 @@ final class LawManager: ObservableObject {
             self.categories.append(contentsOf: await db.getCategories())
         }
         for category in categories {
-            categoryMap[category.id] = category
+            categoryMap[category.tid] = category
         }
     }
 
     private func getCategoryID(name: String) -> Int? {
-        return self.categories.first { $0.name == name }?.id
+        return self.categories.first { $0.name == name }?.tid
     }
 
     private func linkLaws(laws: [TLaw], db: LawDatabase) {
@@ -111,7 +132,7 @@ final class LawManager: ObservableObject {
         }
         var ret = [TCategory]()
         for category in categories {
-            let laws = await getLaws(categoryID: category.id)
+            let laws = await getLaws(categoryID: category.tid)
             ret.append(TCategory.create(old: category, laws: laws))
         }
         return ret
@@ -125,7 +146,7 @@ final class LawManager: ObservableObject {
             }
             .enumerated()
             .map {
-                return TCategory.create(id: $0, level: $1.key, laws: $1.value)
+                return TCategory.create(tid: $0, level: $1.key, laws: $1.value)
             }
     }
 

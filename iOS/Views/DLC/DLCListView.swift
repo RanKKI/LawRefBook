@@ -30,6 +30,11 @@ struct DLCListView: View {
         .onAppear {
             vm.refresh();
         }
+        .onDisappear {
+            Task.init {
+                await manager.cleanup()
+            }
+        }
         .disabled(vm.isLoading)
         .onChange(of: manager.baseURL, perform: { newValue in
             vm.refresh();

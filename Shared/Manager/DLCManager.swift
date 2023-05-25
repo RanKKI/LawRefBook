@@ -112,8 +112,12 @@ class DLCManager: ObservableObject {
                 self.isDownloading = false
             }
         }
+        if let path = item.localSqliteFile {
+            LawManager.shared.closeDB(path: path)
+        }
         do {
             try await self._download(item: item, progressHandler: progressHandler)
+            self.needReconnect = true
         } catch {
             print("Failed to download \(item.name)")
             print(error)
@@ -143,6 +147,15 @@ class DLCManager: ObservableObject {
         return .none
     }
 
+    
+    private var needReconnect = false
+
+    func cleanup() async {
+        guard self.needReconnect else { return }
+        self.needReconnect = false
+        await LawManager.shared.reconnect()
+    }
+
 }
 
 extension DLCManager {
@@ -162,7 +175,10 @@ extension DLCManager {
             }
             return DLCManager.shared.baseURL.appendingPathComponent("DLC").appendingPathComponent(urlFilename)
         }
-
+        
+        var localSqliteFile: URL? {
+            LocalManager.shared.lawsFolder?.appendingPathComponent(name).appendingPathComponent(LocalManager.DB_NAME)
+        }
     }
 
     enum DownloadState: String {
