@@ -27,53 +27,42 @@ extension DLCListView {
         var DLCs = [DLCItem]()
         
         @Published
-        var readyDLCs = [DLCItem]()
+        var isLoading: Bool = false
 
-        var downloadItem: DLCItem?
-        
-        var confirmTitle: String {
-            downloadItem != nil ? "确认下载\(String(describing: downloadItem?.dlc.name))么？" : "似乎出了一些错误"
+        var isDeleteNoticeShow: Bool {
+            DLCs.first(where: { $0.state == .delete }) != nil
         }
 
         init() {
 
         }
 
-        func onAppear() {
-            self.refresh()
-        }
-        
-        private func refresh() {
+        func refresh(force: Bool = false) {
+            if !force && !self.DLCs.isEmpty {
+                return
+            }
+            self.isLoading = true
             Task.init {
                 let items = await DLCManager.shared.fetch()
-                var arr = [DLCItem]()
-                var readyArr = [DLCItem]()
-                for item in items{
-                    let state = DLCManager.shared.queryDLCState(dlc: item)
-                    if state == .ready || state == .upgradeable {
-                        readyArr.append(.init(dlc: item, state: state))
-                    } else {
-                        arr.append(.init(dlc: item, state: state))
-                    }
+                let arr = items.map {
+                    DLCItem(
+                        dlc: $0,
+                        state: DLCManager.shared.queryDLCState(dlc: $0)
+                    )
                 }
                 uiThread {
+                    self.isLoading = false
                     self.DLCs = arr
-                    self.readyDLCs = readyArr
                 }
             }
         }
-        
-        func setDownloadItem(item: DLCItem) {
-            self.downloadItem = item
-        }
 
-        func download() {
+        func download(item: DLCItem) {
             if DLCManager.shared.isDownloading {
                 return
             }
-            guard let item = self.downloadItem else {
-                return
-            }
+            guard item.state != .ready else { return }
+            guard item.state != .downloading else { return }
             item.state = .downloading
             Task.init {
                 await DLCManager.shared.download(item: item.dlc, progressHandler: ({ progress in
@@ -82,6 +71,14 @@ extension DLCListView {
                 self.refresh()
             }
         }
+
+        func delete(item: DLCItem) {
+            guard item.state == .ready || item.state == .delete else { return }
+            Task.init {
+                DLCManager.shared.delete(dlc: item.dlc, revert: item.state == .delete)
+                self.refresh()
+            }
+        }
     }
-    
+
 }

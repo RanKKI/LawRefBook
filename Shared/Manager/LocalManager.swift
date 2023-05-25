@@ -13,39 +13,38 @@ final class LocalManager {
 
     static let shared = LocalManager()
 
-    static let defaultDatabaseName = "db.sqlite3"
+    static let DB_NAME = "db.sqlite3"
+    static let EXT_HASH = "hash"
+    static let EXT_DELETE = "delete"
+    static let DEFAULT_LAW_NAME = "laws"
 
-    private var basePath: URL? {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-    }
-    
-    var lawsFolder: URL? {
-        basePath?.appendingPathComponent("laws", conformingTo: .directory)
-    }
+    private var basePath: URL? { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first }
 
-    var cacheFolder: URL? {
-        basePath?.appendingPathComponent("cache", conformingTo: .directory)
-    }
+    var lawsFolder: URL? { basePath?.appendingPathComponent("laws", conformingTo: .directory) }
+    var cacheFolder: URL? { basePath?.appendingPathComponent("cache", conformingTo: .directory) }
 
-    private let builtInZipPath = Bundle.main.url(forResource: "laws", withExtension: "zip")
-    private let zipHash = Bundle.main.url(forResource: "laws.zip", withExtension: "sha1")
-    
-    private var localHash: URL? {
-        lawsFolder?.appendingPathComponent("laws.hash")
-    }
+    private let inAppLawZip = Bundle.main.url(forResource: LocalManager.DEFAULT_LAW_NAME, withExtension: "zip")
+    private var inAppLawHash: URL? { inAppLawZip?.appendingPathExtension(LocalManager.EXT_HASH) }
+    private var localLawPath: URL? { lawsFolder?.appendingPathComponent(LocalManager.DEFAULT_LAW_NAME) }
+    private var localLawHash: URL? { localLawPath?.appendingPathExtension(LocalManager.EXT_HASH) }
 
     lazy var ANIT996_LICENSE: String? = {
         InBundle.readFile(path: Bundle.main.path(forResource: "LICENSE", ofType: nil))?.asUTF8String()
     }()
 
-    func getLawHash(name: String) -> String? {
-        guard let targetPath = lawsFolder?.appendingPathComponent(name) else { return nil }
-        if let data = try? Data(contentsOf: targetPath.appendingPathExtension(".hash")) {
-            return data.asUTF8String()
-        }
-        return nil
+    func getLawHash(name lawName: String) -> String? {
+        guard let lawPath = lawsFolder?.appendingPathComponent(lawName) else { return nil }
+        let hashFile = lawPath.appendingPathExtension(LocalManager.EXT_HASH)
+        return hashFile.utf8Content
     }
-        
+
+    func isLawPendingDelete(name lawName: String) -> Bool {
+        guard let lawPath = lawsFolder?.appendingPathComponent(lawName) else { return false }
+        let hashFile = lawPath.appendingPathExtension(LocalManager.EXT_DELETE)
+        return hashFile.isExists()
+    }
+
+
     /*
      解压 zip 文件到 cache/{name}
      解压完成后会移动到 laws/{name}
@@ -57,21 +56,60 @@ final class LocalManager {
         guard let zipPath = zipPath else { return }
         guard let targetPath = lawsFolder?.appendingPathComponent(name) else { return }
         guard let cachePath = cacheFolder?.appendingPathComponent(name) else { return }
-        
+
         if targetPath.isExists() {
-            try? FileManager.default.removeItem(at: targetPath)
+            try? targetPath.remove()
         }
         
         if cachePath.isExists() {
-            try? FileManager.default.removeItem(at: cachePath)
+            try? cachePath.remove()
         }
-        
+
         try Zip.unzipFile(zipPath, destination: cachePath, overwrite: true, password: nil)
         try FileManager.default.moveItem(at: cachePath, to: targetPath)
+
         if deleteZip {
-            try? FileManager.default.removeItem(at: zipPath)
+            try? zipPath.remove()
         }
-        try? hash.data(using: .utf8)?.write(to: targetPath.appendingPathExtension(".hash"))
+
+        try? hash.data(using: .utf8)?.write(to: targetPath.appendingPathExtension(LocalManager.EXT_HASH))
+    }
+    
+    /*
+     delete 某个 DLC 时候，不能立马删除
+     而是写入一个标记位
+     下次启动的时候删
+     */
+    func deleteLaw(name: String, revert: Bool = false) {
+        guard name != LocalManager.DEFAULT_LAW_NAME else { return }
+        guard let targetPath = lawsFolder?.appendingPathComponent(name) else { return }
+        let flagPath = targetPath.appendingPathExtension(LocalManager.EXT_DELETE)
+        if revert  {
+            if flagPath.isExists() {
+                try? flagPath.remove()
+            }
+        } else {
+            try? String("").data(using: .utf8)?.write(to: flagPath)
+        }
+    }
+
+    private func removeDeletedLaws() {
+        guard let baseFolder = lawsFolder else { return }
+        guard let files = try? baseFolder.files() else { return }
+        var waitToDelete = [URL]()
+        for file in files {
+            if file.pathExtension == LocalManager.EXT_DELETE {
+                let baseURL = file.deletingPathExtension()
+                waitToDelete.append(contentsOf: [
+                    baseURL,
+                    baseURL.appendingPathExtension(LocalManager.EXT_HASH),
+                    baseURL.appendingPathExtension(LocalManager.EXT_DELETE),
+                ])
+            }
+        }
+        for delete in waitToDelete {
+            try? delete.remove()
+        }
     }
 
     private func createFolders() {
@@ -83,36 +121,18 @@ final class LocalManager {
         }
     }
 
-    private func readSHA1() -> String? {
-        guard let hashFile = zipHash else { return nil }
-        // get sha1 from package
-        if let data = FileManager.default.contents(atPath: hashFile.relativePath) {
-            let sha1 = data.asUTF8String()
-            return sha1
-        }
-        return nil
-    }
-    
     private func checkNeedsUpgrade() -> Bool {
-        guard let sha1 = readSHA1() else {
-            return false
-        }
-        guard let localHash = localHash else {
-            fatalError("invalid local path")
-        }
-        let local = FileManager.default.contents(atPath: localHash.relativePath)
-        if local == nil || local?.asUTF8String() != sha1 {
-            return true;
-        }
-        return false;
+        guard let inAppHash = inAppLawHash?.utf8Content else { return false }
+        guard let localHash = localLawHash else { fatalError("invalid local path") }
+        return localHash.utf8Content != inAppHash
     }
 
     private func upgradeLocalLaws() {
-        guard let hash = self.readSHA1() else { return }
+        guard let hash = inAppLawHash?.utf8Content else { return }
         do {
-            self.removeAllLocalFiles();
             self.createFolders();
-            try self.unzipLaw(at: builtInZipPath, name: "laws", hash: hash)
+            self.deleteLaw(name: LocalManager.DEFAULT_LAW_NAME)
+            try self.unzipLaw(at: inAppLawZip, name: LocalManager.DEFAULT_LAW_NAME, hash: hash)
         } catch {
             fatalError("\(error)")
         }
@@ -127,9 +147,10 @@ final class LocalManager {
         if !lawsFolder.isExists() || checkNeedsUpgrade() {
             self.upgradeLocalLaws()
         }
+        self.removeDeletedLaws()
         do {
             return try lawsFolder.subDirectories()
-                .map { $0.appendingPathComponent(LocalManager.defaultDatabaseName)}
+                .map { $0.appendingPathComponent(LocalManager.DB_NAME)}
         } catch {
             fatalError("\(error)")
         }
@@ -146,16 +167,6 @@ final class LocalManager {
             }
         }
         try FileManager.default.removeItem(atPath: url.path)
-    }
-
-    // 删除本地所有数据
-    func removeAllLocalFiles() {
-        guard let root = lawsFolder else { return }
-        do {
-            try removeFile(url: root)
-        } catch {
-            print("failed to removeAllLocalFiles \(error)")
-        }
     }
 
     func readLocalFile(url: URL) -> Data? {
@@ -177,10 +188,4 @@ extension LocalManager {
 
     }
 
-}
-
-extension URL {
-    var isDirectory: Bool {
-       (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
-    }
 }

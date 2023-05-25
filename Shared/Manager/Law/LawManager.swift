@@ -132,4 +132,5 @@ final class LawManager: ObservableObject {
     func getDatabaseByLaw(law: TLaw) -> LawDatabase? {
         return lawMap[law.id]
     }
+
 }
