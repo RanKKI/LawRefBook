@@ -27,8 +27,8 @@ extension WorkerLawListView {
                 let cases = await LawManager.shared.getLaws(category: "劳动人事")
                 
                 arr.append(contentsOf: [
-                    TCategory.create(tid: 0, level: "案例", laws: cases),
-                    TCategory.create(tid: 1, level: "相关法律", laws: laws)
+                    TCategory.create(id: UUID(), level: "案例", laws: cases),
+                    TCategory.create(id: UUID(), level: "相关法律", laws: laws)
                 ])
                 
                 uiThread {

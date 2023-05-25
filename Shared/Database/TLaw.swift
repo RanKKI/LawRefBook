@@ -6,7 +6,7 @@ struct TLaw: Identifiable {
 
     static let id = Expression<String>("id")
     static let name = Expression<String>("name")
-    static let categoryID = Expression<Int>("category_id")
+    static let categoryID = Expression<String>("category_id")
     static let expired = Expression<Bool>("expired")
     static let level = Expression<String>("level")
 

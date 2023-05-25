@@ -27,7 +27,7 @@ final class LawContentManager {
         guard let url = db.getLawLocalFilePath(law: law) else {
             return nil
         }
-        guard let data = local.readLocalFile(url: url) else {
+        guard let data = url.content else {
             return nil
         }
         let content = parser.parse(data: data)

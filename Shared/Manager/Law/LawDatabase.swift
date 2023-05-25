@@ -13,7 +13,7 @@ class LawDatabase {
 
     private var connection: Connection
     var path: URL
-    var categories = [Int: TCategory]()
+    var categories = [UUID: TCategory]()
 
     init(path: URL) throws {
         self.path = path
@@ -58,7 +58,7 @@ class LawDatabase {
             guard let id = try? row.get(TLaw.categoryID) else {
                 continue
             }
-            guard let category = categories[id] else {
+            guard let category = categories[UUID.create(str: id)] else {
                 continue
             }
             ret.append(TLaw.create(row: row, category: category))

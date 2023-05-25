@@ -18,7 +18,7 @@ final class LawManager: ObservableObject {
     private var dbs = [LawDatabase]()
 
     private var categories = [TCategory]()
-    private var categoryMap = [Int: TCategory]()
+    private var categoryMap = [UUID: TCategory]()
     private var lawMap = [UUID: LawDatabase]()
 
     func reconnect() async {
@@ -62,14 +62,15 @@ final class LawManager: ObservableObject {
     func preflight() async {
         for db in dbs {
             self.categories.append(contentsOf: await db.getCategories())
+            self.linkLaws(laws: await db.getLaws(), db: db)
         }
         for category in categories {
-            categoryMap[category.tid] = category
+            categoryMap[category.id] = category
         }
     }
 
-    private func getCategoryID(name: String) -> Int? {
-        return self.categories.first { $0.name == name }?.tid
+    private func getCategoryID(name: String) -> UUID? {
+        return self.categories.first { $0.name == name }?.id
     }
 
     private func linkLaws(laws: [TLaw], db: LawDatabase) {
@@ -86,7 +87,6 @@ final class LawManager: ObservableObject {
         var ret = [TLaw]()
         for db in dbs {
             let laws = await db.getLaws(predicate: predicate)
-            self.linkLaws(laws: laws, db: db)
             ret.append(contentsOf: laws)
         }
         return ret
@@ -117,8 +117,8 @@ final class LawManager: ObservableObject {
         return await getLaws(categoryID: cateID)
     }
 
-    func getLaws(categoryID: Int) async -> [TLaw] {
-        return await queryLaws(predicate: TLaw.categoryID == categoryID)
+    func getLaws(categoryID: UUID) async -> [TLaw] {
+        return await queryLaws(predicate: TLaw.categoryID == categoryID.asDBString())
     }
     
     func getCases() async -> [TLaw] {
@@ -132,7 +132,7 @@ final class LawManager: ObservableObject {
         }
         var ret = [TCategory]()
         for category in categories {
-            let laws = await getLaws(categoryID: category.tid)
+            let laws = await getLaws(categoryID: category.id)
             ret.append(TCategory.create(old: category, laws: laws))
         }
         return ret
@@ -146,7 +146,7 @@ final class LawManager: ObservableObject {
             }
             .enumerated()
             .map {
-                return TCategory.create(tid: $0, level: $1.key, laws: $1.value)
+                return TCategory.create(id: UUID(), level: $1.key, laws: $1.value)
             }
     }
 
