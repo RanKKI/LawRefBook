@@ -38,12 +38,11 @@ extension DLCListView {
         }
 
         func refresh(force: Bool = false) {
-            if !force && !self.DLCs.isEmpty {
-                return
+            uiThread {
+                self.isLoading = true
             }
-            self.isLoading = true
             Task.init {
-                let items = await DLCManager.shared.fetch()
+                let items = await DLCManager.shared.fetch(force: force)
                 let arr = items.map {
                     DLCItem(
                         dlc: $0,
@@ -68,6 +67,7 @@ extension DLCListView {
                 await DLCManager.shared.download(item: item.dlc, progressHandler: ({ progress in
                     item.progress = progress
                 }))
+                item.state = .none
                 self.refresh()
             }
         }

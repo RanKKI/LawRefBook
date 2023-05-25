@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 
-
 struct DLCListView: View {
     
     @ObservedObject
@@ -9,22 +8,12 @@ struct DLCListView: View {
     
     @ObservedObject
     private var manager = DLCManager.shared
-    
+
     @State
     private var confirmToggler = false
 
     var body: some View {
         List {
-            Section {
-                if vm.isDeleteNoticeShow {
-                    Text("删除的 DLC 会在下次进入 App 时从本地删除。你可以再次点击，从而撤销删除。")
-                }
-            }
-            .listRowBackground(Color.clear)
-            .listRowSeparator(.hidden)
-            .multilineTextAlignment(.leading)
-            .font(.footnote)
-
             Section {
                 ForEach(vm.DLCs) { item in
                     DLCView(item: item, downloadAction: {

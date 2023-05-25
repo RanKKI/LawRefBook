@@ -67,13 +67,17 @@ class DLCManager: ObservableObject {
         }
         return ret
     }
+    
+    private var DLC_CACHE: [DLC] = []
+    func fetch(force: Bool) async -> [DLC] {
+        if force || DLC_CACHE.isEmpty {
+            do {
+                self.DLC_CACHE = try await self._fetch()
+            } catch {
 
-    func fetch() async -> [DLC] {
-        do {
-            return try await self._fetch()
-        } catch {
-            return []
+            }
         }
+        return self.DLC_CACHE
     }
 
     private func _download(item: DLC, progressHandler: @escaping ((Double) -> Void)) async throws {
