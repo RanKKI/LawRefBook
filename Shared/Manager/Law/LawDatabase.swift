@@ -13,7 +13,6 @@ class LawDatabase {
 
     private var connection: Connection
     var path: URL
-    var categories = [UUID: TCategory]()
 
     init(path: URL) throws {
         self.path = path
@@ -23,11 +22,22 @@ class LawDatabase {
     func disconnect() {
         sqlite3_close(self.connection.handle)
     }
+    
+    func getCategory(predicate: Expression<Bool>? = nil) async -> TCategory? {
+        return await self.getCategories(predicate: predicate).first
+    }
 
-    func getCategories() async -> [TCategory] {
+    func getCategories(predicate: Expression<Bool>? = nil) async -> [TCategory] {
         var rows = AnySequence<Row>([])
+
+        var query = TCategory.table
+        if let predicate = predicate {
+            query = query.filter(predicate)
+        }
+        query = query.order(TCategory.order)
+
         do {
-            rows = try connection.prepare(TCategory.table.order(TCategory.order))
+            rows = try connection.prepare(query)
         } catch {
             print(error.localizedDescription)
             return []
@@ -55,12 +65,8 @@ class LawDatabase {
 
         var ret = [TLaw]()
         for row in rows {
-            guard let id = try? row.get(TLaw.categoryID) else {
-                continue
-            }
-            guard let category = categories[UUID.create(str: id)] else {
-                continue
-            }
+            guard let categoryID = try? row.get(TLaw.categoryID) else { continue }
+            guard let category = await self.getCategory(predicate: TCategory.id == categoryID) else { continue }
             ret.append(TLaw.create(row: row, category: category))
         }
         return ret

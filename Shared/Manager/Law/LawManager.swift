@@ -18,7 +18,6 @@ final class LawManager: ObservableObject {
     private var dbs = [LawDatabase]()
 
     private var categories = [TCategory]()
-    private var categoryMap = [UUID: TCategory]()
     private var lawMap = [UUID: LawDatabase]()
 
     func reconnect() async {
@@ -27,7 +26,6 @@ final class LawManager: ObservableObject {
         }
         self.categories.removeAll()
         self.lawMap.removeAll()
-        self.categories.removeAll()
         self.dbs.forEach { $0.disconnect() }
         await self.connect()
         uiThread {
@@ -43,9 +41,6 @@ final class LawManager: ObservableObject {
             fatalError("unable to connect all sqlite file")
         }
         await self.preflight()
-        for db in dbs {
-            db.categories = categoryMap
-        }
         uiThread {
             self.isLoading = false
         }
@@ -62,10 +57,9 @@ final class LawManager: ObservableObject {
     func preflight() async {
         for db in dbs {
             self.categories.append(contentsOf: await db.getCategories())
-            self.linkLaws(laws: await db.getLaws(), db: db)
         }
-        for category in categories {
-            categoryMap[category.id] = category
+        for db in dbs {
+            self.linkLaws(laws: await db.getLaws(), db: db)
         }
     }
 
