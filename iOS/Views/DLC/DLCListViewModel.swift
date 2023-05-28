@@ -15,6 +15,10 @@ extension DLCListView {
         
         @Published
         var progress: Double = 0
+        
+        var canDownload: Bool {
+            self.state == .none || self.state == .failed || self.state == .upgradeable
+        }
 
         init(dlc: DLCManager.DLC, state: DLCManager.DownloadState) {
             self.dlc = dlc
@@ -58,19 +62,31 @@ extension DLCListView {
             }
         }
 
+        func downloadAll() {
+            Task.init {
+                for item in DLCs {
+                    guard item.canDownload else { continue }
+                    await downloadAsync(item: item)
+                }
+            }
+        }
+        
         func download(item: DLCItem) {
+            Task.init {
+                await downloadAsync(item: item)
+            }
+        }
+
+        private func downloadAsync(item: DLCItem) async {
             if DLCManager.shared.isDownloading {
                 return
             }
-            guard item.state != .ready else { return }
-            guard item.state != .downloading else { return }
-            item.state = .downloading
-            Task.init {
-                await DLCManager.shared.download(item: item.dlc, progressHandler: ({ progress in
-                    item.progress = progress
-                }))
-                self.refresh()
+            guard item.canDownload else { return }
+            uiThread {
+                item.state = .downloading
             }
+            await DLCManager.shared.download(item: item.dlc)
+            self.refresh()
         }
 
         func delete(item: DLCItem) {

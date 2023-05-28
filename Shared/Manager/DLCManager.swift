@@ -8,26 +8,6 @@
 import Foundation
 import SwiftUI
 
-class DLCDownloadDelegate: NSObject, URLSessionDelegate, URLSessionDownloadDelegate  {
-
-    var progressHandler: ((Double) -> Void)?
-
-    // Delegate method to track download progress
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print("Download completed \(location)")
-    }
-
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        // Calculate and report download progress
-        let progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
-        uiThread {
-            self.progressHandler?(progress)
-        }
-        print("progress update \(progress)")
-    }
-
-}
-
 enum DLCErrors: Error {
     case invalidURL(String)
     case invalidLocalPath(String)
@@ -37,9 +17,8 @@ enum DLCErrors: Error {
 class DLCManager: ObservableObject {
 
     static let shared = DLCManager()
-
-    @Published
-    var isDownloading = false
+    
+    var isDownloading: Bool { downloading.count > 0 }
     
     @AppStorage("baseUrl")
     var baseURL = DLCManager.GITHUB
@@ -47,7 +26,9 @@ class DLCManager: ObservableObject {
     /*
      DLC HASH -> Error
     */
-    var errorMap = [String: Bool]()
+    private var errorMap = [String: Bool]()
+    
+    private var downloading: Set<String> = .init()
 
     private func _fetch() async throws -> [DLC] {
         let url = baseURL.appendingPathComponent("dlc.json")
@@ -73,19 +54,17 @@ class DLCManager: ObservableObject {
         return self.DLC_CACHE
     }
 
-    private func _download(item: DLC, progressHandler: @escaping ((Double) -> Void)) async throws {
+    private func _download(item: DLC) async throws {
         guard let url = item.url else {
             throw DLCErrors.invalidURL(item.url?.description ?? "")
         }
         print("Downloading from \(url.description)")
-        let delegate = DLCDownloadDelegate()
-        delegate.progressHandler = progressHandler
 
         guard let localPath = LocalManager.shared.cacheFolder?.appendingPathComponent(item.hashZipFilename) else {
             throw DLCErrors.invalidLocalPath(item.hashZipFilename)
         }
 
-        let (data, resp) = try await URLSession.shared.data(from: url, delegate: delegate)
+        let (data, resp) = try await URLSession.shared.data(from: url)
         if let httpResp = resp as? HTTPURLResponse {
             if httpResp.statusCode != 200 {
                 throw DLCErrors.httpError("failed to download zip")
@@ -95,22 +74,16 @@ class DLCManager: ObservableObject {
         try data.write(to: localPath)
         try LocalManager.shared.unzipLaw(at: localPath, name: item.name, hash: item.hash, updateAt: item.update)
     }
-
-    func download(item: DLC, progressHandler: @escaping ((Double) -> Void)) async  {
-        uiThread {
-            self.isDownloading = true
-        }
-        defer {
-            uiThread {
-                self.isDownloading = false
-            }
-        }
+    
+    func download(item: DLC) async  {
+        self.downloading.insert(item.hash)
         if let path = item.localSqliteFile {
             LawManager.shared.closeDB(path: path)
         }
         do {
-            try await self._download(item: item, progressHandler: progressHandler)
+            try await self._download(item: item)
             self.invalidateLocalLaws()
+            self.downloading.remove(item.hash)
         } catch {
             print("Failed to download \(item.name)")
             print(error)
@@ -136,6 +109,11 @@ class DLCManager: ObservableObject {
         if self.errorMap[dlc.hash] != nil {
             return .failed
         }
+        
+        if self.downloading.contains(dlc.hash) {
+            return .downloading
+        }
+
         return .none
     }
 

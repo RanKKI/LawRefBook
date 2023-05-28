@@ -9,9 +9,6 @@ struct DLCListView: View {
     @ObservedObject
     private var manager = DLCManager.shared
 
-    @State
-    private var confirmToggler = false
-
     var body: some View {
         List {
             if vm.DLCs.isEmpty && vm.isLoading {
@@ -29,6 +26,12 @@ struct DLCListView: View {
                 Text("DLC")
             }
 //            DLCSource()
+            
+            Button {
+                vm.downloadAll()
+            } label: {
+                Text("下载全部")
+            }
         }
         .onAppear {
             vm.refresh();
@@ -38,7 +41,7 @@ struct DLCListView: View {
                 await manager.cleanup()
             }
         }
-        .disabled(vm.isLoading)
+        .disabled(vm.isLoading || manager.isDownloading)
         .onChange(of: manager.baseURL, perform: { newValue in
             vm.refresh();
         })
