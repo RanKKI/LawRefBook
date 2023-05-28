@@ -14,6 +14,9 @@ struct DLCListView: View {
 
     var body: some View {
         List {
+            if vm.DLCs.isEmpty && vm.isLoading {
+                ProgressView()
+            }
             Section {
                 ForEach(vm.DLCs) { item in
                     DLCView(item: item, downloadAction: {
@@ -25,7 +28,7 @@ struct DLCListView: View {
             } header: {
                 Text("DLC")
             }
-            DLCSource()
+//            DLCSource()
         }
         .onAppear {
             vm.refresh();

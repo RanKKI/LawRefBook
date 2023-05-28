@@ -1,12 +1,14 @@
 import Foundation
 
 extension DLCListView {
-    
+
     class DLCItem: ObservableObject, Identifiable {
         
         var id = UUID()
 
         var dlc: DLCManager.DLC
+        
+        @Published
         var state: DLCManager.DownloadState
         
         var name: String { dlc.name }
@@ -67,7 +69,6 @@ extension DLCListView {
                 await DLCManager.shared.download(item: item.dlc, progressHandler: ({ progress in
                     item.progress = progress
                 }))
-                item.state = .none
                 self.refresh()
             }
         }

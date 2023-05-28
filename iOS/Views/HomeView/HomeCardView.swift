@@ -119,8 +119,8 @@ struct HomeCardEffect: ViewModifier {
             .background {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(colorScheme == .dark ? .black : .white)
-                    .shadow(color: shadowColor.opacity(0.05), radius: 1, x: 0, y: 1)
-                    .shadow(color: shadowColor.opacity(0.12), radius: 1, x: 0, y: 2)
+                    .shadow(color: shadowColor.opacity(0.05), radius: 1, x: 0, y: 0)
+                    .shadow(color: shadowColor.opacity(0.12), radius: 1, x: 0, y: 0)
             }
     }
 }

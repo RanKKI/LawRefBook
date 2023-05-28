@@ -21,7 +21,9 @@ extension URL {
     var utf8Content: String? { content?.asUTF8String() }
     
     func remove() throws {
-        try FileManager.default.removeItem(at: self)
+        if self.isExists() {
+            try FileManager.default.removeItem(at: self)
+        }
     }
     
     func files() throws -> [URL] {
@@ -33,6 +35,9 @@ extension URL {
         return FileManager.default.fileExists(atPath: self.path)
     }
 
+    func createDirectory() throws {
+        try FileManager.default.createDirectory(at: self, withIntermediateDirectories: true)
+    }
 }
 
 extension URL: RawRepresentable {

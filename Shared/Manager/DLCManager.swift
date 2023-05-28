@@ -20,7 +20,9 @@ class DLCDownloadDelegate: NSObject, URLSessionDelegate, URLSessionDownloadDeleg
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         // Calculate and report download progress
         let progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
-        progressHandler?(progress)
+        uiThread {
+            self.progressHandler?(progress)
+        }
         print("progress update \(progress)")
     }
 
@@ -48,26 +50,17 @@ class DLCManager: ObservableObject {
     var errorMap = [String: Bool]()
 
     private func _fetch() async throws -> [DLC] {
-        let url = baseURL.appendingPathComponent("dlc.txt")
+        let url = baseURL.appendingPathComponent("dlc.json")
         let (data, resp) = try await URLSession.shared.data(from: url)
         if let httpResp = resp as? HTTPURLResponse {
             if httpResp.statusCode != 200 {
                 throw DLCErrors.httpError("failed to fetch dlc list")
             }
         }
-        let arr = data.asUTF8String().split(separator: "\n")
-        var ret = [DLC]()
-        for item in arr {
-            let components = item.split(separator: " ")
-            if components.count != 2 {
-                print("Failed to parse DLC \(item)")
-                continue
-            }
-            ret.append(.init(name: String(components.first!), hash: String(components.last!)))
-        }
-        return ret
+
+        return try JSONDecoder().decode([DLC].self, from: data)
     }
-    
+
     private var DLC_CACHE: [DLC] = []
     func fetch(force: Bool) async -> [DLC] {
         if force || DLC_CACHE.isEmpty {
@@ -100,7 +93,7 @@ class DLCManager: ObservableObject {
         }
 
         try data.write(to: localPath)
-        try LocalManager.shared.unzipLaw(at: localPath, name: item.name, hash: item.hash)
+        try LocalManager.shared.unzipLaw(at: localPath, name: item.name, hash: item.hash, updateAt: item.update)
     }
 
     func download(item: DLC, progressHandler: @escaping ((Double) -> Void)) async  {
@@ -117,7 +110,7 @@ class DLCManager: ObservableObject {
         }
         do {
             try await self._download(item: item, progressHandler: progressHandler)
-            self.needReconnect = true
+            self.invalidateLocalLaws()
         } catch {
             print("Failed to download \(item.name)")
             print(error)
@@ -128,41 +121,48 @@ class DLCManager: ObservableObject {
     func delete(dlc: DLC, revert: Bool = false) {
         self.errorMap.removeValue(forKey: dlc.hash)
         LocalManager.shared.deleteLaw(name: dlc.name, revert: revert)
+        self.invalidateLocalLaws()
     }
 
     func queryDLCState(dlc: DLC) -> DownloadState {
         if LocalManager.shared.isLawPendingDelete(name: dlc.name) {
             return .delete
         }
-        if let hash = LocalManager.shared.getLawHash(name: dlc.name) {
-            if hash.elementsEqual(dlc.hash) {
-                return .ready
-            } else {
-                return .upgradeable
-            }
+        
+        if let update = MetadataManager.shared.needUpdate(meta: dlc) {
+            return update ? .upgradeable : .ready
         }
+    
         if self.errorMap[dlc.hash] != nil {
             return .failed
         }
         return .none
     }
 
+    private var _local_laws_flag = false
+    private func invalidateLocalLaws() {
+        guard !self._local_laws_flag else { return }
+        self._local_laws_flag = true
+    }
     
-    private var needReconnect = false
+    private func validateLocalLaws() async {
+        guard self._local_laws_flag else { return }
+        await LawManager.shared.reconnect()
+    }
 
     func cleanup() async {
-        guard self.needReconnect else { return }
-        self.needReconnect = false
-        await LawManager.shared.reconnect()
+        await self.validateLocalLaws()
     }
 
 }
 
 extension DLCManager {
 
-    struct DLC {
+    struct DLC: IPackageMetadata {
+
         let name: String
         let hash: String
+        let update: Int
 
         var filename: String { "\(name).zip" }
         var hashZipFilename: String { "\(hash).zip" }
@@ -177,7 +177,7 @@ extension DLCManager {
         }
         
         var localSqliteFile: URL? {
-            LocalManager.shared.lawsFolder?.appendingPathComponent(name).appendingPathComponent(LocalManager.DB_NAME)
+            LocalManager.shared.lawsFolder?.appendingPathComponent(name).appendingPathComponent("db.sqlite3")
         }
     }
 

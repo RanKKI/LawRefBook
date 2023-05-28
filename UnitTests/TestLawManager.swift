@@ -26,7 +26,7 @@ class TestLawManager: XCTestCase {
             XCTAssertEqual(law.category.name, "经济法")
         }
 
-        for law in await LawManager.shared.getLaws(categoryID: 1) {
+        for law in await LawManager.shared.getLaws(categoryID: .create(str: "2686206d155643f080cbc60696e53fe5")) {
             XCTAssertEqual(law.category.name, "宪法相关法")
         }
     }

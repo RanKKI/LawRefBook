@@ -27,13 +27,15 @@ final class LawManager: ObservableObject {
         self.categories.removeAll()
         self.lawMap.removeAll()
         self.dbs.forEach { $0.disconnect() }
+        self.dbs = []
         await self.connect()
         uiThread {
             self.isLoading = false
         }
     }
-    
+
     func connect() async {
+        LocalManager.shared.createFolders()
         do {
             dbs = try LocalManager.shared.getDatabaseFiles()
                 .map { try LawDatabase(path: $0) }
@@ -45,7 +47,7 @@ final class LawManager: ObservableObject {
             self.isLoading = false
         }
     }
-    
+
     func closeDB(path: URL) {
         guard let idx = self.dbs.firstIndex(where: { $0.path == path }) else { return }
         guard self.dbs[idx].path == path else { return }
