@@ -11,6 +11,8 @@ enum PurchaseProduct: String, CaseIterable {
     case Cup_of_Milk = "buy_me_a_coffee_1"
     case Cup_of_Milk_Tea = "buy_me_a_coffee_2"
     case Cup_of_Coffee = "buy_me_a_coffee_3"
+    case Chat_Monthly_Sub = "monthly_chat"
+    case Chat_Count = "chat_count"
 }
 
 class InAppPurchaseHandler: NSObject {
@@ -21,7 +23,7 @@ class InAppPurchaseHandler: NSObject {
     fileprivate var productsRequest = SKProductsRequest()
     fileprivate var productToPurchase: SKProduct?
     fileprivate var fetchProductcompletion: (([SKProduct]) -> Void)?
-    fileprivate var purchaseProductcompletion: ((String, SKProduct?, SKPaymentTransaction?) -> Void)?
+    fileprivate var purchaseProductcompletion: ((Bool, String?)->Void)?
 
     private func canMakePurchases() -> Bool {
         SKPaymentQueue.canMakePayments()
@@ -30,7 +32,7 @@ class InAppPurchaseHandler: NSObject {
 
 // MARK: Public methods
 extension InAppPurchaseHandler {
-    func purchase(product: SKProduct, completion: @escaping ((String, SKProduct?, SKPaymentTransaction?) -> Void)) {
+    func purchase(product: SKProduct, completion: @escaping ((Bool, String?)->Void)) {
         purchaseProductcompletion = completion
         productToPurchase = product
 
@@ -40,8 +42,22 @@ extension InAppPurchaseHandler {
             SKPaymentQueue.default().add(payment)
             productID = product.productIdentifier
         } else {
-            completion("In app purchases are disabled", nil, nil)
+            completion(false, "In app purchases are disabled")
         }
+    }
+    
+    func restore(product: SKProduct, completion: @escaping ((Bool, String?)->Void)) {
+        purchaseProductcompletion = completion
+
+        if canMakePurchases() {
+            let payment = SKPayment(product: product)
+            SKPaymentQueue.default().add(self)
+            SKPaymentQueue.default().add(payment)
+            SKPaymentQueue.default().restoreCompletedTransactions()
+        } else {
+            completion(false, "In app purchases are disabled")
+        }
+
     }
 
     func fetchAvailableProducts(completion: @escaping (([SKProduct]) -> Void)) {
@@ -75,7 +91,7 @@ extension InAppPurchaseHandler: SKProductsRequestDelegate, SKPaymentTransactionO
                 SKPaymentQueue.default().finishTransaction(transaction)
 
                 if let completion = purchaseProductcompletion {
-                    completion(InAppPurchaseMessages.failed.rawValue, nil, nil)
+                    completion(false, transaction.error?.localizedDescription)
                 }
                 break
             case .purchased:
@@ -83,7 +99,7 @@ extension InAppPurchaseHandler: SKProductsRequestDelegate, SKPaymentTransactionO
                 SKPaymentQueue.default().finishTransaction(transaction)
 
                 if let completion = purchaseProductcompletion {
-                    completion(InAppPurchaseMessages.purchased.rawValue, productToPurchase, transaction)
+                    completion(true, nil)
                 }
                 break
             default:

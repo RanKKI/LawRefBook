@@ -27,3 +27,16 @@ extension UUID {
     }
 
 }
+
+
+extension UUID: RawRepresentable{
+    public init?(rawValue: String) {
+        print("recover uuid \(rawValue)")
+        self = UUID.create(str: rawValue)
+    }
+
+    public var rawValue: String {
+        print("save uuid \(asDBString())")
+        return asDBString()
+    }
+}

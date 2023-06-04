@@ -43,7 +43,7 @@ private struct IAPItemView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             if let product = vm.getProduct(product: item.product) {
-                vm.purchase(product: product)
+                vm.purchase(product: product) {}
             }
         }
     }

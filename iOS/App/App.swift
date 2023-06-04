@@ -28,6 +28,9 @@ struct MainApp: App {
             .phoneOnlyStackNavigationView()
             .task {
                 IAPManager.shared.loadProducts()
+                if Preference.shared.id.isEmpty {
+                    Preference.shared.id = UUID().uuidString
+                }
             }
         }
     }

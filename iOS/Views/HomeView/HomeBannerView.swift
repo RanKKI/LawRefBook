@@ -11,11 +11,26 @@ import SwiftUI
 
 struct HomeBannerView: View {
     
+    
+    @State
+    var chatVM: ChatView.VM
+
+    init() {
+        self.chatVM = .init()
+    }
+    
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 8)
+            NavigationLink {
+                ChatView(vm: chatVM)
+                    .navigationBarTitle("Chat", displayMode: .inline)
+            } label: {
+                Image("GPT_Banner")
+                    .resizable(resizingMode: .stretch)
+                    .scaledToFit()
+            }
         }
-        .frame(height: 120)
+        .modifier(HomeCardEffect())
         .padding([.leading, .trailing], 16)
     }
     

@@ -29,6 +29,12 @@ class Preference: ObservableObject {
 
     @AppStorage("font_line_spacing")
     var lineSpacing: Int = FontLineSpacingDefault
+    
+    @AppStorage("id")
+    var id: String = ""
+    
+    @AppStorage("_chat_count_left")
+    var chatCount: Int = 0
 
     func resetFont() {
         self.contentFontSize = FontSizeDefault

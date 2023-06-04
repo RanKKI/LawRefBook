@@ -53,6 +53,11 @@
 		903F532B280E5CA100D4523D /* InAppPurchaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532A280E5CA100D4523D /* InAppPurchaseHandler.swift */; };
 		903F532D280E5D4600D4523D /* InAppPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532C280E5D4600D4523D /* InAppPurchaseView.swift */; };
 		903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532E280E5DC000D4523D /* InAppPurchaseViewModel.swift */; };
+		9047E80B29B0557300BC02E4 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E80A29B0557300BC02E4 /* APIManager.swift */; };
+		9047E80E29B0561200BC02E4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E80D29B0561200BC02E4 /* ChatView.swift */; };
+		9047E81029B056BF00BC02E4 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */; };
+		9047E81229B062B100BC02E4 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E81129B062B100BC02E4 /* ChatMessage.swift */; };
+		9047E81629B07C5300BC02E4 /* ChatSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E81529B07C5300BC02E4 /* ChatSubscriptionView.swift */; };
 		905B83D627F83BFD00F951E9 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905B83D527F83BFD00F951E9 /* ImageUtils.swift */; };
 		906E36A428053BF400A5CC39 /* Safari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906E36A328053BF400A5CC39 /* Safari.swift */; };
 		9080B83D2A20A0CB00F45A9B /* PackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9080B83C2A20A0CB00F45A9B /* PackageManager.swift */; };
@@ -185,6 +190,11 @@
 		903F532A280E5CA100D4523D /* InAppPurchaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseHandler.swift; sourceTree = "<group>"; };
 		903F532C280E5D4600D4523D /* InAppPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseView.swift; sourceTree = "<group>"; };
 		903F532E280E5DC000D4523D /* InAppPurchaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseViewModel.swift; sourceTree = "<group>"; };
+		9047E80A29B0557300BC02E4 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		9047E80D29B0561200BC02E4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		9047E81129B062B100BC02E4 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		9047E81529B07C5300BC02E4 /* ChatSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSubscriptionView.swift; sourceTree = "<group>"; };
 		905B83D527F83BFD00F951E9 /* ImageUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
 		906E36A328053BF400A5CC39 /* Safari.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Safari.swift; sourceTree = "<group>"; };
 		9080B83C2A20A0CB00F45A9B /* PackageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageManager.swift; sourceTree = "<group>"; };
@@ -377,6 +387,7 @@
 				90E835E7293C382B00519E23 /* SearchManager.swift */,
 				9093C3562A1DA9F900D182E9 /* DLCManager.swift */,
 				9080B83E2A20A15500F45A9B /* MetadataManager.swift */,
+				9047E80A29B0557300BC02E4 /* APIManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -458,6 +469,7 @@
 				90E8358E2931FF1D00519E23 /* LawContent */,
 				9039916E292A3C3D00CFC975 /* Preference */,
 				90E835DF2938D36600519E23 /* Sharing */,
+				9047E80C29B055BE00BC02E4 /* ChatGPT */,
 				90E835C02938324E00519E23 /* Components */,
 				9093C34F2A1DA9CC00D182E9 /* DLC */,
 			);
@@ -515,6 +527,16 @@
 				9093C3512A1DA9CC00D182E9 /* DLCView.swift */,
 			);
 			path = DLC;
+			sourceTree = "<group>";
+		};
+		9047E80C29B055BE00BC02E4 /* ChatGPT */ = {
+			isa = PBXGroup;
+			children = (
+				9047E80D29B0561200BC02E4 /* ChatView.swift */,
+				9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */,
+				9047E81529B07C5300BC02E4 /* ChatSubscriptionView.swift */,
+			);
+			path = ChatGPT;
 			sourceTree = "<group>";
 		};
 		90E8356C2931AEDB00519E23 /* Search */ = {
@@ -605,6 +627,7 @@
 				90E835A82932FBED00519E23 /* LawContent.swift */,
 				90E835AA2932FD2900519E23 /* LawInfo.swift */,
 				90E835AC2932FD6B00519E23 /* LawTOC.swift */,
+				9047E81129B062B100BC02E4 /* ChatMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -837,6 +860,7 @@
 				901D199F2847565C00999AE6 /* QRCode.swift in Sources */,
 				90E835DE2938D30A00519E23 /* ShareButton.swift in Sources */,
 				90E8357B2931CD6500519E23 /* String.swift in Sources */,
+				9047E80E29B0561200BC02E4 /* ChatView.swift in Sources */,
 				90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */,
 				16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */,
 				90E835C42938334700519E23 /* UIScreen.swift in Sources */,
@@ -846,6 +870,7 @@
 				90F7F99929C6F18E00F9FEC2 /* HomeView.swift in Sources */,
 				9080B83D2A20A0CB00F45A9B /* PackageManager.swift in Sources */,
 				90E835792931BB8E00519E23 /* SearchPayload.swift in Sources */,
+				9047E80B29B0557300BC02E4 /* APIManager.swift in Sources */,
 				90E835DC2938D2BE00519E23 /* CopyLawTextButton.swift in Sources */,
 				9013C3772A0B30F10066E801 /* FlexibleLayout.swift in Sources */,
 				90E835882931CE5700519E23 /* Array.swift in Sources */,
@@ -853,6 +878,7 @@
 				90E835D82938CCF200519E23 /* FavoriteFolderSelectionView.swift in Sources */,
 				90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */,
 				90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */,
+				9047E81629B07C5300BC02E4 /* ChatSubscriptionView.swift in Sources */,
 				90E8359B2932017100519E23 /* Text.swift in Sources */,
 				903F532B280E5CA100D4523D /* InAppPurchaseHandler.swift in Sources */,
 				90399182292B97A100CFC975 /* LawListSubFolderView.swift in Sources */,
@@ -870,6 +896,7 @@
 				9039917E292A403300CFC975 /* LawLinkView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,
 				90F5CEFD28B21E630003752E /* TableView.swift in Sources */,
+				9047E81229B062B100BC02E4 /* ChatMessage.swift in Sources */,
 				90E835822931CDF900519E23 /* UUID.swift in Sources */,
 				90D4CD9F2862BAE0006DB8AC /* ShareLawEditView.swift in Sources */,
 				9039915A292A1E3F00CFC975 /* LocalManager.swift in Sources */,
@@ -899,6 +926,7 @@
 				90D4CD9D2862BA1B006DB8AC /* ShareLawLightConfirmView.swift in Sources */,
 				9016D22427E61BEA0027D69D /* Alert.swift in Sources */,
 				90D4CDA12862C8DE006DB8AC /* CheckBoxView.swift in Sources */,
+				9047E81029B056BF00BC02E4 /* ChatViewModel.swift in Sources */,
 				90E835A62932FB9A00519E23 /* LawContentPraser.swift in Sources */,
 				90E835A92932FBED00519E23 /* LawContent.swift in Sources */,
 				90A22C2A281FCFEC00B5DC24 /* TCategory.swift in Sources */,
@@ -1088,7 +1116,7 @@
 				CODE_SIGN_ENTITLEMENTS = iOS/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 166;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
 				ENABLE_PREVIEWS = YES;
@@ -1107,7 +1135,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.4.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1126,9 +1154,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOS/Resources/RefBook.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 166;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
 				ENABLE_PREVIEWS = YES;
@@ -1147,10 +1175,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.4.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore xyz.rankki.law-handbook";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
