@@ -11,6 +11,9 @@ struct DLCListView: View {
     
     @State
     private var getProToggle = false;
+    
+    @Environment(\.dismiss)
+    private var dismiss
 
     var body: some View {
         List {
@@ -44,7 +47,11 @@ struct DLCListView: View {
             }
         }
         .sheet(isPresented: $getProToggle) {
-            GetProView()
+            GetProView() { val in
+                if !val {
+                    dismiss()
+                }
+            }
         }
         .onDisappear {
             Task.init {

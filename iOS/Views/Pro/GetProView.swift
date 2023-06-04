@@ -23,6 +23,8 @@ struct GetProView: View {
     
     @Environment(\.dismiss)
     private var dismiss
+    
+    var action: ((Bool) -> Void)?
 
     var body: some View {
         VStack(spacing: 24) {
@@ -39,6 +41,7 @@ struct GetProView: View {
                 Spacer()
                 Button {
                     dismiss()
+                    action?(false)
                 } label: {
                     Image(systemName: "xmark")
                 }
@@ -49,6 +52,7 @@ struct GetProView: View {
                 Button {
                     iap.purchase(item: .Chat_Count) {
                         preference.chatCount += COUNT_EACH_PURCHASE
+                        action?(true)
                     }
                 } label: {
                     VStack {
@@ -66,6 +70,7 @@ struct GetProView: View {
                 Button {
                     iap.restoreProducts(product: .Pro) {
                         dismiss()
+                        action?(true)
                     }
                 } label: {
                     Text("恢复购买")
