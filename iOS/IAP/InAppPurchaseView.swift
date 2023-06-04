@@ -20,7 +20,7 @@ private struct IAPItemView: View {
     var item: Product
 
     @ObservedObject
-    var vm = IAPManager.shared
+    var iap = IAPManager.shared
 
     var body: some View {
         VStack(alignment: .center) {
@@ -29,11 +29,11 @@ private struct IAPItemView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 55, height: 55)
-                if vm.isLoading {
+                if iap.isLoading {
                     ProgressView()
                 }
             }
-            if let price = vm.getProductPrice(product: item.product) {
+            if let price = iap.getProductPrice(product: item.product) {
                 Text(price)
                     .font(.caption)
             } else {
@@ -42,8 +42,8 @@ private struct IAPItemView: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            if let product = vm.getProduct(product: item.product) {
-                vm.purchase(product: product) {}
+            if let product = iap.getProduct(product: item.product) {
+                iap.purchase(product: product) {}
             }
         }
     }

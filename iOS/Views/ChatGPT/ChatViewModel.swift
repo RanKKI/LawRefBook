@@ -21,9 +21,7 @@ extension ChatView {
         var newMsg = false
         
         init() {
-            if Preference.shared.chatCount <= 0 {
-                Preference.shared.chatCount = 5
-            }
+
         }
         
         func submit(text: String) {

@@ -32,7 +32,7 @@ class IAPManager: ObservableObject {
     }
     
     func refreshPurchased() {
-        let arr: [PurchaseProduct] = [.Chat_Monthly_Sub]
+        let arr: [PurchaseProduct] = [.Pro]
         arr.forEach { product in
             self.restoreProducts(product: product) {
                 print("restore \(product) success ")

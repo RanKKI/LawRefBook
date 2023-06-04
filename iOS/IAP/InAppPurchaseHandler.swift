@@ -15,8 +15,6 @@ enum PurchaseProduct: String, CaseIterable {
     case Cup_of_Milk = "buy_me_a_coffee_1"
     case Cup_of_Milk_Tea = "buy_me_a_coffee_2"
     case Cup_of_Coffee = "buy_me_a_coffee_3"
-    case Chat_Monthly_Sub = "monthly_chat"
-    case Chat_Count = "chat_count"
     case Pro = "pro_version";
 }
 

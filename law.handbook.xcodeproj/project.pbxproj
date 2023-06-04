@@ -52,7 +52,7 @@
 		903F5328280E5C6D00D4523D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903F5327280E5C6D00D4523D /* StoreKit.framework */; };
 		903F532B280E5CA100D4523D /* InAppPurchaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532A280E5CA100D4523D /* InAppPurchaseHandler.swift */; };
 		903F532D280E5D4600D4523D /* InAppPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532C280E5D4600D4523D /* InAppPurchaseView.swift */; };
-		903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532E280E5DC000D4523D /* InAppPurchaseViewModel.swift */; };
+		903F532F280E5DC000D4523D /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F532E280E5DC000D4523D /* IAPManager.swift */; };
 		9047E80B29B0557300BC02E4 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E80A29B0557300BC02E4 /* APIManager.swift */; };
 		9047E80E29B0561200BC02E4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E80D29B0561200BC02E4 /* ChatView.swift */; };
 		9047E81029B056BF00BC02E4 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */; };
@@ -192,7 +192,7 @@
 		903F5327280E5C6D00D4523D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		903F532A280E5CA100D4523D /* InAppPurchaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseHandler.swift; sourceTree = "<group>"; };
 		903F532C280E5D4600D4523D /* InAppPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseView.swift; sourceTree = "<group>"; };
-		903F532E280E5DC000D4523D /* InAppPurchaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseViewModel.swift; sourceTree = "<group>"; };
+		903F532E280E5DC000D4523D /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		9047E80A29B0557300BC02E4 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		9047E80D29B0561200BC02E4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
@@ -387,6 +387,7 @@
 				90E835B02932FF9000519E23 /* Law */,
 				90E835A42932FB8F00519E23 /* LawContent */,
 				903F5325280E555200D4523D /* Persistence.swift */,
+				903F532E280E5DC000D4523D /* IAPManager.swift */,
 				90399159292A1E3F00CFC975 /* LocalManager.swift */,
 				9080B83C2A20A0CB00F45A9B /* PackageManager.swift */,
 				90399170292A3C7D00CFC975 /* Preference.swift */,
@@ -521,7 +522,6 @@
 			children = (
 				903F532A280E5CA100D4523D /* InAppPurchaseHandler.swift */,
 				903F532C280E5D4600D4523D /* InAppPurchaseView.swift */,
-				903F532E280E5DC000D4523D /* InAppPurchaseViewModel.swift */,
 			);
 			path = IAP;
 			sourceTree = "<group>";
@@ -910,7 +910,7 @@
 				90E83597293200C000519E23 /* LawStatusView.swift in Sources */,
 				90E8358A2931CE7100519E23 /* Date.swift in Sources */,
 				90F7F99F29C7269700F9FEC2 /* HomeCasesView.swift in Sources */,
-				903F532F280E5DC000D4523D /* InAppPurchaseViewModel.swift in Sources */,
+				903F532F280E5DC000D4523D /* IAPManager.swift in Sources */,
 				90E835922931FF7700519E23 /* LawContentViewModel.swift in Sources */,
 				9039917E292A403300CFC975 /* LawLinkView.swift in Sources */,
 				900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */,

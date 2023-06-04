@@ -50,8 +50,8 @@ struct GetProView: View {
             FeatureCards()
             VStack {
                 Button {
-                    iap.purchase(item: .Chat_Count) {
-                        preference.chatCount += COUNT_EACH_PURCHASE
+                    iap.purchase(item: .Pro) {
+                        UserDefaults.standard.setValue(true, forKey: PurchaseProduct.Pro.rawValue)
                         action?(true)
                     }
                 } label: {
