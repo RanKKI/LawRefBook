@@ -31,7 +31,14 @@ struct FeatureCards: View {
     
     var body: some View {
         VStack {
-            FeatureCard(label: "Pro 功能", items: proItems)
+            VStack(spacing: 0) {
+                FeatureCard(label: "Pro 功能", items: proItems)
+                Text("内购（IAP）收入将为我们的开发者账号、服务器、第三方 API 费用及其他日常运营提供支持")
+                    .padding([.leading, .trailing], 16)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             FeatureCard(label: "免费版功能", items: freeItems)
         }
     }
@@ -51,7 +58,6 @@ struct FeatureCard: View {
                     .frame(width: 36)
                 Text(label)
                     .bold()
-                    .font(.title3)
                 Spacer()
             }
             ForEach(items) { item in

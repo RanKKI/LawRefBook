@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WhatsNewKit
 
 struct ContentView: View {
 
@@ -15,6 +16,9 @@ struct ContentView: View {
 
     @Environment(\.managedObjectContext)
     private var moc
+
+    @Environment(\.whatsNew)
+    private var whatsNew: WhatsNewEnvironment
 
     var body: some View {
         Group {
@@ -25,6 +29,7 @@ struct ContentView: View {
                 HomeView()
             }
         }
+        .whatsNewSheet()
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 if UIDevice.isIpad {
@@ -36,6 +41,9 @@ struct ContentView: View {
                     sheetManager.state = .setting
                 }
             }
+        }
+        .onAppear {
+            print(whatsNew.currentVersion)
         }
         .navigationTitle("中国法律")
         .sheet(isPresented: $sheetManager.isShowingSheet) {

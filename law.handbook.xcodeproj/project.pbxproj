@@ -69,6 +69,7 @@
 		909AE295281F6B84008679C4 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 909AE294281F6B84008679C4 /* SQLite */; };
 		909C8D0F2A2C7893008D26FA /* GetProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909C8D0E2A2C7893008D26FA /* GetProView.swift */; };
 		909C8D112A2C91D8008D26FA /* FeatureCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909C8D102A2C91D8008D26FA /* FeatureCard.swift */; };
+		909C8D142A2C9BCA008D26FA /* WhatsNewKit in Frameworks */ = {isa = PBXBuildFile; productRef = 909C8D132A2C9BCA008D26FA /* WhatsNewKit */; };
 		90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C26281FCFB300B5DC24 /* TLaw.swift */; };
 		90A22C2A281FCFEC00B5DC24 /* TCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C29281FCFEC00B5DC24 /* TCategory.swift */; };
 		90A22C2C2820DDBD00B5DC24 /* TestLawManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C2B2820DDBD00B5DC24 /* TestLawManager.swift */; };
@@ -286,6 +287,7 @@
 			files = (
 				909AE295281F6B84008679C4 /* SQLite in Frameworks */,
 				90AC432528124E8600AFECB8 /* SPAlert in Frameworks */,
+				909C8D142A2C9BCA008D26FA /* WhatsNewKit in Frameworks */,
 				90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */,
 				903F5328280E5C6D00D4523D /* StoreKit.framework in Frameworks */,
 				90399161292A341500CFC975 /* Zip in Frameworks */,
@@ -761,6 +763,7 @@
 				90AC432428124E8600AFECB8 /* SPAlert */,
 				909AE294281F6B84008679C4 /* SQLite */,
 				90399160292A341500CFC975 /* Zip */,
+				909C8D132A2C9BCA008D26FA /* WhatsNewKit */,
 			);
 			productName = law.handbook;
 			productReference = 902DAE5427C7CBC100926036 /* 中国法律.app */;
@@ -797,6 +800,7 @@
 				90AC432328124E8600AFECB8 /* XCRemoteSwiftPackageReference "SPAlert" */,
 				909AE293281F6B84008679C4 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				9039915F292A341500CFC975 /* XCRemoteSwiftPackageReference "Zip" */,
+				909C8D122A2C9BCA008D26FA /* XCRemoteSwiftPackageReference "WhatsNewKit" */,
 			);
 			productRefGroup = 902DAE5527C7CBC100926036 /* Products */;
 			projectDirPath = "";
@@ -1151,7 +1155,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1191,7 +1195,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1253,6 +1257,14 @@
 				kind = branch;
 			};
 		};
+		909C8D122A2C9BCA008D26FA /* XCRemoteSwiftPackageReference "WhatsNewKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/WhatsNewKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		90AC432328124E8600AFECB8 /* XCRemoteSwiftPackageReference "SPAlert" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ivanvorobei/SPAlert";
@@ -1273,6 +1285,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 909AE293281F6B84008679C4 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
+		};
+		909C8D132A2C9BCA008D26FA /* WhatsNewKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 909C8D122A2C9BCA008D26FA /* XCRemoteSwiftPackageReference "WhatsNewKit" */;
+			productName = WhatsNewKit;
 		};
 		90AC432428124E8600AFECB8 /* SPAlert */ = {
 			isa = XCSwiftPackageProductDependency;

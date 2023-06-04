@@ -10,7 +10,7 @@ import SwiftUI
 
 private var buy_notes = """
 一次性付款即可享受到现在和以后所有 Pro 功能。
-如果你曾购买过 Pro，请点击**恢复购买**（不会产生任何费用）
+如果你曾购买过 Pro，请点击「恢复购买」（不会产生任何费用）
 """
 
 struct GetProView: View {
