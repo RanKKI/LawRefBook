@@ -42,15 +42,9 @@ struct ChatView: View {
     @ObservedObject
     var vm: VM
     
-    @ObservedObject
-    private var iap = IAPManager.shared
-    
     @State
-    private var infoToogle = false
+    var getProToggle = false
     
-    @ObservedObject
-    private var preference = Preference.shared
-
     var body: some View {
         VStack(spacing: 0) {
             if vm.messages.isEmpty {
@@ -76,42 +70,19 @@ struct ChatView: View {
                     }
                 }
             }
-
-            if preference.chatCount <= 0 {
-                VStack {
-                    Text("如果你觉得这个功能还算有用，支持下作者")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                        .padding([.top, .bottom], 8)
-                    Button {
-                        iap.purchase(item: .Chat_Count) {
-                            preference.chatCount += COUNT_EACH_PURCHASE
-                        }
-                    } label: {
-                        HStack(spacing: 0) {
-                            Text("支持作者")
-                                .padding([.leading, .trailing], 12)
-                                .padding([.top, .bottom], 4)
-                            if iap.isLoading {
-                                ProgressView()
-                            }
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    if let price = iap.getProductPrice(product: .Chat_Count) {
-                        Text("\(price)")
-                            .font(.caption)
-                    } else {
-                        Text("...")
-                            .font(.caption)
-                    }
-                }
-            } else {
+            if IsProUnlocked {
                 ChatInputView(isLoading: $vm.isLoading) { text in
                     vm.submit(text: text)
-                    preference.chatCount -= 1
                 }
             }
+        }
+        .onAppear {
+            if !IsProUnlocked {
+                getProToggle.toggle()
+            }
+        }
+        .sheet(isPresented: $getProToggle) {
+            GetProView()
         }
     }
 }

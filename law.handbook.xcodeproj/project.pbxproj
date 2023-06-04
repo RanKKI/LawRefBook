@@ -67,6 +67,8 @@
 		9093C3552A1DA9CC00D182E9 /* DLCListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093C3522A1DA9CC00D182E9 /* DLCListViewModel.swift */; };
 		9093C3572A1DA9F900D182E9 /* DLCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093C3562A1DA9F900D182E9 /* DLCManager.swift */; };
 		909AE295281F6B84008679C4 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 909AE294281F6B84008679C4 /* SQLite */; };
+		909C8D0F2A2C7893008D26FA /* GetProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909C8D0E2A2C7893008D26FA /* GetProView.swift */; };
+		909C8D112A2C91D8008D26FA /* FeatureCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909C8D102A2C91D8008D26FA /* FeatureCard.swift */; };
 		90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C26281FCFB300B5DC24 /* TLaw.swift */; };
 		90A22C2A281FCFEC00B5DC24 /* TCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C29281FCFEC00B5DC24 /* TCategory.swift */; };
 		90A22C2C2820DDBD00B5DC24 /* TestLawManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22C2B2820DDBD00B5DC24 /* TestLawManager.swift */; };
@@ -203,6 +205,8 @@
 		9093C3512A1DA9CC00D182E9 /* DLCView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLCView.swift; sourceTree = "<group>"; };
 		9093C3522A1DA9CC00D182E9 /* DLCListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLCListViewModel.swift; sourceTree = "<group>"; };
 		9093C3562A1DA9F900D182E9 /* DLCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLCManager.swift; sourceTree = "<group>"; };
+		909C8D0E2A2C7893008D26FA /* GetProView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProView.swift; sourceTree = "<group>"; };
+		909C8D102A2C91D8008D26FA /* FeatureCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCard.swift; sourceTree = "<group>"; };
 		90A22C26281FCFB300B5DC24 /* TLaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLaw.swift; sourceTree = "<group>"; };
 		90A22C29281FCFEC00B5DC24 /* TCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCategory.swift; sourceTree = "<group>"; };
 		90A22C2B2820DDBD00B5DC24 /* TestLawManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLawManager.swift; sourceTree = "<group>"; };
@@ -471,6 +475,7 @@
 				90E835DF2938D36600519E23 /* Sharing */,
 				9047E80C29B055BE00BC02E4 /* ChatGPT */,
 				90E835C02938324E00519E23 /* Components */,
+				909C8D0D2A2C7851008D26FA /* Pro */,
 				9093C34F2A1DA9CC00D182E9 /* DLC */,
 			);
 			path = Views;
@@ -519,6 +524,16 @@
 			path = IAP;
 			sourceTree = "<group>";
 		};
+		9047E80C29B055BE00BC02E4 /* ChatGPT */ = {
+			isa = PBXGroup;
+			children = (
+				9047E80D29B0561200BC02E4 /* ChatView.swift */,
+				9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */,
+				9047E81529B07C5300BC02E4 /* ChatSubscriptionView.swift */,
+			);
+			path = ChatGPT;
+			sourceTree = "<group>";
+		};
 		9093C34F2A1DA9CC00D182E9 /* DLC */ = {
 			isa = PBXGroup;
 			children = (
@@ -529,14 +544,13 @@
 			path = DLC;
 			sourceTree = "<group>";
 		};
-		9047E80C29B055BE00BC02E4 /* ChatGPT */ = {
+		909C8D0D2A2C7851008D26FA /* Pro */ = {
 			isa = PBXGroup;
 			children = (
-				9047E80D29B0561200BC02E4 /* ChatView.swift */,
-				9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */,
-				9047E81529B07C5300BC02E4 /* ChatSubscriptionView.swift */,
+				909C8D0E2A2C7893008D26FA /* GetProView.swift */,
+				909C8D102A2C91D8008D26FA /* FeatureCard.swift */,
 			);
-			path = ChatGPT;
+			path = Pro;
 			sourceTree = "<group>";
 		};
 		90E8356C2931AEDB00519E23 /* Search */ = {
@@ -886,6 +900,7 @@
 				90E835D62938A64F00519E23 /* FavoriteFolderCreateButton.swift in Sources */,
 				90399179292A3F0C00CFC975 /* LawListContentViewModel.swift in Sources */,
 				90E835AF2932FF5F00519E23 /* LawDatabase.swift in Sources */,
+				909C8D112A2C91D8008D26FA /* FeatureCard.swift in Sources */,
 				903F5326280E555200D4523D /* Persistence.swift in Sources */,
 				90E835CD2938368D00519E23 /* FavoriteContentView.swift in Sources */,
 				90E83597293200C000519E23 /* LawStatusView.swift in Sources */,
@@ -912,6 +927,7 @@
 				90E835802931CDCF00519E23 /* Application.swift in Sources */,
 				90E835C9293834B400519E23 /* FavoriteView.swift in Sources */,
 				1632AD3527D5CAD200B42167 /* LawTableOfContentView.swift in Sources */,
+				909C8D0F2A2C7893008D26FA /* GetProView.swift in Sources */,
 				90399168292A3A4C00CFC975 /* Delegate.swift in Sources */,
 				90E835E12939B1AF00519E23 /* CoreDataModel.swift in Sources */,
 				9093C3532A1DA9CC00D182E9 /* DLCListView.swift in Sources */,

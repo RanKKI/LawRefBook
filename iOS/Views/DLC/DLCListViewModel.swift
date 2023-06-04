@@ -78,6 +78,9 @@ extension DLCListView {
         }
 
         private func downloadAsync(item: DLCItem) async {
+            if !IsProUnlocked {
+                return
+            }
             if DLCManager.shared.isDownloading {
                 return
             }

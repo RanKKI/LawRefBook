@@ -8,6 +8,9 @@ struct DLCListView: View {
     
     @ObservedObject
     private var manager = DLCManager.shared
+    
+    @State
+    private var getProToggle = false;
 
     var body: some View {
         List {
@@ -26,15 +29,22 @@ struct DLCListView: View {
                 Text("DLC")
             }
 //            DLCSource()
-            
+
             Button {
                 vm.downloadAll()
             } label: {
                 Text("下载全部")
             }
         }
+        .disabled(!IsProUnlocked)
         .onAppear {
             vm.refresh();
+            if !IsProUnlocked {
+                getProToggle.toggle()
+            }
+        }
+        .sheet(isPresented: $getProToggle) {
+            GetProView()
         }
         .onDisappear {
             Task.init {

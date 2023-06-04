@@ -1,5 +1,9 @@
 import StoreKit
 
+var IsProUnlocked: Bool {
+    UserDefaults.standard.bool(forKey: PurchaseProduct.Pro.rawValue)
+}
+
 // MARK: InAppPurchaseMessages
 enum InAppPurchaseMessages: String {
     case purchased = "You payment has been successfully processed."
@@ -13,6 +17,7 @@ enum PurchaseProduct: String, CaseIterable {
     case Cup_of_Coffee = "buy_me_a_coffee_3"
     case Chat_Monthly_Sub = "monthly_chat"
     case Chat_Count = "chat_count"
+    case Pro = "pro_version";
 }
 
 class InAppPurchaseHandler: NSObject {
