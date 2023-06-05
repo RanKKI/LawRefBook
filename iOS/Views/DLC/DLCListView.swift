@@ -73,7 +73,7 @@ struct DLCListView: View {
                 if vm.isLoading {
                     ProgressView()
                 } else {
-                    Image(systemName: "checkmark")
+                    Image(systemName: "arrow.clockwise")
                         .onTapGesture {
                             vm.refresh(force: true);
                         }
@@ -128,7 +128,7 @@ private struct DLCSourceItem: View {
             Text(label)
             Spacer()
             if url == manager.baseURL {
-                Image(systemName: "checkmark.circle")
+                Image(systemName: "checkmark")
                     .foregroundColor(.green)
             }
         }
