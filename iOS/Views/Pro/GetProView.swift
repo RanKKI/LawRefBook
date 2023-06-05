@@ -85,6 +85,7 @@ struct GetProView: View {
             Spacer()
         }
         .padding()
+        .interactiveDismissDisabled()
         .navigationTitle("成为 Pro")
         .navigationBarTitleDisplayMode(.inline)
 
