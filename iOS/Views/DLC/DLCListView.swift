@@ -34,6 +34,8 @@ struct DLCListView: View {
                 }
             } header: {
                 Text("DLC")
+            } footer: {
+                Text("点击对应法规下载")
             }
             DLCSource()
             Button {
@@ -41,8 +43,9 @@ struct DLCListView: View {
             } label: {
                 Text("下载全部")
             }
+            .disabled(vm.DLCs.isEmpty)
         }
-        .disabled(!IsProUnlocked || vm.DLCs.isEmpty)
+        .disabled(!IsProUnlocked)
         .onAppear {
             vm.refresh();
             if !IsProUnlocked {
@@ -70,7 +73,7 @@ struct DLCListView: View {
                 if vm.isLoading {
                     ProgressView()
                 } else {
-                    Image(systemName: "arrow.clockwise")
+                    Image(systemName: "checkmark")
                         .onTapGesture {
                             vm.refresh(force: true);
                         }
@@ -100,11 +103,11 @@ private struct DLCSource: View {
 
     var body: some View {
         Section {
-            DLCSourceItem(label: "来源1", url: DLCManager.GITHUB)
-            DLCSourceItem(label: "来源2", url: DLCManager.JSDELIVR)
-            DLCSourceItem(label: "来源3", url: DLCManager.RANKKI)
+            DLCSourceItem(label: "源 1", url: DLCManager.GITHUB)
+            DLCSourceItem(label: "源 2", url: DLCManager.JSDELIVR)
+            DLCSourceItem(label: "源 3", url: DLCManager.RANKKI)
         } header: {
-            Text("源")
+            Text("CDN")
         } footer: {
             Text("如果遇到网络原因，导致无法下载，可以尝试切换不同的源")
         }
