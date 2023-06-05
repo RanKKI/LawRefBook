@@ -21,25 +21,28 @@ struct DLCListView: View {
                 ProgressView()
             }
             Section {
-                ForEach(vm.DLCs) { item in
-                    DLCView(item: item, downloadAction: {
-                        vm.download(item: item)
-                    }, deleteAction: {
-                        vm.delete(item: item)
-                    })
+                if vm.DLCs.isEmpty {
+                    Text("加载失败")
+                } else {
+                    ForEach(vm.DLCs) { item in
+                        DLCView(item: item, downloadAction: {
+                            vm.download(item: item)
+                        }, deleteAction: {
+                            vm.delete(item: item)
+                        })
+                    }
                 }
             } header: {
                 Text("DLC")
             }
-//            DLCSource()
-
+            DLCSource()
             Button {
                 vm.downloadAll()
             } label: {
                 Text("下载全部")
             }
         }
-        .disabled(!IsProUnlocked)
+        .disabled(!IsProUnlocked || vm.DLCs.isEmpty)
         .onAppear {
             vm.refresh();
             if !IsProUnlocked {
@@ -97,8 +100,9 @@ private struct DLCSource: View {
 
     var body: some View {
         Section {
-            DLCSourceItem(label: "GitHub", url: DLCManager.GITHUB)
-            DLCSourceItem(label: "jsDelivr", url: DLCManager.JSDELIVR)
+            DLCSourceItem(label: "来源1", url: DLCManager.GITHUB)
+            DLCSourceItem(label: "来源2", url: DLCManager.JSDELIVR)
+            DLCSourceItem(label: "来源3", url: DLCManager.RANKKI)
         } header: {
             Text("源")
         } footer: {
@@ -128,6 +132,7 @@ private struct DLCSourceItem: View {
         .contentShape(Rectangle())
         .onTapGesture {
             manager.baseURL = url
+            print("Switch CDN to \(url)")
         }
     }
     

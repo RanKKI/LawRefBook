@@ -145,7 +145,7 @@ extension DLCManager {
         var filename: String { "\(name).zip" }
         var hashZipFilename: String { "\(hash).zip" }
 
-        var urlFilename: String? { filename }
+        var urlFilename: String? { "\(name).\(hash).zip" }
 
         var url: URL? {
             guard let urlFilename = urlFilename else {
@@ -200,5 +200,6 @@ extension DLCManager {
     
     static let GITHUB = URL(string: "https://raw.githubusercontent.com/LawRefBook/Laws/release")!
     static let JSDELIVR = URL(string: "https://cdn.jsdelivr.net/gh/LawRefBook/Laws@release")!
+    static let RANKKI = URL(string: "https://lawrefbook.rankki.xyz")!
 
 }

@@ -52,7 +52,7 @@ class IAPManager: ObservableObject {
                 success()
             }
             if let log = log {
-                print("InAppPurchaseHandler purchase \(log)")
+                print("InAppPurchaseHandler restore \(log)")
             }
             self.isLoading = false
         }
@@ -86,9 +86,11 @@ class IAPManager: ObservableObject {
         }
         lastPurchaseTime = now
         self.isLoading = true
-        InAppPurchaseHandler.shared.purchase(product: product) { _, _ in
+        InAppPurchaseHandler.shared.purchase(product: product) { ok, _ in
             self.isLoading = false
-            success()
+            if ok {
+                success()
+            }
         }
     }
 }
