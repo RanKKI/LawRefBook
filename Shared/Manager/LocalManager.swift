@@ -7,6 +7,7 @@
 
 import Foundation
 import Zip
+import UIKit
 
 //enum LocalConst: String {
 //
@@ -144,11 +145,17 @@ print(ret)
     // 兼容代码
     private func removeOldLaws() {
         print("---------兼容代码---------")
-        guard let targetPath = lawsFolder?.appendingPathComponent("Laws") else { return }
-        print("旧目录 \(targetPath)")
-        guard targetPath.isExists() else { return }
-        print("删除目录 \(targetPath)")
-        try? targetPath.remove()
+        guard let root = lawsFolder else { return }
+        let folders = [
+            root.appendingPathComponent("Laws"),
+            root.appendingPathComponent("default"),
+        ]
+        for folder in folders {
+            print("删除目录 \(folder)")
+            if folder.isExists() {
+                try? folder.remove()
+            }
+        }
         print("---------兼容结束---------")
     }
 
