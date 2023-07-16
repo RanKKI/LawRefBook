@@ -40,6 +40,7 @@ extension ChatView {
                         self.isLoading = false
                     }
                 } catch {
+                    print(error)
                     uiThread {
                         self.messages.append(.init(isError: true, isBot: true, message: error.localizedDescription))
                         self.isLoading = false
