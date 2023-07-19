@@ -10,8 +10,7 @@ import SwiftUI
 
 
 struct HomeBannerView: View {
-    
-    
+
     @State
     var chatVM: ChatView.VM
 

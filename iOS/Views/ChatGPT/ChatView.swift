@@ -8,35 +8,6 @@
 import Foundation
 import SwiftUI
 
-
-let COUNT_EACH_PURCHASE = 250
-
-let WARNING = """
-您应知晓您发送的内容将发送至开发者 的服务器，您的内容可能会被加入进模型进行训练，因此，请勿输入任何涉密、私人信息。
-
-任何回复不构成法律建议，如您真的需要法律帮助，找律师。
-"""
-
-
-struct EmptyBackground: View {
- 
-    var body: some View {
-        ScrollView {
-            ScrollViewReader { proxy in
-                LazyVStack {
-                    ChatMessageView(msg: .init(isBot: true, message: WARNING))
-                    Divider()
-                    ChatMessageView(msg: .init(isBot: true, message: "您可以问：虚假宣传相关的法律法规有哪些"))
-                    Divider()
-                }
-                .padding([.leading, .trailing], 16)
-                .listStyle(.plain)
-            }
-        }
-        .opacity(0.5)
-    }
-    
-}
 struct ChatView: View {
 
     @ObservedObject
@@ -48,37 +19,56 @@ struct ChatView: View {
     @Environment(\.dismiss)
     private var dismiss
     
+    private let loadingID = UUID()
+    
+    @ObservedObject
+    private var keyboard = KeyboardResponder()
+    
     var body: some View {
         VStack(spacing: 0) {
-            if vm.messages.isEmpty {
-                EmptyBackground()
-            } else {
+            ScrollViewReader { proxy in
                 ScrollView {
-                    ScrollViewReader { proxy in
-                        LazyVStack {
-                            ForEach(vm.messages) { msg in
-                                ChatMessageView(msg: msg)
-                                    .id(msg.id)
-                                Divider()
-                            }
+                    ForEach(vm.messages, id: \.id) { msg in
+                        ChatBoxView(msg: msg) { content in
+                            vm.submit(text: content)
                         }
-                        .padding([.leading, .trailing], 16)
-                        .listStyle(.plain)
-                        .onChange(of: vm.messages, perform: { newValue in
-                            proxy.scrollTo(vm.messages.last?.id, anchor: .bottom)
-                        })
+                        .id(msg.id)
                     }
-                    .onTapGesture {
-                        UIApplication.shared.endEditing()
+                    if vm.isLoading {
+                        ChatBoxView(msg: .init(isBot: true, message: "", isLoading: true))
+                            .id(loadingID)
                     }
                 }
+                .onChange(of: $vm.messages.count, perform: { newValue in
+                    if !vm.isLoading {
+                        withAnimation {
+                            proxy.scrollTo(vm.messages.last?.id, anchor: .bottom)
+                        }
+                    }
+                })
+                .onChange(of: vm.isLoading, perform: { newValue in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation {
+                            proxy.scrollTo(loadingID, anchor: .bottom)
+                        }
+                    }
+                })
+                .onChange(of: keyboard.isKeyboardShown, perform: { newValue in
+                    withAnimation {
+                        proxy.scrollTo(vm.messages.last?.id, anchor: .bottom)
+                    }
+                })
             }
+            .padding([.bottom], 8)
             if IsProUnlocked {
                 ChatInputView(isLoading: $vm.isLoading) { text in
                     vm.submit(text: text)
                 }
             }
         }
+        .simultaneousGesture(TapGesture().onEnded{
+            UIApplication.shared.endEditing()
+        })
         .onAppear {
             if !IsProUnlocked {
                 getProToggle.toggle()
@@ -105,12 +95,15 @@ struct ChatInputView: View {
     var action: (String) -> Void
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 16) {
             TextField("", text: $text, prompt: Text("输入一些问题吧～"))
-                .padding(10)
+                .padding(14)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(Color("ChatInputBoxBackground2"))
+                )
             if isLoading {
                 ProgressView()
-                    .padding(10)
             } else {
                 Button {
                     action(text)
@@ -118,46 +111,22 @@ struct ChatInputView: View {
                 } label: {
                     Image(systemName: "paperplane")
                 }
-                .padding(10)
                 .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .foregroundColor(Color("ChatInputBoxSendIcon"))
             }
         }
         .frame(height: 46)
-        .addBorder(.black, width: 0.6, cornerRadius: 8)
-        .padding([.leading, .trailing], 10)
+//        .addBorder(.black, width: 0.6, cornerRadius: 8)
+        .padding(18)
+        .background(
+            Rectangle()
+                .foregroundColor(Color("ChatInputBoxBackground"))
+                .ignoresSafeArea()
+        )
+        
     }
 }
 
-struct ChatMessageView: View {
-    
-    let msg: ChatMessage
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            VStack {
-                if msg.isBot {
-                    Image("chatgpt_logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                } else {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                }
-            }
-            .frame(width: 24, height: 24)
-            VStack(alignment: .leading) {
-                Text(msg.message)
-                    .multilineTextAlignment(.leading)
-            }
-            Spacer()
-        }
-        .frame(minHeight: 36)
-    }
-    
-}
 
 extension View {
      public func addBorder<S>(_ content: S, width: CGFloat = 1, cornerRadius: CGFloat) -> some View where S : ShapeStyle {

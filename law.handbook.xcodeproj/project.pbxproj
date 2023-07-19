@@ -12,10 +12,13 @@
 		16C0011A27E44A5700AB6446 /* TestLawContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0011227E43AA100AB6446 /* TestLawContent.swift */; };
 		16C3362C27DB182500D3F1F0 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C3362B27DB182500D3F1F0 /* LicenseView.swift */; };
 		16C3362E27DB18D700D3F1F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 16C3362D27DB18D700D3F1F0 /* LICENSE */; };
+		90060A2F2A6801AA006D4D09 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90060A2E2A6801AA006D4D09 /* Keyboard.swift */; };
 		900EBCE027D35D1C00E20FE4 /* CloseSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */; };
 		900EBCE227D35E3500E20FE4 /* LawInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE127D35E3500E20FE4 /* LawInfoView.swift */; };
 		900EBCE427D35EAE00E20FE4 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCE327D35EAE00E20FE4 /* IconButton.swift */; };
 		900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 900EBCEB27D3815900E20FE4 /* LawData.xcdatamodeld */; };
+		9010E53B2A64180A00A5D69A /* ChatBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010E53A2A64180A00A5D69A /* ChatBox.swift */; };
+		9010E53E2A641F7E00A5D69A /* ActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 9010E53D2A641F7E00A5D69A /* ActivityIndicatorView */; };
 		9013C3732A0B26C00066E801 /* laws.meta in Resources */ = {isa = PBXBuildFile; fileRef = 9013C3722A0B26C00066E801 /* laws.meta */; };
 		9013C3752A0B2E5D0066E801 /* laws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 9013C3742A0B2E5D0066E801 /* laws.zip */; };
 		9013C3772A0B30F10066E801 /* FlexibleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9013C3762A0B30F10066E801 /* FlexibleLayout.swift */; };
@@ -57,7 +60,6 @@
 		9047E80E29B0561200BC02E4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E80D29B0561200BC02E4 /* ChatView.swift */; };
 		9047E81029B056BF00BC02E4 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */; };
 		9047E81229B062B100BC02E4 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E81129B062B100BC02E4 /* ChatMessage.swift */; };
-		9047E81629B07C5300BC02E4 /* ChatSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047E81529B07C5300BC02E4 /* ChatSubscriptionView.swift */; };
 		905B83D627F83BFD00F951E9 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905B83D527F83BFD00F951E9 /* ImageUtils.swift */; };
 		906E36A428053BF400A5CC39 /* Safari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906E36A328053BF400A5CC39 /* Safari.swift */; };
 		9080B83D2A20A0CB00F45A9B /* PackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9080B83C2A20A0CB00F45A9B /* PackageManager.swift */; };
@@ -152,10 +154,12 @@
 		16C0011C27E44BE800AB6446 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16C3362B27DB182500D3F1F0 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		16C3362D27DB18D700D3F1F0 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		90060A2E2A6801AA006D4D09 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		900EBCDF27D35D1C00E20FE4 /* CloseSheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseSheetItem.swift; sourceTree = "<group>"; };
 		900EBCE127D35E3500E20FE4 /* LawInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawInfoView.swift; sourceTree = "<group>"; };
 		900EBCE327D35EAE00E20FE4 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		900EBCEC27D3815900E20FE4 /* LawData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LawData.xcdatamodel; sourceTree = "<group>"; };
+		9010E53A2A64180A00A5D69A /* ChatBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBox.swift; sourceTree = "<group>"; };
 		9013C3722A0B26C00066E801 /* laws.meta */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laws.meta; sourceTree = "<group>"; };
 		9013C3742A0B2E5D0066E801 /* laws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = laws.zip; sourceTree = "<group>"; };
 		9013C3762A0B30F10066E801 /* FlexibleLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleLayout.swift; sourceTree = "<group>"; };
@@ -197,7 +201,6 @@
 		9047E80D29B0561200BC02E4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		9047E81129B062B100BC02E4 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
-		9047E81529B07C5300BC02E4 /* ChatSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSubscriptionView.swift; sourceTree = "<group>"; };
 		905B83D527F83BFD00F951E9 /* ImageUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
 		906E36A328053BF400A5CC39 /* Safari.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Safari.swift; sourceTree = "<group>"; };
 		9080B83C2A20A0CB00F45A9B /* PackageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageManager.swift; sourceTree = "<group>"; };
@@ -288,6 +291,7 @@
 				909AE295281F6B84008679C4 /* SQLite in Frameworks */,
 				90AC432528124E8600AFECB8 /* SPAlert in Frameworks */,
 				909C8D142A2C9BCA008D26FA /* WhatsNewKit in Frameworks */,
+				9010E53E2A641F7E00A5D69A /* ActivityIndicatorView in Frameworks */,
 				90A7911B280D34F0003367CB /* CloudKit.framework in Frameworks */,
 				903F5328280E5C6D00D4523D /* StoreKit.framework in Frameworks */,
 				90399161292A341500CFC975 /* Zip in Frameworks */,
@@ -457,6 +461,7 @@
 				90E835C12938328600519E23 /* View.swift */,
 				90E835C32938334700519E23 /* UIScreen.swift */,
 				90E835C52938336300519E23 /* UIImage.swift */,
+				90060A2E2A6801AA006D4D09 /* Keyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -531,7 +536,7 @@
 			children = (
 				9047E80D29B0561200BC02E4 /* ChatView.swift */,
 				9047E80F29B056BF00BC02E4 /* ChatViewModel.swift */,
-				9047E81529B07C5300BC02E4 /* ChatSubscriptionView.swift */,
+				9010E53A2A64180A00A5D69A /* ChatBox.swift */,
 			);
 			path = ChatGPT;
 			sourceTree = "<group>";
@@ -764,6 +769,7 @@
 				909AE294281F6B84008679C4 /* SQLite */,
 				90399160292A341500CFC975 /* Zip */,
 				909C8D132A2C9BCA008D26FA /* WhatsNewKit */,
+				9010E53D2A641F7E00A5D69A /* ActivityIndicatorView */,
 			);
 			productName = law.handbook;
 			productReference = 902DAE5427C7CBC100926036 /* 中国法律.app */;
@@ -801,6 +807,7 @@
 				909AE293281F6B84008679C4 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				9039915F292A341500CFC975 /* XCRemoteSwiftPackageReference "Zip" */,
 				909C8D122A2C9BCA008D26FA /* XCRemoteSwiftPackageReference "WhatsNewKit" */,
+				9010E53C2A641F7E00A5D69A /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */,
 			);
 			productRefGroup = 902DAE5527C7CBC100926036 /* Products */;
 			projectDirPath = "";
@@ -860,6 +867,7 @@
 				9013C37A2A0B47780066E801 /* WorkerLawListView.swift in Sources */,
 				900EBCED27D3815900E20FE4 /* LawData.xcdatamodeld in Sources */,
 				90E835E8293C382B00519E23 /* SearchManager.swift in Sources */,
+				90060A2F2A6801AA006D4D09 /* Keyboard.swift in Sources */,
 				90E835C62938336300519E23 /* UIImage.swift in Sources */,
 				90E835DA2938CDA200519E23 /* FavoriteContentViewModel.swift in Sources */,
 				90F7F99D29C6F8C500F9FEC2 /* HomeBannerView.swift in Sources */,
@@ -895,8 +903,8 @@
 				90399163292A352400CFC975 /* FileManager.swift in Sources */,
 				90E835D82938CCF200519E23 /* FavoriteFolderSelectionView.swift in Sources */,
 				90A79118280D0AD3003367CB /* SearchHistoryUtil.swift in Sources */,
+				9010E53B2A64180A00A5D69A /* ChatBox.swift in Sources */,
 				90A22C27281FCFB300B5DC24 /* TLaw.swift in Sources */,
-				9047E81629B07C5300BC02E4 /* ChatSubscriptionView.swift in Sources */,
 				90E8359B2932017100519E23 /* Text.swift in Sources */,
 				903F532B280E5CA100D4523D /* InAppPurchaseHandler.swift in Sources */,
 				90399182292B97A100CFC975 /* LawListSubFolderView.swift in Sources */,
@@ -1136,7 +1144,7 @@
 				CODE_SIGN_ENTITLEMENTS = iOS/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
 				ENABLE_PREVIEWS = YES;
@@ -1155,7 +1163,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1176,7 +1184,7 @@
 				CODE_SIGN_ENTITLEMENTS = iOS/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
 				ENABLE_PREVIEWS = YES;
@@ -1195,7 +1203,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1241,6 +1249,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9010E53C2A641F7E00A5D69A /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/ActivityIndicatorView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		9039915F292A341500CFC975 /* XCRemoteSwiftPackageReference "Zip" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/marmelroy/Zip";
@@ -1276,6 +1292,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9010E53D2A641F7E00A5D69A /* ActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9010E53C2A641F7E00A5D69A /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */;
+			productName = ActivityIndicatorView;
+		};
 		90399160292A341500CFC975 /* Zip */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9039915F292A341500CFC975 /* XCRemoteSwiftPackageReference "Zip" */;
