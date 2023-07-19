@@ -55,9 +55,11 @@ struct GetProView: View {
                         action?(true)
                     }
                 } label: {
-                    VStack {
+                    HStack {
                         if IsProUnlocked {
                             Text("已解锁")
+                        } else if iap.isLoading {
+                            ProgressView()
                         } else {
                             Text("立即解锁 (\(iap.getProductPrice(product: .Pro) ?? "..."))")
                         }
