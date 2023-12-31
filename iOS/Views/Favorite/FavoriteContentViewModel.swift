@@ -11,7 +11,7 @@ import SwiftUI
 extension FavoriteContentView {
 
     struct ContentItem: Identifiable, Hashable {
-        var id: UUID { data.id! }
+        var id: UUID { data.id ?? UUID() }
         var content: String
         var data: FavContent
     }
