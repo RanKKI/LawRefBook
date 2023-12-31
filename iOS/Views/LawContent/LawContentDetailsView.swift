@@ -27,7 +27,7 @@ struct LawContentDetailsView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: CGFloat(Preference.shared.lineSpacing)) {
+                VStack(alignment: .leading, spacing: CGFloat(Preference.shared.lineSpacing)) {
                     LawStatusView(law: law)
                     LawTitleTextView(titles: content.titles)
                     LawBodyTextView(law: law, sections: $content.sections, searchText: $searchText)
