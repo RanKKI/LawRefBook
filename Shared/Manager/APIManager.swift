@@ -20,7 +20,7 @@ final class APIManager {
     static let shard = APIManager()
     
     func chat(message: String) async throws -> String {
-        guard let url = URL(string: "https://law.rankki.xyz/ai-law-ask") else {
+        guard let url = URL(string: "https://dnj3ht2kgint3b66apl67jq6zi0knpzo.lambda-url.ap-southeast-1.on.aws") else {
             throw URLError(.badURL)
         }
         print("sending message: \(message)")
