@@ -1144,7 +1144,7 @@
 				CODE_SIGN_ENTITLEMENTS = iOS/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
 				ENABLE_PREVIEWS = YES;
@@ -1163,7 +1163,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1184,7 +1184,7 @@
 				CODE_SIGN_ENTITLEMENTS = iOS/Resources/RefBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
 				DEVELOPMENT_TEAM = YFKW2KV54P;
 				ENABLE_PREVIEWS = YES;
@@ -1203,7 +1203,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.rankki.law-handbook";
 				PRODUCT_NAME = "中国法律";
 				PROVISIONING_PROFILE_SPECIFIER = "";
