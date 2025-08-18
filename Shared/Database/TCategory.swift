@@ -14,13 +14,13 @@ struct TCategory: Identifiable, Hashable {
 
     static let table = Table("category")
 
-    static let id = Expression<String>("id")
-    static let name = Expression<String>("name")
-    static let folder = Expression<String>("folder")
-    static let isSubFolder = Expression<Bool>("isSubFolder")
-    static let order = Expression<Int?>("order")
+    static let id = SQLExpr<String>("id")
+    static let name = SQLExpr<String>("name")
+    static let folder = SQLExpr<String>("folder")
+    static let isSubFolder = SQLExpr<Bool>("isSubFolder")
+    static let order = SQLExpr<Int?>("order")
 
-    static let group = Expression<String?>("group")
+    static let group = SQLExpr<String?>("group")
     
     let id: UUID
     let name: String

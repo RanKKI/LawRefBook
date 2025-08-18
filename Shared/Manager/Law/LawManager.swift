@@ -79,7 +79,7 @@ final class LawManager: ObservableObject {
     }
 
     // 取所有 TLaws
-    private func queryLaws(predicate: Expression<Bool>? = nil) async -> [TLaw] {
+    private func queryLaws(predicate: SQLExpr<Bool>? = nil) async -> [TLaw] {
         var ret = [TLaw]()
         for db in dbs {
             let laws = await db.getLaws(predicate: predicate)

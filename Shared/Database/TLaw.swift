@@ -4,20 +4,20 @@ import Foundation
 struct TLaw: Identifiable {
     static let table = Table("law")
 
-    static let id = Expression<String>("id")
-    static let name = Expression<String>("name")
-    static let categoryID = Expression<String>("category_id")
-    static let expired = Expression<Bool>("expired")
-    static let level = Expression<String>("level")
+    static let id = SQLExpr<String>("id")
+    static let name = SQLExpr<String>("name")
+    static let categoryID = SQLExpr<String>("category_id")
+    static let expired = SQLExpr<Bool>("expired")
+    static let level = SQLExpr<String>("level")
 
-    static let filename = Expression<String?>("filename")
-    static let publish = Expression<String?>("publish")
-    static let order = Expression<Int?>("order")
-    static let subtitle = Expression<String?>("subtitle")
-    static let valid_from = Expression<String?>("valid_from")
+    static let filename = SQLExpr<String?>("filename")
+    static let publish = SQLExpr<String?>("publish")
+    static let order = SQLExpr<Int?>("order")
+    static let subtitle = SQLExpr<String?>("subtitle")
+    static let valid_from = SQLExpr<String?>("valid_from")
 
-    static let ver = Expression<Int>("ver")
-    static let tags = Expression<String?>("tags")
+    static let ver = SQLExpr<Int>("ver")
+    static let tags = SQLExpr<String?>("tags")
 
     let id: UUID
     let name: String

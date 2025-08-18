@@ -23,11 +23,11 @@ class LawDatabase {
         sqlite3_close(self.connection.handle)
     }
     
-    func getCategory(predicate: Expression<Bool>? = nil) async -> TCategory? {
+    func getCategory(predicate: SQLExpr<Bool>? = nil) async -> TCategory? {
         return await self.getCategories(predicate: predicate).first
     }
 
-    func getCategories(predicate: Expression<Bool>? = nil) async -> [TCategory] {
+    func getCategories(predicate: SQLExpr<Bool>? = nil) async -> [TCategory] {
         var rows = AnySequence<Row>([])
 
         var query = TCategory.table
@@ -46,7 +46,7 @@ class LawDatabase {
         return rows.map { TCategory.create(row: $0, laws: []) }
     }
 
-    func getLaws(predicate: Expression<Bool>? = nil) async -> [TLaw] {
+    func getLaws(predicate: SQLExpr<Bool>? = nil) async -> [TLaw] {
         var rows = AnySequence<Row>([])
 
         var query = TLaw.table

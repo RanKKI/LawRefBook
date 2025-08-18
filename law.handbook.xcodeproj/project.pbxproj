@@ -134,6 +134,7 @@
 		90F7F99B29C6F1C700F9FEC2 /* HomeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F7F99A29C6F1C700F9FEC2 /* HomeCardView.swift */; };
 		90F7F99D29C6F8C500F9FEC2 /* HomeBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F7F99C29C6F8C500F9FEC2 /* HomeBannerView.swift */; };
 		90F7F99F29C7269700F9FEC2 /* HomeCasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F7F99E29C7269700F9FEC2 /* HomeCasesView.swift */; };
+		9CC5E3642DC4502300DDD088 /* TypealiasUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC5E3632DC4501300DDD088 /* TypealiasUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -274,6 +275,7 @@
 		90F7F99A29C6F1C700F9FEC2 /* HomeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCardView.swift; sourceTree = "<group>"; };
 		90F7F99C29C6F8C500F9FEC2 /* HomeBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBannerView.swift; sourceTree = "<group>"; };
 		90F7F99E29C7269700F9FEC2 /* HomeCasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCasesView.swift; sourceTree = "<group>"; };
+		9CC5E3632DC4501300DDD088 /* TypealiasUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypealiasUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -583,6 +585,7 @@
 		90E8357C2931CD9300519E23 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9CC5E3632DC4501300DDD088 /* TypealiasUtils.swift */,
 				905B83D527F83BFD00F951E9 /* ImageUtils.swift */,
 				90193EFF27F5A376008CF0A6 /* Consts.swift */,
 				90E8357D2931CD9C00519E23 /* Review.swift */,
@@ -885,6 +888,7 @@
 				9080B83F2A20A15500F45A9B /* MetadataManager.swift in Sources */,
 				901D199F2847565C00999AE6 /* QRCode.swift in Sources */,
 				90E835DE2938D30A00519E23 /* ShareButton.swift in Sources */,
+				9CC5E3642DC4502300DDD088 /* TypealiasUtils.swift in Sources */,
 				90E8357B2931CD6500519E23 /* String.swift in Sources */,
 				9047E80E29B0561200BC02E4 /* ChatView.swift in Sources */,
 				90D4CDAC2862F627006DB8AC /* SearchHistoryViewModel.swift in Sources */,
